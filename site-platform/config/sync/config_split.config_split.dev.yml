@@ -1,0 +1,16 @@
+uuid: 1cde2bc2-4c20-4bb5-a459-a184a8c9f364
+langcode: en
+status: false
+dependencies: {  }
+id: dev
+label: Dev
+description: 'Local DDEV and shared development configuration.'
+weight: 0
+stackable: false
+no_patching: false
+storage: folder
+folder: ../config/splits/dev
+module: {  }
+theme: {  }
+complete_list: {  }
+partial_list: {  }

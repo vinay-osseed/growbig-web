@@ -1,0 +1,16 @@
+uuid: b4180587-3122-4c7d-9525-1570da00882f
+langcode: en
+status: false
+dependencies: {  }
+id: stage
+label: Stage
+description: 'Staging and QA configuration.'
+weight: 10
+stackable: false
+no_patching: false
+storage: folder
+folder: ../config/splits/stage
+module: {  }
+theme: {  }
+complete_list: {  }
+partial_list: {  }

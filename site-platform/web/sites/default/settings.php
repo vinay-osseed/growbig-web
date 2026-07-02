@@ -881,3 +881,13 @@ if (getenv('IS_DDEV_PROJECT') == 'true' && file_exists(__DIR__ . '/settings.ddev
 
 // Site Platform config sync directory.
 $settings['config_sync_directory'] = '../config/sync';
+
+// Site Platform environment config split.
+// DDEV/local and shared dev both use DRUPAL_ENV=dev.
+// Stage should use DRUPAL_ENV=stage.
+// Production should use DRUPAL_ENV=prod.
+$site_platform_env = getenv('DRUPAL_ENV') ?: 'dev';
+
+foreach (['dev', 'stage', 'prod'] as $site_platform_split) {
+  $config["config_split.config_split.$site_platform_split"]['status'] = ($site_platform_env === $site_platform_split);
+}
