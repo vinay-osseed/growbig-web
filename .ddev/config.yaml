@@ -1,6 +1,7 @@
 name: growbig-web
 type: drupal11
-docroot: web
+docroot: site-platform/web
+composer_root: site-platform
 php_version: "8.4"
 webserver_type: nginx-fpm
 xdebug_enabled: false
@@ -11,7 +12,8 @@ database:
     version: "11.8"
 use_dns_when_possible: true
 composer_version: "2"
-web_environment: []
+web_environment:
+    - DRUPAL_ENV=dev
 corepack_enable: true
 
 # Key features of DDEV's config.yaml:

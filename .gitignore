@@ -1,1 +1,32 @@
-vendor
+# DDEV generated/local files
+.ddev/.dbimageBuild/
+.ddev/.webimageBuild/
+.ddev/db_snapshots/
+.ddev/.ddev-docker-compose-base.yaml
+.ddev/.ddev-docker-compose-full.yaml
+
+# Drupal dependencies
+site-platform/vendor/
+site-platform/web/core/
+site-platform/web/modules/contrib/
+site-platform/web/themes/contrib/
+site-platform/web/profiles/contrib/
+
+# Drupal files
+site-platform/web/sites/default/files/*
+!site-platform/web/sites/default/files/sync/
+!site-platform/web/sites/default/files/sync/.gitkeep
+
+# Local settings/secrets
+.env
+.env.*
+!.env.example
+site-platform/web/sites/default/settings.local.php
+site-platform/web/sites/default/settings.prod.php
+site-platform/web/sites/default/settings.stage.php
+site-platform/web/sites/default/services.local.yml
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/

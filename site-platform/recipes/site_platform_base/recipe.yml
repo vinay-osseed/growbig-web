@@ -1,0 +1,19 @@
+name: 'Site Platform Base'
+description: 'Reusable Drupal backend structure for content-driven and decoupled-ready websites.'
+type: 'Site'
+
+install:
+  - node
+  - user
+  - field
+  - text
+  - image
+  - file
+  - media
+  - media_library
+  - taxonomy
+  - menu_ui
+  - path
+  - jsonapi
+  - serialization
+  - rest
