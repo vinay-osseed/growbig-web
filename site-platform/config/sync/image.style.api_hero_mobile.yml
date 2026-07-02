@@ -1,0 +1,15 @@
+uuid: 23c7d0cf-28b5-49e0-9311-0bac44738585
+langcode: en
+status: true
+dependencies: {  }
+name: api_hero_mobile
+label: 'API Hero Mobile'
+effects:
+  9246776a-d970-4bce-a0fb-5b0b95b5d4ea:
+    uuid: 9246776a-d970-4bce-a0fb-5b0b95b5d4ea
+    id: image_scale
+    weight: 1
+    data:
+      width: 768
+      height: 768
+      upscale: false

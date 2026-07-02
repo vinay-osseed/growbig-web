@@ -1,0 +1,6 @@
+services:
+  site_platform_api.media_normalizer:
+    class: Drupal\site_platform_api\SitePlatformMediaNormalizer
+    arguments:
+      - '@entity_type.manager'
+      - '@file_url_generator'

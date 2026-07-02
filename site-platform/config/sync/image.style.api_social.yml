@@ -1,0 +1,15 @@
+uuid: 8db4ae63-f902-4a44-8317-1781f3748fd5
+langcode: en
+status: true
+dependencies: {  }
+name: api_social
+label: 'API Social'
+effects:
+  e3032cc3-6b84-44cd-ad1c-a70a1dcf4532:
+    uuid: e3032cc3-6b84-44cd-ad1c-a70a1dcf4532
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1200
+      height: 630
+      anchor: center-center

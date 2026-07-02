@@ -5,13 +5,32 @@ declare(strict_types=1);
 namespace Drupal\site_platform_api\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\media\MediaInterface;
 use Drupal\node\NodeInterface;
+use Drupal\site_platform_api\SitePlatformMediaNormalizer;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Returns clean frontend site API responses.
  */
 final class SiteController extends ControllerBase {
+
+  /**
+   * Constructs a SiteController object.
+   */
+  public function __construct(
+    private readonly SitePlatformMediaNormalizer $mediaNormalizer,
+  ) {}
+
+  /**
+   * Creates a SiteController instance.
+   */
+  public static function create(ContainerInterface $container): self {
+    return new self(
+      $container->get('site_platform_api.media_normalizer'),
+    );
+  }
 
   /**
    * Returns the active site profile response.
@@ -70,9 +89,9 @@ final class SiteController extends ControllerBase {
         'api' => $this->getLinkUri($profile, 'field_api_domain'),
       ],
       'branding' => [
-        'logo' => NULL,
-        'favicon' => NULL,
-        'defaultImage' => NULL,
+        'logo' => $this->normalizeMediaField($profile, 'field_logo'),
+        'favicon' => $this->normalizeMediaField($profile, 'field_favicon'),
+        'defaultImage' => $this->normalizeMediaField($profile, 'field_default_social_image'),
       ],
       'contact' => [
         'email' => $this->getStringValue($profile, 'field_contact_email'),
@@ -82,7 +101,7 @@ final class SiteController extends ControllerBase {
       'seo' => [
         'title' => $this->getStringValue($profile, 'field_default_meta_title') ?: $site_name,
         'description' => $this->getStringValue($profile, 'field_default_meta_description'),
-        'image' => NULL,
+        'image' => $this->normalizeMediaField($profile, 'field_default_social_image'),
       ],
       'social' => [],
       'theme' => [
@@ -145,6 +164,19 @@ final class SiteController extends ControllerBase {
         'isDefault' => TRUE,
       ],
     ];
+  }
+
+  /**
+   * Normalizes a media reference field.
+   */
+  private function normalizeMediaField(NodeInterface $node, string $field_name): ?array {
+    if (!$node->hasField($field_name) || $node->get($field_name)->isEmpty()) {
+      return NULL;
+    }
+
+    $media = $node->get($field_name)->entity;
+
+    return $media instanceof MediaInterface ? $this->mediaNormalizer->normalize($media) : NULL;
   }
 
   /**
