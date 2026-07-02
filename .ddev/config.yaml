@@ -2,34 +2,61 @@ name: growbig-web
 type: drupal11
 docroot: site-platform/web
 composer_root: site-platform
+
 php_version: "8.4"
 webserver_type: nginx-fpm
 xdebug_enabled: false
-additional_hostnames: []
-additional_fqdns: []
+
 database:
     type: mariadb
     version: "11.8"
-use_dns_when_possible: true
+
 composer_version: "2"
+corepack_enable: true
+nodejs_version: "24"
+
+timezone: Asia/Kolkata
+
+use_dns_when_possible: true
+
+additional_hostnames:
+    - admin.growbig-web
+    - api.growbig-web
+    - ui.growbig-web
+    - dev-admin.growbig-web
+    - dev-api.growbig-web
+    - dev-ui.growbig-web
+    - stage-admin.growbig-web
+    - stage-api.growbig-web
+    - stage-ui.growbig-web
+    - prod-admin.growbig-web
+    - prod-api.growbig-web
+    - prod-ui.growbig-web
+
+additional_fqdns: []
+
 web_environment:
     - DRUPAL_ENV=dev
-corepack_enable: true
+    - DRUPAL_PRIMARY_DOMAIN=growbig-web.ddev.site
+    - DRUPAL_ADMIN_DOMAIN=admin.growbig-web.ddev.site
+    - DRUPAL_API_DOMAIN=api.growbig-web.ddev.site
+    - DRUPAL_UI_DOMAIN=ui.growbig-web.ddev.site
+    - DRUPAL_EXTRA_TRUSTED_HOSTS=dev-admin.growbig-web.ddev.site,dev-api.growbig-web.ddev.site,dev-ui.growbig-web.ddev.site,stage-admin.growbig-web.ddev.site,stage-api.growbig-web.ddev.site,stage-ui.growbig-web.ddev.site,prod-admin.growbig-web.ddev.site,prod-api.growbig-web.ddev.site,prod-ui.growbig-web.ddev.site
 
 # Key features of DDEV's config.yaml:
 
 # name: <projectname> # Name of the project, automatically provides
-#   http://projectname.ddev.site and https://projectname.ddev.site
+#    http://projectname.ddev.site and https://projectname.ddev.site
 # If the name is omitted, the project will take the name of the enclosing directory,
 # which is useful if you want to have a copy of the project side by side with this one.
 
-# type: <projecttype>  # asterios, backdrop, cakephp, codeigniter, craftcms, drupal, drupal6, drupal7, drupal8, drupal9, drupal10, drupal11, drupal12, generic, joomla, laravel, magento, magento2, php, shopware6, silverstripe, symfony, typo3, wordpress, wp-bedrock
+# type: <projecttype>   # asterios, backdrop, cakephp, codeigniter, craftcms, drupal, drupal6, drupal7, drupal8, drupal9, drupal10, drupal11, drupal12, generic, joomla, laravel, magento, magento2, php, shopware6, silverstripe, symfony, typo3, wordpress, wp-bedrock
 # See https://docs.ddev.com/en/stable/users/quickstart/ for more
 # information on the different project types
 
 # docroot: <relative_path> # Relative path to the directory containing index.php.
 
-# php_version: "8.4"  # PHP version to use, "5.6" through "8.5"
+# php_version: "8.4"    # PHP version to use, "5.6" through "8.5"
 
 # You can explicitly specify the webimage but this
 # is not recommended, as the images are often closely tied to DDEV's' behavior,
@@ -40,16 +67,16 @@ corepack_enable: true
 # Typically, this means additions to the existing web image using a .ddev/web-build/Dockerfile.*
 
 # database:
-#   type: <dbtype> # mysql, mariadb, postgres
-#   version: <version> # database version, like "10.11" or "8.0"
-#   MariaDB versions can be 5.5-10.8, 10.11, 11.4, 11.8
-#   MySQL versions can be 5.5-8.0, 8.4
-#   PostgreSQL versions can be 9-18
+#    type: <dbtype> # mysql, mariadb, postgres
+#    version: <version> # database version, like "10.11" or "8.0"
+#    MariaDB versions can be 5.5-10.8, 10.11, 11.4, 11.8
+#    MySQL versions can be 5.5-8.0, 8.4
+#    PostgreSQL versions can be 9-18
 
 # router_http_port: <port>  # Port to be used for http (defaults to global configuration, usually 80)
 # router_https_port: <port> # Port for https (defaults to global configuration, usually 443)
 
-# xdebug_enabled: false  # Set to true to enable Xdebug and "ddev start" or "ddev restart"
+# xdebug_enabled: false # Set to true to enable Xdebug and "ddev start" or "ddev restart"
 # Note that for most people the commands
 # "ddev xdebug" to enable Xdebug and "ddev xdebug off" to disable it work better,
 # as leaving Xdebug enabled all the time is a big performance hit.
@@ -86,10 +113,10 @@ corepack_enable: true
 # You can set it to "" or "2" (default) for Composer v2
 # to use the latest major version available at the time your container is built.
 # It is also possible to use each other Composer version channel. This includes:
-#   - 2.2 (latest Composer LTS version)
-#   - stable
-#   - preview
-#   - snapshot
+#    - 2.2 (latest Composer LTS version)
+#    - stable
+#    - preview
+#    - snapshot
 # Alternatively, an explicit Composer version may be specified, for example "2.2.18".
 # To reinstall Composer after the image was built, run "ddev utility rebuild".
 
@@ -102,22 +129,22 @@ corepack_enable: true
 # Change to 'true' to 'corepack enable' and gain access to latest versions of yarn/pnpm
 
 # additional_hostnames:
-#  - somename
-#  - someothername
+#   - somename
+#   - someothername
 # would provide http and https URLs for "somename.ddev.site"
 # and "someothername.ddev.site".
 
 # additional_fqdns:
-#  - example.com
-#  - sub1.example.com
+#   - example.com
+#   - sub1.example.com
 # would provide http and https URLs for "example.com" and "sub1.example.com"
 # Please take care with this because it can cause great confusion.
 
 # upload_dirs: "custom/upload/dir"
 #
 # upload_dirs:
-#   - custom/upload/dir
-#   - ../private
+#    - custom/upload/dir
+#    - ../private
 #
 # would set the destination paths for ddev import-files to <docroot>/custom/upload/dir
 # When Mutagen is enabled this path is bind-mounted so that all the files
@@ -135,8 +162,8 @@ corepack_enable: true
 # supported constraint formats
 
 # working_dir:
-#   web: /var/www/html
-#   db: /home
+#    web: /var/www/html
+#    db: /home
 # would set the default working directory for the web and db services.
 # These values specify the destination directory for ddev ssh and the
 # directory in which commands passed into ddev exec are run.
@@ -153,9 +180,9 @@ corepack_enable: true
 # performance depending on your host system. Should be configured globally.
 #
 # If set, will override the global config. Possible values are:
-#   - "global":  uses the value from the global config.
-#   - "none":    disables performance optimization for this project.
-#   - "mutagen": enables Mutagen for this project.
+#    - "global":   uses the value from the global config.
+#    - "none": disables performance optimization for this project.
+#    - "mutagen": enables Mutagen for this project.
 #
 # See https://docs.ddev.com/en/stable/users/install/performance/#mutagen
 
@@ -218,8 +245,8 @@ corepack_enable: true
 
 # You can inject environment variables into the web container with:
 # web_environment:
-#     - SOMEENV=somevalue
-#     - SOMEOTHERENV=someothervalue
+#    - SOMEENV=somevalue
+#    - SOMEOTHERENV=someothervalue
 
 # no_project_mount: false
 # (Experimental) If true, DDEV will not mount the project into the web container;
@@ -239,13 +266,13 @@ corepack_enable: true
 
 #web_extra_exposed_ports:
 #- name: nodejs
-#  container_port: 3000
-#  http_port: 2999
-#  https_port: 3000
+#   container_port: 3000
+#   http_port: 2999
+#   https_port: 3000
 #- name: something
-#  container_port: 4000
-#  https_port: 4000
-#  http_port: 3999
+#   container_port: 4000
+#   https_port: 4000
+#   http_port: 3999
 # Allows a set of extra ports to be exposed via ddev-router
 # Fill in all three fields even if you don’t intend to use the https_port!
 # If you don’t add https_port, then it defaults to 0 and ddev-router will fail to start.
@@ -255,18 +282,18 @@ corepack_enable: true
 # For example, with a web app on port 3000 inside the container, this config would
 # expose that web app on https://<project>.ddev.site:9999 and http://<project>.ddev.site:9998
 # web_extra_exposed_ports:
-#  - name: myapp
-#    container_port: 3000
-#    http_port: 9998
-#    https_port: 9999
+#   - name: myapp
+#   container_port: 3000
+#   http_port: 9998
+#   https_port: 9999
 
 #web_extra_daemons:
 #- name: "http-1"
-#  command: "/var/www/html/node_modules/.bin/http-server -p 3000"
-#  directory: /var/www/html
+#   command: "/var/www/html/node_modules/.bin/http-server -p 3000"
+#   directory: /var/www/html
 #- name: "http-2"
-#  command: "/var/www/html/node_modules/.bin/http-server /var/www/html/sub -p 3000"
-#  directory: /var/www/html
+#   command: "/var/www/html/node_modules/.bin/http-server /var/www/html/sub -p 3000"
+#   directory: /var/www/html
 
 # override_config: false
 # By default, config.*.yaml files are *merged* into the configuration
@@ -276,7 +303,7 @@ corepack_enable: true
 # However, with "override_config: true" in a particular config.*.yaml file,
 # 'use_dns_when_possible: false' can override the existing values, and
 # hooks:
-#   post-start: []
+#    post-start: []
 # or
 # web_environment: []
 # or
@@ -292,6 +319,6 @@ corepack_enable: true
 # for them. Example:
 #hooks:
 # post-import-db:
-#   - exec: drush sql:sanitize
-#   - exec: drush updatedb
-#   - exec: drush cache:rebuild
+#    - exec: drush sql:sanitize
+#    - exec: drush updatedb
+#    - exec: drush cache:rebuild

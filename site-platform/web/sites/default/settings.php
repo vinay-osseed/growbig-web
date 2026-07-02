@@ -891,3 +891,25 @@ $site_platform_env = getenv('DRUPAL_ENV') ?: 'dev';
 foreach (['dev', 'stage', 'prod'] as $site_platform_split) {
   $config["config_split.config_split.$site_platform_split"]['status'] = ($site_platform_env === $site_platform_split);
 }
+
+// Site Platform trusted host patterns from environment domains.
+$site_platform_domains = array_filter([
+  getenv('DRUPAL_PRIMARY_DOMAIN') ?: '',
+  getenv('DRUPAL_ADMIN_DOMAIN') ?: '',
+  getenv('DRUPAL_API_DOMAIN') ?: '',
+  getenv('DRUPAL_UI_DOMAIN') ?: '',
+]);
+
+$site_platform_extra_hosts = getenv('DRUPAL_EXTRA_TRUSTED_HOSTS') ?: '';
+if ($site_platform_extra_hosts !== '') {
+  $site_platform_domains = array_merge(
+    $site_platform_domains,
+    array_map('trim', explode(',', $site_platform_extra_hosts))
+  );
+}
+
+$settings['trusted_host_patterns'] = array_values(array_map(
+  static fn($domain) => '^' . preg_quote($domain, '/') . '$',
+  array_unique(array_filter($site_platform_domains))
+));
+
