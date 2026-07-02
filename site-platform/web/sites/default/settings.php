@@ -915,4 +915,4 @@ $settings['trusted_host_patterns'] = array_values(array_map(
 
 
 // Explicitly keep HTML5 validation enabled for current Drupal behavior.
-$settings['enable_html5_validation'] = TRUE;
+$settings['enable_html5_validation'] = FALSE;
