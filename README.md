@@ -22,6 +22,8 @@ ddev drush status
 - `docs/environment-domains.md`
 - `docs/git-workflow.md`
 - `docs/local-setup.md`
+- `docs/media-api.md`
+- `docs/frontend-api.md`
 - `docs/recipe-usage.md`
 
 ## Branch flow
