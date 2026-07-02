@@ -3,9 +3,9 @@ set -euo pipefail
 
 echo "Checking Drupal platform..."
 
-ddev composer validate --working-dir=site-platform --strict
+ddev composer validate --strict
 
-ddev composer install --working-dir=site-platform
+ddev composer install
 
 ddev drush status
 
