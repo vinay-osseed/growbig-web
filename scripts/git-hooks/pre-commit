@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "Running pre-commit checks..."
+
+./scripts/check-code.sh
+
+echo "Pre-commit checks passed."
