@@ -1,0 +1,24 @@
+uuid: 72c32172-41d5-4f7a-888c-e4589033cfde
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_favicon
+    - media.type.image
+    - node.type.site_profile
+id: node.site_profile.field_favicon
+field_name: field_favicon
+entity_type: node
+bundle: site_profile
+label: Favicon
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+field_type: entity_reference

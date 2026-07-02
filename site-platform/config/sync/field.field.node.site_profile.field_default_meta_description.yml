@@ -1,0 +1,19 @@
+uuid: 7ebab103-47cb-44a4-904a-1d26c8f30bd4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_default_meta_description
+    - node.type.site_profile
+id: node.site_profile.field_default_meta_description
+field_name: field_default_meta_description
+entity_type: node
+bundle: site_profile
+label: 'Default meta description'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

@@ -1,0 +1,19 @@
+uuid: e73d27a5-f92e-41a0-a202-b50e4f360052
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_footer_copyright
+    - node.type.site_profile
+id: node.site_profile.field_footer_copyright
+field_name: field_footer_copyright
+entity_type: node
+bundle: site_profile
+label: 'Footer copyright'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
