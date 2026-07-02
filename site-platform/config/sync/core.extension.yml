@@ -15,13 +15,11 @@ module:
   config_split: 0
   contextual: 0
   datetime: 0
-  dblog: 0
   decoupled_router: 0
   dynamic_page_cache: 0
   editor: 0
   entity_reference_revisions: 0
   field: 0
-  field_ui: 0
   file: 0
   filter: 0
   gin_toolbar: 0
@@ -54,7 +52,6 @@ module:
   toolbar: 0
   update: 0
   user: 0
-  views_ui: 0
   pathauto: 1
   views: 10
   paragraphs: 11

@@ -1,6 +1,6 @@
 uuid: 1cde2bc2-4c20-4bb5-a459-a184a8c9f364
 langcode: en
-status: false
+status: true
 dependencies: {  }
 id: dev
 label: Dev
@@ -10,7 +10,10 @@ stackable: false
 no_patching: false
 storage: folder
 folder: ../config/splits/dev
-module: {  }
+module:
+  dblog: 0
+  field_ui: 0
+  views_ui: 0
 theme: {  }
 complete_list: {  }
 partial_list: {  }
