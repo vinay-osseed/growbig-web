@@ -83,7 +83,7 @@ final class SiteController extends ControllerBase {
       'name' => $site_name,
       'shortName' => $short_name,
       'domains' => [
-        'primary' => $this->getLinkUri($profile, 'field_admin_domain'),
+        'primary' => $this->getLinkUri($profile, 'field_primary_domain'),
         'ui' => $this->getLinkUri($profile, 'field_ui_domain'),
         'admin' => $this->getLinkUri($profile, 'field_admin_domain'),
         'api' => $this->getLinkUri($profile, 'field_api_domain'),

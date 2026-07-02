@@ -16,6 +16,7 @@ dependencies:
     - field.field.node.site_profile.field_is_active
     - field.field.node.site_profile.field_is_default
     - field.field.node.site_profile.field_logo
+    - field.field.node.site_profile.field_primary_domain
     - field.field.node.site_profile.field_site_key
     - field.field.node.site_profile.field_site_short_name
     - field.field.node.site_profile.field_theme_color
@@ -35,7 +36,7 @@ content:
       link_to_entity: false
       link_rel: canonical
     third_party_settings: {  }
-    weight: 104
+    weight: 122
     region: content
   field_api_domain:
     type: string
@@ -44,7 +45,7 @@ content:
       link_to_entity: false
       link_rel: canonical
     third_party_settings: {  }
-    weight: 105
+    weight: 123
     region: content
   field_contact_address:
     type: string
@@ -53,7 +54,7 @@ content:
       link_to_entity: false
       link_rel: canonical
     third_party_settings: {  }
-    weight: 111
+    weight: 129
     region: content
   field_contact_email:
     type: string
@@ -62,7 +63,7 @@ content:
       link_to_entity: false
       link_rel: canonical
     third_party_settings: {  }
-    weight: 109
+    weight: 127
     region: content
   field_contact_phone:
     type: string
@@ -71,7 +72,7 @@ content:
       link_to_entity: false
       link_rel: canonical
     third_party_settings: {  }
-    weight: 110
+    weight: 128
     region: content
   field_default_meta_description:
     type: string
@@ -80,7 +81,7 @@ content:
       link_to_entity: false
       link_rel: canonical
     third_party_settings: {  }
-    weight: 114
+    weight: 132
     region: content
   field_default_meta_title:
     type: string
@@ -89,7 +90,7 @@ content:
       link_to_entity: false
       link_rel: canonical
     third_party_settings: {  }
-    weight: 113
+    weight: 131
     region: content
   field_default_social_image:
     type: string
@@ -98,7 +99,7 @@ content:
       link_to_entity: false
       link_rel: canonical
     third_party_settings: {  }
-    weight: 108
+    weight: 126
     region: content
   field_favicon:
     type: string
@@ -107,7 +108,7 @@ content:
       link_to_entity: false
       link_rel: canonical
     third_party_settings: {  }
-    weight: 107
+    weight: 125
     region: content
   field_footer_copyright:
     type: string
@@ -116,7 +117,7 @@ content:
       link_to_entity: false
       link_rel: canonical
     third_party_settings: {  }
-    weight: 112
+    weight: 130
     region: content
   field_is_active:
     type: string
@@ -125,7 +126,7 @@ content:
       link_to_entity: false
       link_rel: canonical
     third_party_settings: {  }
-    weight: 117
+    weight: 135
     region: content
   field_is_default:
     type: string
@@ -134,7 +135,7 @@ content:
       link_to_entity: false
       link_rel: canonical
     third_party_settings: {  }
-    weight: 116
+    weight: 134
     region: content
   field_logo:
     type: string
@@ -143,7 +144,16 @@ content:
       link_to_entity: false
       link_rel: canonical
     third_party_settings: {  }
-    weight: 106
+    weight: 124
+    region: content
+  field_primary_domain:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 120
     region: content
   field_site_key:
     type: string
@@ -152,7 +162,7 @@ content:
       link_to_entity: false
       link_rel: canonical
     third_party_settings: {  }
-    weight: 101
+    weight: 118
     region: content
   field_site_short_name:
     type: string
@@ -161,7 +171,7 @@ content:
       link_to_entity: false
       link_rel: canonical
     third_party_settings: {  }
-    weight: 102
+    weight: 119
     region: content
   field_theme_color:
     type: string
@@ -170,7 +180,7 @@ content:
       link_to_entity: false
       link_rel: canonical
     third_party_settings: {  }
-    weight: 115
+    weight: 133
     region: content
   field_ui_domain:
     type: string
@@ -179,7 +189,7 @@ content:
       link_to_entity: false
       link_rel: canonical
     third_party_settings: {  }
-    weight: 103
+    weight: 121
     region: content
   links:
     settings: {  }

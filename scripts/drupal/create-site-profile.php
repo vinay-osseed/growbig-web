@@ -70,6 +70,11 @@ $create_field = static function (
   }
 };
 
+$link_settings = [
+  'link_type' => 17,
+  'title' => 0,
+];
+
 $create_field('field_site_key', 'Site key', 'string', [
   'max_length' => 64,
 ], [], TRUE);
@@ -78,20 +83,10 @@ $create_field('field_site_short_name', 'Short name', 'string', [
   'max_length' => 255,
 ]);
 
-$create_field('field_ui_domain', 'UI domain', 'link', [], [
-  'link_type' => 17,
-  'title' => 0,
-]);
-
-$create_field('field_admin_domain', 'Admin domain', 'link', [], [
-  'link_type' => 17,
-  'title' => 0,
-]);
-
-$create_field('field_api_domain', 'API domain', 'link', [], [
-  'link_type' => 17,
-  'title' => 0,
-]);
+$create_field('field_primary_domain', 'Primary domain', 'link', [], $link_settings);
+$create_field('field_ui_domain', 'UI domain', 'link', [], $link_settings);
+$create_field('field_admin_domain', 'Admin domain', 'link', [], $link_settings);
+$create_field('field_api_domain', 'API domain', 'link', [], $link_settings);
 
 $media_storage_settings = [
   'target_type' => 'media',
@@ -149,14 +144,18 @@ $form_display = EntityFormDisplay::load("node.{$bundle}.default")
 $form_display
   ->setComponent('title', [
     'type' => 'string_textfield',
-    'weight' => -20,
+    'weight' => -21,
   ])
   ->setComponent('field_site_key', [
     'type' => 'string_textfield',
-    'weight' => -19,
+    'weight' => -20,
   ])
   ->setComponent('field_site_short_name', [
     'type' => 'string_textfield',
+    'weight' => -19,
+  ])
+  ->setComponent('field_primary_domain', [
+    'type' => 'link_default',
     'weight' => -18,
   ])
   ->setComponent('field_ui_domain', [
@@ -237,6 +236,7 @@ $view_display = EntityViewDisplay::load("node.{$bundle}.default")
 foreach ([
   'field_site_key',
   'field_site_short_name',
+  'field_primary_domain',
   'field_ui_domain',
   'field_admin_domain',
   'field_api_domain',
