@@ -1,0 +1,316 @@
+openapi: 3.0.3
+
+info:
+  title: GrowBig Site Platform API
+  version: 0.1.0
+  description: Clean frontend API for the reusable Drupal-backed website platform.
+
+servers:
+  - url: https://growbig-web.ddev.site
+    description: Local DDEV
+
+tags:
+  - name: Site
+    description: Global site profile and branding data
+
+paths:
+  /api/v1/site:
+    get:
+      tags:
+        - Site
+      summary: Get active site profile
+      description: Returns the active site profile, domains, branding, SEO defaults, theme values, contact info, and media references.
+      operationId: getSiteProfile
+      responses:
+        '200':
+          description: Active site profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteProfile'
+              example:
+                id: growbig
+                type: site
+                name: GrowBig Technologies LLP
+                shortName: GrowBig
+                domains:
+                  primary: https://growbig-web.ddev.site
+                  ui: https://ui.growbig-web.ddev.site
+                  admin: https://admin.growbig-web.ddev.site
+                  api: https://api.growbig-web.ddev.site
+                branding:
+                  logo:
+                    id: 24234e4e-3c3b-4241-aa62-a7d78c696e71
+                    type: image
+                    title: Horizontal GB LLP Logo.png
+                    alt: Horizontal GrowBig Logo
+                    url: https://growbig-web.ddev.site/sites/default/files/example.png
+                    mime: image/png
+                    width: 748
+                    height: 238
+                    styles:
+                      thumbnail: https://growbig-web.ddev.site/sites/default/files/styles/api_thumbnail/public/example.png
+                      card: https://growbig-web.ddev.site/sites/default/files/styles/api_card/public/example.png
+                      heroMobile: https://growbig-web.ddev.site/sites/default/files/styles/api_hero_mobile/public/example.png
+                      heroDesktop: https://growbig-web.ddev.site/sites/default/files/styles/api_hero_desktop/public/example.png
+                      social: https://growbig-web.ddev.site/sites/default/files/styles/api_social/public/example.png
+                      logo: https://growbig-web.ddev.site/sites/default/files/styles/api_logo/public/example.png
+                  favicon: null
+                  defaultImage: null
+                contact:
+                  email: vinay@osseed.com
+                  phone: ''
+                  address: ''
+                seo:
+                  title: GrowBig Technologies LLP
+                  description: ''
+                  image: null
+                social: []
+                theme:
+                  color: '#0f172a'
+                meta:
+                  source: site_profile
+                  nodeId: 1
+                  isDefault: true
+                  isActive: true
+
+components:
+  schemas:
+    SiteProfile:
+      type: object
+      required:
+        - id
+        - type
+        - name
+        - shortName
+        - domains
+        - branding
+        - contact
+        - seo
+        - social
+        - theme
+        - meta
+      properties:
+        id:
+          type: string
+          example: growbig
+        type:
+          type: string
+          example: site
+        name:
+          type: string
+          example: GrowBig Technologies LLP
+        shortName:
+          type: string
+          example: GrowBig
+        domains:
+          $ref: '#/components/schemas/SiteDomains'
+        branding:
+          $ref: '#/components/schemas/SiteBranding'
+        contact:
+          $ref: '#/components/schemas/SiteContact'
+        seo:
+          $ref: '#/components/schemas/SiteSeo'
+        social:
+          type: array
+          items:
+            $ref: '#/components/schemas/SocialLink'
+        theme:
+          $ref: '#/components/schemas/SiteTheme'
+        meta:
+          $ref: '#/components/schemas/SiteMeta'
+
+    SiteDomains:
+      type: object
+      required:
+        - primary
+        - ui
+        - admin
+        - api
+      properties:
+        primary:
+          type: string
+          format: uri
+          example: https://growbig-web.ddev.site
+        ui:
+          type: string
+          format: uri
+          example: https://ui.growbig-web.ddev.site
+        admin:
+          type: string
+          format: uri
+          example: https://admin.growbig-web.ddev.site
+        api:
+          type: string
+          format: uri
+          example: https://api.growbig-web.ddev.site
+
+    SiteBranding:
+      type: object
+      required:
+        - logo
+        - favicon
+        - defaultImage
+      properties:
+        logo:
+          oneOf:
+            - $ref: '#/components/schemas/MediaImage'
+            - type: 'null'
+        favicon:
+          oneOf:
+            - $ref: '#/components/schemas/MediaImage'
+            - type: 'null'
+        defaultImage:
+          oneOf:
+            - $ref: '#/components/schemas/MediaImage'
+            - type: 'null'
+
+    SiteContact:
+      type: object
+      required:
+        - email
+        - phone
+        - address
+      properties:
+        email:
+          type: string
+          format: email
+          example: vinay@osseed.com
+        phone:
+          type: string
+          example: ''
+        address:
+          type: string
+          example: ''
+
+    SiteSeo:
+      type: object
+      required:
+        - title
+        - description
+        - image
+      properties:
+        title:
+          type: string
+          example: GrowBig Technologies LLP
+        description:
+          type: string
+          example: ''
+        image:
+          oneOf:
+            - $ref: '#/components/schemas/MediaImage'
+            - type: 'null'
+
+    SiteTheme:
+      type: object
+      required:
+        - color
+      properties:
+        color:
+          type: string
+          example: '#0f172a'
+
+    SiteMeta:
+      type: object
+      required:
+        - source
+        - nodeId
+        - isDefault
+        - isActive
+      properties:
+        source:
+          type: string
+          example: site_profile
+        nodeId:
+          type: integer
+          example: 1
+        isDefault:
+          type: boolean
+          example: true
+        isActive:
+          type: boolean
+          example: true
+
+    MediaImage:
+      type: object
+      required:
+        - id
+        - type
+        - title
+        - alt
+        - url
+        - mime
+        - width
+        - height
+        - styles
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 24234e4e-3c3b-4241-aa62-a7d78c696e71
+        type:
+          type: string
+          example: image
+        title:
+          type: string
+          example: Horizontal GB LLP Logo.png
+        alt:
+          type: string
+          example: Horizontal GrowBig Logo
+        url:
+          type: string
+          format: uri
+          example: https://growbig-web.ddev.site/sites/default/files/example.png
+        mime:
+          type: string
+          example: image/png
+        width:
+          type: integer
+          example: 748
+        height:
+          type: integer
+          example: 238
+        styles:
+          $ref: '#/components/schemas/ImageStyles'
+
+    ImageStyles:
+      type: object
+      properties:
+        thumbnail:
+          type: string
+          format: uri
+        card:
+          type: string
+          format: uri
+        heroMobile:
+          type: string
+          format: uri
+        heroDesktop:
+          type: string
+          format: uri
+        social:
+          type: string
+          format: uri
+        logo:
+          type: string
+          format: uri
+        wide:
+          type: string
+          format: uri
+        large:
+          type: string
+          format: uri
+        medium:
+          type: string
+          format: uri
+
+    SocialLink:
+      type: object
+      properties:
+        label:
+          type: string
+          example: LinkedIn
+        url:
+          type: string
+          format: uri
+          example: https://www.linkedin.com/company/example
