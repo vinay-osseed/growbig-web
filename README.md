@@ -19,6 +19,7 @@ ddev drush status
 - `docs/config-management.md`
 - `docs/deployment-flow.md`
 - `docs/deployment-checklist.md`
+- `docs/git-workflow.md`
 - `docs/local-setup.md`
 - `docs/recipe-usage.md`
 
