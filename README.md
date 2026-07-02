@@ -23,6 +23,7 @@ ddev drush status
 - `docs/git-workflow.md`
 - `docs/local-setup.md`
 - `docs/media-api.md`
+- `docs/site-profile.md`
 - `docs/frontend-api.md`
 - `docs/recipe-usage.md`
 
