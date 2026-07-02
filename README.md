@@ -18,6 +18,7 @@ ddev drush status
 - `docs/content-model.md`
 - `docs/config-management.md`
 - `docs/deployment-flow.md`
+- `docs/deployment-checklist.md`
 - `docs/local-setup.md`
 - `docs/recipe-usage.md`
 
