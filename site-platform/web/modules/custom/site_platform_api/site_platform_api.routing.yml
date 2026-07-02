@@ -1,0 +1,9 @@
+site_platform_api.site:
+  path: '/api/v1/site'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\SiteController::site'
+    _title: 'Site profile'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE

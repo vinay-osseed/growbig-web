@@ -1,0 +1,7 @@
+name: 'Site Platform API'
+type: module
+description: 'Provides clean frontend API endpoints for Site Platform.'
+package: Site Platform
+core_version_requirement: ^10 || ^11
+dependencies:
+  - serialization:serialization
