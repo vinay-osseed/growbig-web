@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: GrowBig Site Platform API
   description: Frontend-ready API documentation for the reusable GrowBig Site Platform Drupal backend.
-  version: 0.1.0
+  version: 0.2.0
 
 servers:
   - url: https://growbig-web.ddev.site
@@ -13,6 +13,8 @@ servers:
 tags:
   - name: Site
     description: Global site profile, branding, contact, SEO, social, and footer settings.
+  - name: Pages
+    description: Reusable frontend pages composed from structured sections.
 
 paths:
   /api/v1/site:
@@ -29,59 +31,84 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SiteProfile'
+
+  /api/v1/pages/{slug}:
+    get:
+      tags:
+        - Pages
+      summary: Get page by slug
+      description: Returns a published Site Page by page key, including SEO data and structured sections.
+      operationId: getSitePage
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: Page key.
+          schema:
+            type: string
+            example: home
+      responses:
+        '200':
+          description: Site Page response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SitePage'
               examples:
-                growbig:
-                  summary: GrowBig local site profile
+                home:
+                  summary: Home page
                   value:
-                    id: growbig
-                    type: site
-                    name: GrowBig Technologies LLP
-                    shortName: GrowBig
-                    tagline: Building digital excellence for startups and enterprises across India and beyond.
-                    description: GrowBig Technologies LLP delivers modern websites, mobile applications, cloud solutions, digital transformation, AI-powered software, branding, and technology consulting for startups and enterprises.
-                    domains:
-                      primary: https://growbig-web.ddev.site
-                      ui: https://ui.growbig-web.ddev.site
-                      admin: https://admin.growbig-web.ddev.site
-                      api: https://api.growbig-web.ddev.site
-                      website: https://growbig-web.ddev.site
-                    contact:
-                      email: hello@growbigtech.in
-                      phone: '+91 00000 00000'
-                      alternatePhone: '+91 98765 43210'
-                      address: Narayan Arcade, 1st Floor Above Axis Bank Near ST Stand, Sawantwadi
-                      city: Sawantwadi
-                      state: Maharashtra
-                      country: India
-                      postalCode: ''
-                      workingHours: "Mon - Sat: 9:00 AM - 7:00 PM\nSunday: Closed"
-                      map:
-                        url: https://maps.google.com/?q=Sawantwadi,Maharashtra,India
-                        latitude: 15.9046
-                        longitude: 73.8213
-                    social:
-                      - platform: Facebook
-                        url: https://www.facebook.com/
-                        icon: facebook
-                        order: 10
-                      - platform: LinkedIn
-                        url: https://www.linkedin.com/
-                        icon: linkedin
-                        order: 20
-                    theme:
-                      color: '#0f172a'
-                    footer:
-                      description: Building digital excellence for startups and enterprises across India and beyond.
-                      copyright: © 2026 GrowBig Technologies LLP. All Rights Reserved.
-                      menus:
-                        main: main
-                        quickLinks: footer
-                        services: footer-services
+                    id: 2
+                    type: page
+                    title: Home
+                    slug: home
+                    pageType: home
+                    summary: GrowBig homepage composed from reusable sections.
+                    sites:
+                      - id: 1
+                        key: growbig
+                        name: GrowBig Technologies LLP
+                    seo:
+                      title: GrowBig Technologies LLP | Digital Solutions That Drive Business Growth
+                      description: GrowBig Technologies LLP delivers websites, mobile apps, custom software, cloud solutions, and digital consulting.
+                      keywords: ''
+                      canonicalUrl: ''
+                      openGraph:
+                        title: GrowBig Technologies LLP
+                        description: Building digital solutions that drive business growth.
+                        image: null
+                      robots: index_follow
+                    sections:
+                      - id: 5
+                        type: hero
+                        badge: Premium IT Solutions - Est. 2020
+                        heading: Building Digital Solutions That Drive Business Growth
+                        highlightText: Solutions
+                        description: GrowBig Technologies LLP delivers modern websites, mobile applications, cloud solutions, digital transformation, AI-powered software, branding, and technology consulting for startups and enterprises.
+                        primaryButton:
+                          text: Start Your Project
+                          url: internal:/contact
+                        secondaryButton:
+                          text: View Services
+                          url: internal:/services
+                        image: null
+                        imageAltText: ''
+                        layoutVariant: split_image_right
+                        backgroundStyle: dark_grid
                     meta:
-                      source: site_profile
-                      nodeId: 1
-                      isDefault: true
-                      isActive: true
+                      status: true
+                      created: 1783455604
+                      changed: 1783455604
+        '404':
+          description: Page not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+              example:
+                error:
+                  code: not_found
+                  message: Page not found.
 
 components:
   schemas:
@@ -115,10 +142,8 @@ components:
           example: GrowBig
         tagline:
           type: string
-          example: Building digital excellence for startups and enterprises across India and beyond.
         description:
           type: string
-          example: GrowBig Technologies LLP delivers modern websites, mobile applications, cloud solutions, digital transformation, AI-powered software, branding, and technology consulting for startups and enterprises.
         domains:
           $ref: '#/components/schemas/SiteDomains'
         branding:
@@ -144,23 +169,18 @@ components:
         primary:
           type: string
           format: uri
-          example: https://growbig-web.ddev.site
         ui:
           type: string
           format: uri
-          example: https://ui.growbig-web.ddev.site
         admin:
           type: string
           format: uri
-          example: https://admin.growbig-web.ddev.site
         api:
           type: string
           format: uri
-          example: https://api.growbig-web.ddev.site
         website:
           type: string
           format: uri
-          example: https://growbig-web.ddev.site
 
     SiteBranding:
       type: object
@@ -183,32 +203,22 @@ components:
       properties:
         email:
           type: string
-          format: email
-          example: hello@growbigtech.in
         phone:
           type: string
-          example: '+91 00000 00000'
         alternatePhone:
           type: string
-          example: '+91 98765 43210'
         address:
           type: string
-          example: Narayan Arcade, 1st Floor Above Axis Bank Near ST Stand, Sawantwadi
         city:
           type: string
-          example: Sawantwadi
         state:
           type: string
-          example: Maharashtra
         country:
           type: string
-          example: India
         postalCode:
           type: string
-          example: ''
         workingHours:
           type: string
-          example: "Mon - Sat: 9:00 AM - 7:00 PM\nSunday: Closed"
         map:
           $ref: '#/components/schemas/SiteMap'
 
@@ -217,28 +227,20 @@ components:
       properties:
         url:
           type: string
-          format: uri
-          example: https://maps.google.com/?q=Sawantwadi,Maharashtra,India
         latitude:
           type: number
           nullable: true
-          format: float
-          example: 15.9046
         longitude:
           type: number
           nullable: true
-          format: float
-          example: 73.8213
 
     SiteSeo:
       type: object
       properties:
         title:
           type: string
-          example: GrowBig Technologies LLP
         description:
           type: string
-          example: GrowBig Technologies LLP delivers websites, mobile apps, software, cloud solutions, and digital consulting for growing businesses.
         image:
           nullable: true
           allOf:
@@ -249,34 +251,26 @@ components:
       properties:
         platform:
           type: string
-          example: LinkedIn
         url:
           type: string
-          format: uri
-          example: https://www.linkedin.com/
         icon:
           type: string
-          example: linkedin
         order:
           type: integer
-          example: 20
 
     SiteTheme:
       type: object
       properties:
         color:
           type: string
-          example: '#0f172a'
 
     SiteFooter:
       type: object
       properties:
         description:
           type: string
-          example: Building digital excellence for startups and enterprises across India and beyond.
         copyright:
           type: string
-          example: © 2026 GrowBig Technologies LLP. All Rights Reserved.
         menus:
           $ref: '#/components/schemas/SiteFooterMenus'
 
@@ -285,33 +279,336 @@ components:
       properties:
         main:
           type: string
-          example: main
         quickLinks:
           type: string
-          example: footer
         services:
           type: string
-          example: footer-services
 
     SiteMeta:
       type: object
       properties:
         source:
           type: string
-          enum:
-            - site_profile
-            - fallback
-          example: site_profile
         nodeId:
           type: integer
           nullable: true
-          example: 1
         isDefault:
           type: boolean
-          example: true
         isActive:
           type: boolean
-          example: true
+
+    SitePage:
+      type: object
+      required:
+        - id
+        - uuid
+        - type
+        - title
+        - slug
+        - pageType
+        - summary
+        - sites
+        - seo
+        - sections
+        - meta
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+          format: uuid
+        type:
+          type: string
+          example: page
+        title:
+          type: string
+        slug:
+          type: string
+          example: home
+        pageType:
+          type: string
+          example: home
+        summary:
+          type: string
+        sites:
+          type: array
+          items:
+            $ref: '#/components/schemas/PageSiteReference'
+        seo:
+          $ref: '#/components/schemas/PageSeo'
+        sections:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/HeroSection'
+              - $ref: '#/components/schemas/StatsSection'
+              - $ref: '#/components/schemas/CardGridSection'
+              - $ref: '#/components/schemas/CtaSection'
+              - $ref: '#/components/schemas/ImageTextSection'
+              - $ref: '#/components/schemas/ContentListSection'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+
+    PageSiteReference:
+      type: object
+      properties:
+        id:
+          type: integer
+        key:
+          type: string
+        name:
+          type: string
+
+    PageSeo:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        keywords:
+          type: string
+        canonicalUrl:
+          type: string
+        openGraph:
+          $ref: '#/components/schemas/PageOpenGraph'
+        robots:
+          type: string
+
+    PageOpenGraph:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        image:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/MediaImage'
+
+    HeroSection:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: hero
+        badge:
+          type: string
+        heading:
+          type: string
+        highlightText:
+          type: string
+        description:
+          type: string
+        primaryButton:
+          $ref: '#/components/schemas/Button'
+        secondaryButton:
+          $ref: '#/components/schemas/Button'
+        image:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/MediaImage'
+        imageAltText:
+          type: string
+        layoutVariant:
+          type: string
+        backgroundStyle:
+          type: string
+
+    StatsSection:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: stats
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatsItem'
+
+    StatsItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: stat
+        title:
+          type: string
+        count:
+          type: integer
+        prefix:
+          type: string
+        suffix:
+          type: string
+        icon:
+          type: string
+        order:
+          type: integer
+
+    CardGridSection:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: cardGrid
+        badge:
+          type: string
+        heading:
+          type: string
+        description:
+          type: string
+        cards:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardItem'
+        primaryButton:
+          $ref: '#/components/schemas/Button'
+        secondaryButton:
+          $ref: '#/components/schemas/Button'
+        layoutVariant:
+          type: string
+
+    CardItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: card
+        title:
+          type: string
+        description:
+          type: string
+        icon:
+          type: string
+        image:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/MediaImage'
+        accentColor:
+          type: string
+        link:
+          $ref: '#/components/schemas/Button'
+        order:
+          type: integer
+        isActive:
+          type: boolean
+
+    CtaSection:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: cta
+        badge:
+          type: string
+        heading:
+          type: string
+        description:
+          type: string
+        primaryButton:
+          $ref: '#/components/schemas/Button'
+        secondaryButton:
+          $ref: '#/components/schemas/Button'
+        layoutVariant:
+          type: string
+        backgroundStyle:
+          type: string
+
+    ImageTextSection:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: imageText
+        badge:
+          type: string
+        heading:
+          type: string
+        description:
+          type: string
+        image:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/MediaImage'
+        imagePosition:
+          type: string
+        primaryButton:
+          $ref: '#/components/schemas/Button'
+        secondaryButton:
+          $ref: '#/components/schemas/Button'
+        layoutVariant:
+          type: string
+
+    ContentListSection:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: contentList
+        badge:
+          type: string
+        heading:
+          type: string
+        description:
+          type: string
+        source:
+          type: string
+        limit:
+          type: integer
+        featuredOnly:
+          type: boolean
+        primaryButton:
+          $ref: '#/components/schemas/Button'
+        secondaryButton:
+          $ref: '#/components/schemas/Button'
+        layoutVariant:
+          type: string
+
+    Button:
+      type: object
+      properties:
+        text:
+          type: string
+        url:
+          type: string
+
+    PageMeta:
+      type: object
+      properties:
+        status:
+          type: boolean
+        created:
+          type: integer
+        changed:
+          type: integer
+
+    ApiError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
 
     MediaImage:
       type: object
@@ -320,29 +617,20 @@ components:
         id:
           type: string
           format: uuid
-          example: 517cb81d-3fc1-492a-b0d6-4ec23c616a31
         type:
           type: string
-          example: image
         title:
           type: string
-          example: logo.png
         alt:
           type: string
-          example: GrowBig Logo
         url:
           type: string
-          format: uri
-          example: https://growbig-web.ddev.site/sites/default/files/2026-07/logo.png
         mime:
           type: string
-          example: image/png
         width:
           type: string
-          example: '1024'
         height:
           type: string
-          example: '614'
         styles:
           $ref: '#/components/schemas/ImageStyles'
 
@@ -351,28 +639,19 @@ components:
       properties:
         thumbnail:
           type: string
-          format: uri
         card:
           type: string
-          format: uri
         heroMobile:
           type: string
-          format: uri
         heroDesktop:
           type: string
-          format: uri
         social:
           type: string
-          format: uri
         logo:
           type: string
-          format: uri
         wide:
           type: string
-          format: uri
         large:
           type: string
-          format: uri
         medium:
           type: string
-          format: uri
