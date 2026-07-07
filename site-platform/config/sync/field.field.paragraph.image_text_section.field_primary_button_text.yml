@@ -1,0 +1,19 @@
+uuid: 8de8d435-ad05-4363-b8fc-500e927368d5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_primary_button_text
+    - paragraphs.paragraphs_type.image_text_section
+id: paragraph.image_text_section.field_primary_button_text
+field_name: field_primary_button_text
+entity_type: paragraph
+bundle: image_text_section
+label: 'Primary button text'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

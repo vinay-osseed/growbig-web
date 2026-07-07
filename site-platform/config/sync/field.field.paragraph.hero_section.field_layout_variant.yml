@@ -1,0 +1,21 @@
+uuid: de99136d-f3de-4d1f-a014-d1f88f7af016
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_layout_variant
+    - paragraphs.paragraphs_type.hero_section
+  module:
+    - options
+id: paragraph.hero_section.field_layout_variant
+field_name: field_layout_variant
+entity_type: paragraph
+bundle: hero_section
+label: 'Layout variant'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

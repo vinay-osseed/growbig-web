@@ -1,0 +1,23 @@
+uuid: 93f3d396-8481-4ffd-a31a-3729824f3217
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_display_order
+    - paragraphs.paragraphs_type.card_item
+id: paragraph.card_item.field_display_order
+field_name: field_display_order
+entity_type: paragraph
+bundle: card_item
+label: 'Display order'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

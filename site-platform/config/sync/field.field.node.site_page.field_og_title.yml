@@ -1,0 +1,19 @@
+uuid: 00ccff8b-93d3-4728-9471-473207fca7a3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_og_title
+    - node.type.site_page
+id: node.site_page.field_og_title
+field_name: field_og_title
+entity_type: node
+bundle: site_page
+label: 'Open Graph title'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
