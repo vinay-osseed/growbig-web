@@ -1,0 +1,20 @@
+uuid: c39fe6d9-098a-4a84-a2fe-0a8526eb1b10
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_map_latitude
+field_name: field_map_latitude
+entity_type: node
+type: decimal
+settings:
+  precision: 10
+  scale: 7
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

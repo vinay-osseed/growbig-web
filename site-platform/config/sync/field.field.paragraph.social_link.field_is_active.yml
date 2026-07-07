@@ -1,0 +1,21 @@
+uuid: 5a0a8ba8-0ad4-40a2-b42a-8f0d68ee098a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_is_active
+    - paragraphs.paragraphs_type.social_link
+id: paragraph.social_link.field_is_active
+field_name: field_is_active
+entity_type: paragraph
+bundle: social_link
+label: 'Is active'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

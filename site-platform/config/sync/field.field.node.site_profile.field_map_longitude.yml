@@ -1,0 +1,23 @@
+uuid: 6d985982-5ee6-442c-b3ab-a178d127d606
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_map_longitude
+    - node.type.site_profile
+id: node.site_profile.field_map_longitude
+field_name: field_map_longitude
+entity_type: node
+bundle: site_profile
+label: 'Map longitude'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

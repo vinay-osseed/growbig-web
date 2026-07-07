@@ -1,0 +1,23 @@
+uuid: 46a4d794-babd-4a00-ba30-9b0e2785a503
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_map_latitude
+    - node.type.site_profile
+id: node.site_profile.field_map_latitude
+field_name: field_map_latitude
+entity_type: node
+bundle: site_profile
+label: 'Map latitude'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

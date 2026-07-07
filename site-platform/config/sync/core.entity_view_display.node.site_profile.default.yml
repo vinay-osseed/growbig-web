@@ -4,25 +4,43 @@ status: true
 dependencies:
   config:
     - field.field.node.site_profile.field_admin_domain
+    - field.field.node.site_profile.field_alternate_phone
     - field.field.node.site_profile.field_api_domain
+    - field.field.node.site_profile.field_city
     - field.field.node.site_profile.field_contact_address
     - field.field.node.site_profile.field_contact_email
     - field.field.node.site_profile.field_contact_phone
+    - field.field.node.site_profile.field_country
     - field.field.node.site_profile.field_default_meta_description
     - field.field.node.site_profile.field_default_meta_title
     - field.field.node.site_profile.field_default_social_image
+    - field.field.node.site_profile.field_description
     - field.field.node.site_profile.field_favicon
     - field.field.node.site_profile.field_footer_copyright
+    - field.field.node.site_profile.field_footer_description
+    - field.field.node.site_profile.field_footer_quick_links_menu
+    - field.field.node.site_profile.field_footer_services_menu
+    - field.field.node.site_profile.field_google_map_link
     - field.field.node.site_profile.field_is_active
     - field.field.node.site_profile.field_is_default
     - field.field.node.site_profile.field_logo
+    - field.field.node.site_profile.field_main_menu
+    - field.field.node.site_profile.field_map_latitude
+    - field.field.node.site_profile.field_map_longitude
+    - field.field.node.site_profile.field_postal_code
     - field.field.node.site_profile.field_primary_domain
     - field.field.node.site_profile.field_site_key
     - field.field.node.site_profile.field_site_short_name
+    - field.field.node.site_profile.field_social_links
+    - field.field.node.site_profile.field_state
+    - field.field.node.site_profile.field_tagline
     - field.field.node.site_profile.field_theme_color
     - field.field.node.site_profile.field_ui_domain
+    - field.field.node.site_profile.field_website
+    - field.field.node.site_profile.field_working_hours
     - node.type.site_profile
   module:
+    - entity_reference_revisions
     - user
 id: node.site_profile.default
 targetEntityType: node
@@ -38,6 +56,15 @@ content:
     third_party_settings: {  }
     weight: 122
     region: content
+  field_alternate_phone:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 138
+    region: content
   field_api_domain:
     type: string
     label: above
@@ -46,6 +73,15 @@ content:
       link_rel: canonical
     third_party_settings: {  }
     weight: 123
+    region: content
+  field_city:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 140
     region: content
   field_contact_address:
     type: string
@@ -74,6 +110,15 @@ content:
     third_party_settings: {  }
     weight: 128
     region: content
+  field_country:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 142
+    region: content
   field_default_meta_description:
     type: string
     label: above
@@ -101,6 +146,15 @@ content:
     third_party_settings: {  }
     weight: 126
     region: content
+  field_description:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 137
+    region: content
   field_favicon:
     type: string
     label: above
@@ -118,6 +172,42 @@ content:
       link_rel: canonical
     third_party_settings: {  }
     weight: 130
+    region: content
+  field_footer_description:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 148
+    region: content
+  field_footer_quick_links_menu:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 150
+    region: content
+  field_footer_services_menu:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 151
+    region: content
+  field_google_map_link:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 145
     region: content
   field_is_active:
     type: string
@@ -146,6 +236,42 @@ content:
     third_party_settings: {  }
     weight: 124
     region: content
+  field_main_menu:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 149
+    region: content
+  field_map_latitude:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 146
+    region: content
+  field_map_longitude:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 147
+    region: content
+  field_postal_code:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 143
+    region: content
   field_primary_domain:
     type: string
     label: above
@@ -173,6 +299,33 @@ content:
     third_party_settings: {  }
     weight: 119
     region: content
+  field_social_links:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 152
+    region: content
+  field_state:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 141
+    region: content
+  field_tagline:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 136
+    region: content
   field_theme_color:
     type: string
     label: above
@@ -190,6 +343,24 @@ content:
       link_rel: canonical
     third_party_settings: {  }
     weight: 121
+    region: content
+  field_website:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 139
+    region: content
+  field_working_hours:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 144
     region: content
   links:
     settings: {  }
