@@ -4,3 +4,8 @@ services:
     arguments:
       - '@entity_type.manager'
       - '@file_url_generator'
+
+  site_platform_api.page_normalizer:
+    class: Drupal\site_platform_api\SitePlatformPageNormalizer
+    arguments:
+      - '@site_platform_api.media_normalizer'
