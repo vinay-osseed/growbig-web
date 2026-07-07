@@ -44,6 +44,7 @@ module:
   responsive_image: 0
   rest: 0
   serialization: 0
+  site_platform_admin: 0
   site_platform_api: 0
   system: 0
   taxonomy: 0
