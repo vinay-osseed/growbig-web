@@ -1,0 +1,66 @@
+uuid: 823d8fdc-24e5-4132-ba62-40adbf56e965
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stats_item.field_count
+    - field.field.paragraph.stats_item.field_display_order
+    - field.field.paragraph.stats_item.field_icon
+    - field.field.paragraph.stats_item.field_prefix
+    - field.field.paragraph.stats_item.field_suffix
+    - field.field.paragraph.stats_item.field_title
+    - paragraphs.paragraphs_type.stats_item
+id: paragraph.stats_item.default
+targetEntityType: paragraph
+bundle: stats_item
+mode: default
+content:
+  field_count:
+    type: number
+    weight: 1
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_display_order:
+    type: number
+    weight: 5
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_icon:
+    type: string_textfield
+    weight: 4
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_prefix:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_suffix:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

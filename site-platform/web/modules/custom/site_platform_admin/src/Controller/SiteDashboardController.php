@@ -53,9 +53,13 @@ final class SiteDashboardController extends ControllerBase {
       ],
       [
         'title' => 'Pages',
-        'description' => 'Reusable pages with editable frontend sections. This will be added in the next content model phase.',
-        'url' => NULL,
-        'status' => 'Coming Soon',
+        'description' => 'Create and edit reusable frontend pages with structured sections.',
+        'url' => Url::fromUri('internal:/admin/content', [
+          'query' => [
+            'type' => 'site_page',
+          ],
+        ]),
+        'status' => 'Ready',
       ],
       [
         'title' => 'Services',

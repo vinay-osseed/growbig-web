@@ -1,0 +1,29 @@
+uuid: 4ad5ef77-63f7-4df7-8079-1607efba9fb3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stats_section.field_stats_items
+    - paragraphs.paragraphs_type.stats_section
+  module:
+    - paragraphs
+id: paragraph.stats_section.default
+targetEntityType: paragraph
+bundle: stats_section
+mode: default
+content:
+  field_stats_items:
+    type: entity_reference_paragraphs
+    weight: 0
+    region: content
+    settings:
+      title: Section
+      title_plural: Sections
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
