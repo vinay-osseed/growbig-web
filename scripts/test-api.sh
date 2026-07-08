@@ -14,6 +14,55 @@ curl -ks "${BASE_URL}/api/v1/pages/home" | python3 -m json.tool >/dev/null
 echo "Testing About Page API..."
 curl -ks "${BASE_URL}/api/v1/pages/about" | python3 -m json.tool >/dev/null
 
+echo "Validating dynamic page contract..."
+python3 - <<'INNERPY'
+import json
+import os
+import subprocess
+
+base_url = os.environ["BASE_URL"]
+
+def fetch(path):
+    result = subprocess.run(
+        ["curl", "-ks", f"{base_url}{path}"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return json.loads(result.stdout)
+
+home = fetch("/api/v1/pages/home")
+about = fetch("/api/v1/pages/about")
+
+assert home["contractVersion"] == "1.0"
+assert home["slug"] == "home"
+assert home["route"]["path"] == "/"
+assert home["route"]["apiPath"] == "/api/v1/pages/home"
+assert home["api"]["self"] == "/api/v1/pages/home"
+assert len(home["sections"]) == 4
+
+home_section_types = [section["type"] for section in home["sections"]]
+assert "hero" in home_section_types
+assert "stats" in home_section_types
+assert "cardGrid" in home_section_types
+assert "contentList" in home_section_types
+
+assert about["contractVersion"] == "1.0"
+assert about["slug"] == "about"
+assert about["route"]["path"] == "/about"
+assert about["route"]["apiPath"] == "/api/v1/pages/about"
+assert about["api"]["self"] == "/api/v1/pages/about"
+assert len(about["sections"]) == 5
+
+about_section_types = [section["type"] for section in about["sections"]]
+assert "hero" in about_section_types
+assert "cardGrid" in about_section_types
+assert "contentList" in about_section_types
+assert "cta" in about_section_types
+
+print("Dynamic page contract checks passed.")
+INNERPY
+
 echo "Testing missing Page API..."
 STATUS_CODE="$(curl -ks -o /tmp/growbig-missing-page-api.json -w "%{http_code}" "${BASE_URL}/api/v1/pages/missing")"
 

@@ -24,13 +24,24 @@ final class SitePlatformPageNormalizer {
    * Normalizes a Site Page node.
    */
   public function normalize(NodeInterface $page): array {
+    $slug = $this->getFieldValue($page, 'field_page_key');
+    $route_path = $slug === 'home' ? '/' : '/' . trim($slug, '/');
+
     return [
+      'contractVersion' => '1.0',
       'id' => (int) $page->id(),
       'uuid' => $page->uuid(),
       'type' => 'page',
       'title' => $page->label(),
-      'slug' => $this->getFieldValue($page, 'field_page_key'),
+      'slug' => $slug,
       'pageType' => $this->getFieldValue($page, 'field_page_type'),
+      'route' => [
+        'path' => $route_path,
+        'apiPath' => '/api/v1/pages/' . $slug,
+      ],
+      'api' => [
+        'self' => '/api/v1/pages/' . $slug,
+      ],
       'summary' => $this->getFieldValue($page, 'field_summary'),
       'sites' => $this->normalizeSites($page),
       'seo' => [
