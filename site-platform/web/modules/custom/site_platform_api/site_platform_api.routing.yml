@@ -24,3 +24,12 @@ site_platform_api.content:
     _permission: 'access content'
   options:
     no_cache: TRUE
+
+site_platform_api.content_detail:
+  path: '/api/v1/content/{source}/{key}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\ContentController::detail'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE

@@ -16,6 +16,11 @@ use Symfony\Component\HttpFoundation\Request;
 final class ContentController extends ControllerBase {
 
   /**
+   * Supported reusable content sources.
+   */
+  private const SUPPORTED_SOURCES = ['services', 'partners', 'team'];
+
+  /**
    * Constructs a ContentController object.
    */
   public function __construct(
@@ -35,13 +40,8 @@ final class ContentController extends ControllerBase {
    * Returns reusable content by source.
    */
   public function list(string $source, Request $request): JsonResponse {
-    if (!in_array($source, ['services', 'partners', 'team'], TRUE)) {
-      return new JsonResponse([
-        'error' => [
-          'code' => 'invalid_source',
-          'message' => 'Unsupported content source.',
-        ],
-      ], 400);
+    if (!$this->isSupportedSource($source)) {
+      return $this->invalidSourceResponse();
     }
 
     $limit = max(0, (int) $request->query->get('limit', 0));
@@ -59,6 +59,53 @@ final class ContentController extends ControllerBase {
       'count' => count($items),
       'items' => $items,
     ]);
+  }
+
+  /**
+   * Returns one reusable content item by source and key.
+   */
+  public function detail(string $source, string $key): JsonResponse {
+    if (!$this->isSupportedSource($source)) {
+      return $this->invalidSourceResponse();
+    }
+
+    $items = $this->contentListNormalizer->loadItems($source);
+
+    foreach ($items as $item) {
+      if (($item['key'] ?? '') === $key) {
+        return new JsonResponse([
+          'source' => $source,
+          'key' => $key,
+          'item' => $item,
+        ]);
+      }
+    }
+
+    return new JsonResponse([
+      'error' => [
+        'code' => 'not_found',
+        'message' => 'Content item not found.',
+      ],
+    ], 404);
+  }
+
+  /**
+   * Checks if source is supported.
+   */
+  private function isSupportedSource(string $source): bool {
+    return in_array($source, self::SUPPORTED_SOURCES, TRUE);
+  }
+
+  /**
+   * Returns invalid source response.
+   */
+  private function invalidSourceResponse(): JsonResponse {
+    return new JsonResponse([
+      'error' => [
+        'code' => 'invalid_source',
+        'message' => 'Unsupported content source.',
+      ],
+    ], 400);
   }
 
 }

@@ -7,6 +7,7 @@ This module exposes normalized frontend-ready JSON responses under `/api/v1`.
 - `/api/v1/site`
 - `/api/v1/pages/{slug}`
 - `/api/v1/content/{source}`
+- `/api/v1/content/{source}/{key}`
 
 ## Current examples
 
@@ -16,6 +17,9 @@ This module exposes normalized frontend-ready JSON responses under `/api/v1`.
 - `/api/v1/content/services`
 - `/api/v1/content/partners`
 - `/api/v1/content/team`
+- `/api/v1/content/services/website-development`
+- `/api/v1/content/partners/aws`
+- `/api/v1/content/team/founder-ceo`
 
 ## Supported content sources
 
