@@ -67,3 +67,11 @@
   pointer-events: none;
   opacity: .65;
 }
+
+/**
+ * Prevent Gin toolbar hover labels from visually covering the dashboard content
+ * on narrow or zoomed admin screens.
+ */
+:is(#extra-specificity-hack, .gin--core-navigation [data-drupal-admin-styles]) .toolbar-button.current.is-active::before {
+  background: transparent !important;
+}
