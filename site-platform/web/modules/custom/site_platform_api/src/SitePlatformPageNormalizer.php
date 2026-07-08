@@ -17,6 +17,7 @@ final class SitePlatformPageNormalizer {
    */
   public function __construct(
     private readonly SitePlatformMediaNormalizer $mediaNormalizer,
+    private readonly SitePlatformContentListNormalizer $contentListNormalizer,
   ) {}
 
   /**
@@ -240,15 +241,20 @@ final class SitePlatformPageNormalizer {
    * Normalizes Content List Section.
    */
   private function normalizeContentListSection(ParagraphInterface $paragraph): array {
+    $source = $this->getParagraphFieldValue($paragraph, 'field_content_source');
+    $limit = $this->getParagraphIntValue($paragraph, 'field_limit');
+    $featured_only = $this->getParagraphBoolValue($paragraph, 'field_featured_only');
+
     return [
       'id' => (int) $paragraph->id(),
       'type' => 'contentList',
       'badge' => $this->getParagraphFieldValue($paragraph, 'field_badge'),
       'heading' => $this->getParagraphFieldValue($paragraph, 'field_heading'),
       'description' => $this->getParagraphFieldValue($paragraph, 'field_description'),
-      'source' => $this->getParagraphFieldValue($paragraph, 'field_content_source'),
-      'limit' => $this->getParagraphIntValue($paragraph, 'field_limit'),
-      'featuredOnly' => $this->getParagraphBoolValue($paragraph, 'field_featured_only'),
+      'source' => $source,
+      'limit' => $limit,
+      'featuredOnly' => $featured_only,
+      'items' => $this->contentListNormalizer->loadItems($source, $limit, $featured_only),
       'primaryButton' => $this->normalizeButton($paragraph, 'field_primary_button_text', 'field_primary_button_link'),
       'secondaryButton' => $this->normalizeButton($paragraph, 'field_secondary_button_text', 'field_secondary_button_link'),
       'layoutVariant' => $this->getParagraphFieldValue($paragraph, 'field_layout_variant'),
