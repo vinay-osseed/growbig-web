@@ -60,4 +60,37 @@ assert len(team) == 3, f"Expected 3 team members, got {len(team)}"
 print("Dynamic content list checks passed.")
 INNERPY
 
+echo "Validating reusable content endpoints..."
+python3 - <<'INNERPY'
+import json
+import os
+import subprocess
+
+base_url = os.environ["BASE_URL"]
+
+def fetch(path):
+    result = subprocess.run(
+        ["curl", "-ks", f"{base_url}{path}"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return json.loads(result.stdout)
+
+services = fetch("/api/v1/content/services")
+partners = fetch("/api/v1/content/partners")
+team = fetch("/api/v1/content/team")
+limited_services = fetch("/api/v1/content/services?limit=3")
+
+assert services["source"] == "services"
+assert services["count"] == 6
+assert partners["source"] == "partners"
+assert partners["count"] == 4
+assert team["source"] == "team"
+assert team["count"] == 3
+assert limited_services["count"] == 3
+
+print("Reusable content endpoint checks passed.")
+INNERPY
+
 echo "API smoke tests passed."

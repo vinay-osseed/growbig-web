@@ -110,6 +110,56 @@ paths:
                   code: not_found
                   message: Page not found.
 
+  /api/v1/content/{source}:
+    get:
+      tags:
+        - Pages
+      summary: Get reusable content by source
+      description: Returns reusable frontend-ready content items for services, partners, or team members.
+      operationId: getReusableContent
+      parameters:
+        - name: source
+          in: path
+          required: true
+          description: Reusable content source.
+          schema:
+            type: string
+            enum:
+              - services
+              - partners
+              - team
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of items to return. Use 0 or omit for no limit.
+          schema:
+            type: integer
+            default: 0
+        - name: featuredOnly
+          in: query
+          required: false
+          description: Return only featured items.
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Reusable content list response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReusableContentList'
+        '400':
+          description: Unsupported content source.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+              example:
+                error:
+                  code: invalid_source
+                  message: Unsupported content source.
+
 components:
   schemas:
     SiteProfile:
@@ -591,6 +641,29 @@ components:
           $ref: '#/components/schemas/Button'
         layoutVariant:
           type: string
+
+    ReusableContentList:
+      type: object
+      properties:
+        source:
+          type: string
+          enum:
+            - services
+            - partners
+            - team
+        limit:
+          type: integer
+        featuredOnly:
+          type: boolean
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/ServiceListItem'
+              - $ref: '#/components/schemas/PartnerListItem'
+              - $ref: '#/components/schemas/TeamMemberListItem'
 
     ServiceListItem:
       type: object
