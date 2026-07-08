@@ -160,6 +160,59 @@ paths:
                   code: invalid_source
                   message: Unsupported content source.
 
+  /api/v1/content/{source}/{key}:
+    get:
+      tags:
+        - Pages
+      summary: Get reusable content item by source and key
+      description: Returns one frontend-ready reusable content item.
+      operationId: getReusableContentItem
+      parameters:
+        - name: source
+          in: path
+          required: true
+          description: Reusable content source.
+          schema:
+            type: string
+            enum:
+              - services
+              - partners
+              - team
+        - name: key
+          in: path
+          required: true
+          description: Content item key.
+          schema:
+            type: string
+            example: website-development
+      responses:
+        '200':
+          description: Reusable content detail response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReusableContentDetail'
+        '400':
+          description: Unsupported content source.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+              example:
+                error:
+                  code: invalid_source
+                  message: Unsupported content source.
+        '404':
+          description: Content item not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+              example:
+                error:
+                  code: not_found
+                  message: Content item not found.
+
 components:
   schemas:
     SiteProfile:
@@ -641,6 +694,23 @@ components:
           $ref: '#/components/schemas/Button'
         layoutVariant:
           type: string
+
+    ReusableContentDetail:
+      type: object
+      properties:
+        source:
+          type: string
+          enum:
+            - services
+            - partners
+            - team
+        key:
+          type: string
+        item:
+          oneOf:
+            - $ref: '#/components/schemas/ServiceListItem'
+            - $ref: '#/components/schemas/PartnerListItem'
+            - $ref: '#/components/schemas/TeamMemberListItem'
 
     ReusableContentList:
       type: object

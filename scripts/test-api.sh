@@ -93,4 +93,40 @@ assert limited_services["count"] == 3
 print("Reusable content endpoint checks passed.")
 INNERPY
 
+echo "Validating reusable content detail endpoints..."
+python3 - <<'INNERPY'
+import json
+import os
+import subprocess
+
+base_url = os.environ["BASE_URL"]
+
+def fetch(path):
+    result = subprocess.run(
+        ["curl", "-ks", f"{base_url}{path}"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return json.loads(result.stdout)
+
+service = fetch("/api/v1/content/services/website-development")
+partner = fetch("/api/v1/content/partners/aws")
+team = fetch("/api/v1/content/team/founder-ceo")
+
+assert service["source"] == "services"
+assert service["key"] == "website-development"
+assert service["item"]["type"] == "service"
+
+assert partner["source"] == "partners"
+assert partner["key"] == "aws"
+assert partner["item"]["type"] == "partner"
+
+assert team["source"] == "team"
+assert team["key"] == "founder-ceo"
+assert team["item"]["type"] == "teamMember"
+
+print("Reusable content detail endpoint checks passed.")
+INNERPY
+
 echo "API smoke tests passed."
