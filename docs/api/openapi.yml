@@ -403,18 +403,24 @@ components:
     SitePage:
       type: object
       required:
+        - contractVersion
         - id
         - uuid
         - type
         - title
         - slug
         - pageType
+        - route
+        - api
         - summary
         - sites
         - seo
         - sections
         - meta
       properties:
+        contractVersion:
+          type: string
+          example: '1.0'
         id:
           type: integer
         uuid:
@@ -431,6 +437,10 @@ components:
         pageType:
           type: string
           example: home
+        route:
+          $ref: '#/components/schemas/PageRoute'
+        api:
+          $ref: '#/components/schemas/PageApiLinks'
         summary:
           type: string
         sites:
@@ -451,6 +461,23 @@ components:
               - $ref: '#/components/schemas/ContentListSection'
         meta:
           $ref: '#/components/schemas/PageMeta'
+
+    PageRoute:
+      type: object
+      properties:
+        path:
+          type: string
+          example: /about
+        apiPath:
+          type: string
+          example: /api/v1/pages/about
+
+    PageApiLinks:
+      type: object
+      properties:
+        self:
+          type: string
+          example: /api/v1/pages/about
 
     PageSiteReference:
       type: object
