@@ -570,16 +570,112 @@ components:
           type: string
         source:
           type: string
+          enum:
+            - services
+            - partners
+            - team
         limit:
           type: integer
         featuredOnly:
           type: boolean
+        items:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/ServiceListItem'
+              - $ref: '#/components/schemas/PartnerListItem'
+              - $ref: '#/components/schemas/TeamMemberListItem'
         primaryButton:
           $ref: '#/components/schemas/Button'
         secondaryButton:
           $ref: '#/components/schemas/Button'
         layoutVariant:
           type: string
+
+    ServiceListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: service
+        key:
+          type: string
+        title:
+          type: string
+        summary:
+          type: string
+        icon:
+          type: string
+        accentColor:
+          type: string
+        image:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/MediaImage'
+        url:
+          type: string
+        order:
+          type: integer
+        isFeatured:
+          type: boolean
+
+    PartnerListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: partner
+        key:
+          type: string
+        title:
+          type: string
+        summary:
+          type: string
+        logo:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/MediaImage'
+        website:
+          type: string
+        order:
+          type: integer
+        isFeatured:
+          type: boolean
+
+    TeamMemberListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: teamMember
+        key:
+          type: string
+        name:
+          type: string
+        role:
+          type: string
+        summary:
+          type: string
+        bio:
+          type: string
+        photo:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/MediaImage'
+        email:
+          type: string
+        linkedinUrl:
+          type: string
+        order:
+          type: integer
+        isFeatured:
+          type: boolean
 
     Button:
       type: object
