@@ -107,7 +107,7 @@ final class SiteDashboardController extends ControllerBase {
           ],
         ],
         'title' => [
-          '#markup' => '<h2>Reusable Site Platform Dashboard</h2>',
+          '#markup' => '<h2>Site Dashboard</h2>',
         ],
         'description' => [
           '#markup' => '<p>Use this dashboard to manage the major website components exposed to the frontend UI.</p>',
