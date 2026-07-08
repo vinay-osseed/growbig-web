@@ -1,0 +1,24 @@
+uuid: b68816e2-d77a-4149-8af0-380c1eec34d5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_sites
+    - node.type.site_profile
+    - node.type.team_member
+id: node.team_member.field_sites
+field_name: field_sites
+entity_type: node
+bundle: team_member
+label: Sites
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      site_profile: site_profile
+field_type: entity_reference

@@ -1,0 +1,23 @@
+uuid: b99ba4b6-f6f9-4bd6-9632-06a570e80064
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_display_order
+    - node.type.service
+id: node.service.field_display_order
+field_name: field_display_order
+entity_type: node
+bundle: service
+label: 'Display Order'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer
