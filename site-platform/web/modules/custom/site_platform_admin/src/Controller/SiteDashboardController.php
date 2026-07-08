@@ -63,21 +63,33 @@ final class SiteDashboardController extends ControllerBase {
       ],
       [
         'title' => 'Services',
-        'description' => 'Reusable service cards and service detail content. This will be added after the Page model.',
-        'url' => NULL,
-        'status' => 'Coming Soon',
+        'description' => 'Create and edit reusable service content.',
+        'url' => Url::fromUri('internal:/admin/content', [
+          'query' => [
+            'type' => 'service',
+          ],
+        ]),
+        'status' => 'Ready',
       ],
       [
         'title' => 'Partners',
-        'description' => 'Partner logo and partner information management. This will be added after the Page model.',
-        'url' => NULL,
-        'status' => 'Coming Soon',
+        'description' => 'Create and edit reusable partner content.',
+        'url' => Url::fromUri('internal:/admin/content', [
+          'query' => [
+            'type' => 'partner',
+          ],
+        ]),
+        'status' => 'Ready',
       ],
       [
         'title' => 'Leadership',
-        'description' => 'Leadership and team member management. This will be added after the Page model.',
-        'url' => NULL,
-        'status' => 'Coming Soon',
+        'description' => 'Create and edit reusable team member content.',
+        'url' => Url::fromUri('internal:/admin/content', [
+          'query' => [
+            'type' => 'team_member',
+          ],
+        ]),
+        'status' => 'Ready',
       ],
     ];
 
