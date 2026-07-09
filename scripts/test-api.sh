@@ -31,6 +31,8 @@ assert data["count"] >= 2
 slugs = [item["slug"] for item in data["items"]]
 assert "home" in slugs
 assert "about" in slugs
+assert "careers" in slugs
+assert "contact" in slugs
 
 home = next(item for item in data["items"] if item["slug"] == "home")
 about = next(item for item in data["items"] if item["slug"] == "about")
@@ -48,6 +50,12 @@ curl -ks "${BASE_URL}/api/v1/pages/home" | python3 -m json.tool >/dev/null
 
 echo "Testing About Page API..."
 curl -ks "${BASE_URL}/api/v1/pages/about" | python3 -m json.tool >/dev/null
+
+echo "Testing Careers Page API..."
+curl -ks "${BASE_URL}/api/v1/pages/careers" | python3 -m json.tool >/dev/null
+
+echo "Testing Contact Page API..."
+curl -ks "${BASE_URL}/api/v1/pages/contact" | python3 -m json.tool >/dev/null
 
 echo "Validating dynamic page contract..."
 python3 - <<'INNERPY'
@@ -108,6 +116,51 @@ if [ "${STATUS_CODE}" != "404" ]; then
 fi
 
 python3 -m json.tool /tmp/growbig-missing-page-api.json >/dev/null
+
+echo "Validating top-level careers and contact pages..."
+python3 - <<'INNERPY'
+import json
+import os
+import subprocess
+
+base_url = os.environ["BASE_URL"]
+
+def fetch(path):
+    result = subprocess.run(
+        ["curl", "-ks", f"{base_url}{path}"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return json.loads(result.stdout)
+
+careers = fetch("/api/v1/pages/careers")
+contact = fetch("/api/v1/pages/contact")
+
+assert careers["slug"] == "careers"
+assert careers["route"]["path"] == "/careers"
+assert contact["slug"] == "contact"
+assert contact["route"]["path"] == "/contact"
+
+careers_section_types = [section["type"] for section in careers["sections"]]
+contact_section_types = [section["type"] for section in contact["sections"]]
+
+assert "hero" in careers_section_types
+assert "contentList" in careers_section_types
+assert "hero" in contact_section_types
+assert "cta" in contact_section_types
+
+jobs_sections = [
+    section for section in careers["sections"]
+    if section["type"] == "contentList" and section.get("source") == "jobs"
+]
+
+assert jobs_sections
+assert jobs_sections[0]["items"]
+assert jobs_sections[0]["items"][0]["type"] == "job"
+
+print("Top-level careers and contact page checks passed.")
+INNERPY
 
 echo "Validating dynamic content lists..."
 python3 - <<'INNERPY'

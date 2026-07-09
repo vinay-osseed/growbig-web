@@ -48,6 +48,8 @@ site = fetch("/api/v1/site")
 pages = fetch("/api/v1/pages")
 home = fetch("/api/v1/pages/home")
 about = fetch("/api/v1/pages/about")
+careers = fetch("/api/v1/pages/careers")
+contact = fetch("/api/v1/pages/contact")
 services = fetch("/api/v1/content/services")
 partners = fetch("/api/v1/content/partners")
 team = fetch("/api/v1/content/team")
@@ -70,6 +72,8 @@ require(about.get("contractVersion") == "1.0", "About page must use contractVers
 
 require(home.get("route", {}).get("path") == "/", "Home page route.path must be /.")
 require(about.get("route", {}).get("path") == "/about", "About page route.path must be /about.")
+require(careers.get("route", {}).get("path") == "/careers", "Careers page route.path must be /careers.")
+require(contact.get("route", {}).get("path") == "/contact", "Contact page route.path must be /contact.")
 
 require(services.get("source") == "services", "Services endpoint source mismatch.")
 require(services.get("count", 0) >= 1, "Services endpoint must return at least one item.")
