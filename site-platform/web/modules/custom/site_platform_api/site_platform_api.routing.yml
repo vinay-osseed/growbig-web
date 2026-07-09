@@ -42,3 +42,22 @@ site_platform_api.content_detail:
     _permission: 'access content'
   options:
     no_cache: TRUE
+
+site_platform_api.form:
+  path: '/api/v1/forms/{form}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\FormController::form'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+
+site_platform_api.form_submit:
+  path: '/api/v1/forms/{form}/submit'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\FormController::submit'
+  requirements:
+    _permission: 'access content'
+  methods: [POST]
+  options:
+    no_cache: TRUE

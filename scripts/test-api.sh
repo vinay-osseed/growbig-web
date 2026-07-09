@@ -255,4 +255,84 @@ assert mobile_detail["item"]["title"] == "Mobile App Development"
 print("Reusable content detail endpoint checks passed.")
 INNERPY
 
+echo "Validating form API endpoints..."
+python3 - <<'INNERPY'
+import json
+import os
+import subprocess
+
+base_url = os.environ["BASE_URL"]
+
+def fetch(path):
+    result = subprocess.run(
+        ["curl", "-ks", f"{base_url}{path}"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return json.loads(result.stdout)
+
+def post(path, payload):
+    result = subprocess.run(
+        [
+            "curl",
+            "-ks",
+            "-X", "POST",
+            "-H", "Content-Type: application/json",
+            "-d", json.dumps(payload),
+            f"{base_url}{path}",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return json.loads(result.stdout)
+
+contact_form = fetch("/api/v1/forms/contact-us")
+job_form = fetch("/api/v1/forms/job-application")
+
+assert contact_form["webformId"] == "contact_us"
+assert job_form["webformId"] == "job_application"
+
+contact_fields = [field["name"] for field in contact_form["fields"]]
+job_fields = [field["name"] for field in job_form["fields"]]
+
+assert "budget_range" in contact_fields
+assert "resume_upload" in job_fields
+
+contact_submission = post("/api/v1/forms/contact-us/submit", {
+    "data": {
+        "name": "API Test Contact",
+        "email": "contact-test@example.com",
+        "subject": "API test enquiry",
+        "message": "This is an automated API test contact submission.",
+        "preferred_contact_method": "email",
+        "consent": True
+    }
+})
+
+job_submission = post("/api/v1/forms/job-application/submit", {
+    "data": {
+        "job_key": "frontend-developer",
+        "job_title": "Frontend Developer",
+        "name": "API Test Applicant",
+        "email": "job-test@example.com",
+        "phone": "+910000000000",
+        "current_location": "Remote",
+        "experience_years": 2,
+        "portfolio_url": "https://example.com",
+        "linkedin_url": "https://www.linkedin.com",
+        "message": "This is an automated API test job application.",
+        "consent": True
+    }
+})
+
+assert contact_submission["status"] == "success"
+assert contact_submission["submissionId"] > 0
+assert job_submission["status"] == "success"
+assert job_submission["submissionId"] > 0
+
+print("Form API endpoint checks passed.")
+INNERPY
+
 echo "API smoke tests passed."

@@ -75,7 +75,7 @@ current_company:
 resume_upload:
   '#type': managed_file
   '#title': 'Resume'
-  '#required': true
+  '#required': false
   '#file_extensions': 'pdf doc docx'
 portfolio_url:
   '#type': url
