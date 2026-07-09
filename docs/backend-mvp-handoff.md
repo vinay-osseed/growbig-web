@@ -298,3 +298,56 @@ Future backend improvements can include:
 - detail pages for services/team/partners on the frontend
 - environment-specific deployment docs
 - frontend integration examples
+
+## Phase 8 Additions
+
+The backend now also includes top-level Careers, Jobs, Contact, and Webform support.
+
+### Careers
+
+Frontend route:
+
+- /careers
+
+Primary API:
+
+- GET /api/v1/pages/careers
+
+The Careers page includes a dynamic jobs content list.
+
+### Jobs
+
+Reusable content APIs:
+
+- GET /api/v1/content/jobs
+- GET /api/v1/content/jobs/{key}
+
+Example:
+
+- GET /api/v1/content/jobs/frontend-developer
+
+### Contact
+
+Frontend route:
+
+- /contact
+
+Primary API:
+
+- GET /api/v1/pages/contact
+
+Contact form APIs:
+
+- GET /api/v1/forms/contact-us
+- POST /api/v1/forms/contact-us/submit
+
+The contact form includes optional budget_range.
+
+### Job Application
+
+Job application form APIs:
+
+- GET /api/v1/forms/job-application
+- POST /api/v1/forms/job-application/submit
+
+Resume upload is listed in metadata but is not API-supported yet.

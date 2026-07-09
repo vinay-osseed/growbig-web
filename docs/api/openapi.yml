@@ -1024,3 +1024,17 @@ components:
           type: string
         medium:
           type: string
+
+# Phase 8 documented endpoints:
+# - GET /api/v1/pages/careers
+# - GET /api/v1/pages/contact
+# - GET /api/v1/content/jobs
+# - GET /api/v1/content/jobs/{key}
+# - GET /api/v1/forms/contact-us
+# - POST /api/v1/forms/contact-us/submit
+# - GET /api/v1/forms/job-application
+# - POST /api/v1/forms/job-application/submit
+#
+# Notes:
+# - contact_us includes optional budget_range.
+# - job_application includes resume_upload metadata, but file upload is not API-supported yet.
