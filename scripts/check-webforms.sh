@@ -12,8 +12,13 @@ $required = [
 
 foreach ($required as $id => $label) {
   $webform = \Drupal\webform\Entity\Webform::load($id);
+
   if (!$webform) {
     throw new \RuntimeException("Missing webform: {$id}");
+  }
+
+  if ($webform->label() !== $label) {
+    throw new \RuntimeException("Unexpected label for {$id}: " . $webform->label());
   }
 
   echo $id . ": " . $webform->label() . PHP_EOL;
