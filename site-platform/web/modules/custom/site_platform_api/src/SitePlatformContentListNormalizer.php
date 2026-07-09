@@ -23,11 +23,11 @@ final class SitePlatformContentListNormalizer {
   /**
    * Loads content list items by source.
    */
-  public function loadItems(string $source, int $limit = 0, bool $featured_only = FALSE): array {
+  public function loadItems(string $source, int $limit = 0, bool $featured_only = FALSE, array $node_ids = []): array {
     return match ($source) {
-      'services' => $this->loadNodes('service', 'field_service_key', $limit, $featured_only),
-      'partners' => $this->loadNodes('partner', 'field_partner_key', $limit, $featured_only),
-      'team' => $this->loadNodes('team_member', 'field_member_key', $limit, $featured_only),
+      'services' => $this->loadNodes('service', 'field_service_key', $limit, $featured_only, $node_ids),
+      'partners' => $this->loadNodes('partner', 'field_partner_key', $limit, $featured_only, $node_ids),
+      'team' => $this->loadNodes('team_member', 'field_member_key', $limit, $featured_only, $node_ids),
       default => [],
     };
   }
@@ -35,7 +35,7 @@ final class SitePlatformContentListNormalizer {
   /**
    * Loads active nodes by type.
    */
-  private function loadNodes(string $type, string $key_field, int $limit, bool $featured_only): array {
+  private function loadNodes(string $type, string $key_field, int $limit, bool $featured_only, array $node_ids = []): array {
     $storage = $this->entityTypeManager->getStorage('node');
 
     $query = $storage->getQuery()
@@ -48,6 +48,10 @@ final class SitePlatformContentListNormalizer {
 
     if ($featured_only) {
       $query->condition('field_is_featured', 1);
+    }
+
+    if ($node_ids) {
+      $query->condition('nid', $node_ids, 'IN');
     }
 
     if ($limit > 0) {

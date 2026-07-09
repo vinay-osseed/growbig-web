@@ -175,6 +175,13 @@ assert team["source"] == "team"
 assert team["key"] == "founder-ceo"
 assert team["item"]["type"] == "teamMember"
 
+
+mobile_detail = fetch("/api/v1/content/services/mobile-app-development")
+assert mobile_detail["source"] == "services"
+assert mobile_detail["key"] == "mobile-app-development"
+assert mobile_detail["item"]["key"] == "mobile-app-development"
+assert mobile_detail["item"]["title"] == "Mobile App Development"
+
 print("Reusable content detail endpoint checks passed.")
 INNERPY
 
