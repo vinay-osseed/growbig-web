@@ -7,6 +7,15 @@ site_platform_api.site:
   options:
     no_cache: TRUE
 
+site_platform_api.pages:
+  path: '/api/v1/pages'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\PageController::index'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+
 site_platform_api.page:
   path: '/api/v1/pages/{slug}'
   defaults:

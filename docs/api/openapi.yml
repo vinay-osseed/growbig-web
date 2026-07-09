@@ -32,6 +32,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/SiteProfile'
 
+  /api/v1/pages:
+    get:
+      summary: List dynamic site pages
+      description: Returns published dynamic pages available to the decoupled frontend.
+      responses:
+        '200':
+          description: Dynamic page list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SitePageList'
+
   /api/v1/pages/{slug}:
     get:
       tags:
@@ -399,6 +411,54 @@ components:
           type: boolean
         isActive:
           type: boolean
+
+    SitePageList:
+      type: object
+      required:
+        - contractVersion
+        - count
+        - items
+      properties:
+        contractVersion:
+          type: string
+          example: '1.0'
+        count:
+          type: integer
+          example: 2
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SitePageListItem'
+
+    SitePageListItem:
+      type: object
+      required:
+        - id
+        - uuid
+        - title
+        - slug
+        - pageType
+        - route
+        - api
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+          format: uuid
+        title:
+          type: string
+          example: About
+        slug:
+          type: string
+          example: about
+        pageType:
+          type: string
+          example: about
+        route:
+          $ref: '#/components/schemas/PageRoute'
+        api:
+          $ref: '#/components/schemas/PageApiLinks'
 
     SitePage:
       type: object

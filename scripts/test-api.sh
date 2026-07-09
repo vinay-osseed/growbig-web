@@ -8,6 +8,41 @@ export BASE_URL
 echo "Testing Site API..."
 curl -ks "${BASE_URL}/api/v1/site" | python3 -m json.tool >/dev/null
 
+echo "Testing Pages Index API..."
+python3 - <<'INNERPY'
+import json
+import os
+import subprocess
+
+base_url = os.environ["BASE_URL"]
+
+result = subprocess.run(
+    ["curl", "-ks", f"{base_url}/api/v1/pages"],
+    check=True,
+    capture_output=True,
+    text=True,
+)
+
+data = json.loads(result.stdout)
+
+assert data["contractVersion"] == "1.0"
+assert data["count"] >= 2
+
+slugs = [item["slug"] for item in data["items"]]
+assert "home" in slugs
+assert "about" in slugs
+
+home = next(item for item in data["items"] if item["slug"] == "home")
+about = next(item for item in data["items"] if item["slug"] == "about")
+
+assert home["route"]["path"] == "/"
+assert home["route"]["apiPath"] == "/api/v1/pages/home"
+assert about["route"]["path"] == "/about"
+assert about["route"]["apiPath"] == "/api/v1/pages/about"
+
+print("Pages index API checks passed.")
+INNERPY
+
 echo "Testing Home Page API..."
 curl -ks "${BASE_URL}/api/v1/pages/home" | python3 -m json.tool >/dev/null
 

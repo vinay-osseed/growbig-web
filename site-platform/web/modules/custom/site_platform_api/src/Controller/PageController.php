@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Drupal\site_platform_api\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\NodeInterface;
 use Drupal\site_platform_api\SitePlatformPageNormalizer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * Returns frontend-ready Site Page responses.
+ * Returns normalized site page responses.
  */
 final class PageController extends ControllerBase {
 
@@ -20,6 +21,7 @@ final class PageController extends ControllerBase {
    */
   public function __construct(
     private readonly SitePlatformPageNormalizer $pageNormalizer,
+    private readonly EntityTypeManagerInterface $apiEntityTypeManager,
   ) {}
 
   /**
@@ -28,14 +30,80 @@ final class PageController extends ControllerBase {
   public static function create(ContainerInterface $container): self {
     return new self(
       $container->get('site_platform_api.page_normalizer'),
+      $container->get('entity_type.manager'),
     );
   }
 
   /**
-   * Returns a page by page key.
+   * Returns a list of published dynamic pages.
+   */
+  public function index(): JsonResponse {
+    $storage = $this->apiEntityTypeManager->getStorage('node');
+
+    $node_ids = $storage->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('type', 'site_page')
+      ->condition('status', NodeInterface::PUBLISHED)
+      ->sort('title', 'ASC')
+      ->execute();
+
+    $items = [];
+
+    foreach ($storage->loadMultiple($node_ids) as $node) {
+      if (!$node instanceof NodeInterface) {
+        continue;
+      }
+
+      $slug = $this->getFieldValue($node, 'field_page_key');
+      $route_path = $slug === 'home' ? '/' : '/' . trim($slug, '/');
+
+      $items[] = [
+        'id' => (int) $node->id(),
+        'uuid' => $node->uuid(),
+        'title' => $node->label(),
+        'slug' => $slug,
+        'pageType' => $this->getFieldValue($node, 'field_page_type'),
+        'route' => [
+          'path' => $route_path,
+          'apiPath' => '/api/v1/pages/' . $slug,
+        ],
+        'api' => [
+          'self' => '/api/v1/pages/' . $slug,
+        ],
+      ];
+    }
+
+    return new JsonResponse([
+      'contractVersion' => '1.0',
+      'count' => count($items),
+      'items' => array_values($items),
+    ]);
+  }
+
+  /**
+   * Returns one published page by slug.
    */
   public function page(string $slug): JsonResponse {
-    $page = $this->loadPage($slug);
+    $storage = $this->apiEntityTypeManager->getStorage('node');
+
+    $node_ids = $storage->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('type', 'site_page')
+      ->condition('status', NodeInterface::PUBLISHED)
+      ->condition('field_page_key', $slug)
+      ->range(0, 1)
+      ->execute();
+
+    if (!$node_ids) {
+      return new JsonResponse([
+        'error' => [
+          'code' => 'not_found',
+          'message' => 'Page not found.',
+        ],
+      ], 404);
+    }
+
+    $page = $storage->load(reset($node_ids));
 
     if (!$page instanceof NodeInterface) {
       return new JsonResponse([
@@ -50,26 +118,14 @@ final class PageController extends ControllerBase {
   }
 
   /**
-   * Loads a published Site Page by key.
+   * Gets a plain field value.
    */
-  private function loadPage(string $slug): ?NodeInterface {
-    $storage = $this->entityTypeManager()->getStorage('node');
-
-    $ids = $storage->getQuery()
-      ->accessCheck(FALSE)
-      ->condition('type', 'site_page')
-      ->condition('status', 1)
-      ->condition('field_page_key', $slug)
-      ->range(0, 1)
-      ->execute();
-
-    if (!$ids) {
-      return NULL;
+  private function getFieldValue(NodeInterface $node, string $field_name): string {
+    if (!$node->hasField($field_name) || $node->get($field_name)->isEmpty()) {
+      return '';
     }
 
-    $page = $storage->load(reset($ids));
-
-    return $page instanceof NodeInterface ? $page : NULL;
+    return (string) $node->get($field_name)->value;
   }
 
 }
