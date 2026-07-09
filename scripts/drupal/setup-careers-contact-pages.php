@@ -79,7 +79,7 @@ $careers_hero = create_or_get_paragraph('hero_section', [
 $careers_jobs = create_or_get_paragraph('content_list_section', [
   'field_heading' => 'Open Positions',
   'field_description' => 'Explore current openings and apply for roles that match your skills.',
-  'field_source' => 'jobs',
+  'field_content_source' => 'jobs',
   'field_limit' => 0,
   'field_featured_only' => 0,
 ]);
