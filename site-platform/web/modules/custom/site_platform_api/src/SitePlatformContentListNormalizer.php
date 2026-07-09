@@ -28,6 +28,7 @@ final class SitePlatformContentListNormalizer {
       'services' => $this->loadNodes('service', 'field_service_key', $limit, $featured_only, $node_ids),
       'partners' => $this->loadNodes('partner', 'field_partner_key', $limit, $featured_only, $node_ids),
       'team' => $this->loadNodes('team_member', 'field_member_key', $limit, $featured_only, $node_ids),
+      'jobs' => $this->loadNodes('job', 'field_job_key', $limit, $featured_only, $node_ids),
       default => [],
     };
   }
@@ -75,6 +76,7 @@ final class SitePlatformContentListNormalizer {
         'service' => $this->normalizeService($node, $key_field),
         'partner' => $this->normalizePartner($node, $key_field),
         'team_member' => $this->normalizeTeamMember($node, $key_field),
+        'job' => $this->normalizeJob($node, $key_field),
         default => [],
       };
     }
@@ -119,6 +121,30 @@ final class SitePlatformContentListNormalizer {
   }
 
   /**
+   * Normalizes a Job node.
+   */
+  private function normalizeJob(NodeInterface $node, string $key_field): array {
+    return [
+      'id' => (int) $node->id(),
+      'type' => 'job',
+      'key' => $this->getFieldValue($node, $key_field),
+      'title' => $node->label(),
+      'summary' => $this->getFieldValue($node, 'field_summary'),
+      'department' => $this->getFieldValue($node, 'field_department'),
+      'location' => $this->getFieldValue($node, 'field_location'),
+      'employmentType' => $this->getFieldValue($node, 'field_employment_type'),
+      'experienceLevel' => $this->getFieldValue($node, 'field_experience_level'),
+      'salaryRange' => $this->getFieldValue($node, 'field_salary_range'),
+      'description' => $this->getTextValue($node, 'field_description'),
+      'responsibilities' => $this->getTextValue($node, 'field_responsibilities'),
+      'requirements' => $this->getTextValue($node, 'field_requirements'),
+      'closingDate' => $this->getFieldValue($node, 'field_closing_date'),
+      'order' => $this->getIntValue($node, 'field_display_order'),
+      'isFeatured' => $this->getBoolValue($node, 'field_is_featured'),
+    ];
+  }
+
+  /**
    * Normalizes a Team Member node.
    */
   private function normalizeTeamMember(NodeInterface $node, string $key_field): array {
@@ -142,6 +168,17 @@ final class SitePlatformContentListNormalizer {
    * Gets a string field value.
    */
   private function getFieldValue(NodeInterface $node, string $field_name): string {
+    if (!$node->hasField($field_name) || $node->get($field_name)->isEmpty()) {
+      return '';
+    }
+
+    return (string) $node->get($field_name)->value;
+  }
+
+  /**
+   * Gets a text field value.
+   */
+  private function getTextValue(NodeInterface $node, string $field_name): string {
     if (!$node->hasField($field_name) || $node->get($field_name)->isEmpty()) {
       return '';
     }

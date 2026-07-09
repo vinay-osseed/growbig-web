@@ -177,6 +177,41 @@ assert limited_services["count"] == 3
 print("Reusable content endpoint checks passed.")
 INNERPY
 
+echo "Validating reusable jobs endpoints..."
+python3 - <<'INNERPY'
+import json
+import os
+import subprocess
+
+base_url = os.environ["BASE_URL"]
+
+def fetch(path):
+    result = subprocess.run(
+        ["curl", "-ks", f"{base_url}{path}"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return json.loads(result.stdout)
+
+jobs = fetch("/api/v1/content/jobs")
+job_detail = fetch("/api/v1/content/jobs/frontend-developer")
+
+assert jobs["source"] == "jobs"
+assert jobs["count"] >= 1
+
+keys = [item["key"] for item in jobs["items"]]
+assert "frontend-developer" in keys
+
+assert job_detail["source"] == "jobs"
+assert job_detail["key"] == "frontend-developer"
+assert job_detail["item"]["type"] == "job"
+assert job_detail["item"]["key"] == "frontend-developer"
+assert job_detail["item"]["title"] == "Frontend Developer"
+
+print("Reusable jobs endpoint checks passed.")
+INNERPY
+
 echo "Validating reusable content detail endpoints..."
 python3 - <<'INNERPY'
 import json

@@ -33,6 +33,10 @@ final class ContentController extends ControllerBase {
       'bundle' => 'team_member',
       'key_field' => 'field_member_key',
     ],
+    'jobs' => [
+      'bundle' => 'job',
+      'key_field' => 'field_job_key',
+    ],
   ];
 
   /**

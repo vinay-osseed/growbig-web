@@ -1,0 +1,19 @@
+uuid: e3eeb407-530a-4d3b-bc88-1ce2bdde484e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_experience_level
+    - node.type.job
+id: node.job.field_experience_level
+field_name: field_experience_level
+entity_type: node
+bundle: job
+label: 'Experience Level'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

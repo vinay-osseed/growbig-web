@@ -1,0 +1,11 @@
+uuid: 4ad5ada5-636d-400a-9d43-1439b33fc10b
+langcode: en
+status: true
+dependencies: {  }
+name: Job
+type: job
+description: 'Reusable job openings for the careers section.'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: true

@@ -822,6 +822,49 @@ components:
               - $ref: '#/components/schemas/PartnerListItem'
               - $ref: '#/components/schemas/TeamMemberListItem'
 
+    JobListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: job
+        key:
+          type: string
+          example: frontend-developer
+        title:
+          type: string
+          example: Frontend Developer
+        summary:
+          type: string
+        department:
+          type: string
+          example: Engineering
+        location:
+          type: string
+          example: Remote / Sawantwadi, India
+        employmentType:
+          type: string
+          example: full_time
+        experienceLevel:
+          type: string
+          example: 1-3 years
+        salaryRange:
+          type: string
+        description:
+          type: string
+        responsibilities:
+          type: string
+        requirements:
+          type: string
+        closingDate:
+          type: string
+        order:
+          type: integer
+        isFeatured:
+          type: boolean
+
     ServiceListItem:
       type: object
       properties:

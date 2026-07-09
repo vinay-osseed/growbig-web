@@ -51,7 +51,9 @@ about = fetch("/api/v1/pages/about")
 services = fetch("/api/v1/content/services")
 partners = fetch("/api/v1/content/partners")
 team = fetch("/api/v1/content/team")
+jobs = fetch("/api/v1/content/jobs")
 service_detail = fetch("/api/v1/content/services/website-development")
+job_detail = fetch("/api/v1/content/jobs/frontend-developer")
 
 require(isinstance(site, dict), "Site endpoint must return an object.")
 require("name" in site or "title" in site, "Site endpoint must include a site name/title field.")
@@ -78,9 +80,16 @@ require(partners.get("count", 0) >= 1, "Partners endpoint must return at least o
 require(team.get("source") == "team", "Team endpoint source mismatch.")
 require(team.get("count", 0) >= 1, "Team endpoint must return at least one item.")
 
+require(jobs.get("source") == "jobs", "Jobs endpoint source mismatch.")
+require(jobs.get("count", 0) >= 1, "Jobs endpoint must return at least one item.")
+
 require(service_detail.get("source") == "services", "Service detail source mismatch.")
 require(service_detail.get("key") == "website-development", "Service detail key mismatch.")
 require(service_detail.get("item", {}).get("key") == "website-development", "Service detail item key mismatch.")
+
+require(job_detail.get("source") == "jobs", "Job detail source mismatch.")
+require(job_detail.get("key") == "frontend-developer", "Job detail key mismatch.")
+require(job_detail.get("item", {}).get("key") == "frontend-developer", "Job detail item key mismatch.")
 
 print("Required backend MVP endpoints verified.")
 INNERPY
