@@ -8,6 +8,11 @@ export BASE_URL
 echo "Testing Site API..."
 curl -ks "${BASE_URL}/api/v1/site" | python3 -m json.tool >/dev/null
 
+echo "Testing Menu API..."
+curl -ks "${BASE_URL}/api/v1/menus" | python3 -m json.tool >/dev/null
+curl -ks "${BASE_URL}/api/v1/menus/header" | python3 -m json.tool >/dev/null
+curl -ks "${BASE_URL}/api/v1/menus/footer" | python3 -m json.tool >/dev/null
+
 echo "Testing Pages Index API..."
 python3 - <<'INNERPY'
 import json
@@ -56,6 +61,43 @@ curl -ks "${BASE_URL}/api/v1/pages/careers" | python3 -m json.tool >/dev/null
 
 echo "Testing Contact Page API..."
 curl -ks "${BASE_URL}/api/v1/pages/contact" | python3 -m json.tool >/dev/null
+
+echo "Validating frontend menus..."
+python3 - <<'INNERPY'
+import json
+import os
+import subprocess
+
+base_url = os.environ["BASE_URL"]
+
+def fetch(path):
+    result = subprocess.run(
+        ["curl", "-ks", f"{base_url}{path}"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return json.loads(result.stdout)
+
+menus = fetch("/api/v1/menus")
+header = fetch("/api/v1/menus/header")
+footer = fetch("/api/v1/menus/footer")
+
+assert "header" in menus["items"]
+assert "footer" in menus["items"]
+
+for menu in (header, footer):
+    assert menu["type"] == "menu"
+    assert menu["count"] >= 4
+
+    slugs = [item["slug"] for item in menu["items"]]
+    assert slugs == ["home", "about", "careers", "contact"]
+
+    urls = [item["url"] for item in menu["items"]]
+    assert urls == ["/", "/about", "/careers", "/contact"]
+
+print("Frontend menu checks passed.")
+INNERPY
 
 echo "Validating dynamic page contract..."
 python3 - <<'INNERPY'

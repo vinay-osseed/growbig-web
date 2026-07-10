@@ -46,6 +46,8 @@ def require(condition, message):
 
 site = fetch("/api/v1/site")
 pages = fetch("/api/v1/pages")
+header_menu = fetch("/api/v1/menus/header")
+footer_menu = fetch("/api/v1/menus/footer")
 home = fetch("/api/v1/pages/home")
 about = fetch("/api/v1/pages/about")
 careers = fetch("/api/v1/pages/careers")

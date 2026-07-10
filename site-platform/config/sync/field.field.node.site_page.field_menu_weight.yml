@@ -1,0 +1,23 @@
+uuid: b65a19cb-3051-4c16-9ced-7b9ef7134ef4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_weight
+    - node.type.site_page
+id: node.site_page.field_menu_weight
+field_name: field_menu_weight
+entity_type: node
+bundle: site_page
+label: 'Menu Weight'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

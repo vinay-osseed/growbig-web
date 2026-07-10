@@ -61,3 +61,21 @@ site_platform_api.form_submit:
   methods: [POST]
   options:
     no_cache: TRUE
+
+site_platform_api.menus:
+  path: '/api/v1/menus'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\MenuController::index'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+
+site_platform_api.menu:
+  path: '/api/v1/menus/{menu}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\MenuController::menu'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE

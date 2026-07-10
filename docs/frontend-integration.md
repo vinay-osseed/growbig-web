@@ -113,3 +113,27 @@ Current API metadata marks this as:
 - apiSupported: false
 
 File upload support should be implemented separately.
+
+## Header and Footer Menus
+
+Frontend should not hardcode header or footer navigation.
+
+Use backend menu APIs:
+
+- GET /api/v1/menus
+- GET /api/v1/menus/header
+- GET /api/v1/menus/footer
+
+Header and footer menus are driven by Site Page fields:
+
+- Show In Header
+- Show In Footer
+- Menu Title
+- Menu Weight
+
+Each menu item includes:
+
+- title
+- slug
+- url
+- apiPath
