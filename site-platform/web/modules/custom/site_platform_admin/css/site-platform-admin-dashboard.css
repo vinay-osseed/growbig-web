@@ -1,15 +1,68 @@
 .site-dashboard-intro {
-  margin-block-end: 24px;
+  max-width: 980px;
+  margin: 0 0 28px;
+  padding: 24px 28px;
+  border: 1px solid var(--gin-border-color, #d8d8d8);
+  border-radius: 16px;
+  background: var(--gin-bg-layer, #fff);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
 }
 
 .site-dashboard-intro h2 {
-  margin-block: 0 8px;
+  margin: 0 0 10px;
+  font-size: 30px;
+  line-height: 1.2;
 }
 
 .site-dashboard-intro p {
   max-width: 760px;
-  margin-block: 0;
+  margin: 0;
   color: var(--gin-color-text-light, #555);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.site-dashboard-counts,
+.site-dashboard-section,
+.site-dashboard-recent {
+  margin: 32px 0;
+}
+
+.site-dashboard-counts h3,
+.site-dashboard-section h3,
+.site-dashboard-recent h3 {
+  margin: 0 0 18px;
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.site-dashboard-counts__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 18px;
+}
+
+.site-dashboard-count {
+  min-height: 92px;
+  padding: 22px;
+  border: 1px solid var(--gin-border-color, #d8d8d8);
+  border-radius: 14px;
+  background: var(--gin-bg-layer, #fff);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.site-dashboard-count__value {
+  color: var(--gin-color-primary, #003ecc);
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.site-dashboard-count__label {
+  margin-top: 10px;
+  color: var(--gin-color-text-light, #555);
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .site-dashboard-grid {
@@ -19,100 +72,100 @@
 }
 
 .site-dashboard-card {
-  position: relative;
-  padding: 22px;
+  display: flex;
+  min-height: 170px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
   border: 1px solid var(--gin-border-color, #d8d8d8);
-  border-radius: 14px;
+  border-radius: 16px;
   background: var(--gin-bg-layer, #fff);
-  color: var(--gin-color-text, #1f2937);
-  box-shadow: 0 8px 24px rgb(0 0 0 / 10%);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
 }
 
-.site-dashboard-card__status {
-  display: inline-block;
-  margin-block-end: 14px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.site-dashboard-card__status.is-ready {
-  background: #dcfce7;
-  color: #166534;
-}
-
-.site-dashboard-card__status.is-coming-soon {
-  background: var(--gin-bg-app, #f3f4f6);
-  color: var(--gin-color-text, #374151);
+.site-dashboard-card:hover {
+  border-color: var(--gin-color-primary, #003ecc);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.14);
+  transform: translateY(-2px);
 }
 
 .site-dashboard-card__title {
-  margin-block: 0 10px;
-  color: var(--gin-color-title, var(--gin-color-text, #111827));
-  font-size: 20px;
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.35;
 }
 
 .site-dashboard-card__description {
-  min-height: 74px;
-  margin-block: 0 18px;
-  color: var(--gin-color-text-light, #4b5563);
+  margin: 0 0 22px;
+  color: var(--gin-color-text-light, #555);
+  font-size: 14px;
+  line-height: 1.55;
 }
 
 .site-dashboard-card__button {
-  margin-block-start: auto;
-}
-
-.site-dashboard-card__button.is-disabled {
-  pointer-events: none;
-  opacity: .65;
-}
-
-/**
- * Prevent Gin toolbar hover labels from visually covering the dashboard content
- * on narrow or zoomed admin screens.
- */
-:is(#extra-specificity-hack, .gin--core-navigation [data-drupal-admin-styles]) .toolbar-button.current.is-active::before {
-  background: transparent !important;
-}
-.site-dashboard-counts {
-  margin: 24px 0;
-}
-
-.site-dashboard-counts h3,
-.site-dashboard-section h3,
-.site-dashboard-recent h3 {
-  margin: 0 0 16px;
-}
-
-.site-dashboard-counts__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 16px;
-}
-
-.site-dashboard-count {
-  padding: 18px;
-  border: 1px solid #d8d8d8;
-  border-radius: 8px;
-  background: #fff;
-}
-
-.site-dashboard-count__value {
-  font-size: 28px;
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--gin-color-primary, #003ecc);
+  color: var(--gin-color-button-text, #fff) !important;
+  font-size: 14px;
   font-weight: 700;
-  line-height: 1.2;
+  text-decoration: none;
 }
 
-.site-dashboard-count__label {
-  margin-top: 6px;
-  color: #555;
-}
-
-.site-dashboard-section {
-  margin: 24px 0;
+.site-dashboard-card__button:hover,
+.site-dashboard-card__button:focus {
+  background: var(--gin-color-primary-hover, #002e9f);
+  color: var(--gin-color-button-text, #fff) !important;
+  text-decoration: none;
 }
 
 .site-dashboard-recent {
-  margin-top: 32px;
+  padding: 24px;
+  border: 1px solid var(--gin-border-color, #d8d8d8);
+  border-radius: 16px;
+  background: var(--gin-bg-layer, #fff);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.site-dashboard-recent table {
+  width: 100%;
+  margin: 0;
+}
+
+.site-dashboard-recent th {
+  color: var(--gin-color-text, #222);
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.site-dashboard-recent td {
+  padding: 14px 12px;
+  color: var(--gin-color-text, #222);
+}
+
+@media (max-width: 760px) {
+  .site-dashboard-intro {
+    padding: 20px;
+  }
+
+  .site-dashboard-counts__grid,
+  .site-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*
+ * Prevent Gin toolbar hover labels from visually covering the dashboard content.
+ */
+.gin--vertical-toolbar .toolbar-menu-administration > .toolbar-menu > .menu-item > .toolbar-icon::after {
+  z-index: 1;
 }
