@@ -351,3 +351,36 @@ Job application form APIs:
 - POST /api/v1/forms/job-application/submit
 
 Resume upload is listed in metadata but is not API-supported yet.
+
+## Phase 9 Menu API
+
+The backend now exposes header and footer menus from Site Page menu fields.
+
+### Menu Fields
+
+Site Page includes:
+
+- Show In Header
+- Show In Footer
+- Menu Title
+- Menu Weight
+
+### Menu Endpoints
+
+- GET /api/v1/menus
+- GET /api/v1/menus/header
+- GET /api/v1/menus/footer
+
+### Frontend Usage
+
+Frontend should not hardcode header or footer navigation.
+
+Header and footer should be rendered from the Menu API.
+
+Each menu item includes:
+
+- title
+- slug
+- url
+- weight
+- apiPath
