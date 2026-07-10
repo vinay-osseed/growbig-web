@@ -1,0 +1,19 @@
+uuid: 9b2f126a-2580-47d3-826a-bc1f718ed545
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_badge
+    - paragraphs.paragraphs_type.image_text_section
+id: paragraph.image_text_section.field_badge
+field_name: field_badge
+entity_type: paragraph
+bundle: image_text_section
+label: Badge
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

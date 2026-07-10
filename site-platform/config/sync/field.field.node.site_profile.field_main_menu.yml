@@ -1,0 +1,19 @@
+uuid: fd0d8dd9-612e-4c38-ad37-28113824553b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_main_menu
+    - node.type.site_profile
+id: node.site_profile.field_main_menu
+field_name: field_main_menu
+entity_type: node
+bundle: site_profile
+label: 'Main menu machine name'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

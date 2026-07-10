@@ -1,0 +1,23 @@
+uuid: 2da88ab3-8cc6-4ba0-9740-4bf47cad56eb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_display_order
+    - paragraphs.paragraphs_type.stats_item
+id: paragraph.stats_item.field_display_order
+field_name: field_display_order
+entity_type: paragraph
+bundle: stats_item
+label: 'Display order'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

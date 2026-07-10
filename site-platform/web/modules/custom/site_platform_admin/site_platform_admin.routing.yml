@@ -1,0 +1,7 @@
+site_platform_admin.dashboard:
+  path: '/admin/site-dashboard'
+  defaults:
+    _controller: '\Drupal\site_platform_admin\Controller\SiteDashboardController::dashboard'
+    _title: 'Site Dashboard'
+  requirements:
+    _permission: 'access content overview'

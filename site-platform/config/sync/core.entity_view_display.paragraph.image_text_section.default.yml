@@ -1,0 +1,112 @@
+uuid: 2284e30f-f656-4f20-ba5b-051311986769
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.image_text_section.field_badge
+    - field.field.paragraph.image_text_section.field_description
+    - field.field.paragraph.image_text_section.field_heading
+    - field.field.paragraph.image_text_section.field_image
+    - field.field.paragraph.image_text_section.field_image_position
+    - field.field.paragraph.image_text_section.field_layout_variant
+    - field.field.paragraph.image_text_section.field_primary_button_link
+    - field.field.paragraph.image_text_section.field_primary_button_text
+    - field.field.paragraph.image_text_section.field_secondary_button_link
+    - field.field.paragraph.image_text_section.field_secondary_button_text
+    - paragraphs.paragraphs_type.image_text_section
+id: paragraph.image_text_section.default
+targetEntityType: paragraph
+bundle: image_text_section
+mode: default
+content:
+  field_badge:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_description:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_heading:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_image:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_image_position:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_layout_variant:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_primary_button_link:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_primary_button_text:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_secondary_button_link:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_secondary_button_text:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 9
+    region: content
+hidden: {  }

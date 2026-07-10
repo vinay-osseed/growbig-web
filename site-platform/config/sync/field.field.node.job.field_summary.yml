@@ -1,0 +1,19 @@
+uuid: b603772d-920f-471b-84d2-d7b345fc787e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_summary
+    - node.type.job
+id: node.job.field_summary
+field_name: field_summary
+entity_type: node
+bundle: job
+label: Summary
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

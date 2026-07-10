@@ -4,27 +4,45 @@ status: true
 dependencies:
   config:
     - field.field.node.site_profile.field_admin_domain
+    - field.field.node.site_profile.field_alternate_phone
     - field.field.node.site_profile.field_api_domain
+    - field.field.node.site_profile.field_city
     - field.field.node.site_profile.field_contact_address
     - field.field.node.site_profile.field_contact_email
     - field.field.node.site_profile.field_contact_phone
+    - field.field.node.site_profile.field_country
     - field.field.node.site_profile.field_default_meta_description
     - field.field.node.site_profile.field_default_meta_title
     - field.field.node.site_profile.field_default_social_image
+    - field.field.node.site_profile.field_description
     - field.field.node.site_profile.field_favicon
     - field.field.node.site_profile.field_footer_copyright
+    - field.field.node.site_profile.field_footer_description
+    - field.field.node.site_profile.field_footer_quick_links_menu
+    - field.field.node.site_profile.field_footer_services_menu
+    - field.field.node.site_profile.field_google_map_link
     - field.field.node.site_profile.field_is_active
     - field.field.node.site_profile.field_is_default
     - field.field.node.site_profile.field_logo
+    - field.field.node.site_profile.field_main_menu
+    - field.field.node.site_profile.field_map_latitude
+    - field.field.node.site_profile.field_map_longitude
+    - field.field.node.site_profile.field_postal_code
     - field.field.node.site_profile.field_primary_domain
     - field.field.node.site_profile.field_site_key
     - field.field.node.site_profile.field_site_short_name
+    - field.field.node.site_profile.field_social_links
+    - field.field.node.site_profile.field_state
+    - field.field.node.site_profile.field_tagline
     - field.field.node.site_profile.field_theme_color
     - field.field.node.site_profile.field_ui_domain
+    - field.field.node.site_profile.field_website
+    - field.field.node.site_profile.field_working_hours
     - node.type.site_profile
   module:
     - link
     - media_library
+    - paragraphs
     - path
 id: node.site_profile.default
 targetEntityType: node
@@ -45,6 +63,14 @@ content:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
+  field_alternate_phone:
+    type: string_textfield
+    weight: 22
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_api_domain:
     type: link_default
     weight: -15
@@ -52,6 +78,14 @@ content:
     settings:
       placeholder_url: ''
       placeholder_title: ''
+    third_party_settings: {  }
+  field_city:
+    type: string_textfield
+    weight: 24
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   field_contact_address:
     type: string_textarea
@@ -72,6 +106,14 @@ content:
   field_contact_phone:
     type: string_textfield
     weight: -10
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_country:
+    type: string_textfield
+    weight: 26
     region: content
     settings:
       size: 60
@@ -100,6 +142,14 @@ content:
     settings:
       media_types: {  }
     third_party_settings: {  }
+  field_description:
+    type: string_textarea
+    weight: 21
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
   field_favicon:
     type: media_library_widget
     weight: -13
@@ -114,6 +164,38 @@ content:
     settings:
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  field_footer_description:
+    type: string_textarea
+    weight: 32
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_footer_quick_links_menu:
+    type: string_textfield
+    weight: 34
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_footer_services_menu:
+    type: string_textfield
+    weight: 35
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_google_map_link:
+    type: link_default
+    weight: 29
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
     third_party_settings: {  }
   field_is_active:
     type: boolean_checkbox
@@ -135,6 +217,36 @@ content:
     region: content
     settings:
       media_types: {  }
+    third_party_settings: {  }
+  field_main_menu:
+    type: string_textfield
+    weight: 33
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_map_latitude:
+    type: number
+    weight: 30
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_map_longitude:
+    type: number
+    weight: 31
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_postal_code:
+    type: string_textfield
+    weight: 27
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   field_primary_domain:
     type: link_default
@@ -160,6 +272,34 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_social_links:
+    type: entity_reference_paragraphs
+    weight: 36
+    region: content
+    settings:
+      title: 'Social link'
+      title_plural: 'Social links'
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: social_link
+    third_party_settings: {  }
+  field_state:
+    type: string_textfield
+    weight: 25
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_tagline:
+    type: string_textfield
+    weight: 20
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_theme_color:
     type: string_textfield
     weight: -5
@@ -175,6 +315,22 @@ content:
     settings:
       placeholder_url: ''
       placeholder_title: ''
+    third_party_settings: {  }
+  field_website:
+    type: link_default
+    weight: 23
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_working_hours:
+    type: string_textarea
+    weight: 28
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
     third_party_settings: {  }
   path:
     type: path

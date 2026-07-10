@@ -1,0 +1,19 @@
+uuid: 6194a1ae-317e-445c-ad3c-7cf492ca1d4f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_platform_name
+    - paragraphs.paragraphs_type.social_link
+id: paragraph.social_link.field_platform_name
+field_name: field_platform_name
+entity_type: paragraph
+bundle: social_link
+label: 'Platform name'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,19 @@
+uuid: 6be6d30d-88d6-4053-bb20-37f777f223d3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_secondary_button_text
+    - paragraphs.paragraphs_type.cta_section
+id: paragraph.cta_section.field_secondary_button_text
+field_name: field_secondary_button_text
+entity_type: paragraph
+bundle: cta_section
+label: 'Secondary button text'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

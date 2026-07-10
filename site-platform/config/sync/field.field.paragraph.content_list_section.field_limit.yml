@@ -1,0 +1,23 @@
+uuid: 1e048c45-1fb9-4d8e-86f7-aeb536547665
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_limit
+    - paragraphs.paragraphs_type.content_list_section
+id: paragraph.content_list_section.field_limit
+field_name: field_limit
+entity_type: paragraph
+bundle: content_list_section
+label: Limit
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

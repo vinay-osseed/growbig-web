@@ -1,0 +1,36 @@
+uuid: 82326c9f-246a-4b61-b332-8efc4aedbffc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_sections
+    - node.type.site_page
+    - paragraphs.paragraphs_type.card_grid_section
+    - paragraphs.paragraphs_type.content_list_section
+    - paragraphs.paragraphs_type.cta_section
+    - paragraphs.paragraphs_type.hero_section
+    - paragraphs.paragraphs_type.image_text_section
+    - paragraphs.paragraphs_type.stats_section
+  module:
+    - entity_reference_revisions
+id: node.site_page.field_sections
+field_name: field_sections
+entity_type: node
+bundle: site_page
+label: Sections
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      hero_section: hero_section
+      cta_section: cta_section
+      stats_section: stats_section
+      card_grid_section: card_grid_section
+      image_text_section: image_text_section
+      content_list_section: content_list_section
+field_type: entity_reference_revisions

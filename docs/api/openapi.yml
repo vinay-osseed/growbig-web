@@ -1,17 +1,20 @@
 openapi: 3.0.3
-
 info:
   title: GrowBig Site Platform API
-  version: 0.1.0
-  description: Clean frontend API for the reusable Drupal-backed website platform.
+  description: Frontend-ready API documentation for the reusable GrowBig Site Platform Drupal backend.
+  version: 0.2.0
 
 servers:
   - url: https://growbig-web.ddev.site
     description: Local DDEV
+  - url: https://api.growbig-web.ddev.site
+    description: Local DDEV API domain
 
 tags:
   - name: Site
-    description: Global site profile and branding data
+    description: Global site profile, branding, contact, SEO, social, and footer settings.
+  - name: Pages
+    description: Reusable frontend pages composed from structured sections.
 
 paths:
   /api/v1/site:
@@ -19,60 +22,208 @@ paths:
       tags:
         - Site
       summary: Get active site profile
-      description: Returns the active site profile, domains, branding, SEO defaults, theme values, contact info, and media references.
+      description: Returns the active default Site Profile in a frontend-ready JSON structure.
       operationId: getSiteProfile
       responses:
         '200':
-          description: Active site profile
+          description: Active site profile response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SiteProfile'
+
+  /api/v1/pages:
+    get:
+      summary: List dynamic site pages
+      description: Returns published dynamic pages available to the decoupled frontend.
+      responses:
+        '200':
+          description: Dynamic page list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SitePageList'
+
+  /api/v1/pages/{slug}:
+    get:
+      tags:
+        - Pages
+      summary: Get page by slug
+      description: Returns a published Site Page by page key, including SEO data and structured sections.
+      operationId: getSitePage
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: Page key.
+          schema:
+            type: string
+            example: home
+      responses:
+        '200':
+          description: Site Page response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SitePage'
+              examples:
+                home:
+                  summary: Home page
+                  value:
+                    id: 2
+                    type: page
+                    title: Home
+                    slug: home
+                    pageType: home
+                    summary: GrowBig homepage composed from reusable sections.
+                    sites:
+                      - id: 1
+                        key: growbig
+                        name: GrowBig Technologies LLP
+                    seo:
+                      title: GrowBig Technologies LLP | Digital Solutions That Drive Business Growth
+                      description: GrowBig Technologies LLP delivers websites, mobile apps, custom software, cloud solutions, and digital consulting.
+                      keywords: ''
+                      canonicalUrl: ''
+                      openGraph:
+                        title: GrowBig Technologies LLP
+                        description: Building digital solutions that drive business growth.
+                        image: null
+                      robots: index_follow
+                    sections:
+                      - id: 5
+                        type: hero
+                        badge: Premium IT Solutions - Est. 2020
+                        heading: Building Digital Solutions That Drive Business Growth
+                        highlightText: Solutions
+                        description: GrowBig Technologies LLP delivers modern websites, mobile applications, cloud solutions, digital transformation, AI-powered software, branding, and technology consulting for startups and enterprises.
+                        primaryButton:
+                          text: Start Your Project
+                          url: internal:/contact
+                        secondaryButton:
+                          text: View Services
+                          url: internal:/services
+                        image: null
+                        imageAltText: ''
+                        layoutVariant: split_image_right
+                        backgroundStyle: dark_grid
+                    meta:
+                      status: true
+                      created: 1783455604
+                      changed: 1783455604
+        '404':
+          description: Page not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
               example:
-                id: growbig
-                type: site
-                name: GrowBig Technologies LLP
-                shortName: GrowBig
-                domains:
-                  primary: https://growbig-web.ddev.site
-                  ui: https://ui.growbig-web.ddev.site
-                  admin: https://admin.growbig-web.ddev.site
-                  api: https://api.growbig-web.ddev.site
-                branding:
-                  logo:
-                    id: 24234e4e-3c3b-4241-aa62-a7d78c696e71
-                    type: image
-                    title: Horizontal GB LLP Logo.png
-                    alt: Horizontal GrowBig Logo
-                    url: https://growbig-web.ddev.site/sites/default/files/example.png
-                    mime: image/png
-                    width: 748
-                    height: 238
-                    styles:
-                      thumbnail: https://growbig-web.ddev.site/sites/default/files/styles/api_thumbnail/public/example.png
-                      card: https://growbig-web.ddev.site/sites/default/files/styles/api_card/public/example.png
-                      heroMobile: https://growbig-web.ddev.site/sites/default/files/styles/api_hero_mobile/public/example.png
-                      heroDesktop: https://growbig-web.ddev.site/sites/default/files/styles/api_hero_desktop/public/example.png
-                      social: https://growbig-web.ddev.site/sites/default/files/styles/api_social/public/example.png
-                      logo: https://growbig-web.ddev.site/sites/default/files/styles/api_logo/public/example.png
-                  favicon: null
-                  defaultImage: null
-                contact:
-                  email: vinay@osseed.com
-                  phone: ''
-                  address: ''
-                seo:
-                  title: GrowBig Technologies LLP
-                  description: ''
-                  image: null
-                social: []
-                theme:
-                  color: '#0f172a'
-                meta:
-                  source: site_profile
-                  nodeId: 1
-                  isDefault: true
-                  isActive: true
+                error:
+                  code: not_found
+                  message: Page not found.
+
+  /api/v1/content/{source}:
+    get:
+      tags:
+        - Pages
+      summary: Get reusable content by source
+      description: Returns reusable frontend-ready content items for services, partners, or team members.
+      operationId: getReusableContent
+      parameters:
+        - name: source
+          in: path
+          required: true
+          description: Reusable content source.
+          schema:
+            type: string
+            enum:
+              - services
+              - partners
+              - team
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of items to return. Use 0 or omit for no limit.
+          schema:
+            type: integer
+            default: 0
+        - name: featuredOnly
+          in: query
+          required: false
+          description: Return only featured items.
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Reusable content list response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReusableContentList'
+        '400':
+          description: Unsupported content source.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+              example:
+                error:
+                  code: invalid_source
+                  message: Unsupported content source.
+
+  /api/v1/content/{source}/{key}:
+    get:
+      tags:
+        - Pages
+      summary: Get reusable content item by source and key
+      description: Returns one frontend-ready reusable content item.
+      operationId: getReusableContentItem
+      parameters:
+        - name: source
+          in: path
+          required: true
+          description: Reusable content source.
+          schema:
+            type: string
+            enum:
+              - services
+              - partners
+              - team
+        - name: key
+          in: path
+          required: true
+          description: Content item key.
+          schema:
+            type: string
+            example: website-development
+      responses:
+        '200':
+          description: Reusable content detail response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReusableContentDetail'
+        '400':
+          description: Unsupported content source.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+              example:
+                error:
+                  code: invalid_source
+                  message: Unsupported content source.
+        '404':
+          description: Content item not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+              example:
+                error:
+                  code: not_found
+                  message: Content item not found.
 
 components:
   schemas:
@@ -89,6 +240,7 @@ components:
         - seo
         - social
         - theme
+        - footer
         - meta
       properties:
         id:
@@ -103,6 +255,10 @@ components:
         shortName:
           type: string
           example: GrowBig
+        tagline:
+          type: string
+        description:
+          type: string
         domains:
           $ref: '#/components/schemas/SiteDomains'
         branding:
@@ -117,159 +273,733 @@ components:
             $ref: '#/components/schemas/SocialLink'
         theme:
           $ref: '#/components/schemas/SiteTheme'
+        footer:
+          $ref: '#/components/schemas/SiteFooter'
         meta:
           $ref: '#/components/schemas/SiteMeta'
 
     SiteDomains:
       type: object
-      required:
-        - primary
-        - ui
-        - admin
-        - api
       properties:
         primary:
           type: string
           format: uri
-          example: https://growbig-web.ddev.site
         ui:
           type: string
           format: uri
-          example: https://ui.growbig-web.ddev.site
         admin:
           type: string
           format: uri
-          example: https://admin.growbig-web.ddev.site
         api:
           type: string
           format: uri
-          example: https://api.growbig-web.ddev.site
+        website:
+          type: string
+          format: uri
 
     SiteBranding:
       type: object
-      required:
-        - logo
-        - favicon
-        - defaultImage
       properties:
         logo:
-          oneOf:
+          nullable: true
+          allOf:
             - $ref: '#/components/schemas/MediaImage'
-            - type: 'null'
         favicon:
-          oneOf:
+          nullable: true
+          allOf:
             - $ref: '#/components/schemas/MediaImage'
-            - type: 'null'
         defaultImage:
-          oneOf:
+          nullable: true
+          allOf:
             - $ref: '#/components/schemas/MediaImage'
-            - type: 'null'
 
     SiteContact:
       type: object
-      required:
-        - email
-        - phone
-        - address
       properties:
         email:
           type: string
-          format: email
-          example: vinay@osseed.com
         phone:
           type: string
-          example: ''
+        alternatePhone:
+          type: string
         address:
           type: string
-          example: ''
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        postalCode:
+          type: string
+        workingHours:
+          type: string
+        map:
+          $ref: '#/components/schemas/SiteMap'
+
+    SiteMap:
+      type: object
+      properties:
+        url:
+          type: string
+        latitude:
+          type: number
+          nullable: true
+        longitude:
+          type: number
+          nullable: true
 
     SiteSeo:
       type: object
-      required:
-        - title
-        - description
-        - image
       properties:
         title:
           type: string
-          example: GrowBig Technologies LLP
         description:
           type: string
-          example: ''
         image:
-          oneOf:
+          nullable: true
+          allOf:
             - $ref: '#/components/schemas/MediaImage'
-            - type: 'null'
+
+    SocialLink:
+      type: object
+      properties:
+        platform:
+          type: string
+        url:
+          type: string
+        icon:
+          type: string
+        order:
+          type: integer
 
     SiteTheme:
       type: object
-      required:
-        - color
       properties:
         color:
           type: string
-          example: '#0f172a'
+
+    SiteFooter:
+      type: object
+      properties:
+        description:
+          type: string
+        copyright:
+          type: string
+        menus:
+          $ref: '#/components/schemas/SiteFooterMenus'
+
+    SiteFooterMenus:
+      type: object
+      properties:
+        main:
+          type: string
+        quickLinks:
+          type: string
+        services:
+          type: string
 
     SiteMeta:
       type: object
-      required:
-        - source
-        - nodeId
-        - isDefault
-        - isActive
       properties:
         source:
           type: string
-          example: site_profile
         nodeId:
           type: integer
-          example: 1
+          nullable: true
         isDefault:
           type: boolean
-          example: true
         isActive:
           type: boolean
-          example: true
 
-    MediaImage:
+    SitePageList:
+      type: object
+      required:
+        - contractVersion
+        - count
+        - items
+      properties:
+        contractVersion:
+          type: string
+          example: '1.0'
+        count:
+          type: integer
+          example: 2
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SitePageListItem'
+
+    SitePageListItem:
       type: object
       required:
         - id
+        - uuid
+        - title
+        - slug
+        - pageType
+        - route
+        - api
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+          format: uuid
+        title:
+          type: string
+          example: About
+        slug:
+          type: string
+          example: about
+        pageType:
+          type: string
+          example: about
+        route:
+          $ref: '#/components/schemas/PageRoute'
+        api:
+          $ref: '#/components/schemas/PageApiLinks'
+
+    SitePage:
+      type: object
+      required:
+        - contractVersion
+        - id
+        - uuid
         - type
         - title
-        - alt
-        - url
-        - mime
-        - width
-        - height
-        - styles
+        - slug
+        - pageType
+        - route
+        - api
+        - summary
+        - sites
+        - seo
+        - sections
+        - meta
+      properties:
+        contractVersion:
+          type: string
+          example: '1.0'
+        id:
+          type: integer
+        uuid:
+          type: string
+          format: uuid
+        type:
+          type: string
+          example: page
+        title:
+          type: string
+        slug:
+          type: string
+          example: home
+        pageType:
+          type: string
+          example: home
+        route:
+          $ref: '#/components/schemas/PageRoute'
+        api:
+          $ref: '#/components/schemas/PageApiLinks'
+        summary:
+          type: string
+        sites:
+          type: array
+          items:
+            $ref: '#/components/schemas/PageSiteReference'
+        seo:
+          $ref: '#/components/schemas/PageSeo'
+        sections:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/HeroSection'
+              - $ref: '#/components/schemas/StatsSection'
+              - $ref: '#/components/schemas/CardGridSection'
+              - $ref: '#/components/schemas/CtaSection'
+              - $ref: '#/components/schemas/ImageTextSection'
+              - $ref: '#/components/schemas/ContentListSection'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+
+    PageRoute:
+      type: object
+      properties:
+        path:
+          type: string
+          example: /about
+        apiPath:
+          type: string
+          example: /api/v1/pages/about
+
+    PageApiLinks:
+      type: object
+      properties:
+        self:
+          type: string
+          example: /api/v1/pages/about
+
+    PageSiteReference:
+      type: object
+      properties:
+        id:
+          type: integer
+        key:
+          type: string
+        name:
+          type: string
+
+    PageSeo:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        keywords:
+          type: string
+        canonicalUrl:
+          type: string
+        openGraph:
+          $ref: '#/components/schemas/PageOpenGraph'
+        robots:
+          type: string
+
+    PageOpenGraph:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        image:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/MediaImage'
+
+    HeroSection:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: hero
+        badge:
+          type: string
+        heading:
+          type: string
+        highlightText:
+          type: string
+        description:
+          type: string
+        primaryButton:
+          $ref: '#/components/schemas/Button'
+        secondaryButton:
+          $ref: '#/components/schemas/Button'
+        image:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/MediaImage'
+        imageAltText:
+          type: string
+        layoutVariant:
+          type: string
+        backgroundStyle:
+          type: string
+
+    StatsSection:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: stats
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatsItem'
+
+    StatsItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: stat
+        title:
+          type: string
+        count:
+          type: integer
+        prefix:
+          type: string
+        suffix:
+          type: string
+        icon:
+          type: string
+        order:
+          type: integer
+
+    CardGridSection:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: cardGrid
+        badge:
+          type: string
+        heading:
+          type: string
+        description:
+          type: string
+        cards:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardItem'
+        primaryButton:
+          $ref: '#/components/schemas/Button'
+        secondaryButton:
+          $ref: '#/components/schemas/Button'
+        layoutVariant:
+          type: string
+
+    CardItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: card
+        title:
+          type: string
+        description:
+          type: string
+        icon:
+          type: string
+        image:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/MediaImage'
+        accentColor:
+          type: string
+        link:
+          $ref: '#/components/schemas/Button'
+        order:
+          type: integer
+        isActive:
+          type: boolean
+
+    CtaSection:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: cta
+        badge:
+          type: string
+        heading:
+          type: string
+        description:
+          type: string
+        primaryButton:
+          $ref: '#/components/schemas/Button'
+        secondaryButton:
+          $ref: '#/components/schemas/Button'
+        layoutVariant:
+          type: string
+        backgroundStyle:
+          type: string
+
+    ImageTextSection:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: imageText
+        badge:
+          type: string
+        heading:
+          type: string
+        description:
+          type: string
+        image:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/MediaImage'
+        imagePosition:
+          type: string
+        primaryButton:
+          $ref: '#/components/schemas/Button'
+        secondaryButton:
+          $ref: '#/components/schemas/Button'
+        layoutVariant:
+          type: string
+
+    ContentListSection:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: contentList
+        badge:
+          type: string
+        heading:
+          type: string
+        description:
+          type: string
+        source:
+          type: string
+          enum:
+            - services
+            - partners
+            - team
+        limit:
+          type: integer
+        featuredOnly:
+          type: boolean
+        items:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/ServiceListItem'
+              - $ref: '#/components/schemas/PartnerListItem'
+              - $ref: '#/components/schemas/TeamMemberListItem'
+        primaryButton:
+          $ref: '#/components/schemas/Button'
+        secondaryButton:
+          $ref: '#/components/schemas/Button'
+        layoutVariant:
+          type: string
+
+    ReusableContentDetail:
+      type: object
+      properties:
+        source:
+          type: string
+          enum:
+            - services
+            - partners
+            - team
+        key:
+          type: string
+        item:
+          oneOf:
+            - $ref: '#/components/schemas/ServiceListItem'
+            - $ref: '#/components/schemas/PartnerListItem'
+            - $ref: '#/components/schemas/TeamMemberListItem'
+
+    ReusableContentList:
+      type: object
+      properties:
+        source:
+          type: string
+          enum:
+            - services
+            - partners
+            - team
+        limit:
+          type: integer
+        featuredOnly:
+          type: boolean
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/ServiceListItem'
+              - $ref: '#/components/schemas/PartnerListItem'
+              - $ref: '#/components/schemas/TeamMemberListItem'
+
+    JobListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: job
+        key:
+          type: string
+          example: frontend-developer
+        title:
+          type: string
+          example: Frontend Developer
+        summary:
+          type: string
+        department:
+          type: string
+          example: Engineering
+        location:
+          type: string
+          example: Remote / Sawantwadi, India
+        employmentType:
+          type: string
+          example: full_time
+        experienceLevel:
+          type: string
+          example: 1-3 years
+        salaryRange:
+          type: string
+        description:
+          type: string
+        responsibilities:
+          type: string
+        requirements:
+          type: string
+        closingDate:
+          type: string
+        order:
+          type: integer
+        isFeatured:
+          type: boolean
+
+    ServiceListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: service
+        key:
+          type: string
+        title:
+          type: string
+        summary:
+          type: string
+        icon:
+          type: string
+        accentColor:
+          type: string
+        image:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/MediaImage'
+        url:
+          type: string
+        order:
+          type: integer
+        isFeatured:
+          type: boolean
+
+    PartnerListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: partner
+        key:
+          type: string
+        title:
+          type: string
+        summary:
+          type: string
+        logo:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/MediaImage'
+        website:
+          type: string
+        order:
+          type: integer
+        isFeatured:
+          type: boolean
+
+    TeamMemberListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          example: teamMember
+        key:
+          type: string
+        name:
+          type: string
+        role:
+          type: string
+        summary:
+          type: string
+        bio:
+          type: string
+        photo:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/MediaImage'
+        email:
+          type: string
+        linkedinUrl:
+          type: string
+        order:
+          type: integer
+        isFeatured:
+          type: boolean
+
+    Button:
+      type: object
+      properties:
+        text:
+          type: string
+        url:
+          type: string
+
+    PageMeta:
+      type: object
+      properties:
+        status:
+          type: boolean
+        created:
+          type: integer
+        changed:
+          type: integer
+
+    ApiError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+
+    MediaImage:
+      type: object
+      nullable: true
       properties:
         id:
           type: string
           format: uuid
-          example: 24234e4e-3c3b-4241-aa62-a7d78c696e71
         type:
           type: string
-          example: image
         title:
           type: string
-          example: Horizontal GB LLP Logo.png
         alt:
           type: string
-          example: Horizontal GrowBig Logo
         url:
           type: string
-          format: uri
-          example: https://growbig-web.ddev.site/sites/default/files/example.png
         mime:
           type: string
-          example: image/png
         width:
-          type: integer
-          example: 748
+          type: string
         height:
-          type: integer
-          example: 238
+          type: string
         styles:
           $ref: '#/components/schemas/ImageStyles'
 
@@ -278,39 +1008,33 @@ components:
       properties:
         thumbnail:
           type: string
-          format: uri
         card:
           type: string
-          format: uri
         heroMobile:
           type: string
-          format: uri
         heroDesktop:
           type: string
-          format: uri
         social:
           type: string
-          format: uri
         logo:
           type: string
-          format: uri
         wide:
           type: string
-          format: uri
         large:
           type: string
-          format: uri
         medium:
           type: string
-          format: uri
 
-    SocialLink:
-      type: object
-      properties:
-        label:
-          type: string
-          example: LinkedIn
-        url:
-          type: string
-          format: uri
-          example: https://www.linkedin.com/company/example
+# Phase 8 documented endpoints:
+# - GET /api/v1/pages/careers
+# - GET /api/v1/pages/contact
+# - GET /api/v1/content/jobs
+# - GET /api/v1/content/jobs/{key}
+# - GET /api/v1/forms/contact-us
+# - POST /api/v1/forms/contact-us/submit
+# - GET /api/v1/forms/job-application
+# - POST /api/v1/forms/job-application/submit
+#
+# Notes:
+# - contact_us includes optional budget_range.
+# - job_application includes resume_upload metadata, but file upload is not API-supported yet.

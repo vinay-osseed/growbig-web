@@ -1,0 +1,19 @@
+uuid: cd02d31a-0a28-49e7-bf90-0d4592e4564f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_secondary_button_text
+    - paragraphs.paragraphs_type.card_grid_section
+id: paragraph.card_grid_section.field_secondary_button_text
+field_name: field_secondary_button_text
+entity_type: paragraph
+bundle: card_grid_section
+label: 'Secondary button text'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,10 @@
+name: Site Platform Admin
+type: module
+description: Provides a content admin dashboard for reusable site platform management.
+package: Site Platform
+core_version_requirement: ^11
+dependencies:
+  - drupal:node
+  - drupal:media
+  - drupal:menu_ui
+  - site_platform_api:site_platform_api

@@ -1,0 +1,10 @@
+uuid: e389b4e2-7c07-4473-bcbb-26929c6ca7cc
+langcode: en
+status: true
+dependencies: {  }
+id: stats_item
+label: 'Stats Item'
+icon_uuid: null
+icon_default: null
+description: 'Single statistic item with count, label, prefix, suffix, and icon.'
+behavior_plugins: {  }

@@ -1,0 +1,10 @@
+uuid: 49b053c0-4847-4b64-bed4-f1f0a93285ca
+langcode: en
+status: true
+dependencies: {  }
+id: cta_section
+label: 'CTA Section'
+icon_uuid: null
+icon_default: null
+description: 'Call-to-action section with heading, description, and buttons.'
+behavior_plugins: {  }

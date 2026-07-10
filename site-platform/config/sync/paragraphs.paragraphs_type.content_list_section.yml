@@ -1,0 +1,10 @@
+uuid: c50eca37-7fc0-4e7b-b71f-445b839990b9
+langcode: en
+status: true
+dependencies: {  }
+id: content_list_section
+label: 'Content List Section'
+icon_uuid: null
+icon_default: null
+description: 'Dynamic section that pulls reusable content like services, partners, or team members.'
+behavior_plugins: {  }

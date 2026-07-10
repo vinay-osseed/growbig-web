@@ -1,0 +1,10 @@
+uuid: 675634a2-0ef9-4b24-a995-c2314d0160d2
+langcode: en
+status: true
+dependencies: {  }
+id: social_link
+label: 'Social Link'
+icon_uuid: null
+icon_default: null
+description: 'Stores a social media profile link for a site profile.'
+behavior_plugins: {  }

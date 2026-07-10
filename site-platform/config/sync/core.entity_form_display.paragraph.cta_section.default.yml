@@ -1,0 +1,93 @@
+uuid: ae24dd2d-5442-458c-8556-8393635c2f2c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.cta_section.field_background_style
+    - field.field.paragraph.cta_section.field_badge
+    - field.field.paragraph.cta_section.field_description
+    - field.field.paragraph.cta_section.field_heading
+    - field.field.paragraph.cta_section.field_layout_variant
+    - field.field.paragraph.cta_section.field_primary_button_link
+    - field.field.paragraph.cta_section.field_primary_button_text
+    - field.field.paragraph.cta_section.field_secondary_button_link
+    - field.field.paragraph.cta_section.field_secondary_button_text
+    - paragraphs.paragraphs_type.cta_section
+  module:
+    - link
+id: paragraph.cta_section.default
+targetEntityType: paragraph
+bundle: cta_section
+mode: default
+content:
+  field_background_style:
+    type: options_select
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_badge:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_description:
+    type: string_textarea
+    weight: 2
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_heading:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_layout_variant:
+    type: options_select
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_primary_button_link:
+    type: link_default
+    weight: 4
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_primary_button_text:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_secondary_button_link:
+    type: link_default
+    weight: 6
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_secondary_button_text:
+    type: string_textfield
+    weight: 5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
