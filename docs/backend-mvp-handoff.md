@@ -476,3 +476,26 @@ This endpoint exposes only safe public analytics tracking config.
 Verification:
 
 - ./scripts/check-analytics-config-api.sh
+
+## Analytics Admin Settings
+
+Admin URL:
+
+- /admin/config/site-platform/analytics
+
+Analytics config priority:
+
+1. Environment values
+2. Drupal config fallback
+3. Disabled default
+
+Environment values:
+
+- GOOGLE_ANALYTICS_ENABLED
+- GOOGLE_ANALYTICS_MEASUREMENT_ID
+
+Public frontend API:
+
+- GET /api/v1/analytics/config
+
+The API exposes only safe public tracking config. Private Google reporting credentials must never be exposed to frontend JSON.
