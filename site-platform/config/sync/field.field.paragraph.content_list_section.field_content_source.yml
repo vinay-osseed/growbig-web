@@ -1,0 +1,21 @@
+uuid: 4fdfa438-40f8-4f53-817b-cf68f92c7917
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_content_source
+    - paragraphs.paragraphs_type.content_list_section
+  module:
+    - options
+id: paragraph.content_list_section.field_content_source
+field_name: field_content_source
+entity_type: paragraph
+bundle: content_list_section
+label: 'Content source'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,26 @@
+uuid: b0446fea-5e47-4d6c-81b9-10d70c9b8a43
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_cards
+    - paragraphs.paragraphs_type.card_grid_section
+    - paragraphs.paragraphs_type.card_item
+  module:
+    - entity_reference_revisions
+id: paragraph.card_grid_section.field_cards
+field_name: field_cards
+entity_type: paragraph
+bundle: card_grid_section
+label: Cards
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      card_item: card_item
+field_type: entity_reference_revisions

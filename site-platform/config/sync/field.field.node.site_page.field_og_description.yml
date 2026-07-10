@@ -1,0 +1,19 @@
+uuid: 99a5ea17-877b-4374-97e1-ae4f55cb70c2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_og_description
+    - node.type.site_page
+id: node.site_page.field_og_description
+field_name: field_og_description
+entity_type: node
+bundle: site_page
+label: 'Open Graph description'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

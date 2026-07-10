@@ -1,0 +1,4 @@
+dashboard:
+  css:
+    theme:
+      css/site-platform-admin-dashboard.css: {}

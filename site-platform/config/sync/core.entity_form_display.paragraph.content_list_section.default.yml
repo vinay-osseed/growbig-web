@@ -1,0 +1,109 @@
+uuid: 3d1fdd29-9c21-4f4b-94ca-476b2c12f3fa
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.content_list_section.field_badge
+    - field.field.paragraph.content_list_section.field_content_source
+    - field.field.paragraph.content_list_section.field_description
+    - field.field.paragraph.content_list_section.field_featured_only
+    - field.field.paragraph.content_list_section.field_heading
+    - field.field.paragraph.content_list_section.field_layout_variant
+    - field.field.paragraph.content_list_section.field_limit
+    - field.field.paragraph.content_list_section.field_primary_button_link
+    - field.field.paragraph.content_list_section.field_primary_button_text
+    - field.field.paragraph.content_list_section.field_secondary_button_link
+    - field.field.paragraph.content_list_section.field_secondary_button_text
+    - paragraphs.paragraphs_type.content_list_section
+  module:
+    - link
+id: paragraph.content_list_section.default
+targetEntityType: paragraph
+bundle: content_list_section
+mode: default
+content:
+  field_badge:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_content_source:
+    type: options_select
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_description:
+    type: string_textarea
+    weight: 2
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_featured_only:
+    type: boolean_checkbox
+    weight: 5
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_heading:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_layout_variant:
+    type: options_select
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_limit:
+    type: number
+    weight: 4
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_primary_button_link:
+    type: link_default
+    weight: 7
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_primary_button_text:
+    type: string_textfield
+    weight: 6
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_secondary_button_link:
+    type: link_default
+    weight: 9
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_secondary_button_text:
+    type: string_textfield
+    weight: 8
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

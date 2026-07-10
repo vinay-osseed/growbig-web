@@ -1,0 +1,19 @@
+uuid: 774a4e6b-b6a5-488e-b2fc-d84cdf1e8bd8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_description
+    - paragraphs.paragraphs_type.card_item
+id: paragraph.card_item.field_description
+field_name: field_description
+entity_type: paragraph
+bundle: card_item
+label: Description
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

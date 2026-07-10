@@ -1,0 +1,21 @@
+uuid: e353eafc-0abd-4eb0-9cfc-d7505ddaef91
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_layout_variant
+    - paragraphs.paragraphs_type.image_text_section
+  module:
+    - options
+id: paragraph.image_text_section.field_layout_variant
+field_name: field_layout_variant
+entity_type: paragraph
+bundle: image_text_section
+label: 'Layout variant'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

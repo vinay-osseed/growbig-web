@@ -1,0 +1,19 @@
+uuid: 87eefaf5-4153-4381-9e01-e5ea65819382
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_summary
+    - node.type.service
+id: node.service.field_summary
+field_name: field_summary
+entity_type: node
+bundle: service
+label: Summary
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

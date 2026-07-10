@@ -1,0 +1,6 @@
+site_platform_admin.dashboard:
+  title: 'Site Dashboard'
+  description: 'Manage reusable site platform settings, content, menus, and API documentation.'
+  route_name: site_platform_admin.dashboard
+  parent: system.admin
+  weight: -50

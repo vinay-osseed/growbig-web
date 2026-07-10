@@ -1,0 +1,24 @@
+uuid: 8e9d3cc6-b329-4197-bc2e-c1cf6e2cc6d3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_sites
+    - node.type.partner
+    - node.type.site_profile
+id: node.partner.field_sites
+field_name: field_sites
+entity_type: node
+bundle: partner
+label: Sites
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      site_profile: site_profile
+field_type: entity_reference

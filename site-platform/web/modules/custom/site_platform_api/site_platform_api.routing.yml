@@ -2,8 +2,62 @@ site_platform_api.site:
   path: '/api/v1/site'
   defaults:
     _controller: '\Drupal\site_platform_api\Controller\SiteController::site'
-    _title: 'Site profile'
   requirements:
     _permission: 'access content'
+  options:
+    no_cache: TRUE
+
+site_platform_api.pages:
+  path: '/api/v1/pages'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\PageController::index'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+
+site_platform_api.page:
+  path: '/api/v1/pages/{slug}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\PageController::page'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+
+site_platform_api.content:
+  path: '/api/v1/content/{source}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\ContentController::list'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+
+site_platform_api.content_detail:
+  path: '/api/v1/content/{source}/{key}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\ContentController::detail'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+
+site_platform_api.form:
+  path: '/api/v1/forms/{form}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\FormController::form'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+
+site_platform_api.form_submit:
+  path: '/api/v1/forms/{form}/submit'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\FormController::submit'
+  requirements:
+    _permission: 'access content'
+  methods: [POST]
   options:
     no_cache: TRUE

@@ -1,0 +1,23 @@
+uuid: 12b8e31d-c398-440a-ad23-b536ba1568e0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_profile_url
+    - paragraphs.paragraphs_type.social_link
+  module:
+    - link
+id: paragraph.social_link.field_profile_url
+field_name: field_profile_url
+entity_type: paragraph
+bundle: social_link
+label: 'Profile URL'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 0
+  link_type: 17
+field_type: link

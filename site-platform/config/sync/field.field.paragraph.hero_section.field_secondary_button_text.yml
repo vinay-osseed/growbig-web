@@ -1,0 +1,19 @@
+uuid: f3c13d9e-fc11-4aa9-ab00-4439a008e099
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_secondary_button_text
+    - paragraphs.paragraphs_type.hero_section
+id: paragraph.hero_section.field_secondary_button_text
+field_name: field_secondary_button_text
+entity_type: paragraph
+bundle: hero_section
+label: 'Secondary button text'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,59 @@
+uuid: f633951c-9f92-4bb1-8cf5-7cd803195e00
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.social_link.field_display_order
+    - field.field.paragraph.social_link.field_icon
+    - field.field.paragraph.social_link.field_is_active
+    - field.field.paragraph.social_link.field_platform_name
+    - field.field.paragraph.social_link.field_profile_url
+    - paragraphs.paragraphs_type.social_link
+  module:
+    - link
+id: paragraph.social_link.default
+targetEntityType: paragraph
+bundle: social_link
+mode: default
+content:
+  field_display_order:
+    type: number
+    weight: 3
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_icon:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_is_active:
+    type: boolean_checkbox
+    weight: 4
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_platform_name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_profile_url:
+    type: link_default
+    weight: 1
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

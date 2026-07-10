@@ -1,0 +1,19 @@
+uuid: d21d139f-ecdd-4035-9dd0-c4fdf7af655d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_meta_title
+    - node.type.site_page
+id: node.site_page.field_meta_title
+field_name: field_meta_title
+entity_type: node
+bundle: site_page
+label: 'Meta title'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

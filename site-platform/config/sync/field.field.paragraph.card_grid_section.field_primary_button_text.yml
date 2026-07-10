@@ -1,0 +1,19 @@
+uuid: cc08f740-28b2-4aca-8e76-480bfa427dd6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_primary_button_text
+    - paragraphs.paragraphs_type.card_grid_section
+id: paragraph.card_grid_section.field_primary_button_text
+field_name: field_primary_button_text
+entity_type: paragraph
+bundle: card_grid_section
+label: 'Primary button text'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
