@@ -79,3 +79,12 @@ site_platform_api.menu:
     _permission: 'access content'
   options:
     no_cache: TRUE
+
+site_platform_api.admin_dashboard:
+  path: '/api/v1/admin/dashboard'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\AdminDashboardController::dashboard'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    no_cache: TRUE

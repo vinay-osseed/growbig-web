@@ -384,3 +384,21 @@ Each menu item includes:
 - url
 - weight
 - apiPath
+
+## Phase 10 Dashboard API
+
+The backend includes a first role-aware admin dashboard API.
+
+Endpoint:
+
+- GET /api/v1/admin/dashboard
+
+This endpoint returns:
+
+- current user roles
+- role-aware dashboard cards
+- content counts
+- Webform submission counts
+- recent content updates
+
+The dashboard UI should render these cards from backend data.
