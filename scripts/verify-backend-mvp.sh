@@ -22,6 +22,9 @@ echo "Checking API smoke tests..."
 echo "Checking dashboard API..."
 ./scripts/check-dashboard-api.sh
 
+echo "Checking dashboard UI..."
+./scripts/check-dashboard-ui.sh
+
 echo "Checking required API endpoints..."
 python3 - <<'INNERPY'
 import json

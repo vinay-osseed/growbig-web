@@ -75,3 +75,44 @@
 :is(#extra-specificity-hack, .gin--core-navigation [data-drupal-admin-styles]) .toolbar-button.current.is-active::before {
   background: transparent !important;
 }
+.site-dashboard-counts {
+  margin: 24px 0;
+}
+
+.site-dashboard-counts h3,
+.site-dashboard-section h3,
+.site-dashboard-recent h3 {
+  margin: 0 0 16px;
+}
+
+.site-dashboard-counts__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.site-dashboard-count {
+  padding: 18px;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.site-dashboard-count__value {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.site-dashboard-count__label {
+  margin-top: 6px;
+  color: #555;
+}
+
+.site-dashboard-section {
+  margin: 24px 0;
+}
+
+.site-dashboard-recent {
+  margin-top: 32px;
+}
