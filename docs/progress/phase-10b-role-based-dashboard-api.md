@@ -33,3 +33,13 @@ Cards are generated for:
 This is the backend API foundation for dashboard redesign.
 
 Frontend/dashboard UI should render cards from this API instead of hardcoding dashboard content.
+
+## Verification Note
+
+The dashboard API requires an authenticated admin user.
+
+It should not be tested with anonymous curl.
+
+Use:
+
+- ./scripts/check-dashboard-api.sh

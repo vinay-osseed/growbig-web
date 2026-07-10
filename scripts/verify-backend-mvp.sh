@@ -19,6 +19,9 @@ echo "Checking Drupal platform..."
 echo "Checking API smoke tests..."
 ./scripts/test-api.sh
 
+echo "Checking dashboard API..."
+./scripts/check-dashboard-api.sh
+
 echo "Checking required API endpoints..."
 python3 - <<'INNERPY'
 import json
