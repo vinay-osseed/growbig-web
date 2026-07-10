@@ -19,6 +19,9 @@ echo "Checking Drupal platform..."
 echo "Checking API smoke tests..."
 ./scripts/test-api.sh
 
+echo "Checking analytics config API..."
+./scripts/check-analytics-config-api.sh
+
 echo "Checking dashboard API..."
 ./scripts/check-dashboard-api.sh
 

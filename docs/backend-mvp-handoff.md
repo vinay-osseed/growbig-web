@@ -459,3 +459,20 @@ Environment values:
 Drupal Google Analytics modules may be useful for Drupal-rendered/admin pages, but they are not enough for the decoupled frontend UI because the frontend is not rendered by Drupal.
 
 For dashboard analytics reports, backend-only Google Analytics Data API credentials may be added later.
+
+## Analytics Config API
+
+Endpoint:
+
+- GET /api/v1/analytics/config
+
+Environment values:
+
+- GOOGLE_ANALYTICS_ENABLED
+- GOOGLE_ANALYTICS_MEASUREMENT_ID
+
+This endpoint exposes only safe public analytics tracking config.
+
+Verification:
+
+- ./scripts/check-analytics-config-api.sh

@@ -13,6 +13,9 @@ curl -ks "${BASE_URL}/api/v1/menus" | python3 -m json.tool >/dev/null
 curl -ks "${BASE_URL}/api/v1/menus/header" | python3 -m json.tool >/dev/null
 curl -ks "${BASE_URL}/api/v1/menus/footer" | python3 -m json.tool >/dev/null
 
+echo "Testing Analytics Config API..."
+curl -ks "${BASE_URL}/api/v1/analytics/config" | python3 -m json.tool >/dev/null
+
 echo "Testing Pages Index API..."
 python3 - <<'INNERPY'
 import json
@@ -61,6 +64,32 @@ curl -ks "${BASE_URL}/api/v1/pages/careers" | python3 -m json.tool >/dev/null
 
 echo "Testing Contact Page API..."
 curl -ks "${BASE_URL}/api/v1/pages/contact" | python3 -m json.tool >/dev/null
+
+echo "Validating analytics config..."
+python3 - <<'INNERPY'
+import json
+import os
+import subprocess
+
+base_url = os.environ["BASE_URL"]
+
+result = subprocess.run(
+    ["curl", "-ks", f"{base_url}/api/v1/analytics/config"],
+    check=True,
+    capture_output=True,
+    text=True,
+)
+
+data = json.loads(result.stdout)
+
+assert "enabled" in data
+assert "provider" in data
+assert "measurementId" in data
+assert isinstance(data["enabled"], bool)
+assert data["provider"] in ["none", "google_analytics"]
+
+print("Analytics config checks passed.")
+INNERPY
 
 echo "Validating frontend menus..."
 python3 - <<'INNERPY'

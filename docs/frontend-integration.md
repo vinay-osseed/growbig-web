@@ -159,3 +159,15 @@ Example response:
     }
 
 Do not expose private Google API credentials in frontend code.
+
+## Analytics Config API
+
+Use:
+
+- GET /api/v1/analytics/config
+
+The frontend should load analytics only when `enabled` is true.
+
+For Google Analytics, use `measurementId`.
+
+The frontend must not hardcode analytics IDs.

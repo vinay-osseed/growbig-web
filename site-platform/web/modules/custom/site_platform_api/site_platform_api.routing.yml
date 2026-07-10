@@ -88,3 +88,12 @@ site_platform_api.admin_dashboard:
     _permission: 'access administration pages'
   options:
     no_cache: TRUE
+
+site_platform_api.analytics_config:
+  path: '/api/v1/analytics/config'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\AnalyticsController::config'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE

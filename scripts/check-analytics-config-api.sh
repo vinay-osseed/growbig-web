@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+echo "Checking analytics config API..."
+
+curl -ks "https://growbig-web.ddev.site/api/v1/analytics/config" | python3 - <<'PY'
+import json
+import sys
+
+data = json.load(sys.stdin)
+
+for key in ["enabled", "provider", "measurementId"]:
+    if key not in data:
+        raise SystemExit(f"Missing analytics config key: {key}")
+
+if not isinstance(data["enabled"], bool):
+    raise SystemExit("Analytics enabled must be boolean.")
+
+if data["provider"] not in ["none", "google_analytics"]:
+    raise SystemExit("Unexpected analytics provider.")
+
+print("Analytics config API verified.")
+PY
