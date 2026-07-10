@@ -1,0 +1,14 @@
+uuid: b166b2db-a41e-4a26-9fc4-a29b8064873a
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.hr_manager
+  module:
+    - user
+id: user_add_role_action.hr_manager
+label: 'Add the HR Manager role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: hr_manager
