@@ -92,7 +92,7 @@ site_platform_api.admin_dashboard:
 site_platform_api.analytics_config:
   path: '/api/v1/analytics/config'
   defaults:
-    _controller: '\Drupal\site_platform_api\Controller\AnalyticsController::config'
+    _controller: '\Drupal\site_platform_api\Controller\AnalyticsController::analyticsConfig'
   requirements:
     _permission: 'access content'
   options:

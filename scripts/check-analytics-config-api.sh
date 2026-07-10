@@ -4,11 +4,18 @@ set -euo pipefail
 
 echo "Checking analytics config API..."
 
-curl -ks "https://growbig-web.ddev.site/api/v1/analytics/config" | python3 - <<'PY'
+python3 - <<'PY'
 import json
-import sys
+import subprocess
 
-data = json.load(sys.stdin)
+result = subprocess.run(
+    ["curl", "-ks", "https://growbig-web.ddev.site/api/v1/analytics/config"],
+    check=True,
+    capture_output=True,
+    text=True,
+)
+
+data = json.loads(result.stdout)
 
 for key in ["enabled", "provider", "measurementId"]:
     if key not in data:

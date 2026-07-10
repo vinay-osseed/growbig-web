@@ -15,7 +15,7 @@ final class AnalyticsController extends ControllerBase {
   /**
    * Returns safe public analytics config.
    */
-  public function config(): JsonResponse {
+  public function analyticsConfig(): JsonResponse {
     $enabled = $this->getBooleanEnv('GOOGLE_ANALYTICS_ENABLED');
     $measurement_id = trim((string) getenv('GOOGLE_ANALYTICS_MEASUREMENT_ID'));
 
