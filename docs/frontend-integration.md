@@ -137,3 +137,25 @@ Each menu item includes:
 - slug
 - url
 - apiPath
+
+## Analytics
+
+Analytics settings should not be hardcoded in the frontend.
+
+Future frontend analytics config should come from backend API.
+
+Suggested endpoint:
+
+- GET /api/v1/analytics/config
+
+For Google Analytics 4, frontend should only receive the public Measurement ID.
+
+Example response:
+
+    {
+      "enabled": true,
+      "provider": "google_analytics",
+      "measurementId": "G-XXXXXXXXXX"
+    }
+
+Do not expose private Google API credentials in frontend code.

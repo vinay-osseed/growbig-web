@@ -436,3 +436,26 @@ Roles currently available:
 - hr_manager
 - form_manager
 - analytics_viewer
+
+## Analytics Integration Plan
+
+Analytics should be backend-configured and frontend-rendered.
+
+Recommended first provider:
+
+- Google Analytics 4
+
+Public frontend config should come from backend API, not hardcoded frontend values.
+
+Suggested future endpoint:
+
+- GET /api/v1/analytics/config
+
+Environment values:
+
+- GOOGLE_ANALYTICS_ENABLED
+- GOOGLE_ANALYTICS_MEASUREMENT_ID
+
+Drupal Google Analytics modules may be useful for Drupal-rendered/admin pages, but they are not enough for the decoupled frontend UI because the frontend is not rendered by Drupal.
+
+For dashboard analytics reports, backend-only Google Analytics Data API credentials may be added later.
