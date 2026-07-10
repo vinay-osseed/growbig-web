@@ -402,3 +402,37 @@ This endpoint returns:
 - recent content updates
 
 The dashboard UI should render these cards from backend data.
+
+## Role-Based Admin Dashboard
+
+Admin dashboard URL:
+
+- /admin/site-dashboard
+
+The dashboard is role-aware and uses backend dashboard data.
+
+It includes:
+
+- overview counts
+- role-aware quick action cards
+- recent content updates
+
+Dashboard API:
+
+- GET /api/v1/admin/dashboard
+
+This API requires authenticated admin access.
+
+Verification scripts:
+
+- ./scripts/check-admin-roles.sh
+- ./scripts/check-dashboard-api.sh
+- ./scripts/check-dashboard-ui.sh
+
+Roles currently available:
+
+- site_developer
+- content_admin
+- hr_manager
+- form_manager
+- analytics_viewer
