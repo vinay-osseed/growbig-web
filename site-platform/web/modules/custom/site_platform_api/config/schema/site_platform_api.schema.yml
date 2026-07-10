@@ -1,0 +1,13 @@
+site_platform_api.analytics:
+  type: config_object
+  label: 'Site Platform Analytics Settings'
+  mapping:
+    enabled:
+      type: boolean
+      label: 'Enable analytics'
+    provider:
+      type: string
+      label: 'Analytics provider'
+    measurement_id:
+      type: string
+      label: 'Google Analytics Measurement ID'

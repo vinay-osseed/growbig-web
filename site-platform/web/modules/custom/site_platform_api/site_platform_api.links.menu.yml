@@ -1,0 +1,6 @@
+site_platform_api.analytics_settings:
+  title: 'Analytics Settings'
+  description: 'Configure frontend analytics settings.'
+  route_name: site_platform_api.analytics_settings
+  parent: system.admin_config
+  weight: 90

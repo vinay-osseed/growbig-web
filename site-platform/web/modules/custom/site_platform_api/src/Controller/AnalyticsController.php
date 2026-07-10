@@ -16,8 +16,18 @@ final class AnalyticsController extends ControllerBase {
    * Returns safe public analytics config.
    */
   public function analyticsConfig(): JsonResponse {
-    $enabled = $this->getBooleanEnv('GOOGLE_ANALYTICS_ENABLED');
-    $measurement_id = trim((string) getenv('GOOGLE_ANALYTICS_MEASUREMENT_ID'));
+    $config = $this->config('site_platform_api.analytics');
+
+    $env_enabled = getenv('GOOGLE_ANALYTICS_ENABLED');
+    $env_measurement_id = getenv('GOOGLE_ANALYTICS_MEASUREMENT_ID');
+
+    $measurement_id = $env_measurement_id !== FALSE
+      ? trim((string) $env_measurement_id)
+      : trim((string) $config->get('measurement_id'));
+
+    $enabled = $env_enabled !== FALSE
+      ? $this->parseBoolean((string) $env_enabled)
+      : (bool) $config->get('enabled');
 
     $provider = $measurement_id !== '' ? 'google_analytics' : 'none';
 
@@ -33,16 +43,10 @@ final class AnalyticsController extends ControllerBase {
   }
 
   /**
-   * Gets a boolean environment value.
+   * Parses a boolean-like value.
    */
-  private function getBooleanEnv(string $name): bool {
-    $value = getenv($name);
-
-    if ($value === FALSE) {
-      return FALSE;
-    }
-
-    return in_array(strtolower(trim((string) $value)), [
+  private function parseBoolean(string $value): bool {
+    return in_array(strtolower(trim($value)), [
       '1',
       'true',
       'yes',

@@ -97,3 +97,11 @@ site_platform_api.analytics_config:
     _permission: 'access content'
   options:
     no_cache: TRUE
+
+site_platform_api.analytics_settings:
+  path: '/admin/config/site-platform/analytics'
+  defaults:
+    _form: '\Drupal\site_platform_api\Form\AnalyticsSettingsForm'
+    _title: 'Analytics Settings'
+  requirements:
+    _permission: 'administer site configuration'
