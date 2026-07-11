@@ -98,3 +98,113 @@ site_platform_admin.setup_manifest:
       sequence:
         type: string
         label: 'File path'
+
+site_platform_admin.setup_values:
+  type: config_object
+  label: 'Site Platform Setup Values'
+  mapping:
+    mode:
+      type: string
+      label: 'Setup mode'
+    environment:
+      type: string
+      label: 'Environment'
+    site:
+      type: mapping
+      label: 'Primary site values'
+      mapping:
+        name:
+          type: string
+          label: 'Site name'
+        key:
+          type: string
+          label: 'Site key'
+        primary_domain:
+          type: string
+          label: 'Primary domain'
+        frontend_url:
+          type: string
+          label: 'Frontend URL'
+        admin_url:
+          type: string
+          label: 'Admin URL'
+        api_url:
+          type: string
+          label: 'API URL'
+    contact:
+      type: mapping
+      label: 'Contact values'
+      mapping:
+        company_name:
+          type: string
+          label: 'Company name'
+        primary_email:
+          type: string
+          label: 'Primary email'
+        country:
+          type: string
+          label: 'Country'
+    branding:
+      type: mapping
+      label: 'Branding values'
+      mapping:
+        theme_color:
+          type: string
+          label: 'Theme color'
+        logo:
+          type: string
+          label: 'Logo'
+        favicon:
+          type: string
+          label: 'Favicon'
+    setup_options:
+      type: mapping
+      label: 'Setup options'
+      mapping:
+        create_default_pages:
+          type: boolean
+          label: 'Create default pages'
+        create_default_menus:
+          type: boolean
+          label: 'Create default menus'
+        create_default_forms:
+          type: boolean
+          label: 'Create default forms'
+        create_default_roles:
+          type: boolean
+          label: 'Create default roles'
+        create_demo_content:
+          type: boolean
+          label: 'Create demo content'
+    analytics:
+      type: mapping
+      label: 'Analytics setup values'
+      mapping:
+        enabled:
+          type: boolean
+          label: 'Enable analytics'
+        measurement_id:
+          type: string
+          label: 'Measurement ID'
+    extra_sites:
+      type: sequence
+      label: 'Additional sites'
+      sequence:
+        type: mapping
+        label: 'Additional site'
+        mapping:
+          name:
+            type: string
+            label: 'Site name'
+          key:
+            type: string
+            label: 'Site key'
+          primary_domain:
+            type: string
+            label: 'Primary domain'
+          frontend_url:
+            type: string
+            label: 'Frontend URL'
+          api_url:
+            type: string
+            label: 'API URL'

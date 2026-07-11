@@ -13,3 +13,11 @@ site_platform_admin.site_setup:
     _title: 'Site Setup'
   requirements:
     _permission: 'administer site setup'
+
+site_platform_admin.site_setup_wizard:
+  path: '/admin/site-setup/wizard'
+  defaults:
+    _form: '\Drupal\site_platform_admin\Form\SiteSetupWizardForm'
+    _title: 'Setup Wizard'
+  requirements:
+    _permission: 'administer site setup'

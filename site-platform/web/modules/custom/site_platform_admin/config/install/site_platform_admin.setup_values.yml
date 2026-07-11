@@ -1,0 +1,27 @@
+mode: single
+environment: ''
+site:
+  name: ''
+  key: ''
+  primary_domain: ''
+  frontend_url: ''
+  admin_url: ''
+  api_url: ''
+contact:
+  company_name: ''
+  primary_email: ''
+  country: ''
+branding:
+  theme_color: '#0f62fe'
+  logo: ''
+  favicon: ''
+setup_options:
+  create_default_pages: true
+  create_default_menus: true
+  create_default_forms: true
+  create_default_roles: true
+  create_demo_content: false
+analytics:
+  enabled: false
+  measurement_id: ''
+extra_sites: []
