@@ -81,3 +81,40 @@ Future work may add a native Drush command, such as:
     drush site-platform:setup-reset-status
 
 The current script is intentionally simple and safe.
+
+## Native Drush Commands
+
+The setup workflow also provides native Drush commands.
+
+Show setup status:
+
+    ddev drush site-platform:setup-status
+
+Show setup preview and readiness:
+
+    ddev drush site-platform:setup-preview
+
+Run setup:
+
+    ddev drush site-platform:setup-run
+
+Complete and lock setup:
+
+    ddev drush site-platform:setup-complete
+
+Unlock setup:
+
+    ddev drush site-platform:setup-unlock
+
+Reset setup status only:
+
+    ddev drush site-platform:setup-reset-status
+
+Short aliases:
+
+    ddev drush sp-setup-status
+    ddev drush sp-setup-preview
+    ddev drush sp-setup-run
+    ddev drush sp-setup-complete
+    ddev drush sp-setup-unlock
+    ddev drush sp-setup-reset-status

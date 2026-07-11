@@ -18,7 +18,7 @@ Usage:
   ./scripts/site-setup.sh check
 
 Notes:
-  - This helper uses Drupal State API through existing setup services.
+  - This helper uses native Drush commands.
   - It does not delete pages, forms, roles, content, files, or submissions.
   - Do not run drush cex after entering environment-specific setup values unless intentional.
 USAGE
@@ -26,46 +26,27 @@ USAGE
 
 case "$COMMAND" in
   status)
-    ddev drush php:eval '
-      $storage = \Drupal::service("site_platform_admin.setup_storage");
-      print_r($storage->getStatus());
-    '
+    ddev drush site-platform:setup-status
     ;;
 
   preview)
-    ddev drush php:eval '
-      $runner = \Drupal::service("site_platform_admin.setup_runner");
-      print_r($runner->getPreview());
-      print_r($runner->getCompletionReadiness());
-    '
+    ddev drush site-platform:setup-preview
     ;;
 
   run)
-    ddev drush php:eval '
-      $runner = \Drupal::service("site_platform_admin.setup_runner");
-      print_r($runner->run());
-    '
+    ddev drush site-platform:setup-run
     ;;
 
   complete)
-    ddev drush php:eval '
-      $runner = \Drupal::service("site_platform_admin.setup_runner");
-      print_r($runner->completeAndLock());
-    '
+    ddev drush site-platform:setup-complete
     ;;
 
   unlock)
-    ddev drush php:eval '
-      \Drupal::service("site_platform_admin.setup_storage")->unlockSetup();
-      echo "Setup unlocked." . PHP_EOL;
-    '
+    ddev drush site-platform:setup-unlock
     ;;
 
   reset-status)
-    ddev drush php:eval '
-      \Drupal::service("site_platform_admin.setup_storage")->resetStatus();
-      echo "Setup status reset. Existing data was not deleted." . PHP_EOL;
-    '
+    ddev drush site-platform:setup-reset-status
     ;;
 
   check)

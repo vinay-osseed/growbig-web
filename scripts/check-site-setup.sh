@@ -11,6 +11,9 @@ ddev drush route | grep -q "site_platform_admin.site_setup_complete"
 ddev drush route | grep -q "site_platform_admin.site_setup_reset_status"
 ddev drush route | grep -q "site_platform_admin.site_setup_unlock"
 
+ddev drush site-platform:setup-status >/dev/null
+ddev drush site-platform:setup-preview >/dev/null
+
 ddev drush php:eval '
 foreach (["site_platform_admin.setup_storage", "site_platform_admin.setup_runner"] as $service_id) {
   if (!\Drupal::hasService($service_id)) {
