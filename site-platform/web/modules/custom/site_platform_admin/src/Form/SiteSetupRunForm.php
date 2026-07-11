@@ -105,6 +105,9 @@ final class SiteSetupRunForm extends FormBase {
         $this->t('Create Default Menus: @value', [
           '@value' => $preview['create_default_menus'] ? $this->t('Yes') : $this->t('No'),
         ]),
+        $this->t('Create Default Forms: @value', [
+          '@value' => $preview['create_default_forms'] ? $this->t('Yes') : $this->t('No'),
+        ]),
         $this->t('Create Demo Content: @value', [
           '@value' => $preview['create_demo_content'] ? $this->t('Yes') : $this->t('No'),
         ]),

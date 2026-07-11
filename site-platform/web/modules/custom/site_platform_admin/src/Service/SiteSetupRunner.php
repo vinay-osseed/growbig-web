@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\site_platform_admin\Service;
 
 use Drupal\Component\Datetime\TimeInterface;
+use Drupal\Component\Serialization\Yaml;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\user\RoleInterface;
@@ -107,8 +108,9 @@ final class SiteSetupRunner {
     $this->applyAnalyticsConfig($values);
     $created_roles = $this->ensureRoles($values);
     $created_nodes = $this->ensureDefaultPages($values);
+    $created_webforms = $this->ensureDefaultForms($values);
     $this->updateSetupStatus($setup_id, $values);
-    $this->updateSetupManifest($setup_id, $created_roles, $created_nodes);
+    $this->updateSetupManifest($setup_id, $created_roles, $created_nodes, $created_webforms);
 
     return [
       'setup_id' => $setup_id,
@@ -118,6 +120,161 @@ final class SiteSetupRunner {
       'completed' => FALSE,
       'roles' => $created_roles,
       'nodes' => $created_nodes,
+      'webforms' => $created_webforms,
+    ];
+  }
+
+  /**
+   * Ensures frontend-safe default forms exist.
+   */
+  private function ensureDefaultForms(array $values): array {
+    if (!(bool) $this->getValue($values, 'setup_options.create_default_forms')) {
+      return [];
+    }
+
+    if (!$this->entityTypeManager->hasDefinition('webform')) {
+      return [];
+    }
+
+    $created_or_existing = [];
+    $storage = $this->entityTypeManager->getStorage('webform');
+
+    foreach ($this->getDefaultWebformDefinitions() as $webform_id => $definition) {
+      $webform = $storage->load($webform_id);
+
+      if (!$webform) {
+        $webform = $storage->create([
+          'id' => $webform_id,
+          'title' => $definition['title'],
+          'description' => $definition['description'],
+          'status' => 'open',
+          'elements' => Yaml::encode($definition['elements']),
+        ]);
+
+        $webform->save();
+      }
+
+      $created_or_existing[] = $webform_id;
+    }
+
+    return $created_or_existing;
+  }
+
+  /**
+   * Gets default webform definitions.
+   */
+  private function getDefaultWebformDefinitions(): array {
+    return [
+      'contact_us' => [
+        'title' => 'Contact Us',
+        'description' => 'Default contact form created by the setup workflow.',
+        'elements' => [
+          'name' => [
+            '#type' => 'textfield',
+            '#title' => 'Name',
+            '#required' => TRUE,
+          ],
+          'email' => [
+            '#type' => 'email',
+            '#title' => 'Email',
+            '#required' => TRUE,
+          ],
+          'phone' => [
+            '#type' => 'textfield',
+            '#title' => 'Phone',
+          ],
+          'company' => [
+            '#type' => 'textfield',
+            '#title' => 'Company',
+          ],
+          'subject' => [
+            '#type' => 'textfield',
+            '#title' => 'Subject',
+            '#required' => TRUE,
+          ],
+          'message' => [
+            '#type' => 'textarea',
+            '#title' => 'Message',
+            '#required' => TRUE,
+          ],
+          'consent' => [
+            '#type' => 'checkbox',
+            '#title' => 'I agree to be contacted about this inquiry.',
+            '#required' => TRUE,
+          ],
+          'actions' => [
+            '#type' => 'webform_actions',
+            '#title' => 'Submit button(s)',
+            '#submit__label' => 'Send Message',
+          ],
+        ],
+      ],
+      'job_application' => [
+        'title' => 'Job Application',
+        'description' => 'Default job application form created by the setup workflow.',
+        'elements' => [
+          'job_key' => [
+            '#type' => 'hidden',
+            '#title' => 'Job Key',
+          ],
+          'job_title' => [
+            '#type' => 'textfield',
+            '#title' => 'Job Title',
+          ],
+          'name' => [
+            '#type' => 'textfield',
+            '#title' => 'Name',
+            '#required' => TRUE,
+          ],
+          'email' => [
+            '#type' => 'email',
+            '#title' => 'Email',
+            '#required' => TRUE,
+          ],
+          'phone' => [
+            '#type' => 'textfield',
+            '#title' => 'Phone',
+          ],
+          'current_location' => [
+            '#type' => 'textfield',
+            '#title' => 'Current Location',
+          ],
+          'experience_years' => [
+            '#type' => 'number',
+            '#title' => 'Experience Years',
+          ],
+          'current_company' => [
+            '#type' => 'textfield',
+            '#title' => 'Current Company',
+          ],
+          'resume_upload' => [
+            '#type' => 'managed_file',
+            '#title' => 'Resume Upload',
+          ],
+          'portfolio_url' => [
+            '#type' => 'url',
+            '#title' => 'Portfolio URL',
+          ],
+          'linkedin_url' => [
+            '#type' => 'url',
+            '#title' => 'LinkedIn URL',
+          ],
+          'message' => [
+            '#type' => 'textarea',
+            '#title' => 'Message',
+          ],
+          'consent' => [
+            '#type' => 'checkbox',
+            '#title' => 'I confirm this application information is accurate.',
+            '#required' => TRUE,
+          ],
+          'actions' => [
+            '#type' => 'webform_actions',
+            '#title' => 'Submit button(s)',
+            '#submit__label' => 'Submit Application',
+          ],
+        ],
+      ],
     ];
   }
 
@@ -363,7 +520,7 @@ final class SiteSetupRunner {
       'roles' => (bool) $this->getValue($values, 'setup_options.create_default_roles') ? 'completed' : 'skipped',
       'pages' => (bool) $this->getValue($values, 'setup_options.create_default_pages') ? 'completed' : 'skipped',
       'menus' => (bool) $this->getValue($values, 'setup_options.create_default_menus') ? 'completed' : 'skipped',
-      'forms' => (bool) $this->getValue($values, 'setup_options.create_default_forms') ? 'queued' : 'skipped',
+      'forms' => (bool) $this->getValue($values, 'setup_options.create_default_forms') ? 'completed' : 'skipped',
       'content' => (bool) $this->getValue($values, 'setup_options.create_demo_content') ? 'queued' : 'skipped',
       'analytics' => 'completed',
       'verification' => 'pending',
@@ -373,11 +530,12 @@ final class SiteSetupRunner {
   /**
    * Updates setup manifest.
    */
-  private function updateSetupManifest(string $setup_id, array $created_roles, array $created_nodes): void {
+  private function updateSetupManifest(string $setup_id, array $created_roles, array $created_nodes, array $created_webforms): void {
     $manifest = $this->setupStorage->getManifest();
     $config = $manifest['config'] ?? [];
     $roles = $manifest['roles'] ?? [];
     $nodes = $manifest['nodes'] ?? [];
+    $webforms = $manifest['webforms'] ?? [];
 
     foreach ($created_roles as $role_id) {
       $roles[] = $role_id;
@@ -387,11 +545,16 @@ final class SiteSetupRunner {
       $nodes[] = $node_id;
     }
 
+    foreach ($created_webforms as $webform_id) {
+      $webforms[] = $webform_id;
+    }
+
     $config[] = 'system.site';
     $config[] = 'site_platform_api.analytics';
 
     $manifest['setup_id'] = $setup_id;
     $manifest['nodes'] = array_values(array_unique($nodes));
+    $manifest['webforms'] = array_values(array_unique($webforms));
     $manifest['roles'] = array_values(array_unique($roles));
     $manifest['config'] = array_values(array_unique($config));
 
