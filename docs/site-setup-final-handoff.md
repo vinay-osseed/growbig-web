@@ -150,3 +150,71 @@ These values are exposed through:
 
 - `GET /api/v1/site`
 - `setupProfile.branding`
+
+## Current Production Setup Status
+
+The backend setup workflow is ready for the current single-site architecture.
+
+A non-technical admin can complete the setup flow after a developer has deployed the code, installed the site, and provided an admin login.
+
+Admin setup URLs:
+
+- `/admin/site-setup`
+- `/admin/site-setup/wizard`
+- `/admin/site-setup/run`
+- `/admin/site-setup/complete`
+- `/admin/site-dashboard`
+
+Recommended non-technical admin flow:
+
+1. Open `/admin/site-setup`.
+2. Open the setup wizard.
+3. Review or enter site identity, URLs, contact values, branding values, analytics values, and setup options.
+4. Save setup values.
+5. Open Prepare Run.
+6. Run setup.
+7. Open Complete and Lock.
+8. Complete setup.
+9. Use Site Dashboard to manage pages, forms, menus, media, jobs, reusable content, and analytics overview.
+
+## Current Site Model
+
+This project currently runs one primary site:
+
+- GrowBig
+
+The setup system supports `extra_sites` rows as future-ready metadata, but it does not create real Drupal Domain records yet.
+
+Do not treat Additional Sites / Brands rows as active Drupal domains.
+
+Future multi-site support requires one approved architecture:
+
+- Drupal Domain module
+- custom site entity/table
+- decoupled-only site metadata consumed by the frontend
+
+## Frontend Menu Source
+
+Frontend header and footer menus are API-driven.
+
+The source of truth is not Drupal core node edit Menu settings.
+
+Use these APIs:
+
+    /api/v1/menus/header
+    /api/v1/menus/footer
+
+Both should return frontend menu items such as Home, About, Careers, and Contact.
+
+## Fresh Install vs Restored Demo Data
+
+A fresh config install creates structure and configuration.
+
+It does not restore previous content, media, logos, file entities, or full demo page sections unless those are included in the database/content seed.
+
+To restore the full existing GrowBig demo data, restore both:
+
+- database backup
+- files backup
+
+The restored database contains the media/file entity records. The files backup alone is not enough for logos and media.

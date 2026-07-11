@@ -118,3 +118,60 @@ Expected result:
     Final setup workflow verified.
     Backend MVP verification passed.
     nothing to commit, working tree clean
+
+## Current Decision: Single Site Now, Future Sites Later
+
+The current backend is production-ready for one primary site.
+
+Additional sites/brands are not active Drupal domains yet. They are future-ready setup metadata only.
+
+Reason:
+
+- no Drupal Domain module is currently enabled
+- no custom site entity model has been approved yet
+- frontend menus/pages currently work from page fields and API responses
+
+Future multi-site work should be a separate phase.
+
+## Non-Technical Admin Readiness
+
+The setup workflow is usable by non-technical admins after deployment.
+
+A developer is still responsible for:
+
+- deploying the repository
+- installing Drupal/config
+- running Composer/DDEV/server setup
+- creating or sharing the first admin login
+- restoring backups when needed
+
+A non-technical admin can handle:
+
+- setup wizard values
+- setup run
+- setup completion/lock
+- page/content review
+- forms review
+- media upload
+- basic site dashboard usage
+
+## Safe Reset Policy
+
+The current reset actions are intentionally non-destructive.
+
+Safe actions:
+
+- unlock setup
+- reset setup status
+
+These do not delete:
+
+- pages
+- media
+- files
+- webforms
+- submissions
+- roles
+- content
+
+Destructive reset is intentionally not included without an approved backup-aware deletion plan.

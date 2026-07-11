@@ -1232,3 +1232,30 @@ Use this order to demonstrate the platform:
 The GrowBig backend platform now provides a complete Drupal-powered backend for a decoupled site. It includes APIs, admin tools, setup automation, production-safe setup import, verification scripts, and clear deployment rules.
 
 The setup workflow is production-ready for the current architecture. Risky future items, such as real domain record creation and destructive cleanup, are intentionally deferred until the project chooses the correct architecture and backup policy.
+
+## Current Admin Setup Capability
+
+The backend setup flow is usable by non-technical admins for the current single-site setup.
+
+A developer still performs deployment and first installation. After that, the admin can use:
+
+- Site Setup
+- Setup Wizard
+- Prepare Run
+- Complete and Lock
+- Site Dashboard
+
+## Current Site Scope
+
+This installation currently manages one primary site.
+
+Additional Sites / Brands rows are future-ready metadata only. They do not create active Drupal Domain records yet.
+
+## Menu Usage
+
+Frontend menus are managed through page visibility fields and exposed through APIs:
+
+- `/api/v1/menus/header`
+- `/api/v1/menus/footer`
+
+The Drupal node edit Menu settings panel is not the frontend menu source.

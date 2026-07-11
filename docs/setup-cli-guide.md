@@ -237,3 +237,34 @@ Before production deployment, review:
     docs/setup-production-backlog-closeout.md
 
 This confirms that real domain creation and destructive cleanup are intentionally not included in the current production-safe setup workflow.
+
+## Current Single-Site Setup Notes
+
+The setup CLI and setup UI currently target one primary site.
+
+Additional site rows are supported as metadata and validation only.
+
+They do not create Drupal Domain records.
+
+For current deployments, use:
+
+    ./scripts/site-setup.sh status
+    ./scripts/site-setup.sh preview
+    ./scripts/site-setup.sh sites
+    ./scripts/site-setup.sh run
+    ./scripts/site-setup.sh complete
+
+For production/stage with explicit Drush binary:
+
+    DRUSH_BIN=/var/www/html/site-platform/vendor/bin/drush ./scripts/site-setup.sh status
+
+## Verifying Menus
+
+Frontend menus are API-driven.
+
+Check:
+
+    curl -sk https://growbig-web.ddev.site/api/v1/menus/header | python3 -m json.tool
+    curl -sk https://growbig-web.ddev.site/api/v1/menus/footer | python3 -m json.tool
+
+Do not rely on Drupal core node edit Menu settings for frontend menu visibility.

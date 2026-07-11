@@ -575,3 +575,26 @@ The setup workflow production closeout is documented in:
 No real Domain record creation is included because no Domain module is enabled.
 
 No destructive cleanup is included because production deletion requires a separate backup-aware deletion plan.
+
+## Current Setup and Site Model
+
+The backend currently supports one primary GrowBig site.
+
+The setup workflow is ready for non-technical admins after developer deployment.
+
+The admin can use:
+
+- `/admin/site-setup`
+- `/admin/site-setup/wizard`
+- `/admin/site-setup/run`
+- `/admin/site-setup/complete`
+- `/admin/site-dashboard`
+
+Frontend menus are exposed through:
+
+- `/api/v1/menus/header`
+- `/api/v1/menus/footer`
+
+The Drupal core node edit Menu settings panel is not the frontend menu source.
+
+Future additional sites/brands require a separate architecture decision before active Drupal domain creation.
