@@ -26,7 +26,7 @@ final class SiteSetupRunner {
   ];
 
   /**
-   * Required setup value labels keyed by config path.
+   * Required setup value labels keyed by value path.
    */
   private const REQUIRED_VALUES = [
     'site.name' => 'Site Name',
@@ -47,17 +47,18 @@ final class SiteSetupRunner {
     private readonly ConfigFactoryInterface $configFactory,
     private readonly TimeInterface $time,
     private readonly EntityTypeManagerInterface $entityTypeManager,
+    private readonly SiteSetupStorage $setupStorage,
   ) {}
 
   /**
    * Returns missing required setup values.
    */
   public function getMissingRequiredValues(): array {
-    $values = $this->configFactory->get('site_platform_admin.setup_values');
+    $values = $this->setupStorage->getValues();
     $missing = [];
 
     foreach (self::REQUIRED_VALUES as $key => $label) {
-      if (trim((string) $values->get($key)) === '') {
+      if (trim((string) $this->getValue($values, $key)) === '') {
         $missing[$key] = $label;
       }
     }
@@ -69,23 +70,23 @@ final class SiteSetupRunner {
    * Returns a safe setup preview.
    */
   public function getPreview(): array {
-    $values = $this->configFactory->get('site_platform_admin.setup_values');
+    $values = $this->setupStorage->getValues();
 
     return [
-      'mode' => (string) ($values->get('mode') ?: 'single'),
-      'environment' => (string) ($values->get('environment') ?: 'not set'),
-      'site_name' => (string) ($values->get('site.name') ?: 'not set'),
-      'site_key' => (string) ($values->get('site.key') ?: 'not set'),
-      'primary_domain' => (string) ($values->get('site.primary_domain') ?: 'not set'),
-      'frontend_url' => (string) ($values->get('site.frontend_url') ?: 'not set'),
-      'api_url' => (string) ($values->get('site.api_url') ?: 'not set'),
-      'create_default_pages' => (bool) $values->get('setup_options.create_default_pages'),
-      'create_default_menus' => (bool) $values->get('setup_options.create_default_menus'),
-      'create_default_forms' => (bool) $values->get('setup_options.create_default_forms'),
-      'create_default_roles' => (bool) $values->get('setup_options.create_default_roles'),
-      'create_demo_content' => (bool) $values->get('setup_options.create_demo_content'),
-      'analytics_enabled' => (bool) $values->get('analytics.enabled'),
-      'analytics_measurement_id' => (string) ($values->get('analytics.measurement_id') ?: ''),
+      'mode' => (string) ($this->getValue($values, 'mode') ?: 'single'),
+      'environment' => (string) ($this->getValue($values, 'environment') ?: 'not set'),
+      'site_name' => (string) ($this->getValue($values, 'site.name') ?: 'not set'),
+      'site_key' => (string) ($this->getValue($values, 'site.key') ?: 'not set'),
+      'primary_domain' => (string) ($this->getValue($values, 'site.primary_domain') ?: 'not set'),
+      'frontend_url' => (string) ($this->getValue($values, 'site.frontend_url') ?: 'not set'),
+      'api_url' => (string) ($this->getValue($values, 'site.api_url') ?: 'not set'),
+      'create_default_pages' => (bool) $this->getValue($values, 'setup_options.create_default_pages'),
+      'create_default_menus' => (bool) $this->getValue($values, 'setup_options.create_default_menus'),
+      'create_default_forms' => (bool) $this->getValue($values, 'setup_options.create_default_forms'),
+      'create_default_roles' => (bool) $this->getValue($values, 'setup_options.create_default_roles'),
+      'create_demo_content' => (bool) $this->getValue($values, 'setup_options.create_demo_content'),
+      'analytics_enabled' => (bool) $this->getValue($values, 'analytics.enabled'),
+      'analytics_measurement_id' => (string) ($this->getValue($values, 'analytics.measurement_id') ?: ''),
     ];
   }
 
@@ -99,19 +100,19 @@ final class SiteSetupRunner {
       throw new \InvalidArgumentException('Missing required setup values: ' . implode(', ', $missing));
     }
 
-    $values = $this->configFactory->get('site_platform_admin.setup_values');
+    $values = $this->setupStorage->getValues();
     $setup_id = $this->getOrCreateSetupId();
 
-    $this->applySystemSiteConfig();
-    $this->applyAnalyticsConfig();
-    $created_roles = $this->ensureRoles();
-    $this->updateSetupStatus($setup_id);
+    $this->applySystemSiteConfig($values);
+    $this->applyAnalyticsConfig($values);
+    $created_roles = $this->ensureRoles($values);
+    $this->updateSetupStatus($setup_id, $values);
     $this->updateSetupManifest($setup_id, $created_roles);
 
     return [
       'setup_id' => $setup_id,
-      'site_name' => (string) $values->get('site.name'),
-      'site_key' => (string) $values->get('site.key'),
+      'site_name' => (string) $this->getValue($values, 'site.name'),
+      'site_key' => (string) $this->getValue($values, 'site.key'),
       'current_step' => 'runner_prepared',
       'completed' => FALSE,
       'roles' => $created_roles,
@@ -121,10 +122,8 @@ final class SiteSetupRunner {
   /**
    * Ensures setup roles exist.
    */
-  private function ensureRoles(): array {
-    $values = $this->configFactory->get('site_platform_admin.setup_values');
-
-    if (!(bool) $values->get('setup_options.create_default_roles')) {
+  private function ensureRoles(array $values): array {
+    if (!(bool) $this->getValue($values, 'setup_options.create_default_roles')) {
       return [];
     }
 
@@ -198,66 +197,59 @@ final class SiteSetupRunner {
   /**
    * Applies Drupal system site config from setup values.
    */
-  private function applySystemSiteConfig(): void {
-    $values = $this->configFactory->get('site_platform_admin.setup_values');
-
+  private function applySystemSiteConfig(array $values): void {
     $this->configFactory->getEditable('system.site')
-      ->set('name', trim((string) $values->get('site.name')))
-      ->set('mail', trim((string) $values->get('contact.primary_email')))
+      ->set('name', trim((string) $this->getValue($values, 'site.name')))
+      ->set('mail', trim((string) $this->getValue($values, 'contact.primary_email')))
       ->save();
   }
 
   /**
    * Applies analytics config from setup values.
    */
-  private function applyAnalyticsConfig(): void {
-    $values = $this->configFactory->get('site_platform_admin.setup_values');
-    $measurement_id = trim((string) $values->get('analytics.measurement_id'));
+  private function applyAnalyticsConfig(array $values): void {
+    $measurement_id = trim((string) $this->getValue($values, 'analytics.measurement_id'));
 
     $this->configFactory->getEditable('site_platform_api.analytics')
-      ->set('enabled', (bool) $values->get('analytics.enabled') && $measurement_id !== '')
+      ->set('enabled', (bool) $this->getValue($values, 'analytics.enabled') && $measurement_id !== '')
       ->set('provider', 'google_analytics')
       ->set('measurement_id', $measurement_id)
       ->save();
   }
 
   /**
-   * Updates setup status config.
+   * Updates setup status.
    */
-  private function updateSetupStatus(string $setup_id): void {
-    $values = $this->configFactory->get('site_platform_admin.setup_values');
-    $status = $this->configFactory->getEditable('site_platform_admin.setup_status');
+  private function updateSetupStatus(string $setup_id, array $values): void {
+    $status = $this->setupStorage->getStatus();
+    $started_at = (int) ($status['started_at'] ?: $this->time->getRequestTime());
 
-    $started_at = (int) ($status->get('started_at') ?: $this->time->getRequestTime());
+    $status['installed'] = TRUE;
+    $status['completed'] = FALSE;
+    $status['locked'] = FALSE;
+    $status['current_step'] = 'runner_prepared';
+    $status['setup_id'] = $setup_id;
+    $status['mode'] = (string) ($this->getValue($values, 'mode') ?: 'single');
+    $status['environment'] = (string) ($this->getValue($values, 'environment') ?: '');
+    $status['started_at'] = $started_at;
+    $status['completed_at'] = 0;
+    $status['steps'] = $this->buildStepStatus($values);
 
-    $status
-      ->set('installed', TRUE)
-      ->set('completed', FALSE)
-      ->set('locked', FALSE)
-      ->set('current_step', 'runner_prepared')
-      ->set('setup_id', $setup_id)
-      ->set('mode', (string) ($values->get('mode') ?: 'single'))
-      ->set('environment', (string) ($values->get('environment') ?: ''))
-      ->set('started_at', $started_at)
-      ->set('completed_at', 0)
-      ->set('steps', $this->buildStepStatus())
-      ->save();
+    $this->setupStorage->saveStatus($status);
   }
 
   /**
    * Builds setup step status.
    */
-  private function buildStepStatus(): array {
-    $values = $this->configFactory->get('site_platform_admin.setup_values');
-
+  private function buildStepStatus(array $values): array {
     return [
       'site_profile' => 'completed',
       'frontend_defaults' => 'completed',
-      'roles' => (bool) $values->get('setup_options.create_default_roles') ? 'completed' : 'skipped',
-      'pages' => (bool) $values->get('setup_options.create_default_pages') ? 'queued' : 'skipped',
-      'menus' => (bool) $values->get('setup_options.create_default_menus') ? 'queued' : 'skipped',
-      'forms' => (bool) $values->get('setup_options.create_default_forms') ? 'queued' : 'skipped',
-      'content' => (bool) $values->get('setup_options.create_demo_content') ? 'queued' : 'skipped',
+      'roles' => (bool) $this->getValue($values, 'setup_options.create_default_roles') ? 'completed' : 'skipped',
+      'pages' => (bool) $this->getValue($values, 'setup_options.create_default_pages') ? 'queued' : 'skipped',
+      'menus' => (bool) $this->getValue($values, 'setup_options.create_default_menus') ? 'queued' : 'skipped',
+      'forms' => (bool) $this->getValue($values, 'setup_options.create_default_forms') ? 'queued' : 'skipped',
+      'content' => (bool) $this->getValue($values, 'setup_options.create_demo_content') ? 'queued' : 'skipped',
       'analytics' => 'completed',
       'verification' => 'pending',
     ];
@@ -267,9 +259,9 @@ final class SiteSetupRunner {
    * Updates setup manifest.
    */
   private function updateSetupManifest(string $setup_id, array $created_roles): void {
-    $manifest = $this->configFactory->getEditable('site_platform_admin.setup_manifest');
-    $config = $manifest->get('config') ?: [];
-    $roles = $manifest->get('roles') ?: [];
+    $manifest = $this->setupStorage->getManifest();
+    $config = $manifest['config'] ?? [];
+    $roles = $manifest['roles'] ?? [];
 
     foreach ($created_roles as $role_id) {
       $roles[] = $role_id;
@@ -277,28 +269,43 @@ final class SiteSetupRunner {
 
     $config[] = 'system.site';
     $config[] = 'site_platform_api.analytics';
-    $config[] = 'site_platform_admin.setup_status';
-    $config[] = 'site_platform_admin.setup_values';
 
-    $manifest
-      ->set('setup_id', $setup_id)
-      ->set('roles', array_values(array_unique($roles)))
-      ->set('config', array_values(array_unique($config)))
-      ->save();
+    $manifest['setup_id'] = $setup_id;
+    $manifest['roles'] = array_values(array_unique($roles));
+    $manifest['config'] = array_values(array_unique($config));
+
+    $this->setupStorage->saveManifest($manifest);
   }
 
   /**
    * Gets existing setup ID or creates one.
    */
   private function getOrCreateSetupId(): string {
-    $status = $this->configFactory->get('site_platform_admin.setup_status');
-    $existing = trim((string) $status->get('setup_id'));
+    $status = $this->setupStorage->getStatus();
+    $existing = trim((string) ($status['setup_id'] ?? ''));
 
     if ($existing !== '') {
       return $existing;
     }
 
     return 'setup-' . date('Ymd-His', $this->time->getRequestTime());
+  }
+
+  /**
+   * Gets a nested setup value.
+   */
+  private function getValue(array $values, string $path): mixed {
+    $current = $values;
+
+    foreach (explode('.', $path) as $part) {
+      if (!is_array($current) || !array_key_exists($part, $current)) {
+        return NULL;
+      }
+
+      $current = $current[$part];
+    }
+
+    return $current;
   }
 
 }

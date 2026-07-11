@@ -7,6 +7,8 @@ namespace Drupal\site_platform_admin\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\site_platform_admin\Service\SiteSetupStorage;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides the first-run site setup overview.
@@ -14,11 +16,27 @@ use Drupal\Core\Url;
 final class SiteSetupController extends ControllerBase {
 
   /**
+   * Constructs the site setup controller.
+   */
+  public function __construct(
+    private readonly SiteSetupStorage $setupStorage,
+  ) {}
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): self {
+    return new self(
+      $container->get('site_platform_admin.setup_storage')
+    );
+  }
+
+  /**
    * Builds the setup overview page.
    */
   public function overview(): array {
-    $status = $this->config('site_platform_admin.setup_status');
-    $values = $this->config('site_platform_admin.setup_values');
+    $status = $this->setupStorage->getStatus();
+    $values = $this->setupStorage->getValues();
 
     return [
       '#type' => 'container',
@@ -51,26 +69,26 @@ final class SiteSetupController extends ControllerBase {
         '#title' => $this->t('Current Setup Status'),
         '#items' => [
           $this->t('Mode: @value', [
-            '@value' => $status->get('mode') ?: 'single',
+            '@value' => $status['mode'] ?: 'single',
           ]),
           $this->t('Current step: @value', [
-            '@value' => $status->get('current_step') ?: 'not_started',
+            '@value' => $status['current_step'] ?: 'not_started',
           ]),
           $this->t('Completed: @value', [
-            '@value' => $this->formatBoolean((bool) $status->get('completed')),
+            '@value' => $this->formatBoolean((bool) $status['completed']),
           ]),
           $this->t('Locked: @value', [
-            '@value' => $this->formatBoolean((bool) $status->get('locked')),
+            '@value' => $this->formatBoolean((bool) $status['locked']),
           ]),
           $this->t('Saved site name: @value', [
-            '@value' => $values->get('site.name') ?: $this->t('Not set'),
+            '@value' => $values['site']['name'] ?: $this->t('Not set'),
           ]),
           $this->t('Setup ID: @value', [
-            '@value' => $status->get('setup_id') ?: $this->t('Not created yet'),
+            '@value' => $status['setup_id'] ?: $this->t('Not created yet'),
           ]),
         ],
       ],
-      'steps' => $this->buildSteps($status->get('steps') ?: []),
+      'steps' => $this->buildSteps($status['steps'] ?: []),
       'notice' => [
         '#type' => 'container',
         '#attributes' => [
@@ -81,7 +99,7 @@ final class SiteSetupController extends ControllerBase {
         'message' => [
           '#type' => 'html_tag',
           '#tag' => 'p',
-          '#value' => $this->t('The current setup runner is safe and non-destructive. Entity creation, retry, and reset actions will be added in later phases.'),
+          '#value' => $this->t('Setup values, status, and manifest are stored in Drupal state so local/stage/prod setup values do not accidentally export into shared config.'),
         ],
       ],
     ];

@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Drupal\site_platform_admin\Form;
 
-use Drupal\Core\Form\ConfigFormBase;
+use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\site_platform_admin\Service\SiteSetupStorage;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides the first-run site setup wizard form.
  */
-final class SiteSetupWizardForm extends ConfigFormBase {
+final class SiteSetupWizardForm extends FormBase {
 
   /**
    * {@inheritdoc}
@@ -20,20 +22,26 @@ final class SiteSetupWizardForm extends ConfigFormBase {
   }
 
   /**
+   * Constructs the setup wizard form.
+   */
+  public function __construct(
+    private readonly SiteSetupStorage $setupStorage,
+  ) {}
+
+  /**
    * {@inheritdoc}
    */
-  protected function getEditableConfigNames(): array {
-    return [
-      'site_platform_admin.setup_values',
-      'site_platform_admin.setup_status',
-    ];
+  public static function create(ContainerInterface $container): self {
+    return new self(
+      $container->get('site_platform_admin.setup_storage')
+    );
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $config = $this->config('site_platform_admin.setup_values');
+    $config = $this->setupStorage->getValues();
 
     $form['intro'] = [
       '#type' => 'container',
@@ -67,7 +75,7 @@ final class SiteSetupWizardForm extends ConfigFormBase {
         'single' => $this->t('Single Site'),
         'multiple' => $this->t('Multiple Sites / Brands'),
       ],
-      '#default_value' => $config->get('mode') ?: 'single',
+      '#default_value' => $config['mode'] ?: 'single',
       '#required' => TRUE,
     ];
 
@@ -81,7 +89,7 @@ final class SiteSetupWizardForm extends ConfigFormBase {
         'stage' => $this->t('Stage'),
         'prod' => $this->t('Production'),
       ],
-      '#default_value' => $config->get('environment') ?: '',
+      '#default_value' => $config['environment'] ?: '',
       '#description' => $this->t('Production defaults keep demo content disabled.'),
     ];
 
@@ -94,7 +102,7 @@ final class SiteSetupWizardForm extends ConfigFormBase {
     $form['site']['site_name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Site Name'),
-      '#default_value' => $config->get('site.name') ?: '',
+      '#default_value' => $config['site']['name'] ?: '',
       '#required' => TRUE,
       '#maxlength' => 128,
     ];
@@ -102,7 +110,7 @@ final class SiteSetupWizardForm extends ConfigFormBase {
     $form['site']['site_key'] = [
       '#type' => 'machine_name',
       '#title' => $this->t('Site Key'),
-      '#default_value' => $config->get('site.key') ?: '',
+      '#default_value' => $config['site']['key'] ?: '',
       '#required' => TRUE,
       '#machine_name' => [
         'exists' => [$this, 'siteKeyExists'],
@@ -117,7 +125,7 @@ final class SiteSetupWizardForm extends ConfigFormBase {
     $form['site']['primary_domain'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Primary Domain'),
-      '#default_value' => $config->get('site.primary_domain') ?: '',
+      '#default_value' => $config['site']['primary_domain'] ?: '',
       '#placeholder' => 'example.com',
       '#required' => TRUE,
       '#maxlength' => 255,
@@ -126,7 +134,7 @@ final class SiteSetupWizardForm extends ConfigFormBase {
     $form['site']['frontend_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Frontend URL'),
-      '#default_value' => $config->get('site.frontend_url') ?: '',
+      '#default_value' => $config['site']['frontend_url'] ?: '',
       '#placeholder' => 'https://www.example.com',
       '#required' => TRUE,
     ];
@@ -134,7 +142,7 @@ final class SiteSetupWizardForm extends ConfigFormBase {
     $form['site']['admin_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Admin URL'),
-      '#default_value' => $config->get('site.admin_url') ?: '',
+      '#default_value' => $config['site']['admin_url'] ?: '',
       '#placeholder' => 'https://admin.example.com',
       '#required' => TRUE,
     ];
@@ -142,7 +150,7 @@ final class SiteSetupWizardForm extends ConfigFormBase {
     $form['site']['api_url'] = [
       '#type' => 'url',
       '#title' => $this->t('API URL'),
-      '#default_value' => $config->get('site.api_url') ?: '',
+      '#default_value' => $config['site']['api_url'] ?: '',
       '#placeholder' => 'https://api.example.com',
       '#required' => TRUE,
     ];
@@ -156,7 +164,7 @@ final class SiteSetupWizardForm extends ConfigFormBase {
     $form['contact']['company_name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Company Name'),
-      '#default_value' => $config->get('contact.company_name') ?: '',
+      '#default_value' => $config['contact']['company_name'] ?: '',
       '#required' => TRUE,
       '#maxlength' => 128,
     ];
@@ -164,14 +172,14 @@ final class SiteSetupWizardForm extends ConfigFormBase {
     $form['contact']['primary_email'] = [
       '#type' => 'email',
       '#title' => $this->t('Primary Email'),
-      '#default_value' => $config->get('contact.primary_email') ?: '',
+      '#default_value' => $config['contact']['primary_email'] ?: '',
       '#required' => TRUE,
     ];
 
     $form['contact']['country'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Country'),
-      '#default_value' => $config->get('contact.country') ?: '',
+      '#default_value' => $config['contact']['country'] ?: '',
       '#required' => TRUE,
       '#maxlength' => 128,
     ];
@@ -186,7 +194,7 @@ final class SiteSetupWizardForm extends ConfigFormBase {
     $form['branding']['theme_color'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Theme Color'),
-      '#default_value' => $config->get('branding.theme_color') ?: '#0f62fe',
+      '#default_value' => $config['branding']['theme_color'] ?: '#0f62fe',
       '#placeholder' => '#0f62fe',
       '#maxlength' => 16,
     ];
@@ -194,7 +202,7 @@ final class SiteSetupWizardForm extends ConfigFormBase {
     $form['branding']['logo'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Logo URL'),
-      '#default_value' => $config->get('branding.logo') ?: '',
+      '#default_value' => $config['branding']['logo'] ?: '',
       '#description' => $this->t('Optional. If empty, frontend should render text branding or a default placeholder.'),
       '#maxlength' => 512,
     ];
@@ -202,7 +210,7 @@ final class SiteSetupWizardForm extends ConfigFormBase {
     $form['branding']['favicon'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Favicon URL'),
-      '#default_value' => $config->get('branding.favicon') ?: '',
+      '#default_value' => $config['branding']['favicon'] ?: '',
       '#description' => $this->t('Optional. If empty, frontend should use its fallback favicon.'),
       '#maxlength' => 512,
     ];
@@ -216,31 +224,31 @@ final class SiteSetupWizardForm extends ConfigFormBase {
     $form['setup_options']['create_default_pages'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Create Default Pages'),
-      '#default_value' => $config->get('setup_options.create_default_pages') ?? TRUE,
+      '#default_value' => $config['setup_options']['create_default_pages'] ?? TRUE,
     ];
 
     $form['setup_options']['create_default_menus'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Create Default Menus'),
-      '#default_value' => $config->get('setup_options.create_default_menus') ?? TRUE,
+      '#default_value' => $config['setup_options']['create_default_menus'] ?? TRUE,
     ];
 
     $form['setup_options']['create_default_forms'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Create Default Forms'),
-      '#default_value' => $config->get('setup_options.create_default_forms') ?? TRUE,
+      '#default_value' => $config['setup_options']['create_default_forms'] ?? TRUE,
     ];
 
     $form['setup_options']['create_default_roles'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Create Default Roles'),
-      '#default_value' => $config->get('setup_options.create_default_roles') ?? TRUE,
+      '#default_value' => $config['setup_options']['create_default_roles'] ?? TRUE,
     ];
 
     $form['setup_options']['create_demo_content'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Create Demo Content'),
-      '#default_value' => $config->get('setup_options.create_demo_content') ?? FALSE,
+      '#default_value' => $config['setup_options']['create_demo_content'] ?? FALSE,
       '#description' => $this->t('Keep this disabled for production unless demo content is intentionally needed.'),
     ];
 
@@ -253,14 +261,14 @@ final class SiteSetupWizardForm extends ConfigFormBase {
     $form['analytics']['analytics_enabled'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Enable Analytics'),
-      '#default_value' => $config->get('analytics.enabled') ?? FALSE,
+      '#default_value' => $config['analytics']['enabled'] ?? FALSE,
       '#description' => $this->t('Environment values may override analytics setup values.'),
     ];
 
     $form['analytics']['analytics_measurement_id'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Google Analytics Measurement ID'),
-      '#default_value' => $config->get('analytics.measurement_id') ?: '',
+      '#default_value' => $config['analytics']['measurement_id'] ?: '',
       '#placeholder' => 'G-XXXXXXXXXX',
       '#maxlength' => 64,
     ];
@@ -341,33 +349,44 @@ final class SiteSetupWizardForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
-    $this->config('site_platform_admin.setup_values')
-      ->set('mode', (string) $form_state->getValue('mode'))
-      ->set('environment', (string) $form_state->getValue('environment'))
-      ->set('site.name', trim((string) $form_state->getValue('site_name')))
-      ->set('site.key', trim((string) $form_state->getValue('site_key')))
-      ->set('site.primary_domain', trim((string) $form_state->getValue('primary_domain')))
-      ->set('site.frontend_url', trim((string) $form_state->getValue('frontend_url')))
-      ->set('site.admin_url', trim((string) $form_state->getValue('admin_url')))
-      ->set('site.api_url', trim((string) $form_state->getValue('api_url')))
-      ->set('contact.company_name', trim((string) $form_state->getValue('company_name')))
-      ->set('contact.primary_email', trim((string) $form_state->getValue('primary_email')))
-      ->set('contact.country', trim((string) $form_state->getValue('country')))
-      ->set('branding.theme_color', trim((string) $form_state->getValue('theme_color')) ?: '#0f62fe')
-      ->set('branding.logo', trim((string) $form_state->getValue('logo')))
-      ->set('branding.favicon', trim((string) $form_state->getValue('favicon')))
-      ->set('setup_options.create_default_pages', (bool) $form_state->getValue('create_default_pages'))
-      ->set('setup_options.create_default_menus', (bool) $form_state->getValue('create_default_menus'))
-      ->set('setup_options.create_default_forms', (bool) $form_state->getValue('create_default_forms'))
-      ->set('setup_options.create_default_roles', (bool) $form_state->getValue('create_default_roles'))
-      ->set('setup_options.create_demo_content', (bool) $form_state->getValue('create_demo_content'))
-      ->set('analytics.enabled', (bool) $form_state->getValue('analytics_enabled'))
-      ->set('analytics.measurement_id', trim((string) $form_state->getValue('analytics_measurement_id')))
-      ->save();
+    $this->setupStorage->saveValues([
+      'mode' => (string) $form_state->getValue('mode'),
+      'environment' => (string) $form_state->getValue('environment'),
+      'site' => [
+        'name' => trim((string) $form_state->getValue('site_name')),
+        'key' => trim((string) $form_state->getValue('site_key')),
+        'primary_domain' => trim((string) $form_state->getValue('primary_domain')),
+        'frontend_url' => trim((string) $form_state->getValue('frontend_url')),
+        'admin_url' => trim((string) $form_state->getValue('admin_url')),
+        'api_url' => trim((string) $form_state->getValue('api_url')),
+      ],
+      'contact' => [
+        'company_name' => trim((string) $form_state->getValue('company_name')),
+        'primary_email' => trim((string) $form_state->getValue('primary_email')),
+        'country' => trim((string) $form_state->getValue('country')),
+      ],
+      'branding' => [
+        'theme_color' => trim((string) $form_state->getValue('theme_color')) ?: '#0f62fe',
+        'logo' => trim((string) $form_state->getValue('logo')),
+        'favicon' => trim((string) $form_state->getValue('favicon')),
+      ],
+      'setup_options' => [
+        'create_default_pages' => (bool) $form_state->getValue('create_default_pages'),
+        'create_default_menus' => (bool) $form_state->getValue('create_default_menus'),
+        'create_default_forms' => (bool) $form_state->getValue('create_default_forms'),
+        'create_default_roles' => (bool) $form_state->getValue('create_default_roles'),
+        'create_demo_content' => (bool) $form_state->getValue('create_demo_content'),
+      ],
+      'analytics' => [
+        'enabled' => (bool) $form_state->getValue('analytics_enabled'),
+        'measurement_id' => trim((string) $form_state->getValue('analytics_measurement_id')),
+      ],
+      'extra_sites' => [],
+    ]);
 
-    $this->config('site_platform_admin.setup_status')
-      ->set('current_step', 'setup_form_saved')
-      ->save();
+    $status = $this->setupStorage->getStatus();
+    $status['current_step'] = 'setup_form_saved';
+    $this->setupStorage->saveStatus($status);
 
     $this->messenger()->addStatus($this->t('Setup values saved. The setup runner will be added in the next phase.'));
 

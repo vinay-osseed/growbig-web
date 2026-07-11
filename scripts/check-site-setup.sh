@@ -9,30 +9,33 @@ ddev drush route | grep -q "site_platform_admin.site_setup_wizard"
 ddev drush route | grep -q "site_platform_admin.site_setup_run"
 
 ddev drush php:eval '
-$status = \Drupal::config("site_platform_admin.setup_status");
-$manifest = \Drupal::config("site_platform_admin.setup_manifest");
-$values = \Drupal::config("site_platform_admin.setup_values");
+foreach (["site_platform_admin.setup_storage", "site_platform_admin.setup_runner"] as $service_id) {
+  if (!\Drupal::hasService($service_id)) {
+    throw new \RuntimeException("Missing service: " . $service_id);
+  }
+}
+
+$storage = \Drupal::service("site_platform_admin.setup_storage");
+$status = $storage->getStatus();
+$manifest = $storage->getManifest();
+$values = $storage->getValues();
 
 foreach (["installed", "completed", "locked", "current_step", "mode", "steps"] as $key) {
-  if ($status->get($key) === NULL) {
-    throw new \RuntimeException("Missing setup status config key: " . $key);
+  if (!array_key_exists($key, $status)) {
+    throw new \RuntimeException("Missing setup status key: " . $key);
   }
 }
 
 foreach (["setup_id", "nodes", "webforms", "roles", "config", "files"] as $key) {
-  if ($manifest->get($key) === NULL) {
-    throw new \RuntimeException("Missing setup manifest config key: " . $key);
+  if (!array_key_exists($key, $manifest)) {
+    throw new \RuntimeException("Missing setup manifest key: " . $key);
   }
 }
 
 foreach (["mode", "site", "contact", "branding", "setup_options", "analytics", "extra_sites"] as $key) {
-  if ($values->get($key) === NULL) {
-    throw new \RuntimeException("Missing setup values config key: " . $key);
+  if (!array_key_exists($key, $values)) {
+    throw new \RuntimeException("Missing setup values key: " . $key);
   }
-}
-
-if (!\Drupal::hasService("site_platform_admin.setup_runner")) {
-  throw new \RuntimeException("Missing setup runner service.");
 }
 
 $preview = \Drupal::service("site_platform_admin.setup_runner")->getPreview();
