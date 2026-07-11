@@ -555,3 +555,13 @@ Do not run `drush cex` after entering environment-specific setup values unless t
 Full guide:
 
 - `docs/site-setup-user-guide.md`
+
+## Final Setup Workflow Handoff
+
+The full setup workflow handoff is documented in:
+
+- `docs/site-setup-final-handoff.md`
+
+Final verification command:
+
+    ./scripts/check-final-setup-workflow.sh
