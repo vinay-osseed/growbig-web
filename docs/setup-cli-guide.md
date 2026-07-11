@@ -138,3 +138,20 @@ Or with Drush:
 The import stores values in Drupal State API. It does not export them to config.
 
 Do not commit `setup/site.yml` if it contains production URLs, real analytics IDs, or private deployment values.
+
+## YAML Import Validation
+
+The import command validates setup YAML before saving values.
+
+It checks:
+
+- required site fields
+- required contact fields
+- setup mode
+- URL fields
+- email field
+- setup option booleans
+- analytics value types
+- extra site row shape
+
+Invalid YAML fails before any setup values are saved.
