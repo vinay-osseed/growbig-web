@@ -96,6 +96,9 @@ final class SiteSetupRunForm extends FormBase {
         $this->t('Primary Domain: @value', ['@value' => $preview['primary_domain']]),
         $this->t('Frontend URL: @value', ['@value' => $preview['frontend_url']]),
         $this->t('API URL: @value', ['@value' => $preview['api_url']]),
+        $this->t('Create Default Roles: @value', [
+          '@value' => $preview['create_default_roles'] ? $this->t('Yes') : $this->t('No'),
+        ]),
         $this->t('Create Demo Content: @value', [
           '@value' => $preview['create_demo_content'] ? $this->t('Yes') : $this->t('No'),
         ]),

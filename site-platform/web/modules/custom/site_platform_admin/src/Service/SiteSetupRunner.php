@@ -6,11 +6,24 @@ namespace Drupal\site_platform_admin\Service;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\user\RoleInterface;
 
 /**
  * Runs safe first-run setup preparation tasks.
  */
 final class SiteSetupRunner {
+
+  /**
+   * Setup role definitions.
+   */
+  private const ROLE_DEFINITIONS = [
+    'site_developer' => 'Site Developer',
+    'content_admin' => 'Content Admin',
+    'hr_manager' => 'HR Manager',
+    'form_manager' => 'Form Manager',
+    'analytics_viewer' => 'Analytics Viewer',
+  ];
 
   /**
    * Required setup value labels keyed by config path.
@@ -33,6 +46,7 @@ final class SiteSetupRunner {
   public function __construct(
     private readonly ConfigFactoryInterface $configFactory,
     private readonly TimeInterface $time,
+    private readonly EntityTypeManagerInterface $entityTypeManager,
   ) {}
 
   /**
@@ -90,8 +104,9 @@ final class SiteSetupRunner {
 
     $this->applySystemSiteConfig();
     $this->applyAnalyticsConfig();
+    $created_roles = $this->ensureRoles();
     $this->updateSetupStatus($setup_id);
-    $this->updateSetupManifest($setup_id);
+    $this->updateSetupManifest($setup_id, $created_roles);
 
     return [
       'setup_id' => $setup_id,
@@ -99,7 +114,85 @@ final class SiteSetupRunner {
       'site_key' => (string) $values->get('site.key'),
       'current_step' => 'runner_prepared',
       'completed' => FALSE,
+      'roles' => $created_roles,
     ];
+  }
+
+  /**
+   * Ensures setup roles exist.
+   */
+  private function ensureRoles(): array {
+    $values = $this->configFactory->get('site_platform_admin.setup_values');
+
+    if (!(bool) $values->get('setup_options.create_default_roles')) {
+      return [];
+    }
+
+    $created_or_existing = [];
+    $storage = $this->entityTypeManager->getStorage('user_role');
+
+    foreach (self::ROLE_DEFINITIONS as $role_id => $label) {
+      $role = $storage->load($role_id);
+
+      if (!$role instanceof RoleInterface) {
+        $role = $storage->create([
+          'id' => $role_id,
+          'label' => $label,
+        ]);
+      }
+      else {
+        $role->set('label', $label);
+      }
+
+      $this->grantRolePermissions($role_id, $role);
+      $role->save();
+
+      $created_or_existing[] = $role_id;
+    }
+
+    return $created_or_existing;
+  }
+
+  /**
+   * Grants baseline permissions to setup roles.
+   */
+  private function grantRolePermissions(string $role_id, RoleInterface $role): void {
+    $permissions = match ($role_id) {
+      'site_developer' => [
+        'access administration pages',
+        'administer site configuration',
+        'administer site setup',
+      ],
+      'content_admin' => [
+        'access administration pages',
+        'access content overview',
+        'administer nodes',
+        'create site_page content',
+        'edit any site_page content',
+        'delete any site_page content',
+      ],
+      'hr_manager' => [
+        'access administration pages',
+        'access content overview',
+        'create job content',
+        'edit any job content',
+        'delete any job content',
+      ],
+      'form_manager' => [
+        'access administration pages',
+        'access webform overview',
+      ],
+      'analytics_viewer' => [
+        'access administration pages',
+      ],
+      default => [],
+    };
+
+    foreach ($permissions as $permission) {
+      if (!$role->hasPermission($permission)) {
+        $role->grantPermission($permission);
+      }
+    }
   }
 
   /**
@@ -160,7 +253,7 @@ final class SiteSetupRunner {
     return [
       'site_profile' => 'completed',
       'frontend_defaults' => 'completed',
-      'roles' => (bool) $values->get('setup_options.create_default_roles') ? 'queued' : 'skipped',
+      'roles' => (bool) $values->get('setup_options.create_default_roles') ? 'completed' : 'skipped',
       'pages' => (bool) $values->get('setup_options.create_default_pages') ? 'queued' : 'skipped',
       'menus' => (bool) $values->get('setup_options.create_default_menus') ? 'queued' : 'skipped',
       'forms' => (bool) $values->get('setup_options.create_default_forms') ? 'queued' : 'skipped',
@@ -173,9 +266,14 @@ final class SiteSetupRunner {
   /**
    * Updates setup manifest.
    */
-  private function updateSetupManifest(string $setup_id): void {
+  private function updateSetupManifest(string $setup_id, array $created_roles): void {
     $manifest = $this->configFactory->getEditable('site_platform_admin.setup_manifest');
     $config = $manifest->get('config') ?: [];
+    $roles = $manifest->get('roles') ?: [];
+
+    foreach ($created_roles as $role_id) {
+      $roles[] = $role_id;
+    }
 
     $config[] = 'system.site';
     $config[] = 'site_platform_api.analytics';
@@ -184,6 +282,7 @@ final class SiteSetupRunner {
 
     $manifest
       ->set('setup_id', $setup_id)
+      ->set('roles', array_values(array_unique($roles)))
       ->set('config', array_values(array_unique($config)))
       ->save();
   }

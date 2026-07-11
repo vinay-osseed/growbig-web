@@ -36,8 +36,10 @@ if (!\Drupal::hasService("site_platform_admin.setup_runner")) {
 }
 
 $preview = \Drupal::service("site_platform_admin.setup_runner")->getPreview();
-if (!is_array($preview) || !array_key_exists("mode", $preview)) {
-  throw new \RuntimeException("Setup runner preview failed.");
+foreach (["mode", "site_name", "site_key", "create_default_roles"] as $key) {
+  if (!array_key_exists($key, $preview)) {
+    throw new \RuntimeException("Missing setup runner preview key: " . $key);
+  }
 }
 
 echo "Site setup foundation verified." . PHP_EOL;
