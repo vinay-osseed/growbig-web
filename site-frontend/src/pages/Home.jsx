@@ -9,6 +9,7 @@ export default function Home()
             <HeroSection/>
             <ServiceSection/>
             <PartnersMarquee/>
+            
         </main>
     )
 }
