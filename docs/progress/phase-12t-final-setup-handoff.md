@@ -35,11 +35,15 @@ The setup workflow supports:
 - setup profile in Site API
 - final verification wrapper
 
-## Intentionally Pending
+## Production Backlog Closeout
 
-The following are future tasks, not blockers for deployment:
+The remaining backlog has been reviewed against the current codebase.
 
-- destructive cleanup/reset of setup-created data
-- actual multi-site/domain record creation
-- deeper Setup Wizard UI polish
-- richer branding integration beyond setup profile
+- real multi-site/domain record creation is not implemented because no Domain module is enabled
+- destructive cleanup/reset is not implemented because it requires an approved backup-aware deletion plan
+- setup UI polish is production-ready for the current scope
+- branding values are exposed through `setupProfile.branding`
+
+See:
+
+- `docs/setup-production-backlog-closeout.md`

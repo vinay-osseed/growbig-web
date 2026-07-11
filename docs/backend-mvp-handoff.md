@@ -565,3 +565,13 @@ The full setup workflow handoff is documented in:
 Final verification command:
 
     ./scripts/check-final-setup-workflow.sh
+
+## Setup Production Backlog Closeout
+
+The setup workflow production closeout is documented in:
+
+- `docs/setup-production-backlog-closeout.md`
+
+No real Domain record creation is included because no Domain module is enabled.
+
+No destructive cleanup is included because production deletion requires a separate backup-aware deletion plan.

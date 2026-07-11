@@ -119,3 +119,16 @@ This checks:
 - Site API setup profile
 - backend MVP
 - custom code standards
+
+## Production Backlog Closeout
+
+The production backlog closeout is documented in:
+
+- `docs/setup-production-backlog-closeout.md`
+
+Key decisions:
+
+- real Domain record creation is not implemented because no Domain module is enabled
+- destructive cleanup is not implemented because it requires an approved backup-aware deletion plan
+- setup UI polish is production-ready for the current scope
+- branding values are available through `setupProfile.branding`

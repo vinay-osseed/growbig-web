@@ -229,3 +229,11 @@ Production reminder:
 - preview before running setup
 - do not commit private setup YAML files
 - do not export environment-specific setup values unless intentional
+
+## Production Backlog Closeout
+
+Before production deployment, review:
+
+    docs/setup-production-backlog-closeout.md
+
+This confirms that real domain creation and destructive cleanup are intentionally not included in the current production-safe setup workflow.
