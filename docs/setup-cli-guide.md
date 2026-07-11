@@ -199,3 +199,33 @@ Do not commit environment-specific files such as:
 - `setup/site.production.yml`
 
 These files can contain production URLs, analytics IDs, or environment-specific setup values.
+
+## Portable CLI Usage
+
+The setup helper works in DDEV and non-DDEV environments.
+
+In DDEV, run:
+
+    ./scripts/site-setup.sh status
+
+The helper automatically uses:
+
+    ddev drush
+
+On production or stage, set the Drush binary explicitly:
+
+    DRUSH_BIN=/var/www/html/site-platform/vendor/bin/drush ./scripts/site-setup.sh status
+    DRUSH_BIN=/var/www/html/site-platform/vendor/bin/drush ./scripts/site-setup.sh preview
+    DRUSH_BIN=/var/www/html/site-platform/vendor/bin/drush ./scripts/site-setup.sh import setup/site.yml
+    DRUSH_BIN=/var/www/html/site-platform/vendor/bin/drush ./scripts/site-setup.sh run
+
+If `DRUSH_BIN` is not set and DDEV is not available, the helper falls back to:
+
+    drush
+
+Production reminder:
+
+- import private setup YAML first
+- preview before running setup
+- do not commit private setup YAML files
+- do not export environment-specific setup values unless intentional

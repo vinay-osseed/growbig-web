@@ -4,6 +4,16 @@ set -euo pipefail
 
 COMMAND="${1:-help}"
 
+run_drush() {
+  if [ -n "${DRUSH_BIN:-}" ]; then
+    "$DRUSH_BIN" "$@"
+  elif command -v ddev >/dev/null 2>&1; then
+    ddev drush "$@"
+  else
+    drush "$@"
+  fi
+}
+
 usage() {
   cat <<'USAGE'
 Site Setup helper
@@ -21,6 +31,10 @@ Usage:
 
 Notes:
   - This helper uses native Drush commands.
+  - In DDEV it uses: ddev drush
+  - Outside DDEV it uses: drush
+  - You can override the Drush binary with DRUSH_BIN.
+  - Example: DRUSH_BIN=/path/to/vendor/bin/drush ./scripts/site-setup.sh status
   - It does not delete pages, forms, roles, content, files, or submissions.
   - Do not run drush cex after entering environment-specific setup values unless intentional.
 USAGE
@@ -28,36 +42,36 @@ USAGE
 
 case "$COMMAND" in
   status)
-    ddev drush site-platform:setup-status
+    run_drush site-platform:setup-status
     ;;
 
   preview)
-    ddev drush site-platform:setup-preview
+    run_drush site-platform:setup-preview
     ;;
 
   sites)
-    ddev drush site-platform:setup-sites
+    run_drush site-platform:setup-sites
     ;;
 
   import)
     FILE="${2:-setup/site.yml}"
-    ddev drush site-platform:setup-import "$FILE"
+    run_drush site-platform:setup-import "$FILE"
     ;;
 
   run)
-    ddev drush site-platform:setup-run
+    run_drush site-platform:setup-run
     ;;
 
   complete)
-    ddev drush site-platform:setup-complete
+    run_drush site-platform:setup-complete
     ;;
 
   unlock)
-    ddev drush site-platform:setup-unlock
+    run_drush site-platform:setup-unlock
     ;;
 
   reset-status)
-    ddev drush site-platform:setup-reset-status
+    run_drush site-platform:setup-reset-status
     ;;
 
   check)
