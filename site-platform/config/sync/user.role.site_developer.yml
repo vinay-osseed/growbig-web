@@ -5,6 +5,7 @@ dependencies:
   module:
     - media
     - node
+    - site_platform_admin
     - system
     - webform
 id: site_developer
@@ -23,6 +24,7 @@ permissions:
   - 'administer nodes'
   - 'administer permissions'
   - 'administer site configuration'
+  - 'administer site setup'
   - 'administer users'
   - 'administer webform'
   - 'delete any webform submission'

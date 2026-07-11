@@ -5,3 +5,11 @@ site_platform_admin.dashboard:
     _title: 'Site Dashboard'
   requirements:
     _permission: 'access content overview'
+
+site_platform_admin.site_setup:
+  path: '/admin/site-setup'
+  defaults:
+    _controller: '\Drupal\site_platform_admin\Controller\SiteSetupController::overview'
+    _title: 'Site Setup'
+  requirements:
+    _permission: 'administer site setup'

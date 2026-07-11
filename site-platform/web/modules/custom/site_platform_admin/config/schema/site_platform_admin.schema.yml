@@ -1,0 +1,100 @@
+site_platform_admin.setup_status:
+  type: config_object
+  label: 'Site Platform Setup Status'
+  mapping:
+    installed:
+      type: boolean
+      label: 'Installed'
+    completed:
+      type: boolean
+      label: 'Completed'
+    locked:
+      type: boolean
+      label: 'Locked'
+    current_step:
+      type: string
+      label: 'Current setup step'
+    setup_id:
+      type: string
+      label: 'Setup ID'
+    mode:
+      type: string
+      label: 'Setup mode'
+    environment:
+      type: string
+      label: 'Environment'
+    started_at:
+      type: integer
+      label: 'Started timestamp'
+    completed_at:
+      type: integer
+      label: 'Completed timestamp'
+    steps:
+      type: mapping
+      label: 'Setup steps'
+      mapping:
+        site_profile:
+          type: string
+          label: 'Site profile status'
+        frontend_defaults:
+          type: string
+          label: 'Frontend defaults status'
+        roles:
+          type: string
+          label: 'Roles status'
+        pages:
+          type: string
+          label: 'Pages status'
+        menus:
+          type: string
+          label: 'Menus status'
+        forms:
+          type: string
+          label: 'Forms status'
+        content:
+          type: string
+          label: 'Content status'
+        analytics:
+          type: string
+          label: 'Analytics status'
+        verification:
+          type: string
+          label: 'Verification status'
+
+site_platform_admin.setup_manifest:
+  type: config_object
+  label: 'Site Platform Setup Manifest'
+  mapping:
+    setup_id:
+      type: string
+      label: 'Setup ID'
+    nodes:
+      type: sequence
+      label: 'Created node IDs'
+      sequence:
+        type: integer
+        label: 'Node ID'
+    webforms:
+      type: sequence
+      label: 'Created webforms'
+      sequence:
+        type: string
+        label: 'Webform ID'
+    roles:
+      type: sequence
+      label: 'Created roles'
+      sequence:
+        type: string
+        label: 'Role ID'
+    config:
+      type: sequence
+      label: 'Created config'
+      sequence:
+        type: string
+        label: 'Config name'
+    files:
+      type: sequence
+      label: 'Created files'
+      sequence:
+        type: string
+        label: 'File path'
