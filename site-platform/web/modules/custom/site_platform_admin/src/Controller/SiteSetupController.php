@@ -65,6 +65,9 @@ final class SiteSetupController extends ControllerBase {
           $this->t('Saved site name: @value', [
             '@value' => $values->get('site.name') ?: $this->t('Not set'),
           ]),
+          $this->t('Setup ID: @value', [
+            '@value' => $status->get('setup_id') ?: $this->t('Not created yet'),
+          ]),
         ],
       ],
       'steps' => $this->buildSteps($status->get('steps') ?: []),
@@ -78,7 +81,7 @@ final class SiteSetupController extends ControllerBase {
         'message' => [
           '#type' => 'html_tag',
           '#tag' => 'p',
-          '#value' => $this->t('Setup runner, retry, reset, and review forms will be added in the next implementation phases.'),
+          '#value' => $this->t('The current setup runner is safe and non-destructive. Entity creation, retry, and reset actions will be added in later phases.'),
         ],
       ],
     ];
@@ -96,6 +99,13 @@ final class SiteSetupController extends ControllerBase {
     $wizard['#attributes']['class'][] = 'button';
     $wizard['#attributes']['class'][] = 'button--primary';
 
+    $run = Link::fromTextAndUrl(
+      $this->t('Prepare Setup Run'),
+      Url::fromRoute('site_platform_admin.site_setup_run')
+    )->toRenderable();
+
+    $run['#attributes']['class'][] = 'button';
+
     return [
       '#type' => 'container',
       '#attributes' => [
@@ -104,6 +114,7 @@ final class SiteSetupController extends ControllerBase {
         ],
       ],
       'wizard' => $wizard,
+      'run' => $run,
     ];
   }
 

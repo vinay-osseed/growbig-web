@@ -1,0 +1,6 @@
+services:
+  site_platform_admin.setup_runner:
+    class: Drupal\site_platform_admin\Service\SiteSetupRunner
+    arguments:
+      - '@config.factory'
+      - '@datetime.time'

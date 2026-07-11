@@ -6,6 +6,7 @@ echo "Checking site setup foundation..."
 
 ddev drush route | grep -q "site_platform_admin.site_setup"
 ddev drush route | grep -q "site_platform_admin.site_setup_wizard"
+ddev drush route | grep -q "site_platform_admin.site_setup_run"
 
 ddev drush php:eval '
 $status = \Drupal::config("site_platform_admin.setup_status");
@@ -28,6 +29,15 @@ foreach (["mode", "site", "contact", "branding", "setup_options", "analytics", "
   if ($values->get($key) === NULL) {
     throw new \RuntimeException("Missing setup values config key: " . $key);
   }
+}
+
+if (!\Drupal::hasService("site_platform_admin.setup_runner")) {
+  throw new \RuntimeException("Missing setup runner service.");
+}
+
+$preview = \Drupal::service("site_platform_admin.setup_runner")->getPreview();
+if (!is_array($preview) || !array_key_exists("mode", $preview)) {
+  throw new \RuntimeException("Setup runner preview failed.");
 }
 
 echo "Site setup foundation verified." . PHP_EOL;
