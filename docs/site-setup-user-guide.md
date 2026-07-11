@@ -366,3 +366,30 @@ Future setup phases may add:
 - CLI setup command
 - richer frontend branding defaults
 - site profile API integration with setup values
+
+## Setup Values in Site API
+
+The Site API includes runtime setup values under:
+
+- `setupProfile`
+
+Endpoint:
+
+- `GET /api/v1/site`
+
+The setup profile includes:
+
+- setup mode
+- environment
+- site key
+- primary domain
+- frontend URL
+- admin URL
+- API URL
+- company name
+- primary email
+- country
+- branding defaults
+- extra site rows
+
+This is a non-breaking addition to the existing Site API response.

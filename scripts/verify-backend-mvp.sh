@@ -21,6 +21,7 @@ echo "Checking API smoke tests..."
 
 echo "Checking analytics config API..."
 ./scripts/check-analytics-config-api.sh
+./scripts/check-site-api-setup-profile.sh
 
 echo "Checking dashboard API..."
 ./scripts/check-dashboard-api.sh

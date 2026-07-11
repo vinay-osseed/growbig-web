@@ -16,3 +16,11 @@ services:
     arguments:
       - '@site_platform_api.media_normalizer'
       - '@site_platform_api.content_list_normalizer'
+
+
+  site_platform_api.site_setup_profile_subscriber:
+    class: Drupal\site_platform_api\EventSubscriber\SiteSetupProfileSubscriber
+    arguments:
+      - '@state'
+    tags:
+      - { name: event_subscriber }
