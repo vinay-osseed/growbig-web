@@ -49,6 +49,54 @@ final class SiteSetupCommands extends DrushCommands {
   }
 
   /**
+   * Shows primary and extra setup site rows.
+   *
+   * @command site-platform:setup-sites
+   * @aliases sp-setup-sites
+   */
+  public function sites(): void {
+    $values = $this->setupStorage->getValues();
+    $sites = [];
+
+    $primary = $values['site'] ?? [];
+    if (is_array($primary)) {
+      $sites[] = [
+        'type' => 'primary',
+        'name' => (string) ($primary['name'] ?? ''),
+        'key' => (string) ($primary['key'] ?? ''),
+        'primary_domain' => (string) ($primary['primary_domain'] ?? ''),
+        'frontend_url' => (string) ($primary['frontend_url'] ?? ''),
+        'admin_url' => (string) ($primary['admin_url'] ?? ''),
+        'api_url' => (string) ($primary['api_url'] ?? ''),
+      ];
+    }
+
+    $extra_sites = $values['extra_sites'] ?? [];
+    if (is_array($extra_sites)) {
+      foreach ($extra_sites as $site) {
+        if (!is_array($site)) {
+          continue;
+        }
+
+        $sites[] = [
+          'type' => 'extra',
+          'name' => (string) ($site['name'] ?? ''),
+          'key' => (string) ($site['key'] ?? ''),
+          'primary_domain' => (string) ($site['primary_domain'] ?? ''),
+          'frontend_url' => (string) ($site['frontend_url'] ?? ''),
+          'admin_url' => (string) ($site['admin_url'] ?? ''),
+          'api_url' => (string) ($site['api_url'] ?? ''),
+        ];
+      }
+    }
+
+    $this->printArray([
+      'count' => count($sites),
+      'items' => $sites,
+    ]);
+  }
+
+  /**
    * Imports setup runtime values from a YAML file.
    *
    * @param string $file
@@ -152,6 +200,23 @@ final class SiteSetupCommands extends DrushCommands {
       $errors[] = 'extra_sites must be a list.';
     }
     elseif (is_array($values['extra_sites'] ?? NULL)) {
+      if (!array_is_list($values['extra_sites'])) {
+        $errors[] = 'extra_sites must be a list.';
+      }
+
+      $seen_keys = [];
+      $seen_domains = [];
+
+      $primary_key = $this->getImportValue($values, 'site.key');
+      if (is_string($primary_key) && trim($primary_key) !== '') {
+        $seen_keys[] = $primary_key;
+      }
+
+      $primary_domain = $this->getImportValue($values, 'site.primary_domain');
+      if (is_string($primary_domain) && trim($primary_domain) !== '') {
+        $seen_domains[] = $primary_domain;
+      }
+
       foreach ($values['extra_sites'] as $index => $site) {
         if (!is_array($site)) {
           $errors[] = 'extra_sites.' . $index . ' must be a mapping.';
@@ -159,9 +224,34 @@ final class SiteSetupCommands extends DrushCommands {
         }
 
         foreach (['name', 'key', 'primary_domain'] as $field) {
-          if (array_key_exists($field, $site) && (!is_string($site[$field]) || trim($site[$field]) === '')) {
-            $errors[] = 'extra_sites.' . $index . '.' . $field . ' must be a non-empty string.';
+          if (!array_key_exists($field, $site) || !is_string($site[$field]) || trim($site[$field]) === '') {
+            $errors[] = 'extra_sites.' . $index . '.' . $field . ' is required and must be a non-empty string.';
           }
+        }
+
+        foreach (['frontend_url', 'admin_url', 'api_url'] as $field) {
+          if (
+            array_key_exists($field, $site)
+            && is_string($site[$field])
+            && trim($site[$field]) !== ''
+            && filter_var($site[$field], FILTER_VALIDATE_URL) === FALSE
+          ) {
+            $errors[] = 'extra_sites.' . $index . '.' . $field . ' must be a valid URL.';
+          }
+        }
+
+        if (isset($site['key']) && is_string($site['key']) && trim($site['key']) !== '') {
+          if (in_array($site['key'], $seen_keys, TRUE)) {
+            $errors[] = 'extra_sites.' . $index . '.key must be unique.';
+          }
+          $seen_keys[] = $site['key'];
+        }
+
+        if (isset($site['primary_domain']) && is_string($site['primary_domain']) && trim($site['primary_domain']) !== '') {
+          if (in_array($site['primary_domain'], $seen_domains, TRUE)) {
+            $errors[] = 'extra_sites.' . $index . '.primary_domain must be unique.';
+          }
+          $seen_domains[] = $site['primary_domain'];
         }
       }
     }

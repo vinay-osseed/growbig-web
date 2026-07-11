@@ -155,3 +155,33 @@ It checks:
 - extra site row shape
 
 Invalid YAML fails before any setup values are saved.
+
+## Multi-site YAML Rows
+
+The setup YAML supports optional `extra_sites` rows.
+
+Example:
+
+    extra_sites:
+      - name: Regional Site
+        key: regional
+        primary_domain: regional.example.com
+        frontend_url: https://regional.example.com
+        admin_url: https://admin.regional.example.com
+        api_url: https://api.regional.example.com
+
+Each extra site row must include:
+
+- `name`
+- `key`
+- `primary_domain`
+
+Optional URL fields must be valid URLs when provided.
+
+Inspect setup site rows:
+
+    ./scripts/site-setup.sh sites
+
+Or with Drush:
+
+    ddev drush site-platform:setup-sites
