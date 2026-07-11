@@ -58,11 +58,13 @@ final class SiteSetupCommands extends DrushCommands {
    * @aliases sp-setup-import
    */
   public function import(string $file = 'setup/site.yml'): void {
-    if (!file_exists($file)) {
+    $resolved_file = $this->resolveSetupFilePath($file);
+
+    if ($resolved_file === NULL) {
       throw new \InvalidArgumentException('Setup YAML file not found: ' . $file);
     }
 
-    $values = Yaml::decode((string) file_get_contents($file));
+    $values = Yaml::decode((string) file_get_contents($resolved_file));
 
     if (!is_array($values)) {
       throw new \InvalidArgumentException('Setup YAML file must contain a mapping.');
@@ -70,8 +72,28 @@ final class SiteSetupCommands extends DrushCommands {
 
     $this->setupStorage->mergeValues($values);
 
-    $this->output()->writeln('Setup values imported from: ' . $file);
+    $this->output()->writeln('Setup values imported from: ' . $resolved_file);
     $this->printArray($this->setupRunner->getPreview());
+  }
+
+  /**
+   * Resolves setup YAML file path.
+   */
+  private function resolveSetupFilePath(string $file): ?string {
+    $candidates = [
+      $file,
+      getcwd() . '/' . $file,
+      dirname(DRUPAL_ROOT) . '/' . $file,
+      dirname(DRUPAL_ROOT, 2) . '/' . $file,
+    ];
+
+    foreach ($candidates as $candidate) {
+      if (is_file($candidate)) {
+        return $candidate;
+      }
+    }
+
+    return NULL;
   }
 
   /**
