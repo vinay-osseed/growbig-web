@@ -106,8 +106,9 @@ final class SiteSetupRunner {
     $this->applySystemSiteConfig($values);
     $this->applyAnalyticsConfig($values);
     $created_roles = $this->ensureRoles($values);
+    $created_nodes = $this->ensureDefaultPages($values);
     $this->updateSetupStatus($setup_id, $values);
-    $this->updateSetupManifest($setup_id, $created_roles);
+    $this->updateSetupManifest($setup_id, $created_roles, $created_nodes);
 
     return [
       'setup_id' => $setup_id,
@@ -116,6 +117,120 @@ final class SiteSetupRunner {
       'current_step' => 'runner_prepared',
       'completed' => FALSE,
       'roles' => $created_roles,
+      'nodes' => $created_nodes,
+    ];
+  }
+
+  /**
+   * Ensures frontend-safe default pages exist.
+   */
+  private function ensureDefaultPages(array $values): array {
+    if (!(bool) $this->getValue($values, 'setup_options.create_default_pages')) {
+      return [];
+    }
+
+    $created_or_existing = [];
+    $pages = $this->getDefaultPageDefinitions();
+    $storage = $this->entityTypeManager->getStorage('node');
+
+    foreach ($pages as $page_key => $definition) {
+      $node = $this->loadPageByKey($page_key);
+
+      if (!$node) {
+        $node = $storage->create([
+          'type' => 'site_page',
+          'title' => $definition['title'],
+          'status' => 1,
+          'uid' => 1,
+        ]);
+      }
+      else {
+        $node->setTitle($definition['title']);
+        $node->setPublished(TRUE);
+      }
+
+      $this->setFieldValue($node, 'field_page_key', $page_key);
+      $this->setFieldValue($node, 'field_page_type', $definition['page_type']);
+      $this->setFieldValue($node, 'field_summary', $definition['summary']);
+
+      if ((bool) $this->getValue($values, 'setup_options.create_default_menus')) {
+        $this->setFieldValue($node, 'field_show_in_header', TRUE);
+        $this->setFieldValue($node, 'field_show_in_footer', TRUE);
+        $this->setFieldValue($node, 'field_menu_title', $definition['menu_title']);
+        $this->setFieldValue($node, 'field_menu_weight', $definition['menu_weight']);
+      }
+
+      $node->save();
+      $created_or_existing[] = (int) $node->id();
+    }
+
+    return $created_or_existing;
+  }
+
+  /**
+   * Loads a site page by page key.
+   */
+  private function loadPageByKey(string $page_key): ?object {
+    $storage = $this->entityTypeManager->getStorage('node');
+    $query = $storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('type', 'site_page')
+      ->condition('field_page_key', $page_key)
+      ->range(0, 1);
+
+    $ids = $query->execute();
+
+    if (!$ids) {
+      return NULL;
+    }
+
+    $node = $storage->load(reset($ids));
+
+    return is_object($node) ? $node : NULL;
+  }
+
+  /**
+   * Sets a field value only when the field exists.
+   */
+  private function setFieldValue(object $entity, string $field_name, mixed $value): void {
+    if (method_exists($entity, 'hasField') && $entity->hasField($field_name)) {
+      $entity->set($field_name, $value);
+    }
+  }
+
+  /**
+   * Gets default page definitions.
+   */
+  private function getDefaultPageDefinitions(): array {
+    return [
+      'home' => [
+        'title' => 'Home',
+        'page_type' => 'home',
+        'summary' => 'Frontend-safe home page created by the setup workflow.',
+        'menu_title' => 'Home',
+        'menu_weight' => 0,
+      ],
+      'about' => [
+        'title' => 'About',
+        'page_type' => 'standard',
+        'summary' => 'Default about page created by the setup workflow.',
+        'menu_title' => 'About',
+        'menu_weight' => 10,
+      ],
+      'careers' => [
+        'title' => 'Careers',
+        'page_type' => 'standard',
+        'summary' => 'Default careers page created by the setup workflow.',
+        'menu_title' => 'Careers',
+        'menu_weight' => 20,
+      ],
+      'contact' => [
+        'title' => 'Contact',
+        'page_type' => 'standard',
+        'summary' => 'Default contact page created by the setup workflow.',
+        'menu_title' => 'Contact',
+        'menu_weight' => 30,
+      ],
     ];
   }
 
@@ -246,8 +361,8 @@ final class SiteSetupRunner {
       'site_profile' => 'completed',
       'frontend_defaults' => 'completed',
       'roles' => (bool) $this->getValue($values, 'setup_options.create_default_roles') ? 'completed' : 'skipped',
-      'pages' => (bool) $this->getValue($values, 'setup_options.create_default_pages') ? 'queued' : 'skipped',
-      'menus' => (bool) $this->getValue($values, 'setup_options.create_default_menus') ? 'queued' : 'skipped',
+      'pages' => (bool) $this->getValue($values, 'setup_options.create_default_pages') ? 'completed' : 'skipped',
+      'menus' => (bool) $this->getValue($values, 'setup_options.create_default_menus') ? 'completed' : 'skipped',
       'forms' => (bool) $this->getValue($values, 'setup_options.create_default_forms') ? 'queued' : 'skipped',
       'content' => (bool) $this->getValue($values, 'setup_options.create_demo_content') ? 'queued' : 'skipped',
       'analytics' => 'completed',
@@ -258,19 +373,25 @@ final class SiteSetupRunner {
   /**
    * Updates setup manifest.
    */
-  private function updateSetupManifest(string $setup_id, array $created_roles): void {
+  private function updateSetupManifest(string $setup_id, array $created_roles, array $created_nodes): void {
     $manifest = $this->setupStorage->getManifest();
     $config = $manifest['config'] ?? [];
     $roles = $manifest['roles'] ?? [];
+    $nodes = $manifest['nodes'] ?? [];
 
     foreach ($created_roles as $role_id) {
       $roles[] = $role_id;
+    }
+
+    foreach ($created_nodes as $node_id) {
+      $nodes[] = $node_id;
     }
 
     $config[] = 'system.site';
     $config[] = 'site_platform_api.analytics';
 
     $manifest['setup_id'] = $setup_id;
+    $manifest['nodes'] = array_values(array_unique($nodes));
     $manifest['roles'] = array_values(array_unique($roles));
     $manifest['config'] = array_values(array_unique($config));
 

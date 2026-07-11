@@ -39,7 +39,7 @@ foreach (["mode", "site", "contact", "branding", "setup_options", "analytics", "
 }
 
 $preview = \Drupal::service("site_platform_admin.setup_runner")->getPreview();
-foreach (["mode", "site_name", "site_key", "create_default_roles"] as $key) {
+foreach (["mode", "site_name", "site_key", "create_default_roles", "create_default_pages", "create_default_menus"] as $key) {
   if (!array_key_exists($key, $preview)) {
     throw new \RuntimeException("Missing setup runner preview key: " . $key);
   }
