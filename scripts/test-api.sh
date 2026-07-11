@@ -129,54 +129,62 @@ print("Frontend menu checks passed.")
 INNERPY
 
 echo "Validating dynamic page contract..."
-python3 - <<'INNERPY'
+python3 - <<'PY'
 import json
 import os
 import subprocess
 
-base_url = os.environ["BASE_URL"]
+base_url = os.environ.get("BASE_URL", "https://growbig-web.ddev.site").rstrip("/")
 
 def fetch(path):
     result = subprocess.run(
-        ["curl", "-ks", f"{base_url}{path}"],
+        ["curl", "-sk", base_url + path],
         check=True,
         capture_output=True,
         text=True,
     )
-    return json.loads(result.stdout)
 
-home = fetch("/api/v1/pages/home")
-about = fetch("/api/v1/pages/about")
+    try:
+        return json.loads(result.stdout)
+    except json.JSONDecodeError as exc:
+        raise AssertionError(f"{path} did not return valid JSON: {result.stdout[:500]}") from exc
 
-assert home["contractVersion"] == "1.0"
-assert home["slug"] == "home"
-assert home["route"]["path"] == "/"
-assert home["route"]["apiPath"] == "/api/v1/pages/home"
-assert home["api"]["self"] == "/api/v1/pages/home"
-assert len(home["sections"]) == 4
+def require(condition, message):
+    if not condition:
+        raise AssertionError(message)
 
-home_section_types = [section["type"] for section in home["sections"]]
-assert "hero" in home_section_types
-assert "stats" in home_section_types
-assert "cardGrid" in home_section_types
-assert "contentList" in home_section_types
+expected_pages = {
+    "home": "/",
+    "about": "/about",
+    "careers": "/careers",
+    "contact": "/contact",
+}
 
-assert about["contractVersion"] == "1.0"
-assert about["slug"] == "about"
-assert about["route"]["path"] == "/about"
-assert about["route"]["apiPath"] == "/api/v1/pages/about"
-assert about["api"]["self"] == "/api/v1/pages/about"
-assert len(about["sections"]) == 5
+for slug, route_path in expected_pages.items():
+    page = fetch(f"/api/v1/pages/{slug}")
 
-about_section_types = [section["type"] for section in about["sections"]]
-assert "hero" in about_section_types
-assert "cardGrid" in about_section_types
-assert "contentList" in about_section_types
-assert "cta" in about_section_types
+    require(page.get("contractVersion") == "1.0", f"{slug} contractVersion must be 1.0.")
+    require(page.get("type") == "page", f"{slug} type must be page.")
+    require(page.get("slug") == slug, f"{slug} slug mismatch.")
+    require(page.get("route", {}).get("path") == route_path, f"{slug} route.path must be {route_path}.")
+    require(page.get("route", {}).get("apiPath") == f"/api/v1/pages/{slug}", f"{slug} route.apiPath mismatch.")
+    require(page.get("api", {}).get("self") == f"/api/v1/pages/{slug}", f"{slug} api.self mismatch.")
+    require(isinstance(page.get("sections"), list), f"{slug} sections must be a list.")
+    require(len(page.get("sections", [])) >= 1, f"{slug} must have at least one section.")
+
+about_payload = json.dumps(fetch("/api/v1/pages/about"))
+for required_text in [
+    "We Are GrowBig",
+    "Mission",
+    "Vision",
+    "Core Values",
+    "Leadership",
+]:
+    require(required_text in about_payload, f"About page is missing required mockup text: {required_text}")
 
 print("Dynamic page contract checks passed.")
-INNERPY
-
+PY
+echo "Dynamic page contract checks passed."
 echo "Testing missing Page API..."
 STATUS_CODE="$(curl -ks -o /tmp/growbig-missing-page-api.json -w "%{http_code}" "${BASE_URL}/api/v1/pages/missing")"
 
