@@ -171,3 +171,15 @@ The frontend should load analytics only when `enabled` is true.
 For Google Analytics, use `measurementId`.
 
 The frontend must not hardcode analytics IDs.
+
+## Frontend Analytics Loading
+
+Frontend should call:
+
+- GET /api/v1/analytics/config
+
+If response has `enabled: true` and `provider: google_analytics`, load Google Analytics using `measurementId`.
+
+If `enabled` is false, do not load analytics.
+
+Frontend must not hardcode the Measurement ID.
