@@ -1038,3 +1038,12 @@ components:
 # Notes:
 # - contact_us includes optional budget_range.
 # - job_application includes resume_upload metadata, but file upload is not API-supported yet.
+
+# Phase 9 documented endpoints:
+# - GET /api/v1/menus
+# - GET /api/v1/menus/header
+# - GET /api/v1/menus/footer
+#
+# Notes:
+# - Header and footer menus are driven by Site Page menu fields.
+# - Frontend should render navigation from backend menu responses.

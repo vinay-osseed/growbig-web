@@ -1,32 +1,41 @@
 # Site Platform Admin
 
-Provides a custom Drupal admin dashboard for managing major reusable website platform components.
+Provides a custom Drupal admin dashboard for reusable site platform management.
 
-## Route
+## Dashboard
+
+URL:
 
 - /admin/site-dashboard
 
-## Current dashboard cards
+## Dashboard Sections
 
-Ready:
+- Overview counts
+- Role-aware quick action cards
+- Recent content updates
 
-- Site Settings
-- Menus
-- Content
-- Media Library
-- API Docs
+## Backend Data
 
-Planned:
+The dashboard uses backend dashboard data from:
 
-- Pages
-- Services
-- Partners
-- Leadership
+- GET /api/v1/admin/dashboard
 
-## Purpose
+The API requires authenticated admin access.
 
-The dashboard gives content admins one place to find the main site management areas without needing to understand Drupal's full admin structure.
+## Roles
 
-## Future phases
+Supported role-aware dashboard behavior includes:
 
-The planned cards will be connected after the related content types and APIs are created.
+- Site Developer
+- Content Admin
+- HR Manager
+- Form Manager
+- Analytics Viewer
+
+## Verification
+
+Use:
+
+- ./scripts/check-dashboard-api.sh
+- ./scripts/check-dashboard-ui.sh
+- ./scripts/check-admin-roles.sh

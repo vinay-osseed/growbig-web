@@ -1,0 +1,33 @@
+uuid: 3607d323-4d66-4fd6-a8b2-5ef10784eeb0
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+    - node
+    - site_platform_admin
+    - system
+    - webform
+id: site_developer
+label: 'Site Developer'
+weight: 4
+is_admin: false
+permissions:
+  - 'access administration pages'
+  - 'access content overview'
+  - 'access site reports'
+  - 'access webform overview'
+  - 'administer account settings'
+  - 'administer content types'
+  - 'administer media'
+  - 'administer menu'
+  - 'administer nodes'
+  - 'administer permissions'
+  - 'administer site configuration'
+  - 'administer site setup'
+  - 'administer users'
+  - 'administer webform'
+  - 'delete any webform submission'
+  - 'edit any webform submission'
+  - 'view any webform submission'
+  - 'view the administration theme'

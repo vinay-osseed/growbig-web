@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Drupal\site_platform_admin\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\site_platform_api\Controller\AdminDashboardController;
 
 /**
- * Builds the Site Platform content admin dashboard.
+ * Builds the Site Platform admin dashboard.
  */
 final class SiteDashboardController extends ControllerBase {
 
@@ -16,104 +18,168 @@ final class SiteDashboardController extends ControllerBase {
    * Returns the dashboard render array.
    */
   public function dashboard(): array {
-    $cards = [
-      [
-        'title' => 'Site Settings',
-        'description' => 'Edit company settings, domains, branding, contact details, social links, footer details, and default SEO.',
-        'url' => Url::fromUri('internal:/admin/content', [
-          'query' => [
-            'type' => 'site_profile',
-          ],
-        ]),
-        'status' => 'Ready',
-      ],
-      [
-        'title' => 'Menus',
-        'description' => 'Manage header, footer, quick links, and service links using Drupal menus.',
-        'url' => Url::fromUri('internal:/admin/structure/menu'),
-        'status' => 'Ready',
-      ],
-      [
-        'title' => 'Content',
-        'description' => 'View and manage all Drupal content items.',
-        'url' => Url::fromUri('internal:/admin/content'),
-        'status' => 'Ready',
-      ],
-      [
-        'title' => 'Media Library',
-        'description' => 'Manage uploaded logos, icons, images, favicons, and social sharing images.',
-        'url' => Url::fromUri('internal:/admin/content/media'),
-        'status' => 'Ready',
-      ],
-      [
-        'title' => 'API Docs',
-        'description' => 'Open the Swagger/OpenAPI documentation for frontend developers.',
-        'url' => Url::fromUri('https://vinay-osseed.github.io/growbig-web/api/'),
-        'status' => 'Ready',
-      ],
-      [
-        'title' => 'Pages',
-        'description' => 'Create and edit reusable frontend pages with structured sections.',
-        'url' => Url::fromUri('internal:/admin/content', [
-          'query' => [
-            'type' => 'site_page',
-          ],
-        ]),
-        'status' => 'Ready',
-      ],
-      [
-        'title' => 'Services',
-        'description' => 'Create and edit reusable service content.',
-        'url' => Url::fromUri('internal:/admin/content', [
-          'query' => [
-            'type' => 'service',
-          ],
-        ]),
-        'status' => 'Ready',
-      ],
-      [
-        'title' => 'Partners',
-        'description' => 'Create and edit reusable partner content.',
-        'url' => Url::fromUri('internal:/admin/content', [
-          'query' => [
-            'type' => 'partner',
-          ],
-        ]),
-        'status' => 'Ready',
-      ],
-      [
-        'title' => 'Leadership',
-        'description' => 'Create and edit reusable team member content.',
-        'url' => Url::fromUri('internal:/admin/content', [
-          'query' => [
-            'type' => 'team_member',
-          ],
-        ]),
-        'status' => 'Ready',
-      ],
-    ];
+    $dashboard = $this->getDashboardData();
+    $counts = $dashboard['counts'] ?? [];
+    $recent = $dashboard['recent']['content'] ?? [];
 
-    $build = [
+    return [
       '#attached' => [
         'library' => [
           'site_platform_admin/dashboard',
         ],
       ],
-      'intro' => [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'site-dashboard',
+        ],
+      ],
+      'intro' => $this->buildIntro(),
+      'toolbar' => $this->buildToolbar(),
+      'counts' => $this->buildCounts($counts),
+      'cards' => $this->buildCards($dashboard['cards'] ?? [], $counts, $recent),
+      'analytics' => $this->buildAnalyticsSummary(),
+      'recent' => $this->buildRecentContent($recent),
+    ];
+  }
+
+  /**
+   * Gets dashboard API data through the shared API controller.
+   */
+  private function getDashboardData(): array {
+    $controller = new AdminDashboardController();
+    $response = $controller->dashboard();
+    $data = json_decode($response->getContent(), TRUE);
+
+    return is_array($data) ? $data : [];
+  }
+
+  /**
+   * Builds dashboard intro.
+   */
+  private function buildIntro(): array {
+    return [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'site-dashboard-intro',
+        ],
+      ],
+      'content' => [
+        '#markup' => '<div><h2>' . $this->t('Site Dashboard') . '</h2><p>' . $this->t('Manage frontend pages, menus, content, jobs, forms, analytics, and platform data from one place.') . '</p></div>',
+      ],
+      'badge' => [
+        '#markup' => '<div class="site-dashboard-intro__badge">' . $this->t('Live admin overview') . '</div>',
+      ],
+    ];
+  }
+
+  /**
+   * Builds dashboard toolbar.
+   */
+  private function buildToolbar(): array {
+    return [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'site-dashboard-toolbar',
+        ],
+      ],
+      'search' => [
+        '#type' => 'html_tag',
+        '#tag' => 'input',
+        '#attributes' => [
+          'class' => [
+            'site-dashboard-toolbar__search',
+          ],
+          'type' => 'search',
+          'placeholder' => $this->t('Search cards, jobs, forms, content...'),
+          'aria-label' => $this->t('Search dashboard cards'),
+        ],
+      ],
+      'refresh' => [
+        '#type' => 'html_tag',
+        '#tag' => 'button',
+        '#value' => $this->t('Refresh live data'),
+        '#attributes' => [
+          'type' => 'button',
+          'class' => [
+            'site-dashboard-toolbar__refresh',
+          ],
+        ],
+      ],
+    ];
+  }
+
+  /**
+   * Builds dashboard count summary.
+   */
+  private function buildCounts(array $counts): array {
+    $items = [
+      'pages' => $this->t('Pages'),
+      'services' => $this->t('Services'),
+      'partners' => $this->t('Partners'),
+      'teamMembers' => $this->t('Team Members'),
+      'jobs' => $this->t('Jobs'),
+      'contactSubmissions' => $this->t('Contact Enquiries'),
+      'jobApplications' => $this->t('Job Applications'),
+    ];
+
+    $build = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'site-dashboard-counts',
+        ],
+      ],
+      'title' => [
+        '#markup' => '<h3>' . $this->t('Overview') . '</h3>',
+      ],
+      'grid' => [
         '#type' => 'container',
         '#attributes' => [
           'class' => [
-            'site-dashboard-intro',
+            'site-dashboard-counts__grid',
           ],
         ],
-        'title' => [
-          '#markup' => '<h2>Site Dashboard</h2>',
+      ],
+    ];
+
+    foreach ($items as $key => $label) {
+      $build['grid'][$key] = [
+        '#type' => 'container',
+        '#attributes' => [
+          'class' => [
+            'site-dashboard-count',
+          ],
         ],
-        'description' => [
-          '#markup' => '<p>Use this dashboard to manage the major website components exposed to the frontend UI.</p>',
+        'value' => [
+          '#markup' => '<div class="site-dashboard-count__value">' . (int) ($counts[$key] ?? 0) . '</div>',
+        ],
+        'label' => [
+          '#markup' => '<div class="site-dashboard-count__label">' . $label . '</div>',
+        ],
+      ];
+    }
+
+    return $build;
+  }
+
+  /**
+   * Builds dashboard cards.
+   */
+  private function buildCards(array $cards, array $counts, array $recent): array {
+    $build = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'site-dashboard-section',
         ],
       ],
-      'cards' => [
+      'title' => [
+        '#markup' => '<h3>' . $this->t('Quick Actions') . '</h3>',
+      ],
+      'grid' => [
         '#type' => 'container',
         '#attributes' => [
           'class' => [
@@ -123,80 +189,213 @@ final class SiteDashboardController extends ControllerBase {
       ],
     ];
 
-    foreach ($cards as $index => $card) {
-      $card_build = [
+    foreach ($cards as $card) {
+      $card_id = (string) ($card['id'] ?? uniqid('card_', TRUE));
+      $url = Url::fromUserInput($card['url'] ?? '/admin');
+      $link = Link::fromTextAndUrl($this->t('Open'), $url)->toRenderable();
+      $link['#attributes']['class'][] = 'site-dashboard-card__button';
+
+      $build['grid'][$card_id] = [
         '#type' => 'container',
         '#attributes' => [
           'class' => [
             'site-dashboard-card',
           ],
+          'data-dashboard-card' => $card_id,
         ],
-        'status' => [
-          '#type' => 'html_tag',
-          '#tag' => 'span',
-          '#value' => $card['status'],
-          '#attributes' => [
-            'class' => [
-              'site-dashboard-card__status',
-              $card['status'] === 'Ready' ? 'is-ready' : 'is-coming-soon',
-            ],
-          ],
+        'top' => [
+          '#markup' => $this->buildCardTopMarkup($card, $counts),
         ],
-        'title' => [
-          '#type' => 'html_tag',
-          '#tag' => 'h3',
-          '#value' => $card['title'],
-          '#attributes' => [
-            'class' => [
-              'site-dashboard-card__title',
-            ],
-          ],
+        'recent' => [
+          '#markup' => $this->buildCardRecentMarkup($card_id, $recent),
         ],
-        'description' => [
-          '#type' => 'html_tag',
-          '#tag' => 'p',
-          '#value' => $card['description'],
-          '#attributes' => [
-            'class' => [
-              'site-dashboard-card__description',
-            ],
-          ],
-        ],
+        'link' => $link,
       ];
-
-      if ($card['url'] instanceof Url) {
-        $card_build['link'] = [
-          '#type' => 'link',
-          '#title' => $this->t('Open'),
-          '#url' => $card['url'],
-          '#attributes' => [
-            'class' => [
-              'button',
-              'button--primary',
-              'site-dashboard-card__button',
-            ],
-          ],
-        ];
-      }
-      else {
-        $card_build['link'] = [
-          '#type' => 'html_tag',
-          '#tag' => 'span',
-          '#value' => $this->t('Planned'),
-          '#attributes' => [
-            'class' => [
-              'button',
-              'site-dashboard-card__button',
-              'is-disabled',
-            ],
-          ],
-        ];
-      }
-
-      $build['cards']['card_' . $index] = $card_build;
     }
 
     return $build;
+  }
+
+  /**
+   * Builds card top HTML.
+   */
+  private function buildCardTopMarkup(array $card, array $counts): string {
+    $metric = $this->getCardMetric((string) ($card['id'] ?? ''), $counts);
+
+    $markup = '<div class="site-dashboard-card__top">';
+    $markup .= '<div>';
+    $markup .= '<h4 class="site-dashboard-card__title">' . ($card['title'] ?? '') . '</h4>';
+    $markup .= '<p class="site-dashboard-card__description">' . ($card['description'] ?? '') . '</p>';
+    $markup .= '</div>';
+
+    if ($metric !== NULL) {
+      $markup .= '<div class="site-dashboard-card__metric">' . $metric . '</div>';
+    }
+
+    $markup .= '</div>';
+
+    return $markup;
+  }
+
+  /**
+   * Gets card metric.
+   */
+  private function getCardMetric(string $card_id, array $counts): ?int {
+    $map = [
+      'pages' => 'pages',
+      'reusable_content' => 'services',
+      'jobs' => 'jobs',
+      'job_applications' => 'jobApplications',
+      'contact_enquiries' => 'contactSubmissions',
+    ];
+
+    if (!isset($map[$card_id])) {
+      return NULL;
+    }
+
+    return (int) ($counts[$map[$card_id]] ?? 0);
+  }
+
+  /**
+   * Builds per-card recent content markup.
+   */
+  private function buildCardRecentMarkup(string $card_id, array $recent): string {
+    $types = $this->getRecentTypesForCard($card_id);
+
+    if (!$types) {
+      return '<div class="site-dashboard-card__recent is-muted">' . $this->t('Ready to manage.') . '</div>';
+    }
+
+    $items = [];
+
+    foreach ($recent as $item) {
+      if (in_array($item['type'] ?? '', $types, TRUE)) {
+        $items[] = $item;
+      }
+
+      if (count($items) >= 3) {
+        break;
+      }
+    }
+
+    if (!$items) {
+      return '<div class="site-dashboard-card__recent is-muted">' . $this->t('No recent updates yet.') . '</div>';
+    }
+
+    $markup = '<div class="site-dashboard-card__recent"><div class="site-dashboard-card__recent-title">' . $this->t('Recent') . '</div><ul>';
+
+    foreach ($items as $item) {
+      $markup .= '<li>' . ($item['title'] ?? '') . '</li>';
+    }
+
+    $markup .= '</ul></div>';
+
+    return $markup;
+  }
+
+  /**
+   * Gets recent content types for card.
+   */
+  private function getRecentTypesForCard(string $card_id): array {
+    return match ($card_id) {
+      'pages', 'menus' => ['site_page'],
+      'reusable_content' => ['service', 'partner', 'team_member'],
+      'jobs', 'job_applications' => ['job'],
+      default => [],
+    };
+  }
+
+  /**
+   * Builds dummy analytics summary for now.
+   */
+  private function buildAnalyticsSummary(): array {
+    $items = [
+      [
+        'label' => $this->t('Visitors'),
+        'value' => '1.2k',
+        'change' => '+18%',
+      ],
+      [
+        'label' => $this->t('Page Views'),
+        'value' => '4.8k',
+        'change' => '+24%',
+      ],
+      [
+        'label' => $this->t('Career Views'),
+        'value' => '860',
+        'change' => '+12%',
+      ],
+      [
+        'label' => $this->t('Apply Clicks'),
+        'value' => '146',
+        'change' => '+9%',
+      ],
+    ];
+
+    $build = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'site-dashboard-analytics',
+        ],
+      ],
+      'title' => [
+        '#markup' => '<div class="site-dashboard-section-heading"><h3>' . $this->t('Analytics Preview') . '</h3><span>' . $this->t('Dummy data until provider is connected') . '</span></div>',
+      ],
+      'grid' => [
+        '#type' => 'container',
+        '#attributes' => [
+          'class' => [
+            'site-dashboard-analytics__grid',
+          ],
+        ],
+      ],
+    ];
+
+    foreach ($items as $index => $item) {
+      $build['grid']['item_' . $index] = [
+        '#markup' => '<div class="site-dashboard-analytics__item"><strong>' . $item['value'] . '</strong><span>' . $item['label'] . '</span><em>' . $item['change'] . '</em></div>',
+      ];
+    }
+
+    return $build;
+  }
+
+  /**
+   * Builds recent content list.
+   */
+  private function buildRecentContent(array $items): array {
+    $rows = [];
+
+    foreach ($items as $item) {
+      $rows[] = [
+        $item['title'] ?? '',
+        $item['type'] ?? '',
+        !empty($item['changed']) ? date('Y-m-d H:i', (int) $item['changed']) : '',
+      ];
+    }
+
+    return [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'site-dashboard-recent',
+        ],
+      ],
+      'title' => [
+        '#markup' => '<h3>' . $this->t('Recent Content Updates') . '</h3>',
+      ],
+      'table' => [
+        '#type' => 'table',
+        '#header' => [
+          $this->t('Title'),
+          $this->t('Type'),
+          $this->t('Updated'),
+        ],
+        '#rows' => $rows,
+        '#empty' => $this->t('No recent content updates found.'),
+      ],
+    ];
   }
 
 }

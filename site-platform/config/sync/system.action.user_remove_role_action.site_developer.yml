@@ -1,0 +1,14 @@
+uuid: 99f75ae3-d421-464d-b971-34ab69bd12a8
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.site_developer
+  module:
+    - user
+id: user_remove_role_action.site_developer
+label: 'Remove the Site Developer role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: site_developer

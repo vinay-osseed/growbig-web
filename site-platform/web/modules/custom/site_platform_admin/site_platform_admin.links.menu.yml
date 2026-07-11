@@ -4,3 +4,10 @@ site_platform_admin.dashboard:
   route_name: site_platform_admin.dashboard
   parent: system.admin
   weight: -50
+
+site_platform_admin.site_setup:
+  title: 'Site Setup'
+  description: 'Run and review the first-run site setup workflow.'
+  route_name: site_platform_admin.site_setup
+  parent: system.admin
+  weight: -20

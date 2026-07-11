@@ -351,3 +351,207 @@ Job application form APIs:
 - POST /api/v1/forms/job-application/submit
 
 Resume upload is listed in metadata but is not API-supported yet.
+
+## Phase 9 Menu API
+
+The backend now exposes header and footer menus from Site Page menu fields.
+
+### Menu Fields
+
+Site Page includes:
+
+- Show In Header
+- Show In Footer
+- Menu Title
+- Menu Weight
+
+### Menu Endpoints
+
+- GET /api/v1/menus
+- GET /api/v1/menus/header
+- GET /api/v1/menus/footer
+
+### Frontend Usage
+
+Frontend should not hardcode header or footer navigation.
+
+Header and footer should be rendered from the Menu API.
+
+Each menu item includes:
+
+- title
+- slug
+- url
+- weight
+- apiPath
+
+## Phase 10 Dashboard API
+
+The backend includes a first role-aware admin dashboard API.
+
+Endpoint:
+
+- GET /api/v1/admin/dashboard
+
+This endpoint returns:
+
+- current user roles
+- role-aware dashboard cards
+- content counts
+- Webform submission counts
+- recent content updates
+
+The dashboard UI should render these cards from backend data.
+
+## Role-Based Admin Dashboard
+
+Admin dashboard URL:
+
+- /admin/site-dashboard
+
+The dashboard is role-aware and uses backend dashboard data.
+
+It includes:
+
+- overview counts
+- role-aware quick action cards
+- recent content updates
+
+Dashboard API:
+
+- GET /api/v1/admin/dashboard
+
+This API requires authenticated admin access.
+
+Verification scripts:
+
+- ./scripts/check-admin-roles.sh
+- ./scripts/check-dashboard-api.sh
+- ./scripts/check-dashboard-ui.sh
+
+Roles currently available:
+
+- site_developer
+- content_admin
+- hr_manager
+- form_manager
+- analytics_viewer
+
+## Analytics Integration Plan
+
+Analytics should be backend-configured and frontend-rendered.
+
+Recommended first provider:
+
+- Google Analytics 4
+
+Public frontend config should come from backend API, not hardcoded frontend values.
+
+Suggested future endpoint:
+
+- GET /api/v1/analytics/config
+
+Environment values:
+
+- GOOGLE_ANALYTICS_ENABLED
+- GOOGLE_ANALYTICS_MEASUREMENT_ID
+
+Drupal Google Analytics modules may be useful for Drupal-rendered/admin pages, but they are not enough for the decoupled frontend UI because the frontend is not rendered by Drupal.
+
+For dashboard analytics reports, backend-only Google Analytics Data API credentials may be added later.
+
+## Analytics Config API
+
+Endpoint:
+
+- GET /api/v1/analytics/config
+
+Environment values:
+
+- GOOGLE_ANALYTICS_ENABLED
+- GOOGLE_ANALYTICS_MEASUREMENT_ID
+
+This endpoint exposes only safe public analytics tracking config.
+
+Verification:
+
+- ./scripts/check-analytics-config-api.sh
+
+## Analytics Admin Settings
+
+Admin URL:
+
+- /admin/config/site-platform/analytics
+
+Analytics config priority:
+
+1. Environment values
+2. Drupal config fallback
+3. Disabled default
+
+Environment values:
+
+- GOOGLE_ANALYTICS_ENABLED
+- GOOGLE_ANALYTICS_MEASUREMENT_ID
+
+Public frontend API:
+
+- GET /api/v1/analytics/config
+
+The API exposes only safe public tracking config. Private Google reporting credentials must never be exposed to frontend JSON.
+
+## Analytics Admin Settings
+
+Admin URL:
+
+- /admin/config/site-platform/analytics
+
+Analytics config priority:
+
+1. Environment values
+2. Drupal config fallback
+3. Disabled default
+
+Environment values:
+
+- GOOGLE_ANALYTICS_ENABLED
+- GOOGLE_ANALYTICS_MEASUREMENT_ID
+
+Public frontend API:
+
+- GET /api/v1/analytics/config
+
+The API exposes only safe public tracking config. Private Google reporting credentials must never be exposed to frontend JSON.
+
+## Site Setup Workflow
+
+The backend includes a first-run setup workflow for initializing frontend-safe defaults after Drupal install.
+
+Admin routes:
+
+- `/admin/site-setup`
+- `/admin/site-setup/wizard`
+- `/admin/site-setup/run`
+- `/admin/site-setup/complete`
+- `/admin/site-setup/unlock`
+- `/admin/site-setup/reset-status`
+
+The setup workflow supports:
+
+- required setup values
+- runtime state storage per environment
+- default roles
+- default pages
+- page-connected menu visibility
+- default webforms
+- setup completion and lock
+- safe unlock
+- safe status reset
+
+Setup runtime values are stored in Drupal State API so local, stage, and production values are not accidentally exported through config sync.
+
+Do not run `drush cex` after entering environment-specific setup values unless the exported changes are intentionally meant to become shared defaults.
+
+Full guide:
+
+- `docs/site-setup-user-guide.md`

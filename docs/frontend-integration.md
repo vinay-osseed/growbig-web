@@ -113,3 +113,73 @@ Current API metadata marks this as:
 - apiSupported: false
 
 File upload support should be implemented separately.
+
+## Header and Footer Menus
+
+Frontend should not hardcode header or footer navigation.
+
+Use backend menu APIs:
+
+- GET /api/v1/menus
+- GET /api/v1/menus/header
+- GET /api/v1/menus/footer
+
+Header and footer menus are driven by Site Page fields:
+
+- Show In Header
+- Show In Footer
+- Menu Title
+- Menu Weight
+
+Each menu item includes:
+
+- title
+- slug
+- url
+- apiPath
+
+## Analytics
+
+Analytics settings should not be hardcoded in the frontend.
+
+Future frontend analytics config should come from backend API.
+
+Suggested endpoint:
+
+- GET /api/v1/analytics/config
+
+For Google Analytics 4, frontend should only receive the public Measurement ID.
+
+Example response:
+
+    {
+      "enabled": true,
+      "provider": "google_analytics",
+      "measurementId": "G-XXXXXXXXXX"
+    }
+
+Do not expose private Google API credentials in frontend code.
+
+## Analytics Config API
+
+Use:
+
+- GET /api/v1/analytics/config
+
+The frontend should load analytics only when `enabled` is true.
+
+For Google Analytics, use `measurementId`.
+
+The frontend must not hardcode analytics IDs.
+
+## Frontend Analytics Loading
+
+Frontend should call:
+
+- GET /api/v1/analytics/config
+
+If response has `enabled: true` and `provider: google_analytics`, load Google Analytics using `measurementId`.
+
+If `enabled` is false, do not load analytics.
+
+Frontend must not hardcode the Measurement ID.

@@ -5,3 +5,51 @@ site_platform_admin.dashboard:
     _title: 'Site Dashboard'
   requirements:
     _permission: 'access content overview'
+
+site_platform_admin.site_setup:
+  path: '/admin/site-setup'
+  defaults:
+    _controller: '\Drupal\site_platform_admin\Controller\SiteSetupController::overview'
+    _title: 'Site Setup'
+  requirements:
+    _permission: 'administer site setup'
+
+site_platform_admin.site_setup_wizard:
+  path: '/admin/site-setup/wizard'
+  defaults:
+    _form: '\Drupal\site_platform_admin\Form\SiteSetupWizardForm'
+    _title: 'Setup Wizard'
+  requirements:
+    _permission: 'administer site setup'
+
+site_platform_admin.site_setup_run:
+  path: '/admin/site-setup/run'
+  defaults:
+    _form: '\Drupal\site_platform_admin\Form\SiteSetupRunForm'
+    _title: 'Prepare Setup Run'
+  requirements:
+    _permission: 'administer site setup'
+
+site_platform_admin.site_setup_complete:
+  path: '/admin/site-setup/complete'
+  defaults:
+    _form: '\Drupal\site_platform_admin\Form\SiteSetupCompleteForm'
+    _title: 'Complete and Lock Setup'
+  requirements:
+    _permission: 'administer site setup'
+
+site_platform_admin.site_setup_unlock:
+  path: '/admin/site-setup/unlock'
+  defaults:
+    _form: '\Drupal\site_platform_admin\Form\SiteSetupUnlockForm'
+    _title: 'Unlock Setup'
+  requirements:
+    _permission: 'administer site setup'
+
+site_platform_admin.site_setup_reset_status:
+  path: '/admin/site-setup/reset-status'
+  defaults:
+    _form: '\Drupal\site_platform_admin\Form\SiteSetupResetStatusForm'
+    _title: 'Reset Setup Status'
+  requirements:
+    _permission: 'administer site setup'
