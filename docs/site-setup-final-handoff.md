@@ -2,7 +2,7 @@
 
 ## Status
 
-The setup workflow is now ready for local, stage, and production use.
+The setup workflow is ready for local, stage, and production use.
 
 ## Main Admin URLs
 
@@ -27,7 +27,7 @@ Using helper:
     ./scripts/site-setup.sh reset-status
     ./scripts/site-setup.sh check
 
-Using native Drush:
+Using native Drush in DDEV:
 
     ddev drush site-platform:setup-status
     ddev drush site-platform:setup-preview
@@ -61,12 +61,10 @@ Private environment files must not be committed:
 - `setup/site.prod.yml`
 - `setup/site.production.yml`
 
-## Setup Flow
-
-Recommended production flow:
+## Recommended Production Flow
 
 1. Copy `setup/site.example.yml` to private `setup/site.yml`.
-2. Update URLs, company info, country, setup options, and analytics.
+2. Update URLs, company info, country, setup options, and analytics values.
 3. Import values:
 
         ./scripts/site-setup.sh import setup/site.yml
@@ -79,7 +77,7 @@ Recommended production flow:
 
         ./scripts/site-setup.sh run
 
-6. Verify frontend/API output:
+6. Verify:
 
         ./scripts/check-final-setup-workflow.sh
 
@@ -89,7 +87,7 @@ Recommended production flow:
 
 ## Site API
 
-The Site API now exposes setup values under:
+The Site API exposes setup values under:
 
 - `setupProfile`
 
@@ -103,7 +101,7 @@ Endpoint:
 - Setup import does not export values to config.
 - Do not run `drush cex` after importing environment-specific setup values unless intentional.
 - Reset status does not delete pages, forms, roles, content, files, or submissions.
-- Destructive cleanup is intentionally not included yet.
+- Destructive cleanup is intentionally not included.
 
 ## Final Verification
 

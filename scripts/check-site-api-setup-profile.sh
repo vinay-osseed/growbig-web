@@ -6,12 +6,12 @@ BASE_URL="${BASE_URL:-https://growbig-web.ddev.site}"
 
 echo "Checking Site API setup profile at ${BASE_URL}..."
 
-python3 - <<'PY'
+BASE_URL="$BASE_URL" python3 - <<'PY'
 import json
+import os
 import subprocess
-import sys
 
-base_url = "https://growbig-web.ddev.site"
+base_url = os.environ["BASE_URL"].rstrip("/")
 result = subprocess.run(
     ["curl", "-sk", f"{base_url}/api/v1/site"],
     check=True,

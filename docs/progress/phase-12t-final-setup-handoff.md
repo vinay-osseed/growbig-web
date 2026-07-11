@@ -18,14 +18,14 @@ Run:
 
 ## Setup Workflow Status
 
-The setup workflow now supports:
+The setup workflow supports:
 
 - admin setup UI
 - setup wizard
 - setup runner
 - setup completion lock
 - setup unlock
-- status reset
+- setup status reset
 - native Drush commands
 - portable CLI helper
 - YAML import
@@ -37,7 +37,7 @@ The setup workflow now supports:
 
 ## Intentionally Pending
 
-The following are not implemented yet and should be treated as future tasks:
+The following are future tasks, not blockers for deployment:
 
 - destructive cleanup/reset of setup-created data
 - actual multi-site/domain record creation

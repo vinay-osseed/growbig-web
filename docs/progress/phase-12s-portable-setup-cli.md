@@ -26,4 +26,4 @@ It only changes how the helper calls Drush.
 
 ## Next Phase
 
-Phase 12T should polish Setup Wizard and Setup Run admin pages or add a setup status API endpoint.
+Phase 12T should finalize setup workflow handoff documentation and verification.
