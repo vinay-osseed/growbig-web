@@ -7,6 +7,7 @@ echo "Checking site setup foundation..."
 ddev drush route | grep -q "site_platform_admin.site_setup"
 ddev drush route | grep -q "site_platform_admin.site_setup_wizard"
 ddev drush route | grep -q "site_platform_admin.site_setup_run"
+ddev drush route | grep -q "site_platform_admin.site_setup_complete"
 
 ddev drush php:eval '
 foreach (["site_platform_admin.setup_storage", "site_platform_admin.setup_runner"] as $service_id) {
@@ -38,11 +39,17 @@ foreach (["mode", "site", "contact", "branding", "setup_options", "analytics", "
   }
 }
 
-$preview = \Drupal::service("site_platform_admin.setup_runner")->getPreview();
+$runner = \Drupal::service("site_platform_admin.setup_runner");
+$preview = $runner->getPreview();
 foreach (["mode", "site_name", "site_key", "create_default_roles", "create_default_pages", "create_default_menus", "create_default_forms"] as $key) {
   if (!array_key_exists($key, $preview)) {
     throw new \RuntimeException("Missing setup runner preview key: " . $key);
   }
+}
+
+$readiness = $runner->getCompletionReadiness();
+if (!is_array($readiness) || !array_key_exists("ready", $readiness)) {
+  throw new \RuntimeException("Setup completion readiness failed.");
 }
 
 echo "Site setup foundation verified." . PHP_EOL;

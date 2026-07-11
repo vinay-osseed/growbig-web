@@ -41,6 +41,8 @@ final class SiteSetupWizardForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
+    $form['#attached']['library'][] = 'site_platform_admin/site_setup';
+
     $config = $this->setupStorage->getValues();
 
     $form['intro'] = [

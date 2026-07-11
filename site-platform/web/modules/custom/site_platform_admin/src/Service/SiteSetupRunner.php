@@ -562,6 +562,143 @@ final class SiteSetupRunner {
   }
 
   /**
+   * Gets setup completion readiness.
+   */
+  public function getCompletionReadiness(): array {
+    $values = $this->setupStorage->getValues();
+
+    $missing_values = array_values($this->getMissingRequiredValues());
+    $missing_roles = $this->getMissingRoles($values);
+    $missing_pages = $this->getMissingPages($values);
+    $missing_webforms = $this->getMissingWebforms($values);
+
+    $missing = array_merge(
+      $missing_values,
+      $missing_roles,
+      $missing_pages,
+      $missing_webforms
+    );
+
+    return [
+      'ready' => $missing === [],
+      'missing' => $missing,
+      'checked' => [
+        'required_values' => $missing_values === [],
+        'roles' => $missing_roles === [],
+        'pages' => $missing_pages === [],
+        'webforms' => $missing_webforms === [],
+      ],
+    ];
+  }
+
+  /**
+   * Marks setup completed and locked.
+   */
+  public function completeAndLock(): array {
+    $readiness = $this->getCompletionReadiness();
+
+    if (!$readiness['ready']) {
+      throw new \InvalidArgumentException('Setup cannot be completed. Missing: ' . implode(', ', $readiness['missing']));
+    }
+
+    $status = $this->setupStorage->getStatus();
+    $values = $this->setupStorage->getValues();
+
+    $status['installed'] = TRUE;
+    $status['completed'] = TRUE;
+    $status['locked'] = TRUE;
+    $status['current_step'] = 'setup_completed';
+    $status['mode'] = (string) ($this->getValue($values, 'mode') ?: 'single');
+    $status['environment'] = (string) ($this->getValue($values, 'environment') ?: '');
+    $status['completed_at'] = $this->time->getRequestTime();
+    $status['steps'] = $this->buildCompletedStepStatus($values);
+
+    $this->setupStorage->saveStatus($status);
+
+    return $status;
+  }
+
+  /**
+   * Gets missing setup roles.
+   */
+  private function getMissingRoles(array $values): array {
+    if (!(bool) $this->getValue($values, 'setup_options.create_default_roles')) {
+      return [];
+    }
+
+    $missing = [];
+    $storage = $this->entityTypeManager->getStorage('user_role');
+
+    foreach (array_keys(self::ROLE_DEFINITIONS) as $role_id) {
+      if (!$storage->load($role_id)) {
+        $missing[] = 'Role: ' . $role_id;
+      }
+    }
+
+    return $missing;
+  }
+
+  /**
+   * Gets missing setup pages.
+   */
+  private function getMissingPages(array $values): array {
+    if (!(bool) $this->getValue($values, 'setup_options.create_default_pages')) {
+      return [];
+    }
+
+    $missing = [];
+
+    foreach (array_keys($this->getDefaultPageDefinitions()) as $page_key) {
+      if (!$this->loadPageByKey($page_key)) {
+        $missing[] = 'Page: ' . $page_key;
+      }
+    }
+
+    return $missing;
+  }
+
+  /**
+   * Gets missing setup webforms.
+   */
+  private function getMissingWebforms(array $values): array {
+    if (!(bool) $this->getValue($values, 'setup_options.create_default_forms')) {
+      return [];
+    }
+
+    if (!$this->entityTypeManager->hasDefinition('webform')) {
+      return ['Webform module/entity type'];
+    }
+
+    $missing = [];
+    $storage = $this->entityTypeManager->getStorage('webform');
+
+    foreach (array_keys($this->getDefaultWebformDefinitions()) as $webform_id) {
+      if (!$storage->load($webform_id)) {
+        $missing[] = 'Webform: ' . $webform_id;
+      }
+    }
+
+    return $missing;
+  }
+
+  /**
+   * Builds completed setup step status.
+   */
+  private function buildCompletedStepStatus(array $values): array {
+    return [
+      'site_profile' => 'completed',
+      'frontend_defaults' => 'completed',
+      'roles' => (bool) $this->getValue($values, 'setup_options.create_default_roles') ? 'completed' : 'skipped',
+      'pages' => (bool) $this->getValue($values, 'setup_options.create_default_pages') ? 'completed' : 'skipped',
+      'menus' => (bool) $this->getValue($values, 'setup_options.create_default_menus') ? 'completed' : 'skipped',
+      'forms' => (bool) $this->getValue($values, 'setup_options.create_default_forms') ? 'completed' : 'skipped',
+      'content' => (bool) $this->getValue($values, 'setup_options.create_demo_content') ? 'completed' : 'skipped',
+      'analytics' => 'completed',
+      'verification' => 'completed',
+    ];
+  }
+
+  /**
    * Gets existing setup ID or creates one.
    */
   private function getOrCreateSetupId(): string {

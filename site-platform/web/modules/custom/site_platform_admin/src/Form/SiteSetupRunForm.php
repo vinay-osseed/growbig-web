@@ -43,6 +43,8 @@ final class SiteSetupRunForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
+    $form['#attached']['library'][] = 'site_platform_admin/site_setup';
+
     $missing = $this->setupRunner->getMissingRequiredValues();
     $preview = $this->setupRunner->getPreview();
 

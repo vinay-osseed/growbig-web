@@ -1,0 +1,113 @@
+.site-setup,
+.site-setup-run,
+.site-setup-wizard,
+.site-setup-complete {
+  max-width: 1380px;
+}
+
+.site-setup__intro,
+.site-setup__notice,
+.site-setup-run__intro,
+.site-setup-wizard__intro,
+.site-setup-complete__card,
+.site-setup .item-list,
+.site-setup-run .item-list,
+.site-setup-wizard details,
+.site-setup-complete .item-list {
+  margin-block: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, rgba(59, 76, 116, 0.22), rgba(39, 39, 42, 0.92)),
+    var(--gin-bg-layer, #2b2b2f);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
+}
+
+.site-setup__intro h2,
+.site-setup-run__intro h2,
+.site-setup-wizard__intro h2,
+.site-setup-complete h2 {
+  margin-block-start: 0;
+  font-size: 1.65rem;
+  font-weight: 700;
+}
+
+.site-setup__intro p,
+.site-setup-run__intro p,
+.site-setup-wizard__intro p,
+.site-setup-complete p {
+  color: var(--gin-color-text-light, #d1d5db);
+}
+
+.site-setup__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-block: 1.25rem;
+}
+
+.site-setup__actions .button,
+.site-setup-run .button,
+.site-setup-complete .button,
+.site-setup-wizard .button {
+  min-width: 170px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.site-setup__actions .button--primary,
+.site-setup-run .button--primary,
+.site-setup-complete .button--primary,
+.site-setup-wizard .button--primary {
+  color: #08111f;
+  background: linear-gradient(135deg, #9bbcff, #6f95ff);
+  box-shadow: 0 12px 28px rgba(111, 149, 255, 0.35);
+}
+
+.site-setup .item-list__title,
+.site-setup-run .item-list__title,
+.site-setup-complete .item-list__title {
+  margin-block-start: 0;
+  margin-block-end: 1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.site-setup .item-list ul,
+.site-setup-run .item-list ul,
+.site-setup-complete .item-list ul {
+  display: grid;
+  gap: 0.55rem;
+  margin-block: 0;
+}
+
+.site-setup-wizard details {
+  overflow: hidden;
+}
+
+.site-setup-wizard details > summary {
+  padding: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.site-setup-wizard .form-item {
+  max-width: 760px;
+}
+
+.site-setup-wizard input[type='text'],
+.site-setup-wizard input[type='email'],
+.site-setup-wizard input[type='url'],
+.site-setup-wizard select,
+.site-setup-wizard textarea {
+  border-radius: 12px;
+}
+
+@media (min-width: 900px) {
+  .site-setup .item-list,
+  .site-setup-run .item-list,
+  .site-setup-complete .item-list {
+    max-width: 980px;
+  }
+}

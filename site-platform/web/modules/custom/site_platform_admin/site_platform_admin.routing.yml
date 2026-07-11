@@ -29,3 +29,11 @@ site_platform_admin.site_setup_run:
     _title: 'Prepare Setup Run'
   requirements:
     _permission: 'administer site setup'
+
+site_platform_admin.site_setup_complete:
+  path: '/admin/site-setup/complete'
+  defaults:
+    _form: '\Drupal\site_platform_admin\Form\SiteSetupCompleteForm'
+    _title: 'Complete and Lock Setup'
+  requirements:
+    _permission: 'administer site setup'

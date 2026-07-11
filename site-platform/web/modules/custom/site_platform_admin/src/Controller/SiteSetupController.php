@@ -39,6 +39,11 @@ final class SiteSetupController extends ControllerBase {
     $values = $this->setupStorage->getValues();
 
     return [
+      '#attached' => [
+        'library' => [
+          'site_platform_admin/site_setup',
+        ],
+      ],
       '#type' => 'container',
       '#attributes' => [
         'class' => [
@@ -124,7 +129,19 @@ final class SiteSetupController extends ControllerBase {
 
     $run['#attributes']['class'][] = 'button';
 
+    $complete = Link::fromTextAndUrl(
+      $this->t('Complete and Lock Setup'),
+      Url::fromRoute('site_platform_admin.site_setup_complete')
+    )->toRenderable();
+
+    $complete['#attributes']['class'][] = 'button';
+
     return [
+      '#attached' => [
+        'library' => [
+          'site_platform_admin/site_setup',
+        ],
+      ],
       '#type' => 'container',
       '#attributes' => [
         'class' => [
@@ -133,6 +150,7 @@ final class SiteSetupController extends ControllerBase {
       ],
       'wizard' => $wizard,
       'run' => $run,
+      'complete' => $complete,
     ];
   }
 
