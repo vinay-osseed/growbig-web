@@ -30,3 +30,11 @@ site-platform/web/sites/default/services.local.yml
 .DS_Store
 .idea/
 .vscode/
+
+# Site setup runtime/import files.
+# Keep only setup/site.example.yml committed.
+setup/site.yml
+setup/*.local.yml
+setup/*.stage.yml
+setup/*.prod.yml
+setup/*.production.yml

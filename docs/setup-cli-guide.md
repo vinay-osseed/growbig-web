@@ -185,3 +185,17 @@ Inspect setup site rows:
 Or with Drush:
 
     ddev drush site-platform:setup-sites
+
+## Private Setup Files
+
+Only `setup/site.example.yml` should be committed.
+
+Do not commit environment-specific files such as:
+
+- `setup/site.yml`
+- `setup/site.local.yml`
+- `setup/site.stage.yml`
+- `setup/site.prod.yml`
+- `setup/site.production.yml`
+
+These files can contain production URLs, analytics IDs, or environment-specific setup values.
