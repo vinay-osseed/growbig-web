@@ -13,6 +13,7 @@ ddev drush route | grep -q "site_platform_admin.site_setup_unlock"
 
 ddev drush site-platform:setup-status >/dev/null
 ddev drush site-platform:setup-preview >/dev/null
+ddev drush list | grep -q "site-platform:setup-import"
 
 ddev drush php:eval '
 foreach (["site_platform_admin.setup_storage", "site_platform_admin.setup_runner"] as $service_id) {

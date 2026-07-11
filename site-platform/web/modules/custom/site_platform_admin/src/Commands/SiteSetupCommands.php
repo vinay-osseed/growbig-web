@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\site_platform_admin\Commands;
 
+use Drupal\Component\Serialization\Yaml;
 use Drupal\site_platform_admin\Service\SiteSetupRunner;
 use Drupal\site_platform_admin\Service\SiteSetupStorage;
 use Drush\Commands\DrushCommands;
@@ -45,6 +46,32 @@ final class SiteSetupCommands extends DrushCommands {
 
     $this->output()->writeln('Completion readiness:');
     $this->printArray($this->setupRunner->getCompletionReadiness());
+  }
+
+  /**
+   * Imports setup runtime values from a YAML file.
+   *
+   * @param string $file
+   *   Path to setup YAML file.
+   *
+   * @command site-platform:setup-import
+   * @aliases sp-setup-import
+   */
+  public function import(string $file = 'setup/site.yml'): void {
+    if (!file_exists($file)) {
+      throw new \InvalidArgumentException('Setup YAML file not found: ' . $file);
+    }
+
+    $values = Yaml::decode((string) file_get_contents($file));
+
+    if (!is_array($values)) {
+      throw new \InvalidArgumentException('Setup YAML file must contain a mapping.');
+    }
+
+    $this->setupStorage->mergeValues($values);
+
+    $this->output()->writeln('Setup values imported from: ' . $file);
+    $this->printArray($this->setupRunner->getPreview());
   }
 
   /**

@@ -118,3 +118,23 @@ Short aliases:
     ddev drush sp-setup-complete
     ddev drush sp-setup-unlock
     ddev drush sp-setup-reset-status
+
+## YAML Setup Import
+
+Create a setup file from the example:
+
+    cp setup/site.example.yml setup/site.yml
+
+Edit `setup/site.yml` for the current environment.
+
+Import values:
+
+    ./scripts/site-setup.sh import setup/site.yml
+
+Or with Drush:
+
+    ddev drush site-platform:setup-import setup/site.yml
+
+The import stores values in Drupal State API. It does not export them to config.
+
+Do not commit `setup/site.yml` if it contains production URLs, real analytics IDs, or private deployment values.

@@ -1,0 +1,33 @@
+mode: single
+environment: local
+
+site:
+  name: GrowBig
+  key: growbig
+  primary_domain: growbig-web.ddev.site
+  frontend_url: https://growbig-web.ddev.site
+  admin_url: https://admin.growbig-web.ddev.site
+  api_url: https://api.growbig-web.ddev.site
+
+contact:
+  company_name: GrowBig
+  primary_email: admin@example.com
+  country: India
+
+branding:
+  theme_color: '#0f62fe'
+  logo: ''
+  favicon: ''
+
+setup_options:
+  create_default_pages: true
+  create_default_menus: true
+  create_default_forms: true
+  create_default_roles: true
+  create_demo_content: false
+
+analytics:
+  enabled: false
+  measurement_id: ''
+
+extra_sites: []

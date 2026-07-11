@@ -47,6 +47,13 @@ final class SiteSetupStorage {
   }
 
   /**
+   * Merges setup values with existing runtime values and saves them.
+   */
+  public function mergeValues(array $values): void {
+    $this->saveValues(array_replace_recursive($this->getValues(), $values));
+  }
+
+  /**
    * Saves setup values to state.
    */
   public function saveValues(array $values): void {

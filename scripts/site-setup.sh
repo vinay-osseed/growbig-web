@@ -11,6 +11,7 @@ Site Setup helper
 Usage:
   ./scripts/site-setup.sh status
   ./scripts/site-setup.sh preview
+  ./scripts/site-setup.sh import setup/site.yml
   ./scripts/site-setup.sh run
   ./scripts/site-setup.sh complete
   ./scripts/site-setup.sh unlock
@@ -31,6 +32,11 @@ case "$COMMAND" in
 
   preview)
     ddev drush site-platform:setup-preview
+    ;;
+
+  import)
+    FILE="${2:-setup/site.yml}"
+    ddev drush site-platform:setup-import "$FILE"
     ;;
 
   run)
