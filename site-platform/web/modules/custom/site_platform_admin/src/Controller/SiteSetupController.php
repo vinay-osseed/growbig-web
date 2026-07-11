@@ -50,50 +50,45 @@ final class SiteSetupController extends ControllerBase {
           'site-setup',
         ],
       ],
-      'intro' => [
+      'hero' => [
         '#type' => 'container',
         '#attributes' => [
           'class' => [
-            'site-setup__intro',
+            'site-setup__hero',
           ],
         ],
-        'title' => [
-          '#type' => 'html_tag',
-          '#tag' => 'h2',
-          '#value' => $this->t('Site Setup'),
+        'content' => [
+          '#type' => 'container',
+          '#attributes' => [
+            'class' => [
+              'site-setup__hero-content',
+            ],
+          ],
+          'title' => [
+            '#type' => 'html_tag',
+            '#tag' => 'h2',
+            '#value' => $this->t('Setup Control Center'),
+          ],
+          'description' => [
+            '#type' => 'html_tag',
+            '#tag' => 'p',
+            '#value' => $this->t('Prepare required backend data and frontend-safe defaults for this decoupled site platform.'),
+          ],
         ],
-        'description' => [
+        'badge' => [
           '#type' => 'html_tag',
-          '#tag' => 'p',
-          '#value' => $this->t('This setup workflow will initialize required backend and frontend-safe defaults for this decoupled site platform.'),
+          '#tag' => 'span',
+          '#attributes' => [
+            'class' => [
+              'site-setup__badge',
+            ],
+          ],
+          '#value' => $this->getStatusBadgeText($status),
         ],
       ],
       'actions' => $this->buildActions(),
-      'summary' => [
-        '#theme' => 'item_list',
-        '#title' => $this->t('Current Setup Status'),
-        '#items' => [
-          $this->t('Mode: @value', [
-            '@value' => $status['mode'] ?: 'single',
-          ]),
-          $this->t('Current step: @value', [
-            '@value' => $status['current_step'] ?: 'not_started',
-          ]),
-          $this->t('Completed: @value', [
-            '@value' => $this->formatBoolean((bool) $status['completed']),
-          ]),
-          $this->t('Locked: @value', [
-            '@value' => $this->formatBoolean((bool) $status['locked']),
-          ]),
-          $this->t('Saved site name: @value', [
-            '@value' => $values['site']['name'] ?: $this->t('Not set'),
-          ]),
-          $this->t('Setup ID: @value', [
-            '@value' => $status['setup_id'] ?: $this->t('Not created yet'),
-          ]),
-        ],
-      ],
-      'steps' => $this->buildSteps($status['steps'] ?: []),
+      'status_cards' => $this->buildStatusCards($status, $values),
+      'progress' => $this->buildProgress($status['steps'] ?: []),
       'notice' => [
         '#type' => 'container',
         '#attributes' => [
@@ -104,7 +99,7 @@ final class SiteSetupController extends ControllerBase {
         'message' => [
           '#type' => 'html_tag',
           '#tag' => 'p',
-          '#value' => $this->t('Setup values, status, and manifest are stored in Drupal state so local/stage/prod setup values do not accidentally export into shared config.'),
+          '#value' => $this->t('Runtime setup values are stored per environment, so local, stage, and production setup values are not exported through shared config.'),
         ],
       ],
     ];
@@ -118,30 +113,22 @@ final class SiteSetupController extends ControllerBase {
       $this->t('Open Setup Wizard'),
       Url::fromRoute('site_platform_admin.site_setup_wizard')
     )->toRenderable();
-
     $wizard['#attributes']['class'][] = 'button';
     $wizard['#attributes']['class'][] = 'button--primary';
 
     $run = Link::fromTextAndUrl(
-      $this->t('Prepare Setup Run'),
+      $this->t('Prepare Run'),
       Url::fromRoute('site_platform_admin.site_setup_run')
     )->toRenderable();
-
     $run['#attributes']['class'][] = 'button';
 
     $complete = Link::fromTextAndUrl(
-      $this->t('Complete and Lock Setup'),
+      $this->t('Complete and Lock'),
       Url::fromRoute('site_platform_admin.site_setup_complete')
     )->toRenderable();
-
     $complete['#attributes']['class'][] = 'button';
 
     return [
-      '#attached' => [
-        'library' => [
-          'site_platform_admin/site_setup',
-        ],
-      ],
       '#type' => 'container',
       '#attributes' => [
         'class' => [
@@ -155,24 +142,152 @@ final class SiteSetupController extends ControllerBase {
   }
 
   /**
-   * Builds setup step list.
+   * Builds compact status cards.
    */
-  private function buildSteps(array $steps): array {
+  private function buildStatusCards(array $status, array $values): array {
+    $cards = [
+      [
+        'label' => $this->t('Mode'),
+        'value' => $status['mode'] ?: 'single',
+      ],
+      [
+        'label' => $this->t('Step'),
+        'value' => $status['current_step'] ?: 'not_started',
+      ],
+      [
+        'label' => $this->t('Site'),
+        'value' => $values['site']['name'] ?: $this->t('Not set'),
+      ],
+      [
+        'label' => $this->t('Setup ID'),
+        'value' => $status['setup_id'] ?: $this->t('Pending'),
+      ],
+      [
+        'label' => $this->t('Completed'),
+        'value' => $this->formatBoolean((bool) $status['completed']),
+      ],
+      [
+        'label' => $this->t('Locked'),
+        'value' => $this->formatBoolean((bool) $status['locked']),
+      ],
+    ];
+
     $items = [];
 
-    foreach ($steps as $step => $status) {
-      $items[] = $this->t('@step: @status', [
-        '@step' => str_replace('_', ' ', (string) $step),
-        '@status' => (string) $status,
-      ]);
+    foreach ($cards as $card) {
+      $items[] = [
+        '#type' => 'container',
+        '#attributes' => [
+          'class' => [
+            'site-setup__status-card',
+          ],
+        ],
+        'value' => [
+          '#type' => 'html_tag',
+          '#tag' => 'strong',
+          '#value' => $card['value'],
+        ],
+        'label' => [
+          '#type' => 'html_tag',
+          '#tag' => 'span',
+          '#value' => $card['label'],
+        ],
+      ];
     }
 
     return [
-      '#theme' => 'item_list',
-      '#title' => $this->t('Setup Steps'),
-      '#items' => $items,
-      '#empty' => $this->t('No setup steps are configured yet.'),
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'site-setup__status-grid',
+        ],
+      ],
+      'items' => $items,
     ];
+  }
+
+  /**
+   * Builds compact setup progress pills.
+   */
+  private function buildProgress(array $steps): array {
+    $items = [];
+
+    foreach ($steps as $step => $status) {
+      $items[] = [
+        '#type' => 'container',
+        '#attributes' => [
+          'class' => [
+            'site-setup__step',
+            'site-setup__step--' . str_replace('_', '-', (string) $status),
+          ],
+        ],
+        'name' => [
+          '#type' => 'html_tag',
+          '#tag' => 'span',
+          '#attributes' => [
+            'class' => [
+              'site-setup__step-name',
+            ],
+          ],
+          '#value' => $this->formatStepName((string) $step),
+        ],
+        'status' => [
+          '#type' => 'html_tag',
+          '#tag' => 'span',
+          '#attributes' => [
+            'class' => [
+              'site-setup__step-status',
+            ],
+          ],
+          '#value' => (string) $status,
+        ],
+      ];
+    }
+
+    return [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'site-setup__progress-card',
+        ],
+      ],
+      'title' => [
+        '#type' => 'html_tag',
+        '#tag' => 'h3',
+        '#value' => $this->t('Progress'),
+      ],
+      'items' => [
+        '#type' => 'container',
+        '#attributes' => [
+          'class' => [
+            'site-setup__steps',
+          ],
+        ],
+        'items' => $items,
+      ],
+    ];
+  }
+
+  /**
+   * Gets status badge text.
+   */
+  private function getStatusBadgeText(array $status): string {
+    if (!empty($status['locked'])) {
+      return (string) $this->t('Locked');
+    }
+
+    if (!empty($status['completed'])) {
+      return (string) $this->t('Completed');
+    }
+
+    return (string) $this->t('In Progress');
+  }
+
+  /**
+   * Formats setup step machine name.
+   */
+  private function formatStepName(string $step): string {
+    return ucwords(str_replace('_', ' ', $step));
   }
 
   /**
