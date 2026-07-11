@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\site_platform_api\EventSubscriber;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\State\StateInterface;
+use Drupal\file\FileInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -20,6 +23,8 @@ final class SiteSetupProfileSubscriber implements EventSubscriberInterface {
    */
   public function __construct(
     private readonly StateInterface $state,
+    private readonly EntityTypeManagerInterface $entityTypeManager,
+    private readonly FileUrlGeneratorInterface $fileUrlGenerator,
   ) {}
 
   /**
@@ -55,6 +60,8 @@ final class SiteSetupProfileSubscriber implements EventSubscriberInterface {
       return;
     }
 
+    $branding = is_array($values['branding'] ?? NULL) ? $values['branding'] : [];
+
     $data['setupProfile'] = [
       'mode' => (string) ($values['mode'] ?? ''),
       'environment' => (string) ($values['environment'] ?? ''),
@@ -67,14 +74,43 @@ final class SiteSetupProfileSubscriber implements EventSubscriberInterface {
       'primaryEmail' => (string) ($values['contact']['primary_email'] ?? ''),
       'country' => (string) ($values['contact']['country'] ?? ''),
       'branding' => [
-        'themeColor' => (string) ($values['branding']['theme_color'] ?? ''),
-        'logo' => (string) ($values['branding']['logo'] ?? ''),
-        'favicon' => (string) ($values['branding']['favicon'] ?? ''),
+        'themeColor' => (string) ($branding['theme_color'] ?? ''),
+        'siteTitleBar' => (string) ($branding['site_title_bar'] ?? ''),
+        'headerLogo' => $this->buildFileInfo((int) ($branding['header_logo'] ?? 0)),
+        'headerLogoAlt' => (string) ($branding['header_logo_alt'] ?? ''),
+        'footerLogo' => $this->buildFileInfo((int) ($branding['footer_logo'] ?? 0)),
+        'footerLogoAlt' => (string) ($branding['footer_logo_alt'] ?? ''),
+        'favicon' => $this->buildFileInfo((int) ($branding['favicon_ico'] ?? 0)),
+        'appIcon' => $this->buildFileInfo((int) ($branding['app_icon'] ?? 0)),
+        'socialImage' => $this->buildFileInfo((int) ($branding['social_image'] ?? 0)),
+        'footerCopyright' => (string) ($branding['footer_copyright'] ?? ''),
       ],
       'extraSites' => is_array($values['extra_sites'] ?? NULL) ? $values['extra_sites'] : [],
     ];
 
     $response->setData($data);
+  }
+
+  /**
+   * Builds frontend-safe file info.
+   */
+  private function buildFileInfo(int $file_id): ?array {
+    if ($file_id <= 0) {
+      return NULL;
+    }
+
+    $file = $this->entityTypeManager->getStorage('file')->load($file_id);
+    if (!$file instanceof FileInterface) {
+      return NULL;
+    }
+
+    return [
+      'id' => (int) $file->id(),
+      'uuid' => $file->uuid(),
+      'filename' => $file->getFilename(),
+      'mime' => $file->getMimeType(),
+      'url' => $this->fileUrlGenerator->generateAbsoluteString($file->getFileUri()),
+    ];
   }
 
   /**

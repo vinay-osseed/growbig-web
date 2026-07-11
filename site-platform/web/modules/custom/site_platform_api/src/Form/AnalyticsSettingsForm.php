@@ -65,7 +65,7 @@ final class AnalyticsSettingsForm extends ConfigFormBase {
       '#markup' => '<p>' . $this->t('If GOOGLE_ANALYTICS_ENABLED or GOOGLE_ANALYTICS_MEASUREMENT_ID is set in the environment, the API uses those values first.') . '</p>',
     ];
 
-    return parent::buildForm($form, $form_state);
+    return $form;
   }
 
   /**

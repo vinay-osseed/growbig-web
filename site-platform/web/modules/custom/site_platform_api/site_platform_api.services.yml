@@ -22,5 +22,7 @@ services:
     class: Drupal\site_platform_api\EventSubscriber\SiteSetupProfileSubscriber
     arguments:
       - '@state'
+      - '@entity_type.manager'
+      - '@file_url_generator'
     tags:
       - { name: event_subscriber }

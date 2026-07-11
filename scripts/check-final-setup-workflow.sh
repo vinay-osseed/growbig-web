@@ -11,6 +11,7 @@ bash -n scripts/site-setup.sh
 ./scripts/site-setup.sh sites >/dev/null
 
 ./scripts/check-site-setup.sh
+./scripts/check-site-setup-ui-forms.sh
 ./scripts/check-site-api-setup-profile.sh
 ./scripts/check-code.sh
 

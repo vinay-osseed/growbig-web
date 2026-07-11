@@ -132,3 +132,21 @@ Key decisions:
 - destructive cleanup is not implemented because it requires an approved backup-aware deletion plan
 - setup UI polish is production-ready for the current scope
 - branding values are available through `setupProfile.branding`
+
+## Setup Wizard Branding Fields
+
+The setup wizard includes production-ready branding fields for:
+
+- header logo
+- footer logo
+- browser title bar favicon / ICO
+- app / mobile icon
+- default social sharing image
+- theme color
+- footer copyright
+- title bar text
+
+These values are exposed through:
+
+- `GET /api/v1/site`
+- `setupProfile.branding`
