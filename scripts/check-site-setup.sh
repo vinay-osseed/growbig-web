@@ -8,6 +8,8 @@ ddev drush route | grep -q "site_platform_admin.site_setup"
 ddev drush route | grep -q "site_platform_admin.site_setup_wizard"
 ddev drush route | grep -q "site_platform_admin.site_setup_run"
 ddev drush route | grep -q "site_platform_admin.site_setup_complete"
+ddev drush route | grep -q "site_platform_admin.site_setup_reset_status"
+ddev drush route | grep -q "site_platform_admin.site_setup_unlock"
 
 ddev drush php:eval '
 foreach (["site_platform_admin.setup_storage", "site_platform_admin.setup_runner"] as $service_id) {
@@ -45,6 +47,10 @@ foreach (["mode", "site_name", "site_key", "create_default_roles", "create_defau
   if (!array_key_exists($key, $preview)) {
     throw new \RuntimeException("Missing setup runner preview key: " . $key);
   }
+}
+
+if (!method_exists($storage, "resetStatus") || !method_exists($storage, "unlockSetup")) {
+  throw new \RuntimeException("Missing setup reset/unlock methods.");
 }
 
 $readiness = $runner->getCompletionReadiness();

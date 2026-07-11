@@ -128,6 +128,18 @@ final class SiteSetupController extends ControllerBase {
     )->toRenderable();
     $complete['#attributes']['class'][] = 'button';
 
+    $unlock = Link::fromTextAndUrl(
+      $this->t('Unlock'),
+      Url::fromRoute('site_platform_admin.site_setup_unlock')
+    )->toRenderable();
+    $unlock['#attributes']['class'][] = 'button';
+
+    $reset_status = Link::fromTextAndUrl(
+      $this->t('Reset Status'),
+      Url::fromRoute('site_platform_admin.site_setup_reset_status')
+    )->toRenderable();
+    $reset_status['#attributes']['class'][] = 'button';
+
     return [
       '#type' => 'container',
       '#attributes' => [
@@ -138,6 +150,8 @@ final class SiteSetupController extends ControllerBase {
       'wizard' => $wizard,
       'run' => $run,
       'complete' => $complete,
+      'unlock' => $unlock,
+      'reset_status' => $reset_status,
     ];
   }
 

@@ -90,6 +90,31 @@ final class SiteSetupStorage {
   }
 
   /**
+   * Resets setup status runtime state only.
+   */
+  public function resetStatus(): void {
+    $this->state->set(self::STATUS_KEY, $this->getDefaultStatus());
+  }
+
+  /**
+   * Unlocks setup runtime status.
+   */
+  public function unlockSetup(): void {
+    $status = $this->getStatus();
+
+    $status['completed'] = FALSE;
+    $status['locked'] = FALSE;
+    $status['current_step'] = 'setup_unlocked';
+    $status['completed_at'] = 0;
+
+    if (isset($status['steps']['verification'])) {
+      $status['steps']['verification'] = 'pending';
+    }
+
+    $this->saveStatus($status);
+  }
+
+  /**
    * Gets config defaults.
    */
   private function getConfigDefaults(string $name): array {

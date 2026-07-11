@@ -37,3 +37,19 @@ site_platform_admin.site_setup_complete:
     _title: 'Complete and Lock Setup'
   requirements:
     _permission: 'administer site setup'
+
+site_platform_admin.site_setup_unlock:
+  path: '/admin/site-setup/unlock'
+  defaults:
+    _form: '\Drupal\site_platform_admin\Form\SiteSetupUnlockForm'
+    _title: 'Unlock Setup'
+  requirements:
+    _permission: 'administer site setup'
+
+site_platform_admin.site_setup_reset_status:
+  path: '/admin/site-setup/reset-status'
+  defaults:
+    _form: '\Drupal\site_platform_admin\Form\SiteSetupResetStatusForm'
+    _title: 'Reset Setup Status'
+  requirements:
+    _permission: 'administer site setup'
