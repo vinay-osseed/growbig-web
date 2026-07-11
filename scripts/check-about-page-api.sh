@@ -24,10 +24,24 @@ payload = json.dumps(data)
 
 required = [
     "We Are GrowBig",
+    "150+",
+    "50+",
+    "30+",
+    "6+",
     "Mission",
     "Vision",
+    "Our Mission",
+    "Our Vision",
     "Core Values",
+    "Innovation First",
+    "Client-Centric",
+    "Continuous Growth",
     "Leadership",
+    "Rahul Sawant",
+    "Priya Desai",
+    "Arjun Naik",
+    "Sneha Patil",
+    "Want to join our growing team",
 ]
 
 missing = [item for item in required if item not in payload]
@@ -38,5 +52,5 @@ sections = data.get("sections", [])
 if not isinstance(sections, list) or len(sections) < 4:
     raise SystemExit(f"About page should have multiple sections. Found: {len(sections)}")
 
-print("About page API content verified.")
+print("About page API mockup content verified.")
 PY
