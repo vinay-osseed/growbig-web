@@ -18,12 +18,47 @@ final class SiteSetupRunner {
   /**
    * Setup role definitions.
    */
-  private const ROLE_DEFINITIONS = [
-    'site_developer' => 'Site Developer',
-    'content_admin' => 'Content Admin',
+  private const ROLE_LABELS = [
+    'content_editor' => 'Content editor',
     'hr_manager' => 'HR Manager',
-    'form_manager' => 'Form Manager',
-    'analytics_viewer' => 'Analytics Viewer',
+  ];
+
+  private const ROLE_DEFINITIONS = [
+    'content_editor' => [
+      'label' => 'Content editor',
+      'permissions' => [
+        'access administration pages',
+        'access content overview',
+        'view own unpublished content',
+        'administer media',
+        'view media',
+        'create site_page content',
+        'edit any site_page content',
+        'delete any site_page content',
+        'create service content',
+        'edit any service content',
+        'delete any service content',
+        'create partner content',
+        'edit any partner content',
+        'delete any partner content',
+        'create team_member content',
+        'edit any team_member content',
+        'delete any team_member content',
+      ],
+    ],
+    'hr_manager' => [
+      'label' => 'HR Manager',
+      'permissions' => [
+        'access administration pages',
+        'access content overview',
+        'access webform overview',
+        'create job content',
+        'edit any job content',
+        'delete any job content',
+        'view any webform submission',
+        'edit any webform submission',
+      ],
+    ],
   ];
 
   /**
@@ -425,45 +460,40 @@ final class SiteSetupRunner {
   }
 
   /**
-   * Grants baseline permissions to setup roles.
+   * Gets role permissions managed by setup.
    */
-  private function grantRolePermissions(string $role_id, RoleInterface $role): void {
-    $permissions = match ($role_id) {
-      'site_developer' => [
-        'access administration pages',
-        'administer site configuration',
-        'administer site setup',
-      ],
-      'content_admin' => [
+  private function grantRolePermissions(): array {
+    return [
+      'content_editor' => [
         'access administration pages',
         'access content overview',
-        'administer nodes',
+        'view own unpublished content',
+        'administer media',
+        'view media',
         'create site_page content',
         'edit any site_page content',
         'delete any site_page content',
+        'create service content',
+        'edit any service content',
+        'delete any service content',
+        'create partner content',
+        'edit any partner content',
+        'delete any partner content',
+        'create team_member content',
+        'edit any team_member content',
+        'delete any team_member content',
       ],
       'hr_manager' => [
         'access administration pages',
         'access content overview',
+        'access webform overview',
         'create job content',
         'edit any job content',
         'delete any job content',
+        'view any webform submission',
+        'edit any webform submission',
       ],
-      'form_manager' => [
-        'access administration pages',
-        'access webform overview',
-      ],
-      'analytics_viewer' => [
-        'access administration pages',
-      ],
-      default => [],
-    };
-
-    foreach ($permissions as $permission) {
-      if (!$role->hasPermission($permission)) {
-        $role->grantPermission($permission);
-      }
-    }
+    ];
   }
 
   /**

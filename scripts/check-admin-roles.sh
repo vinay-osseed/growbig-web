@@ -5,27 +5,23 @@ set -euo pipefail
 echo "Checking admin roles..."
 
 ddev drush php:eval '
-$required = [
-  "site_developer" => "Site Developer",
-  "content_admin" => "Content Admin",
-  "hr_manager" => "HR Manager",
-  "form_manager" => "Form Manager",
-  "analytics_viewer" => "Analytics Viewer",
-];
+$role_storage = \Drupal::entityTypeManager()->getStorage("user_role");
 
-foreach ($required as $id => $label) {
-  $role = \Drupal\user\Entity\Role::load($id);
-
-  if (!$role) {
-    throw new \RuntimeException("Missing role: {$id}");
+$required = ["administrator", "content_editor", "hr_manager"];
+foreach ($required as $rid) {
+  if (!$role_storage->load($rid)) {
+    throw new \RuntimeException("Missing required role: " . $rid);
   }
-
-  if ($role->label() !== $label) {
-    throw new \RuntimeException("Unexpected role label for {$id}: " . $role->label());
-  }
-
-  echo $id . ": " . $role->label() . PHP_EOL;
+  echo "Role exists: $rid\n";
 }
 
-echo "Admin roles verified." . PHP_EOL;
+$not_allowed = ["site_developer", "content_admin", "form_manager", "analytics_viewer"];
+foreach ($not_allowed as $rid) {
+  if ($role_storage->load($rid)) {
+    throw new \RuntimeException("Unwanted setup role still exists: " . $rid);
+  }
+  echo "Role removed or absent: $rid\n";
+}
 '
+
+echo "Admin role check passed."

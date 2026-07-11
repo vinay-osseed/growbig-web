@@ -42,3 +42,5 @@ backups
 
 # Local backup exports.
 backups/
+site-platform/web/libraries/
+site-platform/private/

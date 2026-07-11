@@ -13,6 +13,7 @@ bash -n scripts/site-setup.sh
 ./scripts/check-site-setup.sh
 ./scripts/check-site-setup-ui-forms.sh
 ./scripts/check-site-api-setup-profile.sh
+./scripts/check-about-page-api.sh
 ./scripts/check-code.sh
 
 echo "Final setup workflow verified."
