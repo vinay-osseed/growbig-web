@@ -522,3 +522,36 @@ Public frontend API:
 - GET /api/v1/analytics/config
 
 The API exposes only safe public tracking config. Private Google reporting credentials must never be exposed to frontend JSON.
+
+## Site Setup Workflow
+
+The backend includes a first-run setup workflow for initializing frontend-safe defaults after Drupal install.
+
+Admin routes:
+
+- `/admin/site-setup`
+- `/admin/site-setup/wizard`
+- `/admin/site-setup/run`
+- `/admin/site-setup/complete`
+- `/admin/site-setup/unlock`
+- `/admin/site-setup/reset-status`
+
+The setup workflow supports:
+
+- required setup values
+- runtime state storage per environment
+- default roles
+- default pages
+- page-connected menu visibility
+- default webforms
+- setup completion and lock
+- safe unlock
+- safe status reset
+
+Setup runtime values are stored in Drupal State API so local, stage, and production values are not accidentally exported through config sync.
+
+Do not run `drush cex` after entering environment-specific setup values unless the exported changes are intentionally meant to become shared defaults.
+
+Full guide:
+
+- `docs/site-setup-user-guide.md`
