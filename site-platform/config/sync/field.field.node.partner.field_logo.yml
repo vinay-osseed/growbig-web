@@ -11,7 +11,7 @@ field_name: field_logo
 entity_type: node
 bundle: partner
 label: Logo
-description: ''
+description: 'Choose an existing media item from the media library or add a new one.'
 required: false
 translatable: true
 default_value: {  }

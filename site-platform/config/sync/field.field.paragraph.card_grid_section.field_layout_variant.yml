@@ -12,7 +12,7 @@ field_name: field_layout_variant
 entity_type: paragraph
 bundle: card_grid_section
 label: 'Layout variant'
-description: ''
+description: 'Choose the card layout style.'
 required: false
 translatable: true
 default_value: {  }

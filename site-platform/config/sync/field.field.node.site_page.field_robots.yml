@@ -12,7 +12,7 @@ field_name: field_robots
 entity_type: node
 bundle: site_page
 label: 'Robots setting'
-description: ''
+description: 'SEO search engine behavior. Use Index and follow unless this page should not appear in search results.'
 required: false
 translatable: true
 default_value: {  }

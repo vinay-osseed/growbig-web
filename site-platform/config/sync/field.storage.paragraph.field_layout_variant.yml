@@ -10,7 +10,25 @@ field_name: field_layout_variant
 entity_type: paragraph
 type: list_string
 settings:
-  allowed_values: {  }
+  allowed_values:
+    -
+      value: default
+      label: Default
+    -
+      value: centered
+      label: Centered
+    -
+      value: split
+      label: 'Split layout'
+    -
+      value: compact
+      label: Compact
+    -
+      value: featured
+      label: Featured
+    -
+      value: dark_grid
+      label: 'Dark grid'
   allowed_values_function: ''
 module: options
 locked: false

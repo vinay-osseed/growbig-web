@@ -23,6 +23,7 @@ dependencies:
     - node.type.site_page
   module:
     - link
+    - media_library
     - paragraphs
     - path
 id: node.site_page.default
@@ -77,14 +78,11 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_og_image:
-    type: entity_reference_autocomplete
-    weight: 11
+    type: media_library_widget
+    weight: 50
     region: content
     settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+      media_types: {  }
     third_party_settings: {  }
   field_og_title:
     type: string_textfield
@@ -127,14 +125,10 @@ content:
       default_paragraph_type: ''
     third_party_settings: {  }
   field_sites:
-    type: entity_reference_autocomplete
-    weight: 3
+    type: options_select
+    weight: 5
     region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
   field_summary:
     type: string_textarea

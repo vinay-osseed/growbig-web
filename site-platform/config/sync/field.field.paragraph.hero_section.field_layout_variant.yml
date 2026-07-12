@@ -12,7 +12,7 @@ field_name: field_layout_variant
 entity_type: paragraph
 bundle: hero_section
 label: 'Layout variant'
-description: ''
+description: 'Choose how this section should be displayed on the frontend.'
 required: false
 translatable: true
 default_value: {  }

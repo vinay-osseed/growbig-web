@@ -11,7 +11,7 @@ field_name: field_sites
 entity_type: node
 bundle: job
 label: Sites
-description: ''
+description: 'Choose the site where this content should appear. Shared content can be assigned to more than one site.'
 required: true
 translatable: true
 default_value: {  }

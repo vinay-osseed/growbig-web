@@ -12,7 +12,7 @@ field_name: field_layout_variant
 entity_type: paragraph
 bundle: cta_section
 label: 'Layout variant'
-description: ''
+description: 'Choose the call-to-action layout style.'
 required: false
 translatable: true
 default_value: {  }

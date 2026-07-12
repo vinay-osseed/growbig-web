@@ -10,7 +10,16 @@ field_name: field_page_type
 entity_type: node
 type: list_string
 settings:
-  allowed_values: {  }
+  allowed_values:
+    -
+      value: home
+      label: 'Home Page'
+    -
+      value: standard
+      label: 'Standard Page'
+    -
+      value: landing
+      label: 'Landing Page'
   allowed_values_function: ''
 module: options
 locked: false

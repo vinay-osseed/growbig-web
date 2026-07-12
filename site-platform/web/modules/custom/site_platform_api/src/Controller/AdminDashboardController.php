@@ -5,12 +5,37 @@ declare(strict_types=1);
 namespace Drupal\site_platform_api\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\node\NodeInterface;
+use Drupal\site_platform_api\SiteResolver;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Provides role-aware admin dashboard data.
  */
 final class AdminDashboardController extends ControllerBase {
+
+  /**
+   * Constructs the admin dashboard controller.
+   */
+  public function __construct(
+    private readonly EntityTypeManagerInterface $apiEntityTypeManager,
+    private readonly ModuleHandlerInterface $apiModuleHandler,
+    private readonly SiteResolver $siteResolver,
+  ) {}
+
+  /**
+   * Creates the controller.
+   */
+  public static function create(ContainerInterface $container): self {
+    return new self(
+      $container->get('entity_type.manager'),
+      $container->get('module_handler'),
+      $container->get('site_platform_api.site_resolver'),
+    );
+  }
 
   /**
    * Returns dashboard cards and counts for the current user.
@@ -28,6 +53,15 @@ final class AdminDashboardController extends ControllerBase {
       'recent' => [
         'content' => $this->getRecentContent(),
       ],
+      'filters' => [
+        'contentTypes' => [
+          'site_page' => 'Pages',
+          'service' => 'Services',
+          'partner' => 'Partners',
+          'team_member' => 'Team Members',
+          'job' => 'Jobs',
+        ],
+      ],
     ]);
   }
 
@@ -38,20 +72,19 @@ final class AdminDashboardController extends ControllerBase {
     $cards = [];
 
     if ($this->hasAnyRole($roles, ['administrator'])) {
-      $cards[] = $this->card('site_config', 'Site Configuration', 'Manage platform and site settings.', '/admin/config');
-      $cards[] = $this->card('api_status', 'API Status', 'Review backend API availability.', '/api/v1/site');
-      $cards[] = $this->card('roles', 'Roles & Permissions', 'Manage users, roles, and permissions.', '/admin/people/roles');
+      $cards[] = $this->card('site_config', 'Site Setup', 'Manage site profile, domains, branding, setup, and platform defaults.', '/admin/site-setup');
+      $cards[] = $this->card('api_status', 'API Status', 'Review the active Site API response.', '/api/v1/site');
     }
 
     if ($this->hasAnyRole($roles, ['administrator', 'content_editor'])) {
-      $cards[] = $this->card('pages', 'Pages', 'Manage dynamic frontend pages.', '/admin/content');
-      $cards[] = $this->card('menus', 'Header & Footer Menus', 'Control page visibility in frontend menus.', '/admin/content');
-      $cards[] = $this->card('reusable_content', 'Reusable Content', 'Manage services, partners, team, and jobs.', '/admin/content');
+      $cards[] = $this->card('pages', 'Pages', 'Manage frontend pages and page sections.', '/admin/content?type=site_page');
+      $cards[] = $this->card('menus', 'Header & Footer Menus', 'Manage pages used in frontend header and footer menus.', '/admin/content?type=site_page');
+      $cards[] = $this->card('reusable_content', 'Reusable Content', 'Manage services, partners, and team members.', '/admin/content?type=service');
       $cards[] = $this->card('media', 'Media Library', 'Manage images and files.', '/admin/content/media');
     }
 
     if ($this->hasAnyRole($roles, ['administrator', 'content_editor', 'hr_manager'])) {
-      $cards[] = $this->card('jobs', 'Jobs', 'Manage career openings.', '/admin/content');
+      $cards[] = $this->card('jobs', 'Jobs', 'Manage career openings.', '/admin/content?type=job');
       $cards[] = $this->card('job_applications', 'Job Applications', 'Review candidate applications.', '/admin/structure/webform/manage/job_application/results/submissions');
     }
 
@@ -60,7 +93,7 @@ final class AdminDashboardController extends ControllerBase {
     }
 
     if ($this->hasAnyRole($roles, ['administrator'])) {
-      $cards[] = $this->card('analytics', 'Analytics', 'View analytics and reporting summaries.', '/admin/reports');
+      $cards[] = $this->card('analytics', 'Analytics Settings', 'Manage Google Analytics Measurement ID used by the frontend.', '/admin/config/site-platform/analytics');
     }
 
     return $cards;
@@ -101,29 +134,31 @@ final class AdminDashboardController extends ControllerBase {
   }
 
   /**
-   * Counts published and unpublished nodes by type.
+   * Counts nodes by bundle, scoped to the active site when possible.
    */
   private function countNodes(string $bundle): int {
-    $storage = $this->entityTypeManager()->getStorage('node');
-
-    return (int) $storage->getQuery()
+    $query = $this->apiEntityTypeManager
+      ->getStorage('node')
+      ->getQuery()
       ->accessCheck(FALSE)
-      ->condition('type', $bundle)
-      ->count()
-      ->execute();
+      ->condition('type', $bundle);
+
+    $this->siteResolver->applyCurrentSiteFilter($query, $bundle);
+
+    return (int) $query->count()->execute();
   }
 
   /**
    * Counts Webform submissions by Webform ID.
    */
   private function countWebformSubmissions(string $webform_id): int {
-    if (!$this->moduleHandler()->moduleExists('webform')) {
+    if (!$this->apiModuleHandler->moduleExists('webform')) {
       return 0;
     }
 
-    $storage = $this->entityTypeManager()->getStorage('webform_submission');
-
-    return (int) $storage->getQuery()
+    return (int) $this->apiEntityTypeManager
+      ->getStorage('webform_submission')
+      ->getQuery()
       ->accessCheck(FALSE)
       ->condition('webform_id', $webform_id)
       ->count()
@@ -131,30 +166,64 @@ final class AdminDashboardController extends ControllerBase {
   }
 
   /**
-   * Returns recent content updates.
+   * Returns recent content updates scoped to the current site.
    */
   private function getRecentContent(): array {
-    $storage = $this->entityTypeManager()->getStorage('node');
+    $storage = $this->apiEntityTypeManager->getStorage('node');
 
-    $ids = $storage->getQuery()
+    $query = $storage->getQuery()
       ->accessCheck(FALSE)
       ->condition('type', ['site_page', 'service', 'partner', 'team_member', 'job'], 'IN')
       ->sort('changed', 'DESC')
-      ->range(0, 10)
-      ->execute();
+      ->range(0, 20);
 
+    $ids = $query->execute();
     $items = [];
 
     foreach ($storage->loadMultiple($ids) as $node) {
+      if (!$node instanceof NodeInterface) {
+        continue;
+      }
+
+      if (!$this->siteResolver->nodeBelongsToCurrentSite($node)) {
+        continue;
+      }
+
+      $changed = (int) $node->getChangedTime();
+      $owner = $node->getOwner();
+
       $items[] = [
         'id' => (int) $node->id(),
         'type' => $node->bundle(),
+        'typeLabel' => $this->getBundleLabel($node->bundle()),
         'title' => $node->label(),
-        'changed' => (int) $node->getChangedTime(),
+        'changed' => $changed,
+        'changedFormatted' => date('Y-m-d H:i', $changed),
+        'updatedBy' => $owner ? $owner->getDisplayName() : 'Unknown',
+        'editUrl' => '/node/' . $node->id() . '/edit',
+        'viewUrl' => '/node/' . $node->id(),
       ];
+
+      if (count($items) >= 10) {
+        break;
+      }
     }
 
     return $items;
+  }
+
+  /**
+   * Gets a human label for a content bundle.
+   */
+  private function getBundleLabel(string $bundle): string {
+    return match ($bundle) {
+      'site_page' => 'Page',
+      'service' => 'Service',
+      'partner' => 'Partner',
+      'team_member' => 'Team Member',
+      'job' => 'Job',
+      default => ucfirst(str_replace('_', ' ', $bundle)),
+    };
   }
 
 }

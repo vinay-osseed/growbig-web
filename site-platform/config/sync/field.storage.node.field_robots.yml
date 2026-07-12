@@ -10,7 +10,16 @@ field_name: field_robots
 entity_type: node
 type: list_string
 settings:
-  allowed_values: {  }
+  allowed_values:
+    -
+      value: index_follow
+      label: 'Index and follow'
+    -
+      value: noindex_follow
+      label: 'Do not index, follow links'
+    -
+      value: noindex_nofollow
+      label: 'Do not index, do not follow links'
   allowed_values_function: ''
 module: options
 locked: false

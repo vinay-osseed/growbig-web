@@ -16,6 +16,7 @@ dependencies:
     - paragraphs.paragraphs_type.image_text_section
   module:
     - link
+    - media_library
 id: paragraph.image_text_section.default
 targetEntityType: paragraph
 bundle: image_text_section
@@ -46,14 +47,11 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_image:
-    type: entity_reference_autocomplete
-    weight: 3
+    type: media_library_widget
+    weight: 50
     region: content
     settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+      media_types: {  }
     third_party_settings: {  }
   field_image_position:
     type: options_select

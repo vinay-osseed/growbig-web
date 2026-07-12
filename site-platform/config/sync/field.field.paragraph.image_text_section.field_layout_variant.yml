@@ -12,7 +12,7 @@ field_name: field_layout_variant
 entity_type: paragraph
 bundle: image_text_section
 label: 'Layout variant'
-description: ''
+description: 'Choose how text and image should be arranged.'
 required: false
 translatable: true
 default_value: {  }

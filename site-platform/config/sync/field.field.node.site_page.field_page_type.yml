@@ -12,7 +12,7 @@ field_name: field_page_type
 entity_type: node
 bundle: site_page
 label: 'Page type'
-description: ''
+description: 'Choose the purpose of this page. Most pages should use Standard Page.'
 required: true
 translatable: true
 default_value: {  }

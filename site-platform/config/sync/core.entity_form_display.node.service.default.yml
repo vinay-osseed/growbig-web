@@ -18,6 +18,7 @@ dependencies:
     - node.type.service
   module:
     - link
+    - media_library
     - path
 id: node.service.default
 targetEntityType: node
@@ -54,14 +55,11 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_image:
-    type: entity_reference_autocomplete
-    weight: 5
+    type: media_library_widget
+    weight: 50
     region: content
     settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+      media_types: {  }
     third_party_settings: {  }
   field_is_active:
     type: boolean_checkbox
@@ -110,14 +108,10 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_sites:
-    type: entity_reference_autocomplete
-    weight: 1
+    type: options_select
+    weight: 5
     region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
   field_summary:
     type: string_textarea

@@ -137,7 +137,7 @@ content:
     third_party_settings: {  }
   field_default_social_image:
     type: media_library_widget
-    weight: -12
+    weight: 50
     region: content
     settings:
       media_types: {  }
@@ -152,7 +152,7 @@ content:
     third_party_settings: {  }
   field_favicon:
     type: media_library_widget
-    weight: -13
+    weight: 50
     region: content
     settings:
       media_types: {  }
@@ -213,7 +213,7 @@ content:
     third_party_settings: {  }
   field_logo:
     type: media_library_widget
-    weight: -14
+    weight: 50
     region: content
     settings:
       media_types: {  }

@@ -8,11 +8,28 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\site_platform_api\Controller\AdminDashboardController;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Builds the Site Platform admin dashboard.
  */
 final class SiteDashboardController extends ControllerBase {
+
+  /**
+   * Constructs the site dashboard controller.
+   */
+  public function __construct(
+    private readonly AdminDashboardController $adminDashboardController,
+  ) {}
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): self {
+    return new self(
+      AdminDashboardController::create($container)
+    );
+  }
 
   /**
    * Returns the dashboard render array.
@@ -47,8 +64,7 @@ final class SiteDashboardController extends ControllerBase {
    * Gets dashboard API data through the shared API controller.
    */
   private function getDashboardData(): array {
-    $controller = new AdminDashboardController();
-    $response = $controller->dashboard();
+    $response = $this->adminDashboardController->dashboard();
     $data = json_decode($response->getContent(), TRUE);
 
     return is_array($data) ? $data : [];
@@ -95,6 +111,56 @@ final class SiteDashboardController extends ControllerBase {
           'type' => 'search',
           'placeholder' => $this->t('Search cards, jobs, forms, content...'),
           'aria-label' => $this->t('Search dashboard cards'),
+        ],
+      ],
+      'type_filter' => [
+        '#type' => 'html_tag',
+        '#tag' => 'select',
+        '#attributes' => [
+          'class' => [
+            'site-dashboard-toolbar__type-filter',
+          ],
+          'aria-label' => $this->t('Filter dashboard cards'),
+        ],
+        'all' => [
+          '#type' => 'html_tag',
+          '#tag' => 'option',
+          '#value' => $this->t('All dashboard areas'),
+          '#attributes' => [
+            'value' => '',
+          ],
+        ],
+        'pages' => [
+          '#type' => 'html_tag',
+          '#tag' => 'option',
+          '#value' => $this->t('Pages and Menus'),
+          '#attributes' => [
+            'value' => 'pages',
+          ],
+        ],
+        'content' => [
+          '#type' => 'html_tag',
+          '#tag' => 'option',
+          '#value' => $this->t('Reusable Content'),
+          '#attributes' => [
+            'value' => 'content',
+          ],
+        ],
+        'jobs' => [
+          '#type' => 'html_tag',
+          '#tag' => 'option',
+          '#value' => $this->t('Jobs and Applications'),
+          '#attributes' => [
+            'value' => 'jobs',
+          ],
+        ],
+        'analytics' => [
+          '#type' => 'html_tag',
+          '#tag' => 'option',
+          '#value' => $this->t('Analytics'),
+          '#attributes' => [
+            'value' => 'analytics',
+          ],
         ],
       ],
       'refresh' => [
@@ -202,6 +268,7 @@ final class SiteDashboardController extends ControllerBase {
             'site-dashboard-card',
           ],
           'data-dashboard-card' => $card_id,
+          'data-dashboard-category' => $this->getCardCategory($card_id),
         ],
         'top' => [
           '#markup' => $this->buildCardTopMarkup($card, $counts),
@@ -285,12 +352,28 @@ final class SiteDashboardController extends ControllerBase {
     $markup = '<div class="site-dashboard-card__recent"><div class="site-dashboard-card__recent-title">' . $this->t('Recent') . '</div><ul>';
 
     foreach ($items as $item) {
-      $markup .= '<li>' . ($item['title'] ?? '') . '</li>';
+      $title = htmlspecialchars((string) ($item['title'] ?? ''), ENT_QUOTES, 'UTF-8');
+      $type = htmlspecialchars((string) ($item['typeLabel'] ?? $item['type'] ?? ''), ENT_QUOTES, 'UTF-8');
+      $edit_url = htmlspecialchars((string) ($item['editUrl'] ?? '#'), ENT_QUOTES, 'UTF-8');
+      $markup .= '<li><span>' . $title . '</span><small>' . $type . '</small><a href="' . $edit_url . '">' . $this->t('Edit') . '</a></li>';
     }
 
     $markup .= '</ul></div>';
 
     return $markup;
+  }
+
+  /**
+   * Gets the dashboard filter category for a card.
+   */
+  private function getCardCategory(string $card_id): string {
+    return match ($card_id) {
+      'pages', 'menus' => 'pages',
+      'reusable_content', 'media' => 'content',
+      'jobs', 'job_applications', 'contact_enquiries' => 'jobs',
+      'analytics' => 'analytics',
+      default => 'system',
+    };
   }
 
   /**
