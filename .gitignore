@@ -60,3 +60,14 @@ prod-debug/
 *.tgz
 *.tar.gz
 setup/site.local-prod.yml
+
+# OS/editor junk.
+# Local environment files. Never commit production secrets.
+.env.local
+.env.prod
+.env.production
+!.env.prod.example
+setup/site.prod.yml
+# Frontend generated/dependency folders.
+site-frontend/node_modules/
+site-frontend/dist/
