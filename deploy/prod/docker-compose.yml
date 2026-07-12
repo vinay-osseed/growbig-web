@@ -1,0 +1,39 @@
+services:
+  site-platform:
+    image: ${DOCKERHUB_NAMESPACE}/growbig-site-platform:${APP_TAG:-prod}
+    restart: unless-stopped
+    env_file:
+      - .env.prod
+    ports:
+      - "127.0.0.1:8081:80"
+    volumes:
+      - drupal_files:/var/www/html/web/sites/default/files
+      - drupal_private:/var/www/html/private
+      - ./setup:/var/www/html/setup:ro
+    depends_on:
+      - db
+
+  site-frontend:
+    image: ${DOCKERHUB_NAMESPACE}/growbig-site-frontend:${APP_TAG:-prod}
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8082:80"
+
+  db:
+    image: mariadb:11.4
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${DRUPAL_DATABASE_NAME}
+      MARIADB_USER: ${DRUPAL_DATABASE_USER}
+      MARIADB_PASSWORD: ${DRUPAL_DATABASE_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+
+volumes:
+  mariadb_data:
+  drupal_files:
+  drupal_private:
