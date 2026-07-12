@@ -8,6 +8,7 @@ use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Component\Serialization\Yaml;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\node\NodeInterface;
 use Drupal\user\RoleInterface;
 
 /**
@@ -16,50 +17,68 @@ use Drupal\user\RoleInterface;
 final class SiteSetupRunner {
 
   /**
-   * Setup role definitions.
+   * Setup role labels.
    */
   private const ROLE_LABELS = [
-    'content_editor' => 'Content editor',
+    'content_editor' => 'Content Editor',
     'hr_manager' => 'HR Manager',
   ];
 
-  private const ROLE_DEFINITIONS = [
+  /**
+   * Deprecated setup roles removed from the older setup model.
+   */
+  private const DEPRECATED_SETUP_ROLES = [
+    'site_developer',
+    'content_admin',
+    'form_manager',
+    'analytics_viewer',
+  ];
+
+  /**
+   * Setup role permissions.
+   */
+  private const ROLE_PERMISSIONS = [
     'content_editor' => [
-      'label' => 'Content editor',
-      'permissions' => [
-        'access administration pages',
-        'access content overview',
-        'view own unpublished content',
-        'administer media',
-        'view media',
-        'create site_page content',
-        'edit any site_page content',
-        'delete any site_page content',
-        'create service content',
-        'edit any service content',
-        'delete any service content',
-        'create partner content',
-        'edit any partner content',
-        'delete any partner content',
-        'create team_member content',
-        'edit any team_member content',
-        'delete any team_member content',
-      ],
+      'access administration pages',
+      'access content overview',
+      'view own unpublished content',
+      'administer media',
+      'view media',
+      'create site_page content',
+      'edit any site_page content',
+      'delete any site_page content',
+      'create service content',
+      'edit any service content',
+      'delete any service content',
+      'create partner content',
+      'edit any partner content',
+      'delete any partner content',
+      'create team_member content',
+      'edit any team_member content',
+      'delete any team_member content',
+      'create job content',
+      'edit any job content',
+      'delete any job content',
+      'access webform overview',
+      'view any webform submission',
+      'edit any webform submission',
     ],
     'hr_manager' => [
-      'label' => 'HR Manager',
-      'permissions' => [
-        'access administration pages',
-        'access content overview',
-        'access webform overview',
-        'create job content',
-        'edit any job content',
-        'delete any job content',
-        'view any webform submission',
-        'edit any webform submission',
-      ],
+      'access administration pages',
+      'access content overview',
+      'create job content',
+      'edit any job content',
+      'delete any job content',
+      'access webform overview',
+      'view any webform submission',
+      'edit any webform submission',
     ],
   ];
+
+  /**
+   * Setup role definitions.
+   */
+
 
   /**
    * Required setup value labels keyed by value path.
@@ -144,8 +163,9 @@ final class SiteSetupRunner {
     $created_roles = $this->ensureRoles($values);
     $created_nodes = $this->ensureDefaultPages($values);
     $created_webforms = $this->ensureDefaultForms($values);
+    $created_demo_nodes = $this->ensureDemoContent($values);
     $this->updateSetupStatus($setup_id, $values);
-    $this->updateSetupManifest($setup_id, $created_roles, $created_nodes, $created_webforms);
+    $this->updateSetupManifest($setup_id, $created_roles, array_merge($created_nodes, $created_demo_nodes), $created_webforms);
 
     return [
       'setup_id' => $setup_id,
@@ -156,6 +176,7 @@ final class SiteSetupRunner {
       'roles' => $created_roles,
       'nodes' => $created_nodes,
       'webforms' => $created_webforms,
+      'demo_nodes' => $created_demo_nodes,
     ];
   }
 
@@ -391,6 +412,251 @@ final class SiteSetupRunner {
   }
 
   /**
+   * Ensures safe demo content exists when requested.
+   */
+  private function ensureDemoContent(array $values): array {
+    if (!(bool) $this->getValue($values, 'setup_options.create_demo_content')) {
+      return [];
+    }
+
+    $created_or_existing = [];
+    $site_profile = $this->loadSetupSiteProfile($values);
+
+    foreach ($this->getDefaultDemoContentDefinitions() as $definition) {
+      $node = $this->saveDemoNode($definition, $site_profile);
+      if ($node instanceof NodeInterface) {
+        $created_or_existing[] = (int) $node->id();
+      }
+    }
+
+    return $created_or_existing;
+  }
+
+  /**
+   * Loads the setup site profile for assigning demo content.
+   */
+  private function loadSetupSiteProfile(array $values): ?NodeInterface {
+    $site_key = trim((string) $this->getValue($values, 'site.key'));
+
+    if ($site_key === '') {
+      return NULL;
+    }
+
+    if (!$this->entityTypeManager->getStorage('node_type')->load('site_profile')) {
+      return NULL;
+    }
+
+    if (!$this->entityTypeManager->getStorage('field_config')->load('node.site_profile.field_site_key')) {
+      return NULL;
+    }
+
+    $storage = $this->entityTypeManager->getStorage('node');
+    $ids = $storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('type', 'site_profile')
+      ->condition('field_site_key', $site_key)
+      ->range(0, 1)
+      ->execute();
+
+    if (!$ids) {
+      return NULL;
+    }
+
+    $node = $storage->load(reset($ids));
+
+    return $node instanceof NodeInterface ? $node : NULL;
+  }
+
+  /**
+   * Creates or updates one demo content node.
+   */
+  private function saveDemoNode(array $definition, ?NodeInterface $site_profile): ?NodeInterface {
+    $type = (string) ($definition['type'] ?? '');
+    $key_field = (string) ($definition['key_field'] ?? '');
+    $key = (string) ($definition['key'] ?? '');
+    $title = (string) ($definition['title'] ?? '');
+    $fields = is_array($definition['fields'] ?? NULL) ? $definition['fields'] : [];
+
+    if ($type === '' || $key_field === '' || $key === '' || $title === '') {
+      return NULL;
+    }
+
+    if (!$this->entityTypeManager->getStorage('node_type')->load($type)) {
+      return NULL;
+    }
+
+    if (!$this->entityTypeManager->getStorage('field_config')->load('node.' . $type . '.' . $key_field)) {
+      return NULL;
+    }
+
+    $storage = $this->entityTypeManager->getStorage('node');
+    $ids = $storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('type', $type)
+      ->condition($key_field, $key)
+      ->range(0, 1)
+      ->execute();
+
+    $node = NULL;
+    if ($ids) {
+      $loaded = $storage->load(reset($ids));
+      if ($loaded instanceof NodeInterface) {
+        $node = $loaded;
+      }
+    }
+
+    if (!$node instanceof NodeInterface) {
+      $node = $storage->create([
+        'type' => $type,
+        'title' => $title,
+        'status' => 1,
+        'uid' => 1,
+      ]);
+    }
+
+    $node->setTitle($title);
+    $node->setPublished(TRUE);
+    $this->setFieldValue($node, $key_field, $key);
+
+    if ($site_profile instanceof NodeInterface && $node->hasField('field_sites')) {
+      $node->set('field_sites', [
+        [
+          'target_id' => $site_profile->id(),
+        ],
+      ]);
+    }
+
+    foreach ($fields as $field_name => $value) {
+      $this->setFieldValue($node, (string) $field_name, $value);
+    }
+
+    $node->save();
+
+    return $node;
+  }
+
+  /**
+   * Gets frontend-safe demo content definitions.
+   */
+  private function getDefaultDemoContentDefinitions(): array {
+    return [
+      [
+        'type' => 'service',
+        'key_field' => 'field_service_key',
+        'key' => 'website-development',
+        'title' => 'Website Development',
+        'fields' => [
+          'field_summary' => 'Modern, responsive, high-performance websites built for growth, SEO, and conversion.',
+          'field_icon' => 'globe',
+          'field_accent_color' => '#2563eb',
+          'field_link_url' => [
+            'uri' => 'internal:/services/website-development',
+          ],
+          'field_display_order' => 10,
+          'field_is_featured' => TRUE,
+          'field_is_active' => TRUE,
+        ],
+      ],
+      [
+        'type' => 'service',
+        'key_field' => 'field_service_key',
+        'key' => 'mobile-app-development',
+        'title' => 'Mobile App Development',
+        'fields' => [
+          'field_summary' => 'Native and cross-platform mobile applications for iOS and Android.',
+          'field_icon' => 'smartphone',
+          'field_accent_color' => '#f59e0b',
+          'field_link_url' => [
+            'uri' => 'internal:/services/mobile-app-development',
+          ],
+          'field_display_order' => 20,
+          'field_is_featured' => TRUE,
+          'field_is_active' => TRUE,
+        ],
+      ],
+      [
+        'type' => 'service',
+        'key_field' => 'field_service_key',
+        'key' => 'ai-solutions',
+        'title' => 'AI Solutions',
+        'fields' => [
+          'field_summary' => 'AI-powered tools, automation, and intelligent workflows for business productivity.',
+          'field_icon' => 'sparkles',
+          'field_accent_color' => '#6366f1',
+          'field_link_url' => [
+            'uri' => 'internal:/services/ai-solutions',
+          ],
+          'field_display_order' => 30,
+          'field_is_featured' => TRUE,
+          'field_is_active' => TRUE,
+        ],
+      ],
+      [
+        'type' => 'partner',
+        'key_field' => 'field_partner_key',
+        'key' => 'aws',
+        'title' => 'Amazon Web Services',
+        'fields' => [
+          'field_summary' => 'Cloud infrastructure and deployment platform partner.',
+          'field_website' => [
+            'uri' => 'https://aws.amazon.com',
+          ],
+          'field_display_order' => 10,
+          'field_is_featured' => TRUE,
+          'field_is_active' => TRUE,
+        ],
+      ],
+      [
+        'type' => 'partner',
+        'key_field' => 'field_partner_key',
+        'key' => 'github',
+        'title' => 'GitHub',
+        'fields' => [
+          'field_summary' => 'Source control, collaboration, and CI/CD platform partner.',
+          'field_website' => [
+            'uri' => 'https://github.com',
+          ],
+          'field_display_order' => 20,
+          'field_is_featured' => TRUE,
+          'field_is_active' => TRUE,
+        ],
+      ],
+      [
+        'type' => 'team_member',
+        'key_field' => 'field_member_key',
+        'key' => 'founder-ceo',
+        'title' => 'Founder & CEO',
+        'fields' => [
+          'field_role' => 'Founder & CEO',
+          'field_summary' => 'Leads company strategy, business development, and client partnerships.',
+          'field_bio' => 'Responsible for vision, growth, partnerships, and measurable business value.',
+          'field_email' => 'office@growbigllp.com',
+          'field_linkedin_url' => [
+            'uri' => 'https://www.linkedin.com/company/growbig-technologies-llp',
+          ],
+          'field_display_order' => 10,
+          'field_is_featured' => TRUE,
+          'field_is_active' => TRUE,
+        ],
+      ],
+      [
+        'type' => 'job',
+        'key_field' => 'field_job_key',
+        'key' => 'frontend-developer',
+        'title' => 'Frontend Developer',
+        'fields' => [
+          'field_summary' => 'Build fast, accessible, API-driven frontend experiences.',
+          'field_location' => 'Remote',
+          'field_employment_type' => 'Full-time',
+          'field_display_order' => 10,
+          'field_is_featured' => TRUE,
+          'field_is_active' => TRUE,
+        ],
+      ],
+    ];
+  }
+
+  /**
    * Gets default page definitions.
    */
   private function getDefaultPageDefinitions(): array {
@@ -437,17 +703,24 @@ final class SiteSetupRunner {
     $created_or_existing = [];
     $storage = $this->entityTypeManager->getStorage('user_role');
 
-    foreach (self::ROLE_DEFINITIONS as $role_id => $label) {
+    foreach (self::DEPRECATED_SETUP_ROLES as $deprecated_role_id) {
+      $deprecated_role = $storage->load($deprecated_role_id);
+      if ($deprecated_role instanceof RoleInterface) {
+        $deprecated_role->delete();
+      }
+    }
+
+    foreach (self::ROLE_LABELS as $role_id => $label) {
       $role = $storage->load($role_id);
 
       if (!$role instanceof RoleInterface) {
         $role = $storage->create([
           'id' => $role_id,
-          'label' => $label,
+          'label' => (string) $label,
         ]);
       }
       else {
-        $role->set('label', $label);
+        $role->set('label', (string) $label);
       }
 
       $this->grantRolePermissions($role_id, $role);
@@ -462,38 +735,14 @@ final class SiteSetupRunner {
   /**
    * Gets role permissions managed by setup.
    */
-  private function grantRolePermissions(): array {
-    return [
-      'content_editor' => [
-        'access administration pages',
-        'access content overview',
-        'view own unpublished content',
-        'administer media',
-        'view media',
-        'create site_page content',
-        'edit any site_page content',
-        'delete any site_page content',
-        'create service content',
-        'edit any service content',
-        'delete any service content',
-        'create partner content',
-        'edit any partner content',
-        'delete any partner content',
-        'create team_member content',
-        'edit any team_member content',
-        'delete any team_member content',
-      ],
-      'hr_manager' => [
-        'access administration pages',
-        'access content overview',
-        'access webform overview',
-        'create job content',
-        'edit any job content',
-        'delete any job content',
-        'view any webform submission',
-        'edit any webform submission',
-      ],
-    ];
+  private function grantRolePermissions(string $role_id, RoleInterface $role): void {
+    $permissions = self::ROLE_PERMISSIONS[$role_id] ?? [];
+
+    foreach ($permissions as $permission) {
+      if (!$role->hasPermission($permission)) {
+        $role->grantPermission($permission);
+      }
+    }
   }
 
   /**
@@ -659,9 +908,9 @@ final class SiteSetupRunner {
     $missing = [];
     $storage = $this->entityTypeManager->getStorage('user_role');
 
-    foreach (array_keys(self::ROLE_DEFINITIONS) as $role_id) {
+    foreach (self::ROLE_LABELS as $role_id => $label) {
       if (!$storage->load($role_id)) {
-        $missing[] = 'Role: ' . $role_id;
+        $missing[] = 'Role: ' . $label;
       }
     }
 
