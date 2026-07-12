@@ -10,7 +10,19 @@ field_name: field_content_source
 entity_type: paragraph
 type: list_string
 settings:
-  allowed_values: {  }
+  allowed_values:
+    -
+      value: services
+      label: Services
+    -
+      value: partners
+      label: Partners
+    -
+      value: team
+      label: 'Team members'
+    -
+      value: jobs
+      label: Jobs
   allowed_values_function: ''
 module: options
 locked: false

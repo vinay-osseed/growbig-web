@@ -13,9 +13,11 @@ entity_type: paragraph
 bundle: content_list_section
 label: 'Layout variant'
 description: 'Choose the content list layout style.'
-required: false
+required: true
 translatable: true
-default_value: {  }
+default_value:
+  -
+    value: default
 default_value_callback: ''
 settings: {  }
 field_type: list_string

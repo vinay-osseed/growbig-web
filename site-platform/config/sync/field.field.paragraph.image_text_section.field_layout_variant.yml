@@ -13,9 +13,11 @@ entity_type: paragraph
 bundle: image_text_section
 label: 'Layout variant'
 description: 'Choose how text and image should be arranged.'
-required: false
+required: true
 translatable: true
-default_value: {  }
+default_value:
+  -
+    value: split
 default_value_callback: ''
 settings: {  }
 field_type: list_string

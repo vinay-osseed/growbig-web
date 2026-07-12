@@ -53,3 +53,19 @@ site_platform_admin.site_setup_reset_status:
     _title: 'Reset Setup Status'
   requirements:
     _permission: 'administer site setup'
+
+site_platform_admin.frontend_menus:
+  path: '/admin/site-dashboard/menus'
+  defaults:
+    _controller: '\Drupal\site_platform_admin\Controller\SiteDashboardController::frontendMenus'
+    _title: 'Header & Footer Menus'
+  requirements:
+    _permission: 'access content overview'
+
+site_platform_admin.reusable_content:
+  path: '/admin/site-dashboard/content'
+  defaults:
+    _controller: '\Drupal\site_platform_admin\Controller\SiteDashboardController::reusableContent'
+    _title: 'Reusable Content'
+  requirements:
+    _permission: 'access content overview'

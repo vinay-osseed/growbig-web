@@ -31,14 +31,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_accent_color:
-    type: string_textfield
-    weight: 4
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
   field_display_order:
     type: number
     weight: 7
@@ -158,5 +150,6 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_accent_color: true
   promote: true
   sticky: true

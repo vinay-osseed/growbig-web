@@ -321,3 +321,60 @@
 .gin--vertical-toolbar .toolbar-menu-administration > .toolbar-menu > .menu-item > .toolbar-icon::after {
   z-index: 1;
 }
+
+.site-dashboard-card__recent-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.site-dashboard-card__recent-item {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.site-dashboard-card__recent-item strong,
+.site-dashboard-card__recent-item small {
+  display: block;
+}
+
+.site-dashboard-card__recent-item small {
+  opacity: 0.75;
+}
+
+.site-dashboard-card__recent-edit {
+  white-space: nowrap;
+}
+
+.site-dashboard-recent-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0 0 1rem;
+}
+
+.site-dashboard-table-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.site-dashboard-recent-filters button {
+  align-items: center;
+  background: transparent;
+  border: 1px solid #8aa4ff;
+  border-radius: 999px;
+  color: #dbe7ff;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 700;
+  gap: 0.35rem;
+  line-height: 1;
+  padding: 0.5rem 0.85rem;
+}
+
+.site-dashboard-recent-filters button.is-active,
+.site-dashboard-recent-filters button:hover {
+  background: #8aa4ff;
+  color: #10131a;
+}

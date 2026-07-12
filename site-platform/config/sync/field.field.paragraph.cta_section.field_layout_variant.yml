@@ -13,9 +13,11 @@ entity_type: paragraph
 bundle: cta_section
 label: 'Layout variant'
 description: 'Choose the call-to-action layout style.'
-required: false
+required: true
 translatable: true
-default_value: {  }
+default_value:
+  -
+    value: default
 default_value_callback: ''
 settings: {  }
 field_type: list_string

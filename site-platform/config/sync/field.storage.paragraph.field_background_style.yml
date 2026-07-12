@@ -10,7 +10,25 @@ field_name: field_background_style
 entity_type: paragraph
 type: list_string
 settings:
-  allowed_values: {  }
+  allowed_values:
+    -
+      value: default
+      label: Default
+    -
+      value: light
+      label: Light
+    -
+      value: dark
+      label: Dark
+    -
+      value: dark_grid
+      label: 'Dark grid'
+    -
+      value: gradient
+      label: Gradient
+    -
+      value: image
+      label: 'Image background'
   allowed_values_function: ''
 module: options
 locked: false

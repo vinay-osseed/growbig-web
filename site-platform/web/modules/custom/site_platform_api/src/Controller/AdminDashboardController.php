@@ -78,8 +78,8 @@ final class AdminDashboardController extends ControllerBase {
 
     if ($this->hasAnyRole($roles, ['administrator', 'content_editor'])) {
       $cards[] = $this->card('pages', 'Pages', 'Manage frontend pages and page sections.', '/admin/content?type=site_page');
-      $cards[] = $this->card('menus', 'Header & Footer Menus', 'Manage pages used in frontend header and footer menus.', '/admin/content?type=site_page');
-      $cards[] = $this->card('reusable_content', 'Reusable Content', 'Manage services, partners, and team members.', '/admin/content?type=service');
+      $cards[] = $this->card('menus', 'Header & Footer Menus', 'Manage frontend header and footer menu pages.', '/admin/site-dashboard/menus');
+      $cards[] = $this->card('reusable_content', 'Reusable Content', 'Manage services, partners, team members, and jobs by category.', '/admin/site-dashboard/content');
       $cards[] = $this->card('media', 'Media Library', 'Manage images and files.', '/admin/content/media');
     }
 
@@ -190,7 +190,8 @@ final class AdminDashboardController extends ControllerBase {
       }
 
       $changed = (int) $node->getChangedTime();
-      $owner = $node->getOwner();
+      $revision_user = method_exists($node, 'getRevisionUser') ? $node->getRevisionUser() : NULL;
+      $owner = $revision_user ?: $node->getOwner();
 
       $items[] = [
         'id' => (int) $node->id(),

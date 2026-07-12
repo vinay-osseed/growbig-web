@@ -13,9 +13,11 @@ entity_type: paragraph
 bundle: hero_section
 label: 'Layout variant'
 description: 'Choose how this section should be displayed on the frontend.'
-required: false
+required: true
 translatable: true
-default_value: {  }
+default_value:
+  -
+    value: centered
 default_value_callback: ''
 settings: {  }
 field_type: list_string

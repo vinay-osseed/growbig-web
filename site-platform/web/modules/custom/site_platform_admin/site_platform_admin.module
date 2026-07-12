@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Provides form alters for the Site Platform Admin module.
+ * Provides editor form improvements for the Site Platform Admin module.
  */
 
 declare(strict_types=1);
@@ -24,9 +24,11 @@ function site_platform_admin_field_widget_single_element_form_alter(array &$elem
   }
 
   $element['value']['#type'] = 'select';
+  $element['value']['#size'] = 1;
+  $element['value']['#multiple'] = FALSE;
   $element['value']['#empty_option'] = t('- Select an icon -');
   $element['value']['#options'] = site_platform_admin_icon_options();
-  $element['value']['#description'] = t('Choose a predefined icon name. These names are frontend-safe and can be mapped to an open icon library such as React Icons.');
+  $element['value']['#description'] = t('Choose one frontend-safe icon. The API returns this icon key so the frontend can render it through the React Icons/Lucide icon map.');
 }
 
 /**
