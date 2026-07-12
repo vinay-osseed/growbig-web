@@ -6,8 +6,8 @@ services:
       - site-platform
       - site-frontend
     ports:
-      - "80:80"
-      - "443:443"
+      - "${HOST_HTTP_PORT:-80}:80"
+      - "${HOST_HTTPS_PORT:-443}:443"
     environment:
       ACME_EMAIL: ${ACME_EMAIL}
     volumes:
