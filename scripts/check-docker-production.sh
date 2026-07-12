@@ -13,6 +13,8 @@ required_files=(
   "docker/site-platform/entrypoint.sh"
   "docker/site-frontend/Dockerfile"
   "docker/site-frontend/nginx.conf"
+  "docker/site-frontend/index.html"
+  ".github/workflows/docker-images.yml"
   "docker/caddy/Caddyfile"
   "site-platform/web/sites/default/settings.prod.php"
   "site-platform/web/sites/default/services.prod.yml"
