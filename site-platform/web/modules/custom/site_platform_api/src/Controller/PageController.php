@@ -8,6 +8,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\NodeInterface;
 use Drupal\site_platform_api\SitePlatformPageNormalizer;
+use Drupal\site_platform_api\SiteResolver;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -22,6 +23,7 @@ final class PageController extends ControllerBase {
   public function __construct(
     private readonly SitePlatformPageNormalizer $pageNormalizer,
     private readonly EntityTypeManagerInterface $apiEntityTypeManager,
+    private readonly SiteResolver $siteResolver,
   ) {}
 
   /**
@@ -31,6 +33,7 @@ final class PageController extends ControllerBase {
     return new self(
       $container->get('site_platform_api.page_normalizer'),
       $container->get('entity_type.manager'),
+      $container->get('site_platform_api.site_resolver'),
     );
   }
 
@@ -40,10 +43,14 @@ final class PageController extends ControllerBase {
   public function index(): JsonResponse {
     $storage = $this->apiEntityTypeManager->getStorage('node');
 
-    $node_ids = $storage->getQuery()
+    $query = $storage->getQuery()
       ->accessCheck(TRUE)
       ->condition('type', 'site_page')
-      ->condition('status', NodeInterface::PUBLISHED)
+      ->condition('status', NodeInterface::PUBLISHED);
+
+    $this->siteResolver->applyCurrentSiteFilter($query, 'site_page');
+
+    $node_ids = $query
       ->sort('title', 'ASC')
       ->execute();
 
@@ -86,11 +93,15 @@ final class PageController extends ControllerBase {
   public function page(string $slug): JsonResponse {
     $storage = $this->apiEntityTypeManager->getStorage('node');
 
-    $node_ids = $storage->getQuery()
+    $query = $storage->getQuery()
       ->accessCheck(TRUE)
       ->condition('type', 'site_page')
       ->condition('status', NodeInterface::PUBLISHED)
-      ->condition('field_page_key', $slug)
+      ->condition('field_page_key', $slug);
+
+    $this->siteResolver->applyCurrentSiteFilter($query, 'site_page');
+
+    $node_ids = $query
       ->range(0, 1)
       ->execute();
 

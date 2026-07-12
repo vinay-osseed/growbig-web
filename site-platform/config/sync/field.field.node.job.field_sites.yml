@@ -1,0 +1,24 @@
+uuid: 1b0ac14b-3bf9-496c-b9e0-8536e124f205
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_sites
+    - node.type.job
+    - node.type.site_profile
+id: node.job.field_sites
+field_name: field_sites
+entity_type: node
+bundle: job
+label: Sites
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      site_profile: site_profile
+field_type: entity_reference

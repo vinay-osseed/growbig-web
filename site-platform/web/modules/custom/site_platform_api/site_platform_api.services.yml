@@ -1,4 +1,12 @@
 services:
+
+  site_platform_api.site_resolver:
+    class: Drupal\site_platform_api\SiteResolver
+    arguments:
+      - '@request_stack'
+      - '@entity_type.manager'
+      - '@entity_field.manager'
+
   site_platform_api.media_normalizer:
     class: Drupal\site_platform_api\SitePlatformMediaNormalizer
     arguments:
@@ -10,6 +18,7 @@ services:
     arguments:
       - '@entity_type.manager'
       - '@site_platform_api.media_normalizer'
+      - '@site_platform_api.site_resolver'
 
   site_platform_api.page_normalizer:
     class: Drupal\site_platform_api\SitePlatformPageNormalizer

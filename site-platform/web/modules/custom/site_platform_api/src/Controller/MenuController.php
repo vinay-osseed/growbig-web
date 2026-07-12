@@ -6,12 +6,30 @@ namespace Drupal\site_platform_api\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\node\NodeInterface;
+use Drupal\site_platform_api\SiteResolver;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Provides frontend menu APIs driven by Site Page menu fields.
  */
 final class MenuController extends ControllerBase {
+
+  /**
+   * Constructs a MenuController object.
+   */
+  public function __construct(
+    private readonly SiteResolver $siteResolver,
+  ) {}
+
+  /**
+   * Creates the controller.
+   */
+  public static function create(ContainerInterface $container): self {
+    return new self(
+      $container->get('site_platform_api.site_resolver'),
+    );
+  }
 
   /**
    * Supported public menus.
@@ -65,11 +83,15 @@ final class MenuController extends ControllerBase {
 
     $storage = $this->entityTypeManager()->getStorage('node');
 
-    $ids = $storage->getQuery()
-      ->accessCheck(FALSE)
+    $query = $storage->getQuery()
+      ->accessCheck(TRUE)
       ->condition('type', 'site_page')
       ->condition('status', 1)
-      ->condition($visibility_field, TRUE)
+      ->condition($visibility_field, TRUE);
+
+    $this->siteResolver->applyCurrentSiteFilter($query, 'site_page');
+
+    $ids = $query
       ->sort('field_menu_weight', 'ASC')
       ->sort('title', 'ASC')
       ->execute();

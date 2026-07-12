@@ -37,29 +37,29 @@ final class AdminDashboardController extends ControllerBase {
   private function buildCards(array $roles): array {
     $cards = [];
 
-    if ($this->hasAnyRole($roles, ['administrator', 'site_developer'])) {
+    if ($this->hasAnyRole($roles, ['administrator'])) {
       $cards[] = $this->card('site_config', 'Site Configuration', 'Manage platform and site settings.', '/admin/config');
       $cards[] = $this->card('api_status', 'API Status', 'Review backend API availability.', '/api/v1/site');
       $cards[] = $this->card('roles', 'Roles & Permissions', 'Manage users, roles, and permissions.', '/admin/people/roles');
     }
 
-    if ($this->hasAnyRole($roles, ['administrator', 'site_developer', 'content_admin'])) {
+    if ($this->hasAnyRole($roles, ['administrator', 'content_editor'])) {
       $cards[] = $this->card('pages', 'Pages', 'Manage dynamic frontend pages.', '/admin/content');
       $cards[] = $this->card('menus', 'Header & Footer Menus', 'Control page visibility in frontend menus.', '/admin/content');
       $cards[] = $this->card('reusable_content', 'Reusable Content', 'Manage services, partners, team, and jobs.', '/admin/content');
       $cards[] = $this->card('media', 'Media Library', 'Manage images and files.', '/admin/content/media');
     }
 
-    if ($this->hasAnyRole($roles, ['administrator', 'site_developer', 'content_admin', 'hr_manager'])) {
+    if ($this->hasAnyRole($roles, ['administrator', 'content_editor', 'hr_manager'])) {
       $cards[] = $this->card('jobs', 'Jobs', 'Manage career openings.', '/admin/content');
       $cards[] = $this->card('job_applications', 'Job Applications', 'Review candidate applications.', '/admin/structure/webform/manage/job_application/results/submissions');
     }
 
-    if ($this->hasAnyRole($roles, ['administrator', 'site_developer', 'form_manager'])) {
+    if ($this->hasAnyRole($roles, ['administrator', 'content_editor'])) {
       $cards[] = $this->card('contact_enquiries', 'Contact Enquiries', 'Review contact form submissions.', '/admin/structure/webform/manage/contact_us/results/submissions');
     }
 
-    if ($this->hasAnyRole($roles, ['administrator', 'site_developer', 'analytics_viewer'])) {
+    if ($this->hasAnyRole($roles, ['administrator'])) {
       $cards[] = $this->card('analytics', 'Analytics', 'View analytics and reporting summaries.', '/admin/reports');
     }
 

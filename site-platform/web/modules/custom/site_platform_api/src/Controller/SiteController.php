@@ -8,6 +8,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Site\Settings;
 use Drupal\node\NodeInterface;
 use Drupal\site_platform_api\SitePlatformMediaNormalizer;
+use Drupal\site_platform_api\SiteResolver;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -21,6 +22,7 @@ final class SiteController extends ControllerBase {
    */
   public function __construct(
     private readonly SitePlatformMediaNormalizer $mediaNormalizer,
+    private readonly SiteResolver $siteResolver,
   ) {}
 
   /**
@@ -29,6 +31,7 @@ final class SiteController extends ControllerBase {
   public static function create(ContainerInterface $container): self {
     return new self(
       $container->get('site_platform_api.media_normalizer'),
+      $container->get('site_platform_api.site_resolver'),
     );
   }
 
@@ -36,38 +39,13 @@ final class SiteController extends ControllerBase {
    * Returns active site profile data.
    */
   public function site(): JsonResponse {
-    $profile = $this->loadDefaultSiteProfile();
+    $profile = $this->siteResolver->resolve();
 
     if ($profile instanceof NodeInterface) {
       return new JsonResponse($this->buildSiteProfileResponse($profile));
     }
 
     return new JsonResponse($this->buildFallbackResponse());
-  }
-
-  /**
-   * Loads the default active Site Profile node.
-   */
-  private function loadDefaultSiteProfile(): ?NodeInterface {
-    $storage = $this->entityTypeManager()->getStorage('node');
-
-    $ids = $storage->getQuery()
-      ->accessCheck(FALSE)
-      ->condition('type', 'site_profile')
-      ->condition('status', 1)
-      ->condition('field_is_active', 1)
-      ->condition('field_is_default', 1)
-      ->sort('changed', 'DESC')
-      ->range(0, 1)
-      ->execute();
-
-    if (!$ids) {
-      return NULL;
-    }
-
-    $profile = $storage->load(reset($ids));
-
-    return $profile instanceof NodeInterface ? $profile : NULL;
   }
 
   /**

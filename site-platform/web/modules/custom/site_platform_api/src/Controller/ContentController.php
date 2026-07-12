@@ -8,6 +8,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\NodeInterface;
 use Drupal\site_platform_api\SitePlatformContentListNormalizer;
+use Drupal\site_platform_api\SiteResolver;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,6 +46,7 @@ final class ContentController extends ControllerBase {
   public function __construct(
     private readonly SitePlatformContentListNormalizer $contentListNormalizer,
     private readonly EntityTypeManagerInterface $apiEntityTypeManager,
+    private readonly SiteResolver $siteResolver,
   ) {}
 
   /**
@@ -54,6 +56,7 @@ final class ContentController extends ControllerBase {
     return new self(
       $container->get('site_platform_api.content_list_normalizer'),
       $container->get('entity_type.manager'),
+      $container->get('site_platform_api.site_resolver'),
     );
   }
 
@@ -117,13 +120,17 @@ final class ContentController extends ControllerBase {
   private function loadNodeBySourceAndKey(string $source, string $key): ?NodeInterface {
     $definition = self::SOURCE_MAP[$source];
 
-    $node_ids = $this->apiEntityTypeManager
+    $query = $this->apiEntityTypeManager
       ->getStorage('node')
       ->getQuery()
       ->accessCheck(TRUE)
       ->condition('status', NodeInterface::PUBLISHED)
       ->condition('type', $definition['bundle'])
-      ->condition($definition['key_field'], $key)
+      ->condition($definition['key_field'], $key);
+
+    $this->siteResolver->applyCurrentSiteFilter($query, $definition['bundle']);
+
+    $node_ids = $query
       ->range(0, 1)
       ->execute();
 

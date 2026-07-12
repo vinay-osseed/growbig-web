@@ -18,6 +18,7 @@ final class SitePlatformContentListNormalizer {
   public function __construct(
     private readonly EntityTypeManagerInterface $entityTypeManager,
     private readonly SitePlatformMediaNormalizer $mediaNormalizer,
+    private readonly SiteResolver $siteResolver,
   ) {}
 
   /**
@@ -43,7 +44,15 @@ final class SitePlatformContentListNormalizer {
       ->accessCheck(FALSE)
       ->condition('type', $type)
       ->condition('status', 1)
-      ->condition('field_is_active', 1)
+      ->condition('field_is_active', 1);
+
+    $this->siteResolver->applyCurrentSiteFilter($query, $type);
+
+    if ($node_ids !== []) {
+      $query->condition('nid', $node_ids, 'IN');
+    }
+
+    $query
       ->sort('field_display_order', 'ASC')
       ->sort('title', 'ASC');
 
