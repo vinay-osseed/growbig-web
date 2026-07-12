@@ -918,3 +918,8 @@ $settings['trusted_host_patterns'] = array_values(array_map(
 $settings['enable_html5_validation'] = FALSE;
 $settings['file_public_path'] = 'sites/default/files';
 $settings['file_private_path'] = '../private';
+
+// Include production Docker settings when DRUPAL_ENV=prod.
+if (file_exists($app_root . '/' . $site_path . '/settings.prod.php')) {
+  include $app_root . '/' . $site_path . '/settings.prod.php';
+}

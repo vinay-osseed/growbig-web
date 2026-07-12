@@ -1,0 +1,15 @@
+{
+  email {$ACME_EMAIL}
+}
+
+admin.growbigllp.com {
+  reverse_proxy site-platform:80
+}
+
+api.growbigllp.com {
+  reverse_proxy site-platform:80
+}
+
+dev.growbigllp.com {
+  reverse_proxy site-frontend:80
+}

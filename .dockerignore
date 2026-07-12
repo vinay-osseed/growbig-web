@@ -1,0 +1,8 @@
+.git
+.ddev
+**/.DS_Store
+**/node_modules
+**/vendor
+site-platform/web/sites/default/files
+site-platform/private
+site-frontend/dist
