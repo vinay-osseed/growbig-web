@@ -52,3 +52,11 @@ prod-debug/
 *.tgz
 *.tar.gz
 setup/site.local-prod.yml
+
+# Production/local sync artifacts.
+prod-debug/
+*.sql
+*.sql.gz
+*.tgz
+*.tar.gz
+setup/site.local-prod.yml
