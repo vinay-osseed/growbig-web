@@ -5,10 +5,14 @@ on:
     branches:
       - dev
       - main
+      - prod
   workflow_dispatch:
 
 permissions:
   contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   docker:
@@ -17,7 +21,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set Docker tags
         id: vars
