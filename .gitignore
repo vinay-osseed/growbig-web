@@ -44,3 +44,11 @@ backups
 backups/
 site-platform/web/libraries/
 site-platform/private/
+
+# Production/local sync artifacts.
+prod-debug/
+*.sql
+*.sql.gz
+*.tgz
+*.tar.gz
+setup/site.local-prod.yml
