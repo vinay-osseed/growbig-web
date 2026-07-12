@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: GrowBig Site Platform API
-  description: Frontend-ready API documentation for the reusable GrowBig Site Platform Drupal backend.
+  description: Domain convention - <domain> is public UI, api.<domain> is API, admin.<domain> is Drupal admin. Frontend-ready API documentation for the reusable GrowBig Site Platform Drupal backend.
   version: 0.2.0
 
 servers:
@@ -224,6 +224,80 @@ paths:
                 error:
                   code: not_found
                   message: Content item not found.
+
+  /api/v1/menus/{menu}:
+    get:
+      tags: [Menus]
+      summary: Get one frontend menu
+      parameters:
+        - name: menu
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [header, footer]
+      responses:
+        "200":
+          description: Menu response.
+        "404":
+          description: Menu not found.
+  /api/v1/forms/{form}:
+    get:
+      tags: [Forms]
+      summary: Get public form metadata
+      parameters:
+        - name: form
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [contact-us, job-application]
+      responses:
+        "200":
+          description: Form metadata.
+        "404":
+          description: Form not found.
+  /api/v1/forms/{form}/submit:
+    post:
+      tags: [Forms]
+      summary: Submit a public form
+      parameters:
+        - name: form
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [contact-us, job-application]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "201":
+          description: Submission created.
+        "400":
+          description: Invalid JSON or payload.
+        "422":
+          description: Validation failed.
+  /api/v1/analytics/config:
+    get:
+      tags: [Analytics]
+      summary: Get safe public analytics config
+      responses:
+        "200":
+          description: Analytics config.
+  /api/v1/admin/dashboard:
+    get:
+      tags: [Admin]
+      summary: Get authenticated admin dashboard data
+      description: Requires authenticated Drupal admin access.
+      responses:
+        "200":
+          description: Admin dashboard data.
+        "403":
+          description: Access denied.
 
 components:
   schemas:

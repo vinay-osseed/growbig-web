@@ -48,3 +48,14 @@ Whenever a custom API endpoint is added or changed, update docs/api/openapi.yml 
 - GET /api/v1/services
 - GET /api/v1/services/{slug}
 - POST /api/v1/contact
+
+## Domain convention
+
+<domain>       Public frontend UI
+api.<domain>   API base URL
+admin.<domain> Drupal admin/backend
+
+## Security note
+
+siteKey and X-Site-Key are public identifiers, not private secrets. Admin/private APIs must rely on Drupal authentication, permissions, server-side validation, and backend-only secrets.
+
