@@ -1,61 +1,56 @@
-# GrowBig Site Platform API Docs
+# GrowBig Site Platform Frontend API Docs
 
-This directory contains OpenAPI documentation for the clean frontend API exposed by Drupal.
+This directory documents the public frontend API only.
 
-## Current endpoints
+The API exists for frontend developers. It should describe only what the public UI needs to render the website.
 
-- GET /api/v1/site
+## Domain model
 
-## OpenAPI file
+- `<domain>` is the public frontend UI.
+- `api.<domain>` is the API base URL used by the frontend.
+- `admin.<domain>` is the Drupal admin/backend.
 
-The main API documentation file is:
+## Multi-site model
 
-- docs/api/openapi.yml
+One Drupal backend can power multiple company sites.
 
-## How to view
+Example:
 
-Open Swagger Editor:
+- GrowBig Technologies LLP
+  - own domains
+  - own frontend pages
+  - own reusable content
+  - own menus
+  - own analytics key
 
-https://editor.swagger.io/
+- OSSeed Technologies LLP
+  - own domains
+  - own frontend pages
+  - own reusable content
+  - own menus
+  - own analytics key
 
-Then import or paste the contents of:
+## Frontend endpoints
 
-docs/api/openapi.yml
+- `GET /api/v1/site`
+- `GET /api/v1/pages`
+- `GET /api/v1/pages/{slug}`
+- `GET /api/v1/menus`
+- `GET /api/v1/menus/{menu}`
+- `GET /api/v1/content/{source}`
+- `GET /api/v1/content/{source}/{key}`
+- `GET /api/v1/forms/{form}`
+- `POST /api/v1/forms/{form}/submit`
+- `GET /api/v1/analytics/config`
 
-## Current API purpose
+## Not included here
 
-The API is used by the frontend application to fetch Drupal-managed content and global site settings.
+Admin/dashboard APIs are intentionally not documented in the public frontend API docs.
 
-The current site API returns:
-
-- Site identity
-- Domain URLs
-- Branding media
-- SEO defaults
-- Contact details
-- Theme values
-- Metadata about the active Site Profile
-
-## Maintenance rule
-
-Whenever a custom API endpoint is added or changed, update docs/api/openapi.yml in the same commit.
-
-## Planned future endpoints
-
-- GET /api/v1/navigation
-- GET /api/v1/homepage
-- GET /api/v1/pages/{path}
-- GET /api/v1/services
-- GET /api/v1/services/{slug}
-- POST /api/v1/contact
-
-## Domain convention
-
-<domain>       Public frontend UI
-api.<domain>   API base URL
-admin.<domain> Drupal admin/backend
+Drupal admin tools belong under `admin.<domain>`, not in frontend API docs.
 
 ## Security note
 
-siteKey and X-Site-Key are public identifiers, not private secrets. Admin/private APIs must rely on Drupal authentication, permissions, server-side validation, and backend-only secrets.
+`siteKey` is a public site identifier, not a secret.
 
+Browser-visible keys are not secure secrets. Public APIs must expose only published, frontend-safe, site-scoped data. Admin/private APIs must rely on Drupal authentication, permissions, server-side validation, and backend-only secrets.

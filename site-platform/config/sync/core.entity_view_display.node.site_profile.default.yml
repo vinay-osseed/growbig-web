@@ -20,6 +20,7 @@ dependencies:
     - field.field.node.site_profile.field_footer_description
     - field.field.node.site_profile.field_footer_quick_links_menu
     - field.field.node.site_profile.field_footer_services_menu
+    - field.field.node.site_profile.field_ga_measurement_id
     - field.field.node.site_profile.field_google_map_link
     - field.field.node.site_profile.field_is_active
     - field.field.node.site_profile.field_is_default
@@ -367,4 +368,5 @@ content:
     third_party_settings: {  }
     weight: 100
     region: content
-hidden: {  }
+hidden:
+  field_ga_measurement_id: true

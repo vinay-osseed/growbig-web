@@ -1,0 +1,19 @@
+uuid: b070a24d-000c-4fa2-879b-b7b709d0059b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ga_measurement_id
+    - node.type.site_profile
+id: node.site_profile.field_ga_measurement_id
+field_name: field_ga_measurement_id
+entity_type: node
+bundle: site_profile
+label: 'Google Analytics Measurement ID'
+description: 'Per-site GA4 Measurement ID exposed through /api/v1/analytics/config. Example: G-XXXXXXXXXX.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
