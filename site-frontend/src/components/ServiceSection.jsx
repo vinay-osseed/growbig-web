@@ -44,15 +44,13 @@ const services = [
     color: '#0d9488',
     bg: 'rgba(13,148,136,0.08)',
   },
- 
 ]
 
 export default function ServicesSection() {
   const navigate = useNavigate()
 
   return (
-  
-      <section className="bg-white py-28">
+    <section className="bg-white py-28">
 
       <div className="max-w-[1440px] mx-auto px-8 lg:px-12">
 
@@ -90,7 +88,7 @@ export default function ServicesSection() {
               <button
                 className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold transition-all duration-200 hover:gap-3"
                 style={{ color: s.color }}
-                onClick={() => navigate('/services')}
+                onClick={() => navigate('/#services')}
               >
                 Learn more
                 <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -105,4 +103,3 @@ export default function ServicesSection() {
     </section>
   )
 }
-

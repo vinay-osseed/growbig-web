@@ -5,27 +5,27 @@ const slides = [
   {
     label: 'Website Development',
     badge: 'Web Experts',
-    img: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=900&q=80',
+    img: '',
   },
   {
     label: 'Expert Team',
     badge: 'Expert Team',
-    img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80',
+    img: '',
   },
   {
     label: 'Custom Software',
     badge: 'Custom Dev',
-    img: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=900&q=80',
+    img: '',
   },
   {
     label: 'Cloud Solutions',
     badge: 'Cloud First',
-    img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=900&q=80',
+    img: '',
   },
   {
     label: 'AI-Powered',
     badge: 'AI Driven',
-    img: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=900&q=80',
+    img: '',
   },
 ]
 
