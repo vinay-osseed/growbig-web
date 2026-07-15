@@ -1,6 +1,0 @@
-
-
-administer site setup:
-  title: 'Administer Site Setup'
-  description: 'Run, review, unlock, retry, or reset the first-run site setup workflow.'
-  restrict access: true

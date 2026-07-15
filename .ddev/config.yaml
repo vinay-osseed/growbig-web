@@ -1,4 +1,4 @@
-name: growbig-web
+name: site-platform
 type: drupal11
 docroot: site-platform/web
 composer_root: site-platform

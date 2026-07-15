@@ -1,5 +1,0 @@
-hooks:
-  post-start:
-    - exec: "sudo chmod a-w /var/www/html/site-platform/web/sites/default/settings.php || true"
-    - exec: "sudo chmod a-w /var/www/html/site-platform/web/sites/default || true"
-    - exec: "if [ -f /var/www/html/site-platform/web/sites/default/services.yml ]; then sudo chmod a-w /var/www/html/site-platform/web/sites/default/services.yml; fi"
