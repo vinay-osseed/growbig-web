@@ -21,4 +21,9 @@ interface SiteContextResolverInterface {
    */
   public function resolveFromHost(string $host): SiteContext;
 
+  /**
+   * Resolves the active site context from a stable site key.
+   */
+  public function resolveFromSiteKey(string $siteKey): SiteContext;
+
 }

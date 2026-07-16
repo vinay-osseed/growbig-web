@@ -4,6 +4,7 @@ services:
     arguments:
       - '@request_stack'
       - '@language_manager'
+      - '@entity_type.manager'
 
   Drupal\site_platform_core\Context\SiteContextResolverInterface:
     alias: site_platform_core.site_context_resolver

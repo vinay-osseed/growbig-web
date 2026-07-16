@@ -30,6 +30,8 @@ final class SiteContext {
    *   Known domains grouped by type.
    * @param array<string, mixed> $debug
    *   Optional debug data.
+   * @param int|null $siteProfileId
+   *   Resolved Site Profile node ID, when available.
    */
   public function __construct(
     private readonly bool $resolved,
@@ -41,6 +43,7 @@ final class SiteContext {
     private readonly string $languageId,
     private readonly array $domains = [],
     private readonly array $debug = [],
+    private readonly ?int $siteProfileId = NULL,
   ) {
   }
 
@@ -61,8 +64,9 @@ final class SiteContext {
     string $languageId,
     array $domains = [],
     array $debug = [],
+    ?int $siteProfileId = NULL,
   ): self {
-    return new self(TRUE, $siteKey, $siteName, $host, $environment, $resolvedBy, $languageId, $domains, $debug);
+    return new self(TRUE, $siteKey, $siteName, $host, $environment, $resolvedBy, $languageId, $domains, $debug, $siteProfileId);
   }
 
   /**
@@ -125,6 +129,13 @@ final class SiteContext {
   }
 
   /**
+   * Returns the Site Profile node ID when available.
+   */
+  public function getSiteProfileId(): ?int {
+    return $this->siteProfileId;
+  }
+
+  /**
    * Returns known domains grouped by type.
    *
    * @return array<string, array<int, string>>
@@ -155,6 +166,7 @@ final class SiteContext {
       'resolved' => $this->resolved,
       'siteKey' => $this->siteKey,
       'siteName' => $this->siteName,
+      'siteProfileId' => $this->siteProfileId,
       'host' => $this->host,
       'environment' => $this->environment,
       'resolvedBy' => $this->resolvedBy,
