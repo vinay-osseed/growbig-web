@@ -1,0 +1,8 @@
+services:
+  site_platform_setup.commands:
+    class: Drupal\site_platform_setup\Commands\SitePlatformSetupCommands
+    arguments:
+      - '@entity_type.manager'
+      - '@state'
+    tags:
+      - { name: drush.command }
