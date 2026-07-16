@@ -19,6 +19,10 @@ The setup import command currently supports:
 - Site Profile
 - Site Pages
 - Site Content Blocks
+- Site Menus
+- Site Menu Items
+- Site Forms
+- Site Form Fields
 
 Example:
 
@@ -40,8 +44,6 @@ It only deletes demo records when called with:
 
 Later setup phases can add:
 
-- menu import
-- form import
 - component import
 - full idempotent site setup
 - site reset by key

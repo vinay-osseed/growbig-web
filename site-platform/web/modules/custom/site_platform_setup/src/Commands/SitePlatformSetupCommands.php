@@ -138,6 +138,10 @@ final class SitePlatformSetupCommands extends DrushCommands {
     $summary = [
       'siteProfile' => 0,
       'pages' => 0,
+      'menus' => 0,
+      'menuItems' => 0,
+      'forms' => 0,
+      'formFields' => 0,
       'contentBlocks' => 0,
     ];
 
@@ -154,6 +158,24 @@ final class SitePlatformSetupCommands extends DrushCommands {
       }
       $this->importSitePage($site_data, $site, $page_data, $dry_run);
       $summary['pages']++;
+    }
+
+    foreach (($data['menus'] ?? []) as $menu_data) {
+      if (!is_array($menu_data)) {
+        continue;
+      }
+      $menu_summary = $this->importSiteMenu($site_data, $site, $menu_data, $dry_run);
+      $summary['menus']++;
+      $summary['menuItems'] += $menu_summary['items'];
+    }
+
+    foreach (($data['forms'] ?? []) as $form_data) {
+      if (!is_array($form_data)) {
+        continue;
+      }
+      $form_summary = $this->importSiteForm($site_data, $site, $form_data, $dry_run);
+      $summary['forms']++;
+      $summary['formFields'] += $form_summary['fields'];
     }
 
     foreach (($data['content'] ?? []) as $content_data) {
@@ -178,6 +200,10 @@ final class SitePlatformSetupCommands extends DrushCommands {
     $this->output()->writeln('Site key: ' . (string) $site_data['key']);
     $this->output()->writeln('Site Profile: ' . $summary['siteProfile']);
     $this->output()->writeln('Site Pages: ' . $summary['pages']);
+    $this->output()->writeln('Site Menus: ' . $summary['menus']);
+    $this->output()->writeln('Site Menu Items: ' . $summary['menuItems']);
+    $this->output()->writeln('Site Forms: ' . $summary['forms']);
+    $this->output()->writeln('Site Form Fields: ' . $summary['formFields']);
     $this->output()->writeln('Site Content Blocks: ' . $summary['contentBlocks']);
   }
 
@@ -320,6 +346,245 @@ final class SitePlatformSetupCommands extends DrushCommands {
     $this->setIfFieldExists($page, 'field_demo_source', 'setup_import:' . (string) $siteData['key']);
 
     $page->save();
+  }
+
+  /**
+   * Imports or previews a Site Menu.
+   *
+   * @param array<string, mixed> $siteData
+   *   Site data.
+   * @param array<string, mixed> $data
+   *   Menu data.
+   *
+   * @return array<string, int>
+   *   Import summary.
+   */
+  private function importSiteMenu(array $siteData, ?NodeInterface $site, array $data, bool $dryRun): array {
+    $items = is_array($data['items'] ?? NULL) ? $data['items'] : [];
+    if ($dryRun) {
+      return ['items' => count($items)];
+    }
+
+    if (!$site instanceof NodeInterface) {
+      throw new \RuntimeException('Menu import requires a saved Site Profile.');
+    }
+
+    $storage = $this->entityTypeManager->getStorage('node');
+    $menu_key = (string) ($data['key'] ?? '');
+    if ($menu_key === '') {
+      throw new \InvalidArgumentException('Every menu entry must include key.');
+    }
+
+    $menu = $this->loadNode('site_menu', [
+      'field_site_profile.target_id' => (int) $site->id(),
+      'field_menu_key' => $menu_key,
+    ]);
+
+    if (!$menu instanceof NodeInterface) {
+      $menu = $storage->create([
+        'type' => 'site_menu',
+        'title' => (string) ($data['title'] ?? $menu_key),
+        'status' => 1,
+        'uid' => 1,
+      ]);
+    }
+
+    $menu->setTitle((string) ($data['title'] ?? $menu_key));
+    $this->setIfFieldExists($menu, 'field_site_profile', ['target_id' => $site->id()]);
+    $this->setIfFieldExists($menu, 'field_menu_key', $menu_key);
+    $this->setIfFieldExists($menu, 'field_menu_label', (string) ($data['label'] ?? $data['title'] ?? $menu_key));
+    $this->setIfFieldExists($menu, 'field_menu_is_active', (bool) ($data['active'] ?? TRUE));
+    $this->setIfFieldExists($menu, 'field_menu_weight', (int) ($data['weight'] ?? 0));
+    $this->setIfFieldExists($menu, 'field_is_demo', (bool) ($data['demo'] ?? TRUE));
+    $this->setIfFieldExists($menu, 'field_demo_source', 'setup_import:' . (string) $siteData['key']);
+    $menu->save();
+
+    foreach ($items as $item_data) {
+      if (is_array($item_data)) {
+        $this->importSiteMenuItem($siteData, $site, $menu, $item_data);
+      }
+    }
+
+    return ['items' => count($items)];
+  }
+
+  /**
+   * Imports one Site Menu Item.
+   *
+   * @param array<string, mixed> $siteData
+   *   Site data.
+   * @param array<string, mixed> $data
+   *   Menu item data.
+   */
+  private function importSiteMenuItem(array $siteData, NodeInterface $site, NodeInterface $menu, array $data): void {
+    $storage = $this->entityTypeManager->getStorage('node');
+    $item_key = (string) ($data['key'] ?? '');
+    if ($item_key === '') {
+      throw new \InvalidArgumentException('Every menu item entry must include key.');
+    }
+
+    $item = $this->loadNode('site_menu_item', [
+      'field_site_menu.target_id' => (int) $menu->id(),
+      'field_menu_item_key' => $item_key,
+    ]);
+
+    if (!$item instanceof NodeInterface) {
+      $item = $storage->create([
+        'type' => 'site_menu_item',
+        'title' => (string) ($data['title'] ?? $item_key),
+        'status' => 1,
+        'uid' => 1,
+      ]);
+    }
+
+    $link_type = (string) ($data['linkType'] ?? 'page');
+    $page = NULL;
+    if (!empty($data['page'])) {
+      $page = $this->loadNode('site_page', [
+        'field_site_profile.target_id' => (int) $site->id(),
+        'field_page_key' => (string) $data['page'],
+      ]);
+    }
+
+    $parent = NULL;
+    if (!empty($data['parent'])) {
+      $parent = $this->loadNode('site_menu_item', [
+        'field_site_menu.target_id' => (int) $menu->id(),
+        'field_menu_item_key' => (string) $data['parent'],
+      ]);
+    }
+
+    $item->setTitle((string) ($data['title'] ?? $item_key));
+    $this->setIfFieldExists($item, 'field_site_profile', ['target_id' => $site->id()]);
+    $this->setIfFieldExists($item, 'field_site_menu', ['target_id' => $menu->id()]);
+    $this->setIfFieldExists($item, 'field_menu_item_key', $item_key);
+    $this->setIfFieldExists($item, 'field_menu_title', (string) ($data['title'] ?? $item_key));
+    $this->setIfFieldExists($item, 'field_menu_link_type', $link_type);
+    $this->setIfFieldExists($item, 'field_menu_path', (string) ($data['path'] ?? ''));
+    $this->setIfFieldExists($item, 'field_menu_external_url', (string) ($data['externalUrl'] ?? ''));
+    $this->setIfFieldExists($item, 'field_menu_anchor', (string) ($data['anchor'] ?? ''));
+    $this->setIfFieldExists($item, 'field_menu_target', (string) ($data['target'] ?? '_self'));
+    $this->setIfFieldExists($item, 'field_menu_is_enabled', (bool) ($data['enabled'] ?? TRUE));
+    $this->setIfFieldExists($item, 'field_menu_is_button', (bool) ($data['isButton'] ?? FALSE));
+    $this->setIfFieldExists($item, 'field_menu_weight', (int) ($data['weight'] ?? 0));
+    $this->setIfFieldExists($item, 'field_is_demo', (bool) ($data['demo'] ?? TRUE));
+    $this->setIfFieldExists($item, 'field_demo_source', 'setup_import:' . (string) $siteData['key']);
+
+    if ($page instanceof NodeInterface) {
+      $this->setIfFieldExists($item, 'field_menu_page', ['target_id' => $page->id()]);
+    }
+
+    if ($parent instanceof NodeInterface) {
+      $this->setIfFieldExists($item, 'field_menu_parent', ['target_id' => $parent->id()]);
+    }
+
+    $item->save();
+  }
+
+  /**
+   * Imports or previews a Site Form.
+   *
+   * @param array<string, mixed> $siteData
+   *   Site data.
+   * @param array<string, mixed> $data
+   *   Form data.
+   *
+   * @return array<string, int>
+   *   Import summary.
+   */
+  private function importSiteForm(array $siteData, ?NodeInterface $site, array $data, bool $dryRun): array {
+    $fields = is_array($data['fields'] ?? NULL) ? $data['fields'] : [];
+    if ($dryRun) {
+      return ['fields' => count($fields)];
+    }
+
+    if (!$site instanceof NodeInterface) {
+      throw new \RuntimeException('Form import requires a saved Site Profile.');
+    }
+
+    $storage = $this->entityTypeManager->getStorage('node');
+    $form_key = (string) ($data['key'] ?? '');
+    if ($form_key === '') {
+      throw new \InvalidArgumentException('Every form entry must include key.');
+    }
+
+    $form = $this->loadNode('site_form', [
+      'field_site_profile.target_id' => (int) $site->id(),
+      'field_form_key' => $form_key,
+    ]);
+
+    if (!$form instanceof NodeInterface) {
+      $form = $storage->create([
+        'type' => 'site_form',
+        'title' => (string) ($data['title'] ?? $form_key),
+        'status' => 1,
+        'uid' => 1,
+      ]);
+    }
+
+    $form->setTitle((string) ($data['title'] ?? $form_key));
+    $this->setIfFieldExists($form, 'field_site_profile', ['target_id' => $site->id()]);
+    $this->setIfFieldExists($form, 'field_form_key', $form_key);
+    $this->setIfFieldExists($form, 'field_form_label', (string) ($data['label'] ?? $data['title'] ?? $form_key));
+    $this->setIfFieldExists($form, 'field_form_description', (string) ($data['description'] ?? ''));
+    $this->setIfFieldExists($form, 'field_form_success_message', (string) ($data['successMessage'] ?? 'Thank you.'));
+    $this->setIfFieldExists($form, 'field_form_is_active', (bool) ($data['active'] ?? TRUE));
+    $this->setIfFieldExists($form, 'field_is_demo', (bool) ($data['demo'] ?? TRUE));
+    $this->setIfFieldExists($form, 'field_demo_source', 'setup_import:' . (string) $siteData['key']);
+    $form->save();
+
+    foreach ($fields as $field_data) {
+      if (is_array($field_data)) {
+        $this->importSiteFormField($siteData, $site, $form, $field_data);
+      }
+    }
+
+    return ['fields' => count($fields)];
+  }
+
+  /**
+   * Imports one Site Form Field.
+   *
+   * @param array<string, mixed> $siteData
+   *   Site data.
+   * @param array<string, mixed> $data
+   *   Form field data.
+   */
+  private function importSiteFormField(array $siteData, NodeInterface $site, NodeInterface $form, array $data): void {
+    $storage = $this->entityTypeManager->getStorage('node');
+    $field_key = (string) ($data['key'] ?? '');
+    if ($field_key === '') {
+      throw new \InvalidArgumentException('Every form field entry must include key.');
+    }
+
+    $field = $this->loadNode('site_form_field', [
+      'field_site_form.target_id' => (int) $form->id(),
+      'field_form_field_key' => $field_key,
+    ]);
+
+    if (!$field instanceof NodeInterface) {
+      $field = $storage->create([
+        'type' => 'site_form_field',
+        'title' => (string) ($data['label'] ?? $field_key),
+        'status' => 1,
+        'uid' => 1,
+      ]);
+    }
+
+    $field->setTitle((string) ($data['label'] ?? $field_key));
+    $this->setIfFieldExists($field, 'field_site_profile', ['target_id' => $site->id()]);
+    $this->setIfFieldExists($field, 'field_site_form', ['target_id' => $form->id()]);
+    $this->setIfFieldExists($field, 'field_form_field_key', $field_key);
+    $this->setIfFieldExists($field, 'field_form_field_type', (string) ($data['type'] ?? 'text'));
+    $this->setIfFieldExists($field, 'field_form_field_label', (string) ($data['label'] ?? $field_key));
+    $this->setIfFieldExists($field, 'field_form_field_required', (bool) ($data['required'] ?? FALSE));
+    $this->setIfFieldExists($field, 'field_form_field_placeholder', (string) ($data['placeholder'] ?? ''));
+    $this->setIfFieldExists($field, 'field_form_field_help', (string) ($data['help'] ?? ''));
+    $this->setIfFieldExists($field, 'field_form_field_options', (string) ($data['options'] ?? ''));
+    $this->setIfFieldExists($field, 'field_form_field_weight', (int) ($data['weight'] ?? 0));
+    $this->setIfFieldExists($field, 'field_is_demo', (bool) ($data['demo'] ?? TRUE));
+    $this->setIfFieldExists($field, 'field_demo_source', 'setup_import:' . (string) $siteData['key']);
+    $field->save();
   }
 
   /**

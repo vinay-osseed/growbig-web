@@ -36,6 +36,59 @@ pages:
     weight: 10
     demo: true
 
+menus:
+  - key: main
+    title: YAML Main Menu
+    label: Main menu
+    weight: 0
+    active: true
+    demo: true
+    items:
+      - key: home
+        title: Home
+        linkType: page
+        page: home
+        weight: 0
+      - key: about
+        title: About
+        linkType: page
+        page: about
+        weight: 10
+      - key: contact
+        title: Contact
+        linkType: path
+        path: /contact
+        isButton: true
+        weight: 20
+
+forms:
+  - key: contact
+    title: YAML Contact Form
+    label: Contact YAML Test
+    description: Send a message to YAML Test.
+    successMessage: Thanks for contacting YAML Test.
+    active: true
+    demo: true
+    fields:
+      - key: name
+        type: text
+        label: Name
+        required: true
+        placeholder: Your name
+        weight: 0
+      - key: email
+        type: email
+        label: Email
+        required: true
+        placeholder: you@example.com
+        weight: 10
+      - key: message
+        type: textarea
+        label: Message
+        required: true
+        placeholder: How can we help?
+        weight: 20
+
 content:
   - source: global
     key: footer_cta
