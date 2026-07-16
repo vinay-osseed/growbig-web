@@ -57,3 +57,21 @@ site_platform_api.menu:
     _access: 'TRUE'
     menu: '[A-Za-z0-9_-]+'
   methods: [GET]
+
+site_platform_api.form:
+  path: '/api/v1/forms/{form}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\FormApiController::form'
+  requirements:
+    _access: 'TRUE'
+    form: '[A-Za-z0-9_-]+'
+  methods: [GET]
+
+site_platform_api.form_submit:
+  path: '/api/v1/forms/{form}/submit'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\FormApiController::submit'
+  requirements:
+    _access: 'TRUE'
+    form: '[A-Za-z0-9_-]+'
+  methods: [POST]

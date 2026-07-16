@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_form_label
+    - node.type.site_form
+id: node.site_form.field_form_label
+field_name: field_form_label
+entity_type: node
+bundle: site_form
+label: 'Form label'
+description: 'Public form label.'
+required: true
+translatable: true
+default_value_callback: ''
+default_value: {  }
+settings: {  }
+field_type: string
