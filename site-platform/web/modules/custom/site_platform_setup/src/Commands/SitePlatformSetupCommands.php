@@ -33,6 +33,22 @@ final class SitePlatformSetupCommands extends DrushCommands {
   ];
 
   /**
+   * Site-scoped delete order for reset-site.
+   *
+   * @var array<string, string>
+   */
+  private const SITE_RESET_NODE_TYPES = [
+    'site_form_submission' => 'Site Form Submission',
+    'site_form_field' => 'Site Form Field',
+    'site_form' => 'Site Form',
+    'site_menu_item' => 'Site Menu Item',
+    'site_menu' => 'Site Menu',
+    'site_content_block' => 'Site Content Block',
+    'site_page' => 'Site Page',
+    'site_profile' => 'Site Profile',
+  ];
+
+  /**
    * Constructs setup commands.
    */
   public function __construct(
@@ -60,6 +76,7 @@ final class SitePlatformSetupCommands extends DrushCommands {
     $this->output()->writeln('- manage Site Form and Site Form Field records');
     $this->output()->writeln('- manage reusable Site Content Block records');
     $this->output()->writeln('- track demo records for safe reset');
+    $this->output()->writeln('- reset one setup-managed site by site key');
     $this->output()->writeln('- import setup YAML files');
     $this->output()->writeln('');
     $this->printCounts();
@@ -254,6 +271,64 @@ final class SitePlatformSetupCommands extends DrushCommands {
 
     $this->output()->writeln('');
     $this->output()->writeln(sprintf('Deleted %d demo records.', $deleted));
+  }
+
+  /**
+   * Previews or deletes all setup-managed records for one site.
+   *
+   * @command site-platform:setup-reset-site
+   * @aliases sp-reset-site
+   * @param string $siteKey Site key to reset.
+   * @option execute Actually delete records. Without this option the command is dry-run.
+   */
+  public function resetSite(string $siteKey, array $options = ['execute' => FALSE]): void {
+    $execute = (bool) ($options['execute'] ?? FALSE);
+    $site_key = trim($siteKey);
+
+    if ($site_key === '') {
+      throw new \InvalidArgumentException('Site key is required.');
+    }
+
+    $site = $this->loadNode('site_profile', [
+      'field_site_key' => $site_key,
+    ]);
+
+    $this->output()->writeln($execute ? 'Site reset execute mode' : 'Site reset dry-run');
+    $this->output()->writeln($execute ? '=======================' : '==================');
+    $this->output()->writeln('Site key: ' . $site_key);
+    $this->output()->writeln('');
+
+    if (!$site instanceof NodeInterface) {
+      $this->output()->writeln('No matching Site Profile found.');
+      return;
+    }
+
+    $plan = $this->buildSiteResetPlan($site);
+
+    foreach (self::SITE_RESET_NODE_TYPES as $type => $label) {
+      $this->output()->writeln(sprintf('%s: %d', $label, count($plan['nodes'][$type] ?? [])));
+    }
+    $this->output()->writeln(sprintf('Page Components: %d', count($plan['paragraphs'])));
+
+    if (!$execute) {
+      $this->output()->writeln('');
+      $this->output()->writeln('No records were deleted. Add --execute to reset this site.');
+      return;
+    }
+
+    $deleted_nodes = $this->deleteSiteResetNodes($plan['nodes']);
+    $deleted_components = $this->deleteParagraphIds($plan['paragraphs']);
+
+    $this->state->set('site_platform_setup.last_site_reset', [
+      'siteKey' => $site_key,
+      'ranAt' => gmdate('c'),
+      'deletedNodes' => $deleted_nodes,
+      'deletedComponents' => $deleted_components,
+    ]);
+
+    $this->output()->writeln('');
+    $this->output()->writeln(sprintf('Deleted %d node records.', $deleted_nodes));
+    $this->output()->writeln(sprintf('Deleted %d page components.', $deleted_components));
   }
 
   /**
@@ -739,6 +814,128 @@ final class SitePlatformSetupCommands extends DrushCommands {
     $this->setIfFieldExists($content, 'field_demo_source', 'setup_import:' . (string) $siteData['key']);
 
     $content->save();
+  }
+
+  /**
+   * Builds a site reset plan.
+   *
+   * @return array{nodes: array<string, array<int, int>>, paragraphs: array<int, int>}
+   *   Reset plan.
+   */
+  private function buildSiteResetPlan(NodeInterface $site): array {
+    $site_id = (int) $site->id();
+    $nodes = [];
+    foreach (array_keys(self::SITE_RESET_NODE_TYPES) as $type) {
+      if ($type === 'site_profile') {
+        $nodes[$type] = [$site_id];
+        continue;
+      }
+      $nodes[$type] = $this->findNodeIdsBySite($type, $site_id);
+    }
+
+    return [
+      'nodes' => $nodes,
+      'paragraphs' => $this->findComponentIdsForPages($nodes['site_page'] ?? []),
+    ];
+  }
+
+  /**
+   * Finds node IDs by Site Profile reference.
+   *
+   * @return array<int, int>
+   *   Node IDs.
+   */
+  private function findNodeIdsBySite(string $type, int $siteProfileId): array {
+    if (!$this->nodeTypeExists($type) || !$this->fieldExists($type, 'field_site_profile')) {
+      return [];
+    }
+
+    $ids = $this->entityTypeManager->getStorage('node')
+      ->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('type', $type)
+      ->condition('field_site_profile.target_id', $siteProfileId)
+      ->execute();
+
+    return array_map('intval', array_values($ids));
+  }
+
+  /**
+   * Finds component paragraph IDs referenced by pages.
+   *
+   * @param array<int, int> $pageIds
+   *   Page node IDs.
+   *
+   * @return array<int, int>
+   *   Paragraph IDs.
+   */
+  private function findComponentIdsForPages(array $pageIds): array {
+    if ($pageIds === []) {
+      return [];
+    }
+
+    $paragraph_ids = [];
+    $pages = $this->entityTypeManager->getStorage('node')->loadMultiple($pageIds);
+
+    foreach ($pages as $page) {
+      if (!$page instanceof NodeInterface || !$page->hasField('field_page_components')) {
+        continue;
+      }
+
+      foreach ($page->get('field_page_components')->referencedEntities() as $component) {
+        if ($component instanceof ParagraphInterface) {
+          $paragraph_ids[] = (int) $component->id();
+        }
+      }
+    }
+
+    return array_values(array_unique($paragraph_ids));
+  }
+
+  /**
+   * Deletes nodes from a site reset plan.
+   *
+   * @param array<string, array<int, int>> $nodeIdsByType
+   *   Node IDs grouped by type.
+   */
+  private function deleteSiteResetNodes(array $nodeIdsByType): int {
+    $storage = $this->entityTypeManager->getStorage('node');
+    $deleted = 0;
+
+    foreach (array_keys(self::SITE_RESET_NODE_TYPES) as $type) {
+      $ids = $nodeIdsByType[$type] ?? [];
+      if ($ids === []) {
+        continue;
+      }
+
+      $nodes = $storage->loadMultiple($ids);
+      $deleted += count($nodes);
+      $storage->delete($nodes);
+    }
+
+    return $deleted;
+  }
+
+  /**
+   * Deletes paragraph IDs.
+   *
+   * @param array<int, int> $paragraphIds
+   *   Paragraph IDs.
+   */
+  private function deleteParagraphIds(array $paragraphIds): int {
+    if ($paragraphIds === []) {
+      return 0;
+    }
+
+    $storage = $this->entityTypeManager->getStorage('paragraph');
+    $paragraphs = $storage->loadMultiple($paragraphIds);
+    if ($paragraphs === []) {
+      return 0;
+    }
+
+    $storage->delete($paragraphs);
+
+    return count($paragraphs);
   }
 
   /**
