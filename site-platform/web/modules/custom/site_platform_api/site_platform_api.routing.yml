@@ -22,3 +22,21 @@ site_platform_api.page:
     _access: 'TRUE'
     slug: '[A-Za-z0-9_-]+'
   methods: [GET]
+
+site_platform_api.route_front:
+  path: '/api/v1/routes'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\PageApiController::route'
+    path: ''
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+
+site_platform_api.route:
+  path: '/api/v1/routes/{path}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\PageApiController::route'
+  requirements:
+    _access: 'TRUE'
+    path: '.+'
+  methods: [GET]

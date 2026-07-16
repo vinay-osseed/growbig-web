@@ -98,6 +98,50 @@ final class PageApiController extends ControllerBase {
   }
 
   /**
+   * Resolves a frontend route path to a page.
+   */
+  public function route(Request $request, string $path = ''): JsonResponse {
+    $context = $this->siteContextResolver->resolve($request);
+    $route_path = $this->normalizeRoutePath($path);
+
+    if (!$context->isResolved() || !$context->getSiteProfileId()) {
+      return $this->errorResponse(
+        'site_not_resolved',
+        'No active site matched this request host.',
+        ['host' => $request->getHost(), 'path' => $route_path],
+        404,
+      );
+    }
+
+    $page = $this->loadPageByPath((int) $context->getSiteProfileId(), $route_path);
+
+    if (!$page instanceof NodeInterface) {
+      return $this->errorResponse(
+        'route_not_found',
+        'Route not found.',
+        [
+          'siteKey' => $context->getSiteKey(),
+          'path' => $route_path,
+          'language' => $context->getLanguageId(),
+        ],
+        404,
+      );
+    }
+
+    return $this->successResponse([
+      'route' => [
+        'type' => 'page',
+        'path' => $route_path,
+        'slug' => $this->fieldValue($page, 'field_page_slug'),
+      ],
+      'page' => $this->normalizePage($page),
+    ], $context, [
+      'node:' . $page->id(),
+      'node:' . $context->getSiteProfileId(),
+    ]);
+  }
+
+  /**
    * Loads pages for a Site Profile.
    *
    * @return array<int, \Drupal\node\NodeInterface>
@@ -137,6 +181,30 @@ final class PageApiController extends ControllerBase {
       ->condition('status', 1)
       ->condition('field_site_profile.target_id', $siteProfileId)
       ->condition('field_page_slug', $slug)
+      ->range(0, 1)
+      ->execute();
+
+    if (!$ids) {
+      return NULL;
+    }
+
+    $page = $storage->load(reset($ids));
+
+    return $page instanceof NodeInterface ? $page : NULL;
+  }
+
+  /**
+   * Loads one page by frontend path.
+   */
+  private function loadPageByPath(int $siteProfileId, string $path): ?NodeInterface {
+    $storage = $this->sitePlatformEntityTypeManager->getStorage('node');
+
+    $ids = $storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('type', 'site_page')
+      ->condition('status', 1)
+      ->condition('field_site_profile.target_id', $siteProfileId)
+      ->condition('field_page_path', $path)
       ->range(0, 1)
       ->execute();
 
@@ -193,6 +261,17 @@ final class PageApiController extends ControllerBase {
     $slug = trim($slug, '/');
 
     return $slug === '' ? 'home' : $slug;
+  }
+
+  /**
+   * Normalizes a route path.
+   */
+  private function normalizeRoutePath(string $path): string {
+    $path = trim(urldecode($path));
+    $path = preg_replace('/\?.*$/', '', $path) ?: $path;
+    $path = '/' . trim($path, '/');
+
+    return $path === '/' ? '/' : rtrim($path, '/');
   }
 
   /**
