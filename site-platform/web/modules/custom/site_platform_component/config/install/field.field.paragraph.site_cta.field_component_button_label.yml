@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_component_button_label
+    - paragraphs.paragraphs_type.site_cta
+id: paragraph.site_cta.field_component_button_label
+field_name: field_component_button_label
+entity_type: paragraph
+bundle: site_cta
+label: 'Button label'
+description: 'CTA button label.'
+required: false
+translatable: true
+default_value_callback: ''
+default_value: {  }
+settings: {  }
+field_type: string

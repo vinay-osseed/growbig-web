@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_component_key
+    - paragraphs.paragraphs_type.site_cta
+id: paragraph.site_cta.field_component_key
+field_name: field_component_key
+entity_type: paragraph
+bundle: site_cta
+label: 'Component key'
+description: 'Stable component key.'
+required: true
+translatable: false
+default_value_callback: ''
+default_value: {  }
+settings: {  }
+field_type: string

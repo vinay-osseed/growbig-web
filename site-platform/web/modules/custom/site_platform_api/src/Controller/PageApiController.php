@@ -7,6 +7,7 @@ namespace Drupal\site_platform_api\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\NodeInterface;
+use Drupal\paragraphs\ParagraphInterface;
 use Drupal\site_platform_core\Context\SiteContext;
 use Drupal\site_platform_core\Context\SiteContextResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -236,6 +237,7 @@ final class PageApiController extends ControllerBase {
         'title' => $this->fieldValue($page, 'field_seo_title'),
         'description' => $this->fieldValue($page, 'field_seo_description'),
       ],
+      'components' => $this->normalizeComponents($page),
       'isDemo' => (bool) $this->fieldValue($page, 'field_is_demo'),
       'demoSource' => $this->fieldValue($page, 'field_demo_source'),
       'weight' => (int) ($this->fieldValue($page, 'field_page_weight') ?: 0),
@@ -243,7 +245,78 @@ final class PageApiController extends ControllerBase {
   }
 
   /**
-   * Gets a field value safely.
+   * Normalizes page components.
+   *
+   * @return array<int, array<string, mixed>>
+   *   Normalized components.
+   */
+  private function normalizeComponents(NodeInterface $page): array {
+    if (!$page->hasField('field_page_components') || $page->get('field_page_components')->isEmpty()) {
+      return [];
+    }
+
+    $components = [];
+    foreach ($page->get('field_page_components')->referencedEntities() as $entity) {
+      if ($entity instanceof ParagraphInterface) {
+        $components[] = $this->normalizeComponent($entity);
+      }
+    }
+
+    return $components;
+  }
+
+  /**
+   * Normalizes one paragraph component.
+   *
+   * @return array<string, mixed>
+   *   Normalized component.
+   */
+  private function normalizeComponent(ParagraphInterface $paragraph): array {
+    $type = str_starts_with($paragraph->bundle(), 'site_')
+      ? substr($paragraph->bundle(), 5)
+      : $paragraph->bundle();
+
+    return [
+      'id' => 'component-' . $paragraph->id(),
+      'type' => $type,
+      'variant' => $this->paragraphFieldValue($paragraph, 'field_component_variant') ?: 'default',
+      'adminLabel' => $this->paragraphFieldValue($paragraph, 'field_component_admin_label'),
+      'props' => $this->componentProps($paragraph),
+    ];
+  }
+
+  /**
+   * Builds component props.
+   *
+   * @return array<string, mixed>
+   *   Component props.
+   */
+  private function componentProps(ParagraphInterface $paragraph): array {
+    return match ($paragraph->bundle()) {
+      'site_hero' => [
+        'title' => $this->paragraphFieldValue($paragraph, 'field_component_title'),
+        'summary' => $this->paragraphFieldValue($paragraph, 'field_component_summary'),
+        'body' => $this->paragraphFieldValue($paragraph, 'field_component_body'),
+        'mediaUrl' => $this->paragraphFieldValue($paragraph, 'field_component_media_url'),
+        'buttonLabel' => $this->paragraphFieldValue($paragraph, 'field_component_button_label'),
+        'buttonPath' => $this->paragraphFieldValue($paragraph, 'field_component_button_path'),
+      ],
+      'site_rich_text' => [
+        'title' => $this->paragraphFieldValue($paragraph, 'field_component_title'),
+        'body' => $this->paragraphFieldValue($paragraph, 'field_component_body'),
+      ],
+      'site_cta' => [
+        'title' => $this->paragraphFieldValue($paragraph, 'field_component_title'),
+        'summary' => $this->paragraphFieldValue($paragraph, 'field_component_summary'),
+        'buttonLabel' => $this->paragraphFieldValue($paragraph, 'field_component_button_label'),
+        'buttonPath' => $this->paragraphFieldValue($paragraph, 'field_component_button_path'),
+      ],
+      default => [],
+    };
+  }
+
+  /**
+   * Gets a node field value safely.
    */
   private function fieldValue(NodeInterface $node, string $fieldName): mixed {
     if (!$node->hasField($fieldName) || $node->get($fieldName)->isEmpty()) {
@@ -251,6 +324,17 @@ final class PageApiController extends ControllerBase {
     }
 
     return $node->get($fieldName)->value ?? '';
+  }
+
+  /**
+   * Gets a paragraph field value safely.
+   */
+  private function paragraphFieldValue(ParagraphInterface $paragraph, string $fieldName): mixed {
+    if (!$paragraph->hasField($fieldName) || $paragraph->get($fieldName)->isEmpty()) {
+      return '';
+    }
+
+    return $paragraph->get($fieldName)->value ?? '';
   }
 
   /**

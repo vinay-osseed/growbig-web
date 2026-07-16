@@ -44,6 +44,6 @@ Errors use:
 
 ## Current Scope
 
-This API returns Site Profile, Site Page, route, and basic Site Menu data.
+This API returns Site Profile, Site Page, route, basic Site Menu, and basic component data.
 
-Components, forms, reusable content, and advanced multilingual fallback come later.
+Forms, reusable content, and advanced multilingual fallback come later.

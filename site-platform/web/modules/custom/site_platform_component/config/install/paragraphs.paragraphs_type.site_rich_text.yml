@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: site_rich_text
+label: 'Site Rich Text'
+icon_uuid: null
+icon_default: null
+description: 'Rich text/content section component.'
+behavior_plugins: {  }
