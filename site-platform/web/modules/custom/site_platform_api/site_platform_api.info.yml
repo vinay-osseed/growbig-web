@@ -1,0 +1,10 @@
+name: Site Platform API
+type: module
+description: Provides public JSON API endpoints for Site Platform.
+package: Site Platform
+core_version_requirement: ^11
+dependencies:
+  - drupal:node
+  - site_platform_core:site_platform_core
+  - site_platform_site:site_platform_site
+  - site_platform_page:site_platform_page

@@ -1,0 +1,24 @@
+site_platform_api.site:
+  path: '/api/v1/site'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\SiteApiController::site'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+
+site_platform_api.pages:
+  path: '/api/v1/pages'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\PageApiController::pages'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+
+site_platform_api.page:
+  path: '/api/v1/pages/{slug}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\PageApiController::page'
+  requirements:
+    _access: 'TRUE'
+    slug: '[A-Za-z0-9_-]+'
+  methods: [GET]
