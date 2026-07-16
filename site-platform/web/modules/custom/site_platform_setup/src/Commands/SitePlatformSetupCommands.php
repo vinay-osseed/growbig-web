@@ -77,6 +77,7 @@ final class SitePlatformSetupCommands extends DrushCommands {
     $this->output()->writeln('- manage reusable Site Content Block records');
     $this->output()->writeln('- track demo records for safe reset');
     $this->output()->writeln('- reset one setup-managed site by site key');
+    $this->output()->writeln('- track setup completion and lock status');
     $this->output()->writeln('- import setup YAML files');
     $this->output()->writeln('');
     $this->printCounts();
@@ -110,6 +111,9 @@ final class SitePlatformSetupCommands extends DrushCommands {
    */
   public function status(): void {
     $last_run = $this->state->get('site_platform_setup.last_run');
+    $last_import = $this->state->get('site_platform_setup.last_import');
+    $last_site_reset = $this->state->get('site_platform_setup.last_site_reset');
+    $completion = $this->state->get('site_platform_setup.completion');
 
     $this->output()->writeln('Setup runner status');
     $this->output()->writeln('===================');
@@ -124,6 +128,103 @@ final class SitePlatformSetupCommands extends DrushCommands {
       $this->output()->writeln('Last run: never');
     }
 
+    if (is_array($last_import)) {
+      $this->output()->writeln('Last import: ' . (string) ($last_import['siteKey'] ?? 'unknown') . ' at ' . (string) ($last_import['ranAt'] ?? 'unknown'));
+    }
+    else {
+      $this->output()->writeln('Last import: never');
+    }
+
+    if (is_array($last_site_reset)) {
+      $this->output()->writeln('Last site reset: ' . (string) ($last_site_reset['siteKey'] ?? 'unknown') . ' at ' . (string) ($last_site_reset['ranAt'] ?? 'unknown'));
+    }
+    else {
+      $this->output()->writeln('Last site reset: never');
+    }
+
+    if (is_array($completion)) {
+      $locked = (bool) ($completion['locked'] ?? FALSE);
+      $this->output()->writeln('Completion status: ' . (string) ($completion['status'] ?? 'unknown'));
+      $this->output()->writeln('Setup locked: ' . ($locked ? 'yes' : 'no'));
+
+      if (!empty($completion['completedAt'])) {
+        $this->output()->writeln('Completed at: ' . (string) $completion['completedAt']);
+      }
+
+      if (!empty($completion['unlockedAt'])) {
+        $this->output()->writeln('Unlocked at: ' . (string) $completion['unlockedAt']);
+      }
+    }
+    else {
+      $this->output()->writeln('Completion status: not_completed');
+      $this->output()->writeln('Setup locked: no');
+    }
+
+    $this->output()->writeln('');
+    $this->printCounts();
+  }
+
+  /**
+   * Marks setup as completed and locked.
+   *
+   * @command site-platform:setup-complete
+   * @aliases sp-complete
+   * @option force Complete again even if setup is already locked.
+   */
+  public function complete(array $options = ['force' => FALSE]): void {
+    $force = (bool) ($options['force'] ?? FALSE);
+    $completion = $this->state->get('site_platform_setup.completion');
+
+    if (!$force && is_array($completion) && !empty($completion['locked'])) {
+      $this->output()->writeln('Setup is already locked. Add --force to complete again.');
+      return;
+    }
+
+    $this->state->set('site_platform_setup.completion', [
+      'status' => 'complete',
+      'locked' => TRUE,
+      'completedAt' => gmdate('c'),
+    ]);
+
+    $this->output()->writeln('Setup marked complete and locked.');
+  }
+
+  /**
+   * Unlocks setup without deleting any records.
+   *
+   * @command site-platform:setup-unlock
+   * @aliases sp-unlock
+   */
+  public function unlock(): void {
+    $completion = $this->state->get('site_platform_setup.completion');
+    $completion = is_array($completion) ? $completion : [];
+
+    $completion['status'] = 'unlocked';
+    $completion['locked'] = FALSE;
+    $completion['unlockedAt'] = gmdate('c');
+
+    $this->state->set('site_platform_setup.completion', $completion);
+
+    $this->output()->writeln('Setup unlocked. Existing data was not deleted.');
+  }
+
+  /**
+   * Resets setup tracking status only.
+   *
+   * @command site-platform:setup-reset-status
+   * @aliases sp-reset-status
+   */
+  public function resetStatus(): void {
+    foreach ([
+      'site_platform_setup.last_run',
+      'site_platform_setup.last_import',
+      'site_platform_setup.last_site_reset',
+      'site_platform_setup.completion',
+    ] as $key) {
+      $this->state->delete($key);
+    }
+
+    $this->output()->writeln('Setup tracking status reset. Existing data was not deleted.');
     $this->output()->writeln('');
     $this->printCounts();
   }

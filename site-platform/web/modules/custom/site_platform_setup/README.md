@@ -9,6 +9,9 @@ Site Platform Setup provides Drush commands for the setup lifecycle.
     ddev drush site-platform:setup-preview
     ddev drush site-platform:setup-run
     ddev drush site-platform:setup-status
+    ddev drush site-platform:setup-complete
+    ddev drush site-platform:setup-unlock
+    ddev drush site-platform:setup-reset-status
     ddev drush site-platform:setup-reset-demo
     ddev drush site-platform:setup-reset-site yamltest
     ddev drush site-platform:setup-import /var/www/html/setup/examples/sample.site.yml
@@ -34,6 +37,20 @@ Dry-run:
 
     ddev drush site-platform:setup-import /var/www/html/setup/examples/sample.site.yml --dry-run
 
+## Completion Tracking
+
+Mark setup complete:
+
+    ddev drush site-platform:setup-complete
+
+Unlock setup tracking without deleting data:
+
+    ddev drush site-platform:setup-unlock
+
+Reset setup tracking state without deleting data:
+
+    ddev drush site-platform:setup-reset-status
+
 ## Reset Safety
 
 `site-platform:setup-reset-demo` is dry-run by default.
@@ -54,5 +71,4 @@ Later setup phases can add:
 
 - media import
 - full idempotent site setup
-- setup completion tracking
 - demo content replacement
