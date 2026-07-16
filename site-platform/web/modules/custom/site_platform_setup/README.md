@@ -18,6 +18,7 @@ The setup import command currently supports:
 
 - Site Profile
 - Site Pages
+- Page Components
 - Site Content Blocks
 - Site Menus
 - Site Menu Items
@@ -44,7 +45,7 @@ It only deletes demo records when called with:
 
 Later setup phases can add:
 
-- component import
+- media import
 - full idempotent site setup
 - site reset by key
 - setup completion tracking

@@ -8,6 +8,7 @@ use Drupal\Component\Serialization\Yaml;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\State\StateInterface;
 use Drupal\node\NodeInterface;
+use Drupal\paragraphs\ParagraphInterface;
 use Drush\Commands\DrushCommands;
 
 /**
@@ -54,6 +55,7 @@ final class SitePlatformSetupCommands extends DrushCommands {
     $this->output()->writeln('Planned setup lifecycle:');
     $this->output()->writeln('- resolve Site Profile records');
     $this->output()->writeln('- manage Site Page records');
+    $this->output()->writeln('- manage page component records');
     $this->output()->writeln('- manage Site Menu and Site Menu Item records');
     $this->output()->writeln('- manage Site Form and Site Form Field records');
     $this->output()->writeln('- manage reusable Site Content Block records');
@@ -138,6 +140,7 @@ final class SitePlatformSetupCommands extends DrushCommands {
     $summary = [
       'siteProfile' => 0,
       'pages' => 0,
+      'pageComponents' => 0,
       'menus' => 0,
       'menuItems' => 0,
       'forms' => 0,
@@ -156,8 +159,9 @@ final class SitePlatformSetupCommands extends DrushCommands {
       if (!is_array($page_data)) {
         continue;
       }
-      $this->importSitePage($site_data, $site, $page_data, $dry_run);
+      $page_summary = $this->importSitePage($site_data, $site, $page_data, $dry_run);
       $summary['pages']++;
+      $summary['pageComponents'] += $page_summary['components'];
     }
 
     foreach (($data['menus'] ?? []) as $menu_data) {
@@ -200,6 +204,7 @@ final class SitePlatformSetupCommands extends DrushCommands {
     $this->output()->writeln('Site key: ' . (string) $site_data['key']);
     $this->output()->writeln('Site Profile: ' . $summary['siteProfile']);
     $this->output()->writeln('Site Pages: ' . $summary['pages']);
+    $this->output()->writeln('Page Components: ' . $summary['pageComponents']);
     $this->output()->writeln('Site Menus: ' . $summary['menus']);
     $this->output()->writeln('Site Menu Items: ' . $summary['menuItems']);
     $this->output()->writeln('Site Forms: ' . $summary['forms']);
@@ -303,10 +308,14 @@ final class SitePlatformSetupCommands extends DrushCommands {
    *   Site data.
    * @param array<string, mixed> $data
    *   Page data.
+   *
+   * @return array<string, int>
+   *   Import summary.
    */
-  private function importSitePage(array $siteData, ?NodeInterface $site, array $data, bool $dryRun): void {
+  private function importSitePage(array $siteData, ?NodeInterface $site, array $data, bool $dryRun): array {
+    $components = is_array($data['components'] ?? NULL) ? $data['components'] : [];
     if ($dryRun) {
-      return;
+      return ['components' => count($components)];
     }
 
     if (!$site instanceof NodeInterface) {
@@ -345,7 +354,97 @@ final class SitePlatformSetupCommands extends DrushCommands {
     $this->setIfFieldExists($page, 'field_is_demo', (bool) ($data['demo'] ?? TRUE));
     $this->setIfFieldExists($page, 'field_demo_source', 'setup_import:' . (string) $siteData['key']);
 
+    $page_components = [];
+    foreach ($components as $component_data) {
+      if (!is_array($component_data)) {
+        continue;
+      }
+      $paragraph = $this->importPageComponent($siteData, $page_key, $component_data);
+      if ($paragraph instanceof ParagraphInterface) {
+        $page_components[] = [
+          'target_id' => $paragraph->id(),
+          'target_revision_id' => $paragraph->getRevisionId(),
+        ];
+      }
+    }
+
+    if ($page->hasField('field_page_components')) {
+      $page->set('field_page_components', $page_components);
+    }
+
     $page->save();
+
+    return ['components' => count($components)];
+  }
+
+  /**
+   * Imports one page component.
+   *
+   * @param array<string, mixed> $siteData
+   *   Site data.
+   * @param array<string, mixed> $data
+   *   Component data.
+   */
+  private function importPageComponent(array $siteData, string $pageKey, array $data): ?ParagraphInterface {
+    $type = (string) ($data['type'] ?? '');
+    $bundle = match ($type) {
+      'hero' => 'site_hero',
+      'rich_text' => 'site_rich_text',
+      'cta' => 'site_cta',
+      default => '',
+    };
+
+    if ($bundle === '') {
+      throw new \InvalidArgumentException('Unsupported component type: ' . $type);
+    }
+
+    $component_key = (string) ($data['key'] ?? '');
+    if ($component_key === '') {
+      throw new \InvalidArgumentException('Every component entry must include key.');
+    }
+
+    $stable_key = (string) $siteData['key'] . ':' . $pageKey . ':' . $component_key;
+    $paragraph = $this->loadParagraph($bundle, $stable_key);
+    $storage = $this->entityTypeManager->getStorage('paragraph');
+
+    if (!$paragraph instanceof ParagraphInterface) {
+      $paragraph = $storage->create(['type' => $bundle]);
+    }
+
+    $this->setParagraphIfFieldExists($paragraph, 'field_component_key', $stable_key);
+    $this->setParagraphIfFieldExists($paragraph, 'field_component_variant', (string) ($data['variant'] ?? 'default'));
+    $this->setParagraphIfFieldExists($paragraph, 'field_component_admin_label', (string) ($data['adminLabel'] ?? $component_key));
+    $this->setParagraphIfFieldExists($paragraph, 'field_component_title', (string) ($data['title'] ?? ''));
+    $this->setParagraphIfFieldExists($paragraph, 'field_component_summary', (string) ($data['summary'] ?? ''));
+    $this->setParagraphIfFieldExists($paragraph, 'field_component_body', (string) ($data['body'] ?? ''));
+    $this->setParagraphIfFieldExists($paragraph, 'field_component_media_url', (string) ($data['mediaUrl'] ?? ''));
+    $this->setParagraphIfFieldExists($paragraph, 'field_component_button_label', (string) ($data['buttonLabel'] ?? ''));
+    $this->setParagraphIfFieldExists($paragraph, 'field_component_button_path', (string) ($data['buttonPath'] ?? ''));
+
+    $paragraph->save();
+
+    return $paragraph;
+  }
+
+  /**
+   * Loads one paragraph by bundle and component key.
+   */
+  private function loadParagraph(string $bundle, string $componentKey): ?ParagraphInterface {
+    $storage = $this->entityTypeManager->getStorage('paragraph');
+    $ids = $storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('type', $bundle)
+      ->condition('field_component_key', $componentKey)
+      ->range(0, 1)
+      ->execute();
+
+    if (!$ids) {
+      return NULL;
+    }
+
+    $paragraph = $storage->load(reset($ids));
+
+    return $paragraph instanceof ParagraphInterface ? $paragraph : NULL;
   }
 
   /**
@@ -675,6 +774,15 @@ final class SitePlatformSetupCommands extends DrushCommands {
   private function setIfFieldExists(NodeInterface $node, string $field, mixed $value): void {
     if ($node->hasField($field)) {
       $node->set($field, $value);
+    }
+  }
+
+  /**
+   * Sets a paragraph field value when the field exists.
+   */
+  private function setParagraphIfFieldExists(ParagraphInterface $paragraph, string $field, mixed $value): void {
+    if ($paragraph->hasField($field)) {
+      $paragraph->set($field, $value);
     }
   }
 
