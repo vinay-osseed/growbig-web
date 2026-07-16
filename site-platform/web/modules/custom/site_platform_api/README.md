@@ -11,6 +11,8 @@ Site Platform API provides public JSON endpoints for decoupled frontends.
     GET /api/v1/pages/{slug}
     GET /api/v1/routes
     GET /api/v1/routes/{path}
+    GET /api/v1/menus
+    GET /api/v1/menus/{menu}
 
 ## Local Testing
 
@@ -23,6 +25,8 @@ Examples:
     https://site-platform.ddev.site/api/v1/pages/home?site=growbig
     https://site-platform.ddev.site/api/v1/routes?site=growbig
     https://site-platform.ddev.site/api/v1/routes/about?site=growbig
+    https://site-platform.ddev.site/api/v1/menus?site=growbig
+    https://site-platform.ddev.site/api/v1/menus/main?site=growbig
 
 The `site` query parameter is local/dev only. Production resolution must use domains.
 
@@ -40,6 +44,6 @@ Errors use:
 
 ## Current Scope
 
-This API only returns Site Profile and Site Page data.
+This API returns Site Profile, Site Page, route, and basic Site Menu data.
 
-Components, menus, forms, reusable content, and advanced multilingual fallback come later.
+Components, forms, reusable content, and advanced multilingual fallback come later.

@@ -20,12 +20,7 @@ for file in "${required[@]}"; do
   fi
 done
 
-if ! ddev drush pm:list --type=module --status=enabled --no-core | grep -q site_platform_core; then
-  echo "site_platform_core must be enabled first."
-  exit 1
-fi
-
-ddev drush en site_platform_site -y
+ddev drush en site_platform_core site_platform_site -y
 ddev drush cr
 
 ddev drush config:get node.type.site_profile >/dev/null

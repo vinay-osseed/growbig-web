@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_is_enabled
+    - node.type.site_menu_item
+id: node.site_menu_item.field_menu_is_enabled
+field_name: field_menu_is_enabled
+entity_type: node
+bundle: site_menu_item
+label: 'Enabled'
+description: 'Only enabled menu items are exposed by API.'
+required: false
+translatable: false
+default_value_callback: ''
+default_value:
+  -
+    value: 1
+settings: {  }
+field_type: boolean
