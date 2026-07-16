@@ -1,0 +1,57 @@
+site:
+  key: yamltest
+  name: YAML Test Site
+  active: true
+  isDefault: false
+  defaultLanguage: en
+  enabledLanguages:
+    - en
+  timezone: Asia/Kolkata
+  domains:
+    frontend:
+      - www.yamltest.ddev.site
+      - yamltest.ddev.site
+    api:
+      - api.yamltest.ddev.site
+    admin:
+      - admin.yamltest.ddev.site
+
+pages:
+  - key: home
+    title: YAML Test Home
+    slug: home
+    path: /
+    template: landing
+    seoTitle: YAML Test Site
+    seoDescription: YAML imported home page.
+    weight: 0
+    demo: true
+  - key: about
+    title: YAML Test About
+    slug: about
+    path: /about
+    template: default
+    seoTitle: About YAML Test
+    seoDescription: About page imported from YAML.
+    weight: 10
+    demo: true
+
+content:
+  - source: global
+    key: footer_cta
+    title: YAML Footer CTA
+    label: Footer CTA
+    variant: default
+    summary: Imported reusable footer CTA.
+    body: This reusable content block was imported from YAML.
+    weight: 0
+    demo: true
+  - source: global
+    key: announcement
+    title: YAML Announcement
+    label: Announcement
+    variant: banner
+    summary: YAML setup import is working.
+    body: This block verifies setup import output.
+    weight: 10
+    demo: true

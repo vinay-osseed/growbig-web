@@ -4,24 +4,29 @@
 
 Site Platform Setup provides Drush commands for the setup lifecycle.
 
-This phase adds the setup runner foundation only.
-
 ## Commands
 
     ddev drush site-platform:setup-preview
     ddev drush site-platform:setup-run
     ddev drush site-platform:setup-status
     ddev drush site-platform:setup-reset-demo
+    ddev drush site-platform:setup-import /var/www/html/setup/examples/sample.site.yml
 
-## Current Scope
+## YAML Import
 
-The runner can:
+The setup import command currently supports:
 
-- show the setup plan
-- summarize current platform entity counts
-- record a setup run in Drupal state
-- dry-run demo content reset
-- delete demo content only when explicitly requested with `--execute`
+- Site Profile
+- Site Pages
+- Site Content Blocks
+
+Example:
+
+    ddev drush site-platform:setup-import /var/www/html/setup/examples/sample.site.yml
+
+Dry-run:
+
+    ddev drush site-platform:setup-import /var/www/html/setup/examples/sample.site.yml --dry-run
 
 ## Safety
 
@@ -35,7 +40,9 @@ It only deletes demo records when called with:
 
 Later setup phases can add:
 
-- YAML setup import
+- menu import
+- form import
+- component import
 - full idempotent site setup
 - site reset by key
 - setup completion tracking
