@@ -20,7 +20,7 @@ $databases['default']['default']['host'] = $host;
 $databases['default']['default']['port'] = $port;
 $databases['default']['default']['driver'] = $driver;
 
-$settings['hash_salt'] = '7481b213e05e56c6387111565f4a94cab80022b4ace1dd36beee95a5a8bec060';
+$settings['hash_salt'] = '6f5df1dc1761f34fce83afac5a002190e9cd1dc5166c9d9aa8abf887b2f7ca3c';
 
 // This will prevent Drupal from setting read-only permissions on sites/default.
 $settings['skip_permissions_hardening'] = TRUE;

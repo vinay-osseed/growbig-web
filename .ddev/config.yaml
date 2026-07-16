@@ -20,28 +20,28 @@ timezone: Asia/Kolkata
 use_dns_when_possible: true
 
 additional_hostnames:
-    - admin.growbig-web
-    - api.growbig-web
-    - ui.growbig-web
-    - dev-admin.growbig-web
-    - dev-api.growbig-web
-    - dev-ui.growbig-web
-    - stage-admin.growbig-web
-    - stage-api.growbig-web
-    - stage-ui.growbig-web
-    - prod-admin.growbig-web
-    - prod-api.growbig-web
-    - prod-ui.growbig-web
+    - admin.site-platform
+    - api.site-platform
+    - ui.site-platform
+    - dev-admin.site-platform
+    - dev-api.site-platform
+    - dev-ui.site-platform
+    - stage-admin.site-platform
+    - stage-api.site-platform
+    - stage-ui.site-platform
+    - prod-admin.site-platform
+    - prod-api.site-platform
+    - prod-ui.site-platform
 
 additional_fqdns: []
 
 web_environment:
     - DRUPAL_ENV=dev
-    - DRUPAL_PRIMARY_DOMAIN=growbig-web.ddev.site
-    - DRUPAL_ADMIN_DOMAIN=admin.growbig-web.ddev.site
-    - DRUPAL_API_DOMAIN=api.growbig-web.ddev.site
-    - DRUPAL_UI_DOMAIN=ui.growbig-web.ddev.site
-    - DRUPAL_EXTRA_TRUSTED_HOSTS=dev-admin.growbig-web.ddev.site,dev-api.growbig-web.ddev.site,dev-ui.growbig-web.ddev.site,stage-admin.growbig-web.ddev.site,stage-api.growbig-web.ddev.site,stage-ui.growbig-web.ddev.site,prod-admin.growbig-web.ddev.site,prod-api.growbig-web.ddev.site,prod-ui.growbig-web.ddev.site
+    - DRUPAL_PRIMARY_DOMAIN=site-platform.ddev.site
+    - DRUPAL_ADMIN_DOMAIN=admin.site-platform.ddev.site
+    - DRUPAL_API_DOMAIN=api.site-platform.ddev.site
+    - DRUPAL_UI_DOMAIN=ui.site-platform.ddev.site
+    - DRUPAL_EXTRA_TRUSTED_HOSTS=dev-admin.site-platform.ddev.site,dev-api.site-platform.ddev.site,dev-ui.site-platform.ddev.site,stage-admin.site-platform.ddev.site,stage-api.site-platform.ddev.site,stage-ui.site-platform.ddev.site,prod-admin.site-platform.ddev.site,prod-api.site-platform.ddev.site,prod-ui.site-platform.ddev.site
 
 # Key features of DDEV's config.yaml:
 
