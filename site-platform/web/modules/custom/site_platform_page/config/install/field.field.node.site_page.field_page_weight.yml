@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_page_weight
+    - node.type.site_page
+id: node.site_page.field_page_weight
+field_name: field_page_weight
+entity_type: node
+bundle: site_page
+label: 'Weight'
+description: 'Sort weight for page admin listings.'
+required: false
+translatable: false
+default_value_callback: ''
+default_value:
+  -
+    value: 0
+settings: {  }
+field_type: integer
