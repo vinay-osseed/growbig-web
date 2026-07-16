@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_frontend_domains
+    - node.type.site_profile
+id: node.site_profile.field_frontend_domains
+field_name: field_frontend_domains
+entity_type: node
+bundle: site_profile
+label: 'Frontend domains'
+description: 'Public frontend domains, such as www.example.com.'
+required: false
+translatable: false
+default_value_callback: ''
+default_value: {  }
+settings: {  }
+field_type: string

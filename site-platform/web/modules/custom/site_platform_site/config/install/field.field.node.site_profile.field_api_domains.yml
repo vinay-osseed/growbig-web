@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_api_domains
+    - node.type.site_profile
+id: node.site_profile.field_api_domains
+field_name: field_api_domains
+entity_type: node
+bundle: site_profile
+label: 'API domains'
+description: 'API domains, such as api.example.com.'
+required: false
+translatable: false
+default_value_callback: ''
+default_value: {  }
+settings: {  }
+field_type: string

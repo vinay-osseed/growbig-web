@@ -1,0 +1,10 @@
+name: Site Platform Site
+type: module
+description: Provides the Site Profile content model for Site Platform.
+package: Site Platform
+core_version_requirement: ^11
+dependencies:
+  - drupal:node
+  - drupal:text
+  - drupal:user
+  - site_platform_core:site_platform_core
