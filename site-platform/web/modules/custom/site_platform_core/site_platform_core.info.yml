@@ -1,0 +1,6 @@
+name: Site Platform Core
+type: module
+description: Core contracts and services for the Site Platform backend.
+package: Site Platform
+core_version_requirement: ^11
+dependencies: []

@@ -1,0 +1,9 @@
+services:
+  site_platform_core.site_context_resolver:
+    class: Drupal\site_platform_core\Context\SiteContextResolver
+    arguments:
+      - '@request_stack'
+      - '@language_manager'
+
+  Drupal\site_platform_core\Context\SiteContextResolverInterface:
+    alias: site_platform_core.site_context_resolver
