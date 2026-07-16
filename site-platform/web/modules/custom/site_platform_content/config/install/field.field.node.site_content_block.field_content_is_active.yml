@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_content_is_active
+    - node.type.site_content_block
+id: node.site_content_block.field_content_is_active
+field_name: field_content_is_active
+entity_type: node
+bundle: site_content_block
+label: 'Active'
+description: 'Only active content blocks are exposed by API.'
+required: false
+translatable: false
+default_value_callback: ''
+default_value:
+  -
+    value: 1
+settings: {  }
+field_type: boolean

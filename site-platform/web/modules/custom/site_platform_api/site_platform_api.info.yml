@@ -11,3 +11,4 @@ dependencies:
   - site_platform_menu:site_platform_menu
   - site_platform_component:site_platform_component
   - site_platform_form:site_platform_form
+  - site_platform_content:site_platform_content

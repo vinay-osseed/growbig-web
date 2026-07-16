@@ -75,3 +75,31 @@ site_platform_api.form_submit:
     _access: 'TRUE'
     form: '[A-Za-z0-9_-]+'
   methods: [POST]
+
+site_platform_api.content:
+  path: '/api/v1/content'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\ContentApiController::content'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+
+site_platform_api.content_source:
+  path: '/api/v1/content/{source}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\ContentApiController::content'
+    key: ''
+  requirements:
+    _access: 'TRUE'
+    source: '[A-Za-z0-9_-]+'
+  methods: [GET]
+
+site_platform_api.content_item:
+  path: '/api/v1/content/{source}/{key}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\ContentApiController::contentItem'
+  requirements:
+    _access: 'TRUE'
+    source: '[A-Za-z0-9_-]+'
+    key: '[A-Za-z0-9_-]+'
+  methods: [GET]

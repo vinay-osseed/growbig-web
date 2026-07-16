@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_content_weight
+    - node.type.site_content_block
+id: node.site_content_block.field_content_weight
+field_name: field_content_weight
+entity_type: node
+bundle: site_content_block
+label: 'Weight'
+description: 'Sort weight for reusable content.'
+required: false
+translatable: false
+default_value_callback: ''
+default_value:
+  -
+    value: 0
+settings: {  }
+field_type: integer

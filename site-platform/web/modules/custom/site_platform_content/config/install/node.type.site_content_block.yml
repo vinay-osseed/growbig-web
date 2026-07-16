@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Site Content Block'
+type: site_content_block
+description: 'Represents reusable content assigned to a Site Profile.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false
