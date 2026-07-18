@@ -6,8 +6,8 @@ const heroStats = [
       </svg>
     ),
     label: 'Call Us',
-    value: '+91 00000 00000',
-    link: 'tel:+910000000000',
+    value: '+91 9146802212',
+    link: 'tel:+919146802212',
   },
   {
     icon: (
@@ -17,8 +17,8 @@ const heroStats = [
       </svg>
     ),
     label: 'Email Us',
-    value: 'hello@growbigtech.in',
-    link: 'mailto:hello@growbigtech.in',
+    value: 'office@growbigllp.com',
+    link: 'mailto:office@growbigllp.com',
   },
   {
     icon: (

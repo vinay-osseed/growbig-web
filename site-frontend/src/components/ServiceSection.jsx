@@ -10,7 +10,7 @@ const services = [
         <line x1="9" y1="21" x2="9" y2="9"/>
       </svg>
     ),
-    title: 'Website Development',
+    title: 'Website & Software Development',
     description:
       'Pixel-perfect, high-performance websites built with modern frameworks — from landing pages to enterprise portals.',
     color: '#3b82f6',
@@ -24,7 +24,7 @@ const services = [
         <line x1="12" y1="18" x2="12.01" y2="18"/>
       </svg>
     ),
-    title: 'Mobile App Development',
+    title: 'Mobile Application Developmentt',
     description:
       'Native and cross-platform apps for iOS and Android, crafted with seamless UX and robust backend integration.',
     color: '#7c3aed',
@@ -38,10 +38,52 @@ const services = [
         <polyline points="8 6 2 12 8 18"/>
       </svg>
     ),
-    title: 'Custom Software',
+    title: 'CRM & ERP Solution',
     description:
       'Tailored software solutions engineered around your business logic, workflows, and scaling requirements.',
     color: '#0d9488',
+    bg: 'rgba(13,148,136,0.08)',
+  },
+   {
+    id: 4,
+    icon: (
+      <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <polyline points="16 18 22 12 16 6"/>
+        <polyline points="8 6 2 12 8 18"/>
+      </svg>
+    ),
+    title: 'Digital Marketing Services',
+    description:
+      'Tailored software solutions engineered around your business logic, workflows, and scaling requirements.',
+    color: '#a36f2a',
+    bg: 'rgba(13,148,136,0.08)',
+  },
+  {
+    id: 5,
+    icon: (
+      <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <polyline points="16 18 22 12 16 6"/>
+        <polyline points="8 6 2 12 8 18"/>
+      </svg>
+    ),
+    title: 'BPO & Customer Support Solutions',
+    description:
+      'Tailored software solutions engineered around your business logic, workflows, and scaling requirements.',
+    color: '#9a236d',
+    bg: 'rgba(13,148,136,0.08)',
+  },
+   {
+    id: 6,
+    icon: (
+      <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <polyline points="16 18 22 12 16 6"/>
+        <polyline points="8 6 2 12 8 18"/>
+      </svg>
+    ),
+    title: 'AI & Automation Services',
+    description:
+      'Tailored software solutions engineered around your business logic, workflows, and scaling requirements.',
+    color: '#9a236d',
     bg: 'rgba(13,148,136,0.08)',
   },
 ]
@@ -85,7 +127,7 @@ export default function ServicesSection() {
               </div>
               <h3 className="mt-5 text-2xl font-bold tracking-tight text-slate-900">{s.title}</h3>
               <p className="mt-3 text-base leading-7 text-slate-600">{s.description}</p>
-              <button
+              {/*<button
                 className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold transition-all duration-200 hover:gap-3"
                 style={{ color: s.color }}
                 onClick={() => navigate('/#services')}
@@ -95,7 +137,7 @@ export default function ServicesSection() {
                   <line x1="5" y1="12" x2="19" y2="12"/>
                   <polyline points="12 5 19 12 12 19"/>
                 </svg>
-              </button>
+              </button>*/}
             </div>
           ))}
         </div>

@@ -12,7 +12,7 @@ export default function CareersCtaSection() {
         </p>
 
         <a
-          href="mailto:careers@growbigtech.in"
+          href="mailto:office@growbigllp.com"
           className="mt-8 inline-flex items-center gap-3 rounded-[1.5rem] bg-[#f08a00] px-8 py-4 text-base font-semibold text-white shadow-[0_22px_44px_rgba(240,138,0,0.38)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#ff9800]"
         >
           <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -20,7 +20,7 @@ export default function CareersCtaSection() {
             <path d="M3 7l9 6 9-6" />
           </svg>
 
-          careers@growbigtech.in
+          office@growbigllp.com
         </a>
       </div>
     </section>

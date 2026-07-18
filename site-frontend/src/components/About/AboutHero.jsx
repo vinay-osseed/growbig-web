@@ -7,7 +7,7 @@ export default function AboutHero() {
       <div className="relative mx-auto max-w-4xl text-center">
         <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-5 py-2 text-sm font-medium text-slate-300 backdrop-blur-sm">
           <span className="h-2 w-2 rounded-full bg-green-400" />
-          Est. 2020 · Sawantwadi, India
+          Company Overview and value
         </div>
 
         <h1 className="text-5xl font-black tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl">
@@ -16,11 +16,10 @@ export default function AboutHero() {
         </h1>
 
         <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-          A passionate team of engineers, designers, and strategists building digital
-          products that matter — for startups, SMEs, and enterprises across India.
+          We help businesses grow through innovative software development, AI solutions, digital marketing, and business process outsourcing—delivering reliable, scalable, and future-ready technology solutions.
         </p>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {/*<div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { num: '150+', label: 'Projects' },
             { num: '50+', label: 'Clients' },
@@ -32,7 +31,7 @@ export default function AboutHero() {
               <span className="mt-2 block text-sm text-slate-400">{stat.label}</span>
             </div>
           ))}
-        </div>
+        </div>*/}
       </div>
     </section>
   )

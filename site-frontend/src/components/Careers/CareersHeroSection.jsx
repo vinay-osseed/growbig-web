@@ -22,7 +22,7 @@ export default function CareersHeroSection() {
             Join a team that builds products used by real businesses, ships fast, and takes craftsmanship seriously. We hire for attitude and grow the skill.
           </p>
 
-          <div className="mt-10 grid max-w-xl grid-cols-3 gap-6">
+          {/*<div className="mt-10 grid max-w-xl grid-cols-3 gap-6">
             <div>
               <div className="text-3xl font-black tracking-[-0.04em] text-white">30+</div>
               <div className="mt-1 text-sm text-slate-400">Team Members</div>
@@ -35,7 +35,7 @@ export default function CareersHeroSection() {
               <div className="text-3xl font-black tracking-[-0.04em] text-white">92%</div>
               <div className="mt-1 text-sm text-slate-400">Retention Rate</div>
             </div>
-          </div>
+          </div>*/}
         </div>
 
         <div className="relative lg:justify-self-end">

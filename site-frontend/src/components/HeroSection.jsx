@@ -3,30 +3,26 @@ import { useNavigate } from 'react-router-dom'
 
 const slides = [
   {
-    label: 'Website Development',
+    label: 'Software Development',
     badge: 'Web Experts',
-    img: '',
+    img: '/Images/website Development Image.jpg',
   },
   {
     label: 'Expert Team',
     badge: 'Expert Team',
-    img: '',
+    img: '/Images/expert team.jpg',
   },
   {
-    label: 'Custom Software',
-    badge: 'Custom Dev',
-    img: '',
+    label: 'Customer Support',
+    badge: 'Customer support',
+    img: '/Images/customer support.jpg',
   },
   {
-    label: 'Cloud Solutions',
-    badge: 'Cloud First',
-    img: '',
+    label: 'Business processing outsourcing',
+    badge: 'Bpo',
+    img: '/Images/bpo.jpg',
   },
-  {
-    label: 'AI-Powered',
-    badge: 'AI Driven',
-    img: '',
-  },
+ 
 ]
 
 export default function HeroSection() {
@@ -98,6 +94,7 @@ export default function HeroSection() {
           </div>
 
           {/* Stats — plain, no container */}
+          {/*
           <div className="mt-10 flex flex-wrap items-center gap-8">
             <div>
               <span className="block text-3xl font-extrabold tracking-tight text-white">150+</span>
@@ -113,8 +110,8 @@ export default function HeroSection() {
               <span className="block text-3xl font-extrabold tracking-tight text-white">6+</span>
               <span className="mt-1 block text-sm text-slate-400">Years Experience</span>
             </div>
-          </div>
-        </div>
+          </div>*/}
+        </div> 
 
         {/* ── Right: Photo slideshow ── */}
         <div className="mx-auto w-full max-w-xl lg:max-w-none">

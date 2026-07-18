@@ -26,7 +26,7 @@ export default function ContactInfoPanel() {
           {[
             {
               label: 'LinkedIn',
-              href: '#',
+              href: 'https://www.linkedin.com/company/growbig-technologies/',
               icon: (
                 <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path d="M16 8a6 6 0 016 6v6h-4v-6a2 2 0 00-4 0v6h-4v-12h4v2" />
@@ -37,7 +37,7 @@ export default function ContactInfoPanel() {
             },
             {
               label: 'Instagram',
-              href: '#',
+              href: 'https://www.instagram.com/growbigllp/',
               icon: (
                 <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <rect x="3" y="3" width="18" height="18" rx="5" />
@@ -46,7 +46,7 @@ export default function ContactInfoPanel() {
                 </svg>
               ),
             },
-            {
+            /*{
               label: 'Facebook',
               href: '#',
               icon: (
@@ -64,11 +64,13 @@ export default function ContactInfoPanel() {
                   <path d="M15 22v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0018 4.77 5.07 5.07 0 0017.91 1S16.73.65 15 2.48a13.38 13.38 0 00-6 0C7.27.65 6.09 1 6.09 1A5.07 5.07 0 006 4.77a5.44 5.44 0 00-1.5 3.75c0 5.42 3.3 6.63 6.44 7A3.37 3.37 0 0010 18.13V22" />
                 </svg>
               ),
-            },
+            },*/
           ].map((item) => (
             <a
               key={item.label}
               href={item.href}
+               target="_blank"
+               rel="noopener noreferrer"
               className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 text-slate-700 transition hover:border-blue-200 hover:bg-white hover:text-slate-950"
             >
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-sm">

@@ -45,10 +45,8 @@ export default function MissionVisionSection() {
             </h3>
 
             <p className="mt-3 text-sm leading-7 text-slate-600">
-              To deliver world-class digital solutions that empower
-              businesses—big and small—to compete, grow, and thrive in a
-              technology-first world. We measure our success by the growth we
-              create for our clients.
+             Deliver scalable, reliable & cost-effective digital solutions while building
+             long-term client partnerships.
             </p>
 
           </article>
@@ -75,10 +73,7 @@ export default function MissionVisionSection() {
             </h3>
 
             <p className="mt-3 text-sm leading-7 text-slate-600">
-              To be the most trusted technology partner for businesses by
-              delivering innovative, scalable, and reliable digital solutions
-              while building long-term relationships through excellence and
-              integrity.
+            To become a globally trusted technology and outsourcing partner.
             </p>
 
           </article>

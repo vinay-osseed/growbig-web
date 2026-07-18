@@ -1,12 +1,12 @@
 import { useState } from 'react'
 
 const services = [
-  'Website Development',
-  'Mobile App Development',
-  'Custom Software',
-  'Cloud Solutions',
-  'AI-Powered Software',
-  'Branding & Design',
+  'Website & Software Development',
+  'Mobile Application Development',
+  'CRM & ERP Solutions',
+  'Digital Marketing Services',
+  'BPO & Marketing Services',
+  'AI & Marketing Setvices',
   'Other',
 ]
 
