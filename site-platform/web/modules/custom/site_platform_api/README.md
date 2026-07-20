@@ -60,3 +60,13 @@ Form endpoints are Webform-first.
     POST /api/v1/forms/{form}/submit
 
 When a site-scoped Webform exists, submissions are stored as `webform_submission` entities. The old `site_form_submission` node storage remains only as a legacy fallback.
+
+
+## Media
+
+Media endpoints are site-scoped and return stable reusable media assets.
+
+    GET /api/v1/media
+    GET /api/v1/media/{key}
+
+The media API returns metadata and URL references only. Binary file ingestion/import remains a later production hardening step.

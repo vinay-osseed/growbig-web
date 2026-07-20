@@ -1,0 +1,12 @@
+name: Site Platform Media
+type: module
+description: Provides reusable site-scoped media asset records for Site Platform.
+package: Site Platform
+core_version_requirement: ^11
+dependencies:
+  - drupal:node
+  - drupal:options
+  - drupal:text
+  - site_platform_core:site_platform_core
+  - site_platform_site:site_platform_site
+  - site_platform_page:site_platform_page

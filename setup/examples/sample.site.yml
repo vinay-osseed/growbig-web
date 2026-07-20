@@ -6,26 +6,78 @@ site:
   defaultLanguage: en
   enabledLanguages:
     - en
-  timezone: Asia/Kolkata
+  timezone: UTC
   domains:
     frontend:
-      - www.yamltest.ddev.site
-      - yamltest.ddev.site
+      - www.yamltest-web.ddev.site
     api:
-      - api.yamltest.ddev.site
+      - api.yamltest-web.ddev.site
     admin:
-      - admin.yamltest.ddev.site
+      - admin.yamltest-web.ddev.site
+  branding:
+    logoUrl: /assets/demo/yaml-logo.svg
+    faviconUrl: /assets/demo/yaml-favicon.ico
+    primaryColor: '#1f6feb'
+  contact:
+    email: hello@example.com
+    phone: '+1 555 0100'
+    address: YAML Test Address
+  analytics:
+    gaMeasurementId: G-YAMLTEST
+    gtmContainerId: GTM-YAMLTEST
+
+media_assets:
+  - key: hero-image
+    title: YAML Hero Image
+    kind: image
+    url: /assets/demo/yaml-hero.png
+    alt: YAML hero image
+    credit: Site Platform demo
+    weight: 0
+    demo: true
+  - key: brochure
+    title: YAML Brochure
+    kind: file
+    url: /assets/demo/yaml-brochure.pdf
+    alt: YAML brochure PDF
+    credit: Site Platform demo
+    weight: 10
+    demo: true
 
 pages:
   - key: home
     title: YAML Test Home
     slug: home
-    path: /
+    path: /home
     template: landing
-    seoTitle: YAML Test Site
+    seoTitle: YAML Test Home
     seoDescription: YAML imported home page.
     weight: 0
     demo: true
+    components:
+      - type: hero
+        key: home_hero
+        variant: split
+        adminLabel: YAML home hero
+        title: YAML Test Site
+        summary: This hero was imported from setup YAML.
+        mediaUrl: /assets/demo/yaml-hero.png
+        buttonLabel: Contact us
+        buttonPath: /contact
+      - type: rich_text
+        key: home_intro
+        variant: default
+        adminLabel: YAML home intro
+        title: YAML-driven setup
+        body: Pages, content, menus, forms, media assets, and components can now be imported from YAML.
+      - type: cta
+        key: home_cta
+        variant: dark
+        adminLabel: YAML home CTA
+        title: Ready to build from YAML?
+        summary: The setup runner can now create page component data.
+        buttonLabel: Start setup
+        buttonPath: /contact
   - key: about
     title: YAML Test About
     slug: about
@@ -35,31 +87,31 @@ pages:
     seoDescription: About page imported from YAML.
     weight: 10
     demo: true
+    components:
+      - type: rich_text
+        key: about_intro
+        variant: default
+        adminLabel: YAML about intro
+        title: About YAML Test
+        body: This about page component was imported through the setup runner.
 
 menus:
   - key: main
     title: YAML Main Menu
-    label: Main menu
-    weight: 0
-    active: true
-    demo: true
     items:
       - key: home
         title: Home
-        linkType: page
-        page: home
+        url: /home
         weight: 0
       - key: about
         title: About
-        linkType: page
-        page: about
+        url: /about
         weight: 10
       - key: contact
         title: Contact
-        linkType: path
-        path: /contact
-        isButton: true
+        url: /contact
         weight: 20
+        isButton: true
 
 forms:
   - key: contact
@@ -69,44 +121,36 @@ forms:
     label: Contact YAML Test
     description: Send a message to YAML Test.
     successMessage: Thanks for contacting YAML Test.
-    active: true
-    demo: true
     fields:
-      - key: name
-        type: text
-        label: Name
-        required: true
-        placeholder: Your name
-        weight: 0
       - key: email
         type: email
         label: Email
         required: true
         placeholder: you@example.com
-        weight: 10
+        weight: 0
       - key: message
         type: textarea
         label: Message
         required: true
-        placeholder: How can we help?
-        weight: 20
+        placeholder: Message
+        weight: 10
 
 content:
   - source: global
-    key: footer_cta
-    title: YAML Footer CTA
-    label: Footer CTA
-    variant: default
-    summary: Imported reusable footer CTA.
-    body: This reusable content block was imported from YAML.
+    key: footer_note
+    title: YAML Footer Note
+    label: Footer note
+    variant: footer
+    summary: YAML footer summary
+    body: This footer content was imported from setup YAML.
     weight: 0
     demo: true
-  - source: global
-    key: announcement
-    title: YAML Announcement
-    label: Announcement
-    variant: banner
-    summary: YAML setup import is working.
-    body: This block verifies setup import output.
+  - source: home
+    key: intro_copy
+    title: YAML Home Intro Copy
+    label: Home intro copy
+    variant: default
+    summary: Reusable copy for the YAML home page.
+    body: This reusable content block is scoped to the YAML test site.
     weight: 10
     demo: true

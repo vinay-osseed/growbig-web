@@ -103,3 +103,21 @@ site_platform_api.content_item:
     source: '[A-Za-z0-9_-]+'
     key: '[A-Za-z0-9_-]+'
   methods: [GET]
+
+
+site_platform_api.media:
+  path: '/api/v1/media'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\MediaApiController::media'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+
+site_platform_api.media_item:
+  path: '/api/v1/media/{key}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\MediaApiController::mediaItem'
+  requirements:
+    _access: 'TRUE'
+    key: '[A-Za-z0-9_-]+'
+  methods: [GET]

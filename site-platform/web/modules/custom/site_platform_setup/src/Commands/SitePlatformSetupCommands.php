@@ -31,6 +31,7 @@ final class SitePlatformSetupCommands extends DrushCommands {
     'site_form_field' => 'Site Form Field',
     'site_form_submission' => 'Site Form Submission',
     'site_content_block' => 'Site Content Block',
+    'site_media_asset' => 'Site Media Asset',
   ];
 
   /**
@@ -45,6 +46,7 @@ final class SitePlatformSetupCommands extends DrushCommands {
     'site_menu_item' => 'Site Menu Item',
     'site_menu' => 'Site Menu',
     'site_content_block' => 'Site Content Block',
+    'site_media_asset' => 'Site Media Asset',
     'site_page' => 'Site Page',
     'site_profile' => 'Site Profile',
   ];
@@ -76,6 +78,7 @@ final class SitePlatformSetupCommands extends DrushCommands {
     $this->output()->writeln('- manage Site Menu and Site Menu Item records');
     $this->output()->writeln('- manage Webform-backed Site Form records');
     $this->output()->writeln('- manage reusable Site Content Block records');
+    $this->output()->writeln('- manage reusable Site Media Asset records');
     $this->output()->writeln('- track demo records for safe reset');
     $this->output()->writeln('- reset one setup-managed site by site key');
     $this->output()->writeln('- track setup completion and lock status');
@@ -265,6 +268,7 @@ final class SitePlatformSetupCommands extends DrushCommands {
       'forms' => 0,
       'formFields' => 0,
       'contentBlocks' => 0,
+      'mediaAssets' => 0,
     ];
 
     $site = $this->importSiteProfile($site_data, $dry_run);
@@ -301,6 +305,14 @@ final class SitePlatformSetupCommands extends DrushCommands {
       $summary['formFields'] += $form_summary['fields'];
     }
 
+    foreach (($data['media_assets'] ?? []) as $media_data) {
+      if (!is_array($media_data)) {
+        continue;
+      }
+      $this->importMediaAsset($site_data, $site, $media_data, $dry_run);
+      $summary['mediaAssets']++;
+    }
+
     foreach (($data['content'] ?? []) as $content_data) {
       if (!is_array($content_data)) {
         continue;
@@ -330,6 +342,7 @@ final class SitePlatformSetupCommands extends DrushCommands {
     $this->output()->writeln('Site Form Fields: ' . $summary['formFields']);
     $this->output()->writeln('Webforms: ' . $summary['forms']);
     $this->output()->writeln('Site Content Blocks: ' . $summary['contentBlocks']);
+    $this->output()->writeln('Site Media Assets: ' . $summary['mediaAssets']);
   }
 
   /**
@@ -1079,6 +1092,58 @@ final class SitePlatformSetupCommands extends DrushCommands {
     $this->setIfFieldExists($content, 'field_demo_source', 'setup_import:' . (string) $siteData['key']);
 
     $content->save();
+  }
+
+  /**
+   * Imports one Site Media Asset.
+   *
+   * @param array<string, mixed> $siteData
+   *   Site data.
+   * @param array<string, mixed> $data
+   *   Media asset data.
+   */
+  private function importMediaAsset(array $siteData, ?NodeInterface $site, array $data, bool $dryRun): void {
+    if ($dryRun) {
+      return;
+    }
+
+    if (!$site instanceof NodeInterface) {
+      throw new \RuntimeException('Media asset import requires a saved Site Profile.');
+    }
+
+    $storage = $this->entityTypeManager->getStorage('node');
+    $key = (string) ($data['key'] ?? '');
+    if ($key === '') {
+      throw new \InvalidArgumentException('Every media_assets entry must include key.');
+    }
+
+    $media = $this->loadNode('site_media_asset', [
+      'field_site_profile.target_id' => (int) $site->id(),
+      'field_media_key' => $key,
+    ]);
+
+    if (!$media instanceof NodeInterface) {
+      $media = $storage->create([
+        'type' => 'site_media_asset',
+        'title' => (string) ($data['title'] ?? $key),
+        'status' => 1,
+        'uid' => 1,
+      ]);
+    }
+
+    $media->setTitle((string) ($data['title'] ?? $key));
+    $this->setIfFieldExists($media, 'field_site_profile', ['target_id' => $site->id()]);
+    $this->setIfFieldExists($media, 'field_media_key', $key);
+    $this->setIfFieldExists($media, 'field_media_kind', (string) ($data['kind'] ?? 'image'));
+    $this->setIfFieldExists($media, 'field_media_url', (string) ($data['url'] ?? ''));
+    $this->setIfFieldExists($media, 'field_media_alt', (string) ($data['alt'] ?? ''));
+    $this->setIfFieldExists($media, 'field_media_credit', (string) ($data['credit'] ?? ''));
+    $this->setIfFieldExists($media, 'field_media_weight', (int) ($data['weight'] ?? 0));
+    $this->setIfFieldExists($media, 'field_media_is_active', (bool) ($data['active'] ?? TRUE));
+    $this->setIfFieldExists($media, 'field_is_demo', (bool) ($data['demo'] ?? TRUE));
+    $this->setIfFieldExists($media, 'field_demo_source', 'setup_import:' . (string) $siteData['key']);
+
+    $media->save();
   }
 
   /**

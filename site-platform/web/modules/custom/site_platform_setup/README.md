@@ -86,3 +86,17 @@ A form entry can include:
         title: Contact Form
 
 The `site_form` and `site_form_field` node records remain as compatibility wrappers, but real form submissions should be stored as Webform submissions.
+
+
+## Media Assets
+
+Setup YAML can now import reusable site-scoped media asset records.
+
+    media_assets:
+      - key: hero-image
+        title: Hero Image
+        kind: image
+        url: /assets/demo/hero.jpg
+        alt: Hero image
+
+The current phase stores URL/reference metadata. Full binary file import can be added later without changing the public API shape.

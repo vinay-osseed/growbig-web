@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Site Media Asset'
+type: site_media_asset
+description: 'Represents a reusable media asset assigned to a Site Profile.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false
