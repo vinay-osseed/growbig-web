@@ -1,35 +1,19 @@
 # Site Platform Form
 
-## Purpose
+Site Platform Form contains the legacy/simple form wrapper content types from Phase 09.
 
-Site Platform Form owns the first decoupled form model.
+Real production forms must be backed by Drupal Webform.
 
-A Site Form belongs to one Site Profile and exposes a stable form key to frontend APIs.
+Use Webform for:
 
-## Content Types
+- contact forms
+- job application forms
+- inquiry/lead forms
+- forms with email handlers
+- forms with conditional logic
+- forms with file uploads
+- forms that need exports and admin review
 
-This module adds:
+The public API may continue to expose stable `/api/v1/forms/{form}` and `/api/v1/forms/{form}/submit` endpoints, but Webform is now the primary storage for real form schemas and submissions.
 
-- Site Form
-- Site Form Field
-- Site Form Submission
-
-## Current Scope
-
-This is a lightweight platform-owned form foundation.
-
-It supports:
-
-- field schema output
-- required-field validation
-- JSON submission storage
-
-Later phases can add:
-
-- Webform integration
-- email handlers
-- spam protection
-- CRM integrations
-- submission export
-- field option validation
-- advanced field types
+The legacy `site_form_submission` node type remains only as a backward-compatible fallback. New Webform-backed submissions must be saved as `webform_submission` entities, not nodes.

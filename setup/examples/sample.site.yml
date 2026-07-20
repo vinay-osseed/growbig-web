@@ -26,30 +26,6 @@ pages:
     seoDescription: YAML imported home page.
     weight: 0
     demo: true
-    components:
-      - type: hero
-        key: home_hero
-        variant: split
-        adminLabel: YAML home hero
-        title: YAML Test Site
-        summary: This hero was imported from setup YAML.
-        mediaUrl: /assets/demo/yaml-hero.png
-        buttonLabel: Contact us
-        buttonPath: /contact
-      - type: rich_text
-        key: home_intro
-        variant: default
-        adminLabel: YAML home intro
-        title: YAML-driven setup
-        body: Pages, content, menus, forms, and components can now be imported from YAML.
-      - type: cta
-        key: home_cta
-        variant: dark
-        adminLabel: YAML home CTA
-        title: Ready to build from YAML?
-        summary: The setup runner can now create page component data.
-        buttonLabel: Start setup
-        buttonPath: /contact
   - key: about
     title: YAML Test About
     slug: about
@@ -59,13 +35,6 @@ pages:
     seoDescription: About page imported from YAML.
     weight: 10
     demo: true
-    components:
-      - type: rich_text
-        key: about_intro
-        variant: default
-        adminLabel: YAML about intro
-        title: About YAML Test
-        body: This about page component was imported through the setup runner.
 
 menus:
   - key: main
@@ -94,6 +63,8 @@ menus:
 
 forms:
   - key: contact
+    storage: webform
+    webformId: yamltest_contact
     title: YAML Contact Form
     label: Contact YAML Test
     description: Send a message to YAML Test.

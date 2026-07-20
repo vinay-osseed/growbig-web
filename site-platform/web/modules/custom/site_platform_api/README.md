@@ -51,3 +51,12 @@ Errors use:
 This API returns Site Profile, Site Page, route, basic Site Menu, basic component, basic form, and reusable content data.
 
 Advanced multilingual fallback comes later.
+
+## Forms
+
+Form endpoints are Webform-first.
+
+    GET  /api/v1/forms/{form}
+    POST /api/v1/forms/{form}/submit
+
+When a site-scoped Webform exists, submissions are stored as `webform_submission` entities. The old `site_form_submission` node storage remains only as a legacy fallback.

@@ -47,3 +47,11 @@ It does not include:
 - advanced conditional logic
 
 Those come later.
+
+## Phase 09B Correction
+
+Real forms are now Webform-first.
+
+The original `site_form`, `site_form_field`, and `site_form_submission` node model remains only as a legacy/simple fallback. Production forms such as contact forms, inquiry forms, and job applications should be Webform-backed.
+
+New API submissions should save as `webform_submission` records when a matching Webform exists.

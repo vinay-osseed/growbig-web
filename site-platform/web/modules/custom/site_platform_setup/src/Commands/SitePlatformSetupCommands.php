@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\State\StateInterface;
 use Drupal\node\NodeInterface;
 use Drupal\paragraphs\ParagraphInterface;
+use Drupal\webform\Entity\Webform;
 use Drush\Commands\DrushCommands;
 
 /**
@@ -73,7 +74,7 @@ final class SitePlatformSetupCommands extends DrushCommands {
     $this->output()->writeln('- manage Site Page records');
     $this->output()->writeln('- manage page component records');
     $this->output()->writeln('- manage Site Menu and Site Menu Item records');
-    $this->output()->writeln('- manage Site Form and Site Form Field records');
+    $this->output()->writeln('- manage Webform-backed Site Form records');
     $this->output()->writeln('- manage reusable Site Content Block records');
     $this->output()->writeln('- track demo records for safe reset');
     $this->output()->writeln('- reset one setup-managed site by site key');
@@ -327,6 +328,7 @@ final class SitePlatformSetupCommands extends DrushCommands {
     $this->output()->writeln('Site Menu Items: ' . $summary['menuItems']);
     $this->output()->writeln('Site Forms: ' . $summary['forms']);
     $this->output()->writeln('Site Form Fields: ' . $summary['formFields']);
+    $this->output()->writeln('Webforms: ' . $summary['forms']);
     $this->output()->writeln('Site Content Blocks: ' . $summary['contentBlocks']);
   }
 
@@ -783,6 +785,11 @@ final class SitePlatformSetupCommands extends DrushCommands {
       throw new \InvalidArgumentException('Every form entry must include key.');
     }
 
+    // Webform is now the primary storage for real forms/submissions.
+    // The legacy Site Form node is kept as a wrapper so older API/setup checks
+    // and existing records continue to work during the transition.
+    $this->importWebform($siteData, $data, $fields);
+
     $form = $this->loadNode('site_form', [
       'field_site_profile.target_id' => (int) $site->id(),
       'field_form_key' => $form_key,
@@ -818,7 +825,164 @@ final class SitePlatformSetupCommands extends DrushCommands {
   }
 
   /**
-   * Imports one Site Form Field.
+   * Creates or updates the Webform backing one Site Platform form.
+   *
+   * @param array<string, mixed> $siteData
+   *   Site data.
+   * @param array<string, mixed> $data
+   *   Form data.
+   * @param array<int, mixed> $fields
+   *   Form field data.
+   */
+  private function importWebform(array $siteData, array $data, array $fields): Webform {
+    if (!class_exists(Webform::class)) {
+      throw new \RuntimeException('The Webform module must be installed before importing forms.');
+    }
+
+    $site_key = (string) ($siteData['key'] ?? 'site');
+    $form_key = (string) ($data['key'] ?? 'form');
+    $webform_id = $this->machineName((string) ($data['webformId'] ?? ($site_key . '_' . $form_key)));
+
+    $webform = Webform::load($webform_id);
+    if (!$webform instanceof Webform) {
+      $webform = Webform::create([
+        'id' => $webform_id,
+      ]);
+    }
+
+    $webform->set('title', (string) ($data['label'] ?? $data['title'] ?? $form_key));
+    $webform->set('description', (string) ($data['description'] ?? ''));
+    $webform->set('status', !empty($data['active'] ?? TRUE) ? 'open' : 'closed');
+
+    $settings = $webform->get('settings') ?? [];
+    $settings = is_array($settings) ? $settings : [];
+    $settings['confirmation_type'] = 'message';
+    $settings['confirmation_message'] = (string) ($data['successMessage'] ?? 'Thank you.');
+    $webform->set('settings', $settings);
+
+    $elements = [];
+    foreach ($fields as $field_data) {
+      if (is_array($field_data)) {
+        $element = $this->buildWebformElement($field_data);
+        if ($element !== []) {
+          $elements[(string) $field_data['key']] = $element;
+        }
+      }
+    }
+
+    if (method_exists($webform, 'setElements')) {
+      $webform->setElements($elements);
+    }
+    else {
+      $webform->set('elements', Yaml::encode($elements));
+    }
+
+    $webform->save();
+
+    return $webform;
+  }
+
+  /**
+   * Builds one Webform element from setup YAML field data.
+   *
+   * @param array<string, mixed> $data
+   *   Field data.
+   *
+   * @return array<string, mixed>
+   *   Webform element definition.
+   */
+  private function buildWebformElement(array $data): array {
+    $key = (string) ($data['key'] ?? '');
+    if ($key === '') {
+      return [];
+    }
+
+    $type = (string) ($data['type'] ?? 'text');
+    $element = [
+      '#type' => $this->webformElementType($type),
+      '#title' => (string) ($data['label'] ?? $key),
+      '#required' => (bool) ($data['required'] ?? FALSE),
+      '#weight' => (int) ($data['weight'] ?? 0),
+    ];
+
+    if (!empty($data['placeholder'])) {
+      $element['#placeholder'] = (string) $data['placeholder'];
+    }
+
+    if (!empty($data['help'])) {
+      $element['#description'] = (string) $data['help'];
+    }
+
+    $options = $this->parseOptions($data['options'] ?? []);
+    if ($options !== []) {
+      $element['#options'] = $options;
+    }
+
+    return $element;
+  }
+
+  /**
+   * Maps existing Site Platform field types to Webform element types.
+   */
+  private function webformElementType(string $type): string {
+    return match ($type) {
+      'text' => 'textfield',
+      'tel', 'phone' => 'tel',
+      'url', 'link' => 'url',
+      'select' => 'select',
+      'radio', 'radios' => 'radios',
+      'checkboxes' => 'checkboxes',
+      'checkbox' => 'checkbox',
+      'number' => 'number',
+      'date' => 'date',
+      'file' => 'managed_file',
+      default => $type,
+    };
+  }
+
+  /**
+   * Parses field options from YAML arrays or newline strings.
+   *
+   * @return array<string, string>
+   *   Options keyed by value.
+   */
+  private function parseOptions(mixed $options): array {
+    if (is_array($options)) {
+      $parsed = [];
+      foreach ($options as $key => $value) {
+        if (is_array($value)) {
+          continue;
+        }
+        $parsed[(string) $key] = (string) $value;
+      }
+      return $parsed;
+    }
+
+    $options = trim((string) $options);
+    if ($options === '') {
+      return [];
+    }
+
+    $parsed = [];
+    foreach (preg_split('/\\R/', $options) ?: [] as $line) {
+      $line = trim($line);
+      if ($line === '') {
+        continue;
+      }
+      if (str_contains($line, '|')) {
+        [$key, $label] = array_map('trim', explode('|', $line, 2));
+        $parsed[$key] = $label;
+      }
+      else {
+        $parsed[$this->machineName($line)] = $line;
+      }
+    }
+
+    return $parsed;
+  }
+
+  /**
+   * Imports one legacy Site Form Field wrapper node.
    *
    * @param array<string, mixed> $siteData
    *   Site data.
@@ -1108,6 +1272,17 @@ final class SitePlatformSetupCommands extends DrushCommands {
     }
 
     $node->set($field, $items);
+  }
+
+  /**
+   * Normalizes a value into a Drupal config machine name.
+   */
+  private function machineName(string $value): string {
+    $value = strtolower(trim($value));
+    $value = preg_replace('/[^a-z0-9_]+/', '_', str_replace('-', '_', $value)) ?: $value;
+    $value = trim($value, '_');
+
+    return $value !== '' ? $value : 'item';
   }
 
   /**

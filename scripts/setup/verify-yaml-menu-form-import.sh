@@ -19,7 +19,7 @@ done
 
 php -l site-platform/web/modules/custom/site_platform_setup/src/Commands/SitePlatformSetupCommands.php >/dev/null
 
-ddev drush en site_platform_core site_platform_site site_platform_page site_platform_menu site_platform_component site_platform_form site_platform_content site_platform_setup site_platform_api -y
+ddev drush en webform site_platform_core site_platform_site site_platform_page site_platform_menu site_platform_component site_platform_form site_platform_content site_platform_setup site_platform_api -y
 ddev drush cr
 
 dry_run_output="$(ddev drush site-platform:setup-import /var/www/html/setup/examples/sample.site.yml --dry-run)"
@@ -43,9 +43,11 @@ invalid_json="$(curl -s -X POST 'https://site-platform.ddev.site/api/v1/forms/co
 printf '%s' "$menu_json" | grep -q '"title":"Home"'
 printf '%s' "$menu_json" | grep -q '"title":"About"'
 printf '%s' "$menu_json" | grep -q '"isButton":true'
+printf '%s' "$form_json" | grep -q '"type":"Webform"'
+printf '%s' "$form_json" | grep -q '"storage":"webform"'
 printf '%s' "$form_json" | grep -q '"label":"Contact YAML Test"'
 printf '%s' "$form_json" | grep -q '"key":"email"'
-printf '%s' "$submit_json" | grep -q '"submissionId"'
+printf '%s' "$submit_json" | grep -q '"submissionId":"webform_submission-'
 printf '%s' "$invalid_json" | grep -q '"code":"validation_failed"'
 
 echo "YAML menu and form import verification passed."

@@ -72,3 +72,17 @@ Later setup phases can add:
 - media import
 - full idempotent site setup
 - demo content replacement
+
+## Webform-backed Forms
+
+Forms imported from setup YAML are Webform-backed.
+
+A form entry can include:
+
+    forms:
+      - key: contact
+        storage: webform
+        webformId: yamltest_contact
+        title: Contact Form
+
+The `site_form` and `site_form_field` node records remain as compatibility wrappers, but real form submissions should be stored as Webform submissions.
