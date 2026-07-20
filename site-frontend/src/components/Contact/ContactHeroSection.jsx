@@ -42,7 +42,7 @@ export default function ContactHeroSection() {
       <div className="relative mx-auto max-w-4xl text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-sm font-semibold text-amber-300 shadow-[0_0_0_1px_rgba(245,158,11,0.08)]">
           <span className="h-2 w-2 rounded-full bg-emerald-400" />
-          We typically reply within 4 hours
+          We typically reply within few hours
         </div>
 
         <h1 className="mt-8 text-5xl font-black tracking-[-0.05em] text-white sm:text-6xl lg:text-[4.6rem] lg:leading-[0.98]">

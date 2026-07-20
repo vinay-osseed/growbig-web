@@ -20,15 +20,15 @@ export default function MissionVisionSection() {
         </div>
 
         {/* Cards */}
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
+        <div className="mt-16 grid gap-10 md:grid-cols-2">
 
           {/* Mission */}
-          <article className="rounded-[1.75rem] border border-slate-200 bg-white p-7 shadow-[0_20px_50px_rgba(15,23,42,0.05)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
+          <article className="min-h-[290px] rounded-[1.75rem] border border-slate-200 bg-white p-8 shadow-[0_20px_50px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
 
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-500">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-blue-500">
               <svg
-                width="24"
-                height="24"
+                width="30"
+                height="30"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -40,24 +40,25 @@ export default function MissionVisionSection() {
               </svg>
             </div>
 
-            <h3 className="mt-5 text-xl font-bold tracking-[-0.02em] text-slate-900">
+            <h3 className="mt-6 text-2xl font-bold tracking-[-0.02em] text-slate-900">
               Our Mission
             </h3>
 
-            <p className="mt-3 text-sm leading-7 text-slate-600">
-             Deliver scalable, reliable & cost-effective digital solutions while building
-             long-term client partnerships.
+            <p className="mt-4 text-base leading-8 text-slate-600">
+              Deliver scalable, reliable, and cost-effective digital
+              solutions while building long-term client partnerships through
+              innovation, quality, and customer-focused development.
             </p>
 
           </article>
 
           {/* Vision */}
-          <article className="rounded-[1.75rem] border border-slate-200 bg-white p-7 shadow-[0_20px_50px_rgba(15,23,42,0.05)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
+          <article className="min-h-[290px] rounded-[1.75rem] border border-slate-200 bg-white p-8 shadow-[0_20px_50px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
 
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-50 text-orange-500">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-50 text-orange-500">
               <svg
-                width="24"
-                height="24"
+                width="30"
+                height="30"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -68,12 +69,14 @@ export default function MissionVisionSection() {
               </svg>
             </div>
 
-            <h3 className="mt-5 text-xl font-bold tracking-[-0.02em] text-slate-900">
+            <h3 className="mt-6 text-2xl font-bold tracking-[-0.02em] text-slate-900">
               Our Vision
             </h3>
 
-            <p className="mt-3 text-sm leading-7 text-slate-600">
-            To become a globally trusted technology and outsourcing partner.
+            <p className="mt-4 text-base leading-8 text-slate-600">
+              To become a globally trusted technology and outsourcing partner
+              by delivering innovative digital solutions that empower
+              businesses to grow and succeed.
             </p>
 
           </article>

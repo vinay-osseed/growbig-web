@@ -21,15 +21,15 @@ const serviceLinks = [
 ]
 
 const socialLinks = [
- /* {
+  {
     label: 'Facebook',
-    href: '#',
+    href: 'https://www.facebook.com/share/182RC2vgWz/',
     icon: (
       <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
         <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.234 2.686.234v2.953H15.83c-1.491 0-1.956.93-1.956 1.886v2.287h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
       </svg>
     ),
-  },*/
+  },
   {
     label: 'LinkedIn',
     href: 'https://www.linkedin.com/company/growbig-technologies/',
@@ -129,7 +129,10 @@ export default function Footer() {
             </div>
             <div className="mt-6 flex gap-3">
               {socialLinks.map((s) => (
-                <a key={s.label} href={s.href} className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-white" aria-label={s.label} title={s.label}>
+                <a key={s.label} href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-white" aria-label={s.label} title={s.label}>
                   {s.icon}
                 </a>
               ))}

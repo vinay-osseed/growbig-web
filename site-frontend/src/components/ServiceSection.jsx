@@ -5,94 +5,102 @@ const services = [
     id: 1,
     icon: (
       <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-        <line x1="3" y1="9" x2="21" y2="9"/>
-        <line x1="9" y1="21" x2="9" y2="9"/>
+        <path d="M8 6L3 12L8 18" />
+        <path d="M16 6L21 12L16 18" />
       </svg>
     ),
-    title: 'Website & Software Development',
+    title: "Website & Software Development",
     description:
-      'Pixel-perfect, high-performance websites built with modern frameworks — from landing pages to enterprise portals.',
-    color: '#3b82f6',
-    bg: 'rgba(59,130,246,0.08)',
+      "Custom websites and software solutions designed to improve business operations, performance, and user experience.",
+    color: "#3b82f6",
+    bg: "rgba(59,130,246,0.08)",
   },
+
   {
     id: 2,
     icon: (
       <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
-        <line x1="12" y1="18" x2="12.01" y2="18"/>
+        <rect x="7" y="2" width="10" height="20" rx="2" />
+        <circle cx="12" cy="18" r="1" />
       </svg>
     ),
-    title: 'Mobile Application Developmentt',
+    title: "Mobile Application Development",
     description:
-      'Native and cross-platform apps for iOS and Android, crafted with seamless UX and robust backend integration.',
-    color: '#7c3aed',
-    bg: 'rgba(124,58,237,0.08)',
+      "High-performance Android and iOS mobile applications built with intuitive design and seamless functionality.",
+    color: "#7c3aed",
+    bg: "rgba(124,58,237,0.08)",
   },
+
   {
     id: 3,
     icon: (
       <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-        <polyline points="16 18 22 12 16 6"/>
-        <polyline points="8 6 2 12 8 18"/>
+        <circle cx="8" cy="8" r="2" />
+        <circle cx="16" cy="8" r="2" />
+        <circle cx="12" cy="16" r="2" />
+        <line x1="8" y1="8" x2="12" y2="16" />
+        <line x1="16" y1="8" x2="12" y2="16" />
       </svg>
     ),
-    title: 'CRM & ERP Solution',
+    title: "CRM & ERP Solution",
     description:
-      'Tailored software solutions engineered around your business logic, workflows, and scaling requirements.',
-    color: '#0d9488',
-    bg: 'rgba(13,148,136,0.08)',
+      "Powerful CRM and ERP systems that automate workflows, improve productivity, and streamline business management.",
+    color: "#0d9488",
+    bg: "rgba(13,148,136,0.08)",
   },
-   {
+
+  {
     id: 4,
     icon: (
       <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-        <polyline points="16 18 22 12 16 6"/>
-        <polyline points="8 6 2 12 8 18"/>
+        <path d="M3 11L22 2L13 21L11 13L3 11Z" />
       </svg>
     ),
-    title: 'Digital Marketing Services',
+    title: "Digital Marketing Services",
     description:
-      'Tailored software solutions engineered around your business logic, workflows, and scaling requirements.',
-    color: '#a36f2a',
-    bg: 'rgba(13,148,136,0.08)',
+      "Grow your online presence with SEO, social media marketing, paid advertising, branding, and content strategies.",
+    color: "#a36f2a",
+    bg: "rgba(163,111,42,0.08)",
   },
+
   {
     id: 5,
     icon: (
       <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-        <polyline points="16 18 22 12 16 6"/>
-        <polyline points="8 6 2 12 8 18"/>
+        <path d="M4 12a8 8 0 0 1 16 0" />
+        <rect x="2" y="11" width="4" height="7" rx="2" />
+        <rect x="18" y="11" width="4" height="7" rx="2" />
+        <path d="M12 20h2" />
       </svg>
     ),
-    title: 'BPO & Customer Support Solutions',
+    title: "BPO & Customer Support Solutions",
     description:
-      'Tailored software solutions engineered around your business logic, workflows, and scaling requirements.',
-    color: '#9a236d',
-    bg: 'rgba(13,148,136,0.08)',
+      "Professional customer support and business process outsourcing services that enhance customer satisfaction and efficiency.",
+    color: "#9a236d",
+    bg: "rgba(154,35,109,0.08)",
   },
-   {
+
+  {
     id: 6,
     icon: (
       <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-        <polyline points="16 18 22 12 16 6"/>
-        <polyline points="8 6 2 12 8 18"/>
+        <rect x="7" y="7" width="10" height="10" rx="2" />
+        <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+        <path d="M5 5l2 2M17 17l2 2M19 5l-2 2M5 19l2-2" />
       </svg>
     ),
-    title: 'AI & Automation Services',
+    title: "AI & Automation Services",
     description:
-      'Tailored software solutions engineered around your business logic, workflows, and scaling requirements.',
-    color: '#9a236d',
-    bg: 'rgba(13,148,136,0.08)',
+      "Intelligent AI-powered solutions and workflow automation to reduce manual effort, improve accuracy, and boost productivity.",
+    color: "#52409b",
+    bg: "rgba(82,64,155,0.08)",
   },
-]
-
+];
 export default function ServicesSection() {
   const navigate = useNavigate()
 
   return (
-    <section className="bg-white py-28">
+    <section id="services" className="bg-white py-28">
 
       <div className="max-w-[1440px] mx-auto px-8 lg:px-12">
 

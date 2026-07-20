@@ -82,19 +82,19 @@ export default function AboutValuesSection() {
   {values.map((v) => (
     <article
       key={v.title}
-      className="rounded-[1.75rem] border border-slate-200 bg-white p-7 shadow-[0_20px_50px_rgba(15,23,42,0.05)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+      className="min-h-[310px] rounded-[1.75rem] border border-slate-200 bg-white p-8 shadow-[0_20px_50px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
     >
       <div
-        className={`flex h-14 w-14 items-center justify-center rounded-2xl ${v.badge}`}
+        className={`flex h-16 w-16 items-center justify-center rounded-2xl ${v.badge}`}
       >
         {v.icon}
       </div>
 
-      <h3 className="mt-5 text-xl font-bold tracking-[-0.02em] text-slate-900">
+      <h3 className="mt-6 text-2xl font-bold tracking-[-0.02em] text-slate-900 leading-snug">
         {v.title}
       </h3>
 
-      <p className="mt-3 text-sm leading-7 text-slate-600">
+      <p className="mt-4 text-base leading-8 text-slate-600">
         {v.desc}
       </p>
     </article>

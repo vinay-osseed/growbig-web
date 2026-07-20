@@ -97,52 +97,75 @@
 //   )
 // }
 
+import { FiMapPin, FiBriefcase, FiClock } from "react-icons/fi";
+
 export default function CareersOpenRolesSection() {
   return (
-    <section className="bg-white px-6 py-20 sm:py-24 lg:px-8">
-      <div className="mx-auto max-w-7xl text-center">
+    <section className="bg-white py-28">
+      <div className="mx-auto max-w-7xl px-6">
         {/* Badge */}
-        <div className="inline-flex rounded-full border border-amber-200 bg-amber-50 px-5 py-2 text-sm font-semibold uppercase tracking-[0.18em] text-orange-600">
-          Open Roles
+        <div className="flex justify-center">
+          <span className="rounded-full border border-[#FDBA74] bg-[#FFF7ED] px-6 py-2 text-[15px] font-semibold uppercase tracking-[2px] text-[#F97316]">
+            Open Roles
+          </span>
         </div>
 
         {/* Heading */}
-        <h2 className="mt-6 text-3xl font-black tracking-[-0.05em] text-slate-950 sm:text-5xl lg:text-5xl">
+        <h2 className="mt-6 text-center text-[48px] font-extrabold text-[#0B1F4D]">
           Current Openings
         </h2>
 
-        {/* Description */}
-        <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-slate-600">
-          We're expanding our team and exciting career opportunities will be available soon.
+        <p className="mx-auto mt-6 max-w-3xl text-center text-[22px] leading-10 text-[#64748B]">
+          Join our growing team and build your career with GrowBig
+          Technologies.
         </p>
 
-        {/* Coming Soon Card */}
-        <div className="mx-auto mt-16 max-w-3xl rounded-[2rem] border border-slate-200 bg-white p-12 shadow-[0_20px_50px_rgba(15,23,42,0.08)]">
-          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-orange-100">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-10 w-10 text-orange-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M13 16h-1v-4h-1m1-4h.01M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"
-              />
-            </svg>
+        {/* Job Card */}
+        <div className="mx-auto mt-20 max-w-4xl rounded-[32px] border border-[#E5E7EB] bg-white p-10 shadow-[0_15px_50px_rgba(15,23,42,0.08)] transition hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(15,23,42,0.12)]">
+          <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h3 className="text-[34px] font-bold text-[#0B1F4D]">
+                Customer Support Executive
+              </h3>
+
+              <div className="mt-5 flex flex-wrap gap-5 text-[16px] text-[#64748B]">
+                <span className="flex items-center gap-2">
+                  <FiMapPin />
+                  Sawantwadi, Maharashtra
+                </span>
+
+                <span className="flex items-center gap-2">
+                  <FiBriefcase />
+                  Rotational Shifts
+                </span>
+
+                <span className="flex items-center gap-2">
+                  <FiClock />
+                  0–2 Years Experience
+                </span>
+              </div>
+
+              <p className="mt-8 max-w-2xl text-[18px] leading-8 text-[#475569]">
+                We are looking for a Customer Support Executive with excellent
+                communication skills to assist customers, resolve queries, and
+                deliver outstanding service while working closely with our
+                internal teams.
+              </p>
+            </div>
+
+            <div className="flex justify-center">
+              <button className="rounded-full bg-[#2563EB] px-8 py-4 text-[17px] font-semibold text-white transition hover:bg-[#1D4ED8]">
+                Apply Now
+              </button>
+            </div>
           </div>
+        </div>
 
-          <h3 className="mt-8 text-4xl font-extrabold text-slate-900">
-            Coming Soon
-          </h3>
-
-          <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-slate-600">
-            We are currently preparing exciting career opportunities for talented
-            individuals. Stay connected and check back soon to explore openings
-            and become a part of the GrowBig Technologies team.
+        {/* Bottom Note */}
+        <div className="mt-12 text-center">
+          <p className="text-[18px] text-[#64748B]">
+            🚀 More exciting career opportunities will be announced soon. Stay
+            connected with GrowBig Technologies.
           </p>
         </div>
       </div>

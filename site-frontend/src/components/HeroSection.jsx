@@ -50,7 +50,7 @@ export default function HeroSection() {
           {/* Badge */}
           <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-slate-200 backdrop-blur-sm">
             <span className="h-2.5 w-2.5 rounded-full bg-orange-400" />
-            Premium IT Solutions · Est. 2020
+            🚀 Empowering Digital Growth
           </div>
 
           {/* Heading */}
@@ -70,7 +70,7 @@ export default function HeroSection() {
           </p>
 
           {/* Buttons */}
-          <div className="mt-8 flex flex-wrap gap-4">
+          {/*<div className="mt-8 flex flex-wrap gap-4">
             <button
               className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/30 transition hover:-translate-y-0.5 hover:bg-blue-700"
               onClick={() => navigate('/contact')}
@@ -91,7 +91,7 @@ export default function HeroSection() {
                 <polyline points="12 5 19 12 12 19" />
               </svg>
             </button>
-          </div>
+          </div>*/}
 
           {/* Stats — plain, no container */}
           {/*
