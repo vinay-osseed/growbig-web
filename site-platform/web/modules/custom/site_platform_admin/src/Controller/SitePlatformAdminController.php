@@ -52,9 +52,9 @@ final class SitePlatformAdminController extends ControllerBase {
    * Constructs the controller.
    */
   public function __construct(
-    private readonly EntityTypeManagerInterface $entityTypeManager,
-    private readonly StateInterface $state,
-    private readonly ModuleHandlerInterface $moduleHandler,
+    private readonly EntityTypeManagerInterface $sitePlatformEntityTypeManager,
+    private readonly StateInterface $sitePlatformState,
+    private readonly ModuleHandlerInterface $sitePlatformModuleHandler,
   ) {
   }
 
@@ -143,10 +143,10 @@ final class SitePlatformAdminController extends ControllerBase {
    *   Table rows.
    */
   private function setupRows(): array {
-    $last_run = $this->state->get('site_platform_setup.last_run');
-    $last_import = $this->state->get('site_platform_setup.last_import');
-    $last_reset = $this->state->get('site_platform_setup.last_site_reset');
-    $completion = $this->state->get('site_platform_setup.completion');
+    $last_run = $this->sitePlatformState->get('site_platform_setup.last_run');
+    $last_import = $this->sitePlatformState->get('site_platform_setup.last_import');
+    $last_reset = $this->sitePlatformState->get('site_platform_setup.last_site_reset');
+    $completion = $this->sitePlatformState->get('site_platform_setup.completion');
 
     return [
       ['Last run', $this->formatStateSummary($last_run, 'status', 'ranAt')],
@@ -166,7 +166,7 @@ final class SitePlatformAdminController extends ControllerBase {
   private function moduleRows(): array {
     $rows = [];
     foreach (self::PLATFORM_MODULES as $module => $label) {
-      $rows[] = [$label . ' (' . $module . ')', $this->moduleHandler->moduleExists($module) ? 'enabled' : 'disabled'];
+      $rows[] = [$label . ' (' . $module . ')', $this->sitePlatformModuleHandler->moduleExists($module) ? 'enabled' : 'disabled'];
     }
 
     return $rows;
@@ -192,7 +192,7 @@ final class SitePlatformAdminController extends ControllerBase {
    */
   private function countBundle(string $bundle): int {
     try {
-      $ids = $this->entityTypeManager->getStorage('node')
+      $ids = $this->sitePlatformEntityTypeManager->getStorage('node')
         ->getQuery()
         ->accessCheck(FALSE)
         ->condition('type', $bundle)

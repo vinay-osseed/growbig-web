@@ -8,16 +8,6 @@ required=(
   "docs/implementation/phase-25-api-contract-handoff.md"
   "docs/api/site-platform-v2-api-contract.md"
   "site-platform/web/modules/custom/site_platform_api/site_platform_api.routing.yml"
-  "site-platform/web/modules/custom/site_platform_api/src/Controller/SiteApiController.php"
-  "site-platform/web/modules/custom/site_platform_api/src/Controller/PageApiController.php"
-  "site-platform/web/modules/custom/site_platform_api/src/Controller/RouteApiController.php"
-  "site-platform/web/modules/custom/site_platform_api/src/Controller/MenuApiController.php"
-  "site-platform/web/modules/custom/site_platform_api/src/Controller/FormApiController.php"
-  "site-platform/web/modules/custom/site_platform_api/src/Controller/ContentApiController.php"
-  "site-platform/web/modules/custom/site_platform_api/src/Controller/MediaApiController.php"
-  "site-platform/web/modules/custom/site_platform_api/src/Controller/SeoApiController.php"
-  "site-platform/web/modules/custom/site_platform_api/src/Controller/AnalyticsApiController.php"
-  "site-platform/web/modules/custom/site_platform_api/src/Controller/SearchApiController.php"
 )
 
 for file in "${required[@]}"; do
@@ -27,19 +17,50 @@ for file in "${required[@]}"; do
   fi
 done
 
+php <<'PHP'
+<?php
+$routes = 'site-platform/web/modules/custom/site_platform_api/site_platform_api.routing.yml';
+$text = file_get_contents($routes);
+if ($text === false) {
+  fwrite(STDERR, "Unable to read: $routes\n");
+  exit(1);
+}
+
+$pattern = '/_controller:\s*[\'\"]?\\\\Drupal\\\\site_platform_api\\\\Controller\\\\([A-Za-z0-9_]+)::/';
+preg_match_all($pattern, $text, $matches);
+$classes = array_values(array_unique($matches[1] ?? []));
+
+if ($classes === []) {
+  fwrite(STDERR, "No site_platform_api controllers found in routing file.\n");
+  exit(1);
+}
+
+foreach ($classes as $class) {
+  $file = "site-platform/web/modules/custom/site_platform_api/src/Controller/$class.php";
+  if (!is_file($file)) {
+    fwrite(STDERR, "Missing controller file referenced by routing: $file\n");
+    exit(1);
+  }
+}
+PHP
+
 routes="site-platform/web/modules/custom/site_platform_api/site_platform_api.routing.yml"
 for route in \
   "/api/v1/site" \
   "/api/v1/pages" \
+  "/api/v1/pages/{slug}" \
   "/api/v1/routes" \
+  "/api/v1/routes/{path}" \
   "/api/v1/menus" \
+  "/api/v1/menus/{menu}" \
   "/api/v1/forms/{form}" \
+  "/api/v1/forms/{form}/submit" \
   "/api/v1/content" \
   "/api/v1/media" \
   "/api/v1/seo" \
   "/api/v1/analytics" \
   "/api/v1/search"; do
-  grep -q "$route" "$routes"
+  grep -Fq "$route" "$routes"
 done
 
 for endpoint in \
@@ -50,7 +71,7 @@ for endpoint in \
   "GET /api/v1/seo" \
   "GET /api/v1/analytics" \
   "GET /api/v1/search?q=term"; do
-  grep -q "$endpoint" docs/api/site-platform-v2-api-contract.md
+  grep -Fq "$endpoint" docs/api/site-platform-v2-api-contract.md
 done
 
 echo "API contract handoff verification passed."
