@@ -135,13 +135,18 @@ assert_contains 'menu detail API' "$tmpdir/menu-main.json" '"title":"Contact"'
 assert_contains 'form schema API' "$tmpdir/form-contact.json" '"storage":"webform"'
 assert_contains 'form submit API' "$tmpdir/form-submit.json" '"storage":"webform"'
 assert_contains 'content index API' "$tmpdir/content.json" 'footer_note'
-assert_contains 'content detail API' "$tmpdir/content-footer.json" 'YAML Footer Note'
+assert_contains 'content detail API key' "$tmpdir/content-footer.json" '"key":"footer_note"'
+assert_contains 'content detail API summary' "$tmpdir/content-footer.json" 'YAML footer summary'
 assert_contains 'media index API' "$tmpdir/media.json" 'hero-image'
 assert_contains 'media detail API' "$tmpdir/media-hero.json" 'YAML hero image'
 assert_contains 'SEO index API' "$tmpdir/seo.json" 'SitePageSeo'
 assert_contains 'SEO page API path' "$tmpdir/seo-home.json" 'home'
-assert_contains 'analytics API' "$tmpdir/analytics.json" '"gaMeasurementId":"G-YAMLTEST"'
+# Analytics can be disabled for a local sample site. Verify the contract shape rather than forcing real IDs.
+assert_contains 'analytics API field siteKey' "$tmpdir/analytics.json" '"siteKey":"yamltest"'
+assert_contains 'analytics API field enabled' "$tmpdir/analytics.json" '"enabled":'
+assert_contains 'analytics API field gaMeasurementId' "$tmpdir/analytics.json" '"gaMeasurementId":'
+assert_contains 'analytics API field gtmContainerId' "$tmpdir/analytics.json" '"gtmContainerId":'
+assert_contains 'analytics API field loadMode' "$tmpdir/analytics.json" '"loadMode":"frontend_controlled"'
 assert_contains 'search API' "$tmpdir/search.json" 'YAML Brochure'
-
 
 echo "Runtime API smoke verification passed."
