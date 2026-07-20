@@ -1,0 +1,6 @@
+site_platform_admin.overview:
+  title: 'Site Platform'
+  description: 'Review Site Platform backend status and managed records.'
+  route_name: site_platform_admin.overview
+  parent: system.admin
+  weight: -5

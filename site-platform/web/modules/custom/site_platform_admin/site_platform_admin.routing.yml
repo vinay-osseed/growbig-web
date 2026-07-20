@@ -1,0 +1,9 @@
+site_platform_admin.overview:
+  path: '/admin/site-platform'
+  defaults:
+    _controller: '\Drupal\site_platform_admin\Controller\SitePlatformAdminController::overview'
+    _title: 'Site Platform'
+  requirements:
+    _permission: 'administer site platform'
+  options:
+    _admin_route: TRUE

@@ -1,0 +1,18 @@
+name: Site Platform Admin
+type: module
+description: Provides Site Platform admin dashboard and permission foundation.
+package: Site Platform
+core_version_requirement: ^11
+dependencies:
+  - drupal:node
+  - webform:webform
+  - site_platform_core:site_platform_core
+  - site_platform_site:site_platform_site
+  - site_platform_page:site_platform_page
+  - site_platform_menu:site_platform_menu
+  - site_platform_component:site_platform_component
+  - site_platform_form:site_platform_form
+  - site_platform_content:site_platform_content
+  - site_platform_media:site_platform_media
+  - site_platform_api:site_platform_api
+  - site_platform_setup:site_platform_setup
