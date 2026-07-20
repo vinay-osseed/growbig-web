@@ -70,3 +70,15 @@ Media endpoints are site-scoped and return stable reusable media assets.
     GET /api/v1/media/{key}
 
 The media API returns metadata and URL references only. Binary file ingestion/import remains a later production hardening step.
+
+
+## SEO, Analytics, and Search
+
+Additional backend foundation endpoints:
+
+    GET /api/v1/seo
+    GET /api/v1/seo/page/{slug}
+    GET /api/v1/analytics
+    GET /api/v1/search?q=term
+
+SEO and analytics are API-first. A future production phase can integrate contrib Metatag, full sitemap generation, and a stronger search index without changing the current frontend contract.

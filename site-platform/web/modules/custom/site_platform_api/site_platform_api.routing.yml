@@ -121,3 +121,36 @@ site_platform_api.media_item:
     _access: 'TRUE'
     key: '[A-Za-z0-9_-]+'
   methods: [GET]
+
+site_platform_api.seo:
+  path: '/api/v1/seo'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\SeoApiController::seo'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+
+site_platform_api.seo_page:
+  path: '/api/v1/seo/page/{slug}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\SeoApiController::seoPage'
+  requirements:
+    _access: 'TRUE'
+    slug: '[A-Za-z0-9_-]+'
+  methods: [GET]
+
+site_platform_api.analytics:
+  path: '/api/v1/analytics'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\AnalyticsApiController::analytics'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+
+site_platform_api.search:
+  path: '/api/v1/search'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\SearchApiController::search'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
