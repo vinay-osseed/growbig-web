@@ -1,0 +1,122 @@
+# GrowBig real-site YAML draft for Site Platform v2.
+# Replace all TODO values before importing into any shared or production environment.
+# Do not store secrets in this file.
+
+site:
+  key: growbig
+  name: GrowBig
+  status: draft
+  domains:
+    frontend: TODO_GROWBIG_FRONTEND_DOMAIN
+    api: TODO_GROWBIG_API_DOMAIN
+    admin: TODO_GROWBIG_ADMIN_DOMAIN
+  language: en
+  is_demo: false
+
+pages:
+  - key: home
+    title: GrowBig Home
+    path: /home
+    status: draft
+    seo_key: home
+    components:
+      - type: hero
+        key: home_hero
+        title: TODO Home hero title
+        body: TODO Home hero body
+        weight: 0
+      - type: content
+        key: home_intro
+        title: TODO Intro title
+        body: TODO Intro content
+        weight: 10
+
+  - key: about
+    title: About GrowBig
+    path: /about
+    status: draft
+    seo_key: about
+    components:
+      - type: content
+        key: about_intro
+        title: TODO About title
+        body: TODO About content
+        weight: 0
+
+  - key: contact
+    title: Contact GrowBig
+    path: /contact
+    status: draft
+    seo_key: contact
+    components:
+      - type: form_reference
+        key: contact_form_section
+        title: Contact GrowBig
+        form_key: contact
+        weight: 0
+
+menus:
+  - key: main
+    label: Main menu
+    items:
+      - title: Home
+        path: /home
+        weight: 0
+      - title: About
+        path: /about
+        weight: 10
+      - title: Contact
+        path: /contact
+        weight: 20
+
+forms:
+  - key: contact
+    label: Contact form
+    webform_id: growbig_contact
+    storage: webform
+    status: draft
+    notes: TODO configure Webform fields, email handlers, confirmation, spam protection, and retention.
+
+content_blocks:
+  - source: global
+    key: footer_note
+    label: Footer note
+    variant: footer
+    summary: TODO GrowBig footer summary
+    body: TODO GrowBig footer content
+    weight: 0
+
+media_assets:
+  - key: hero-image
+    label: Hero image
+    asset_type: image
+    url: TODO_GROWBIG_HERO_IMAGE_URL
+    alt: TODO GrowBig hero image alt text
+    summary: TODO GrowBig hero image summary
+    is_demo: false
+
+seo:
+  - key: home
+    page_key: home
+    title: TODO GrowBig home SEO title
+    description: TODO GrowBig home SEO description
+    canonical_path: /home
+    robots: index,follow
+  - key: about
+    page_key: about
+    title: TODO GrowBig about SEO title
+    description: TODO GrowBig about SEO description
+    canonical_path: /about
+    robots: index,follow
+  - key: contact
+    page_key: contact
+    title: TODO GrowBig contact SEO title
+    description: TODO GrowBig contact SEO description
+    canonical_path: /contact
+    robots: index,follow
+
+analytics:
+  enabled: false
+  ga_measurement_id: ""
+  gtm_container_id: ""
+  load_mode: frontend_controlled
