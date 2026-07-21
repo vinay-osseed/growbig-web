@@ -4,21 +4,21 @@ export default function CareersHeroSection() {
       <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.08)_1px,transparent_1px)] bg-[size:64px_64px] opacity-35" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_18%,rgba(37,99,235,0.32),transparent_32%),radial-gradient(circle_at_82%_20%,rgba(249,115,22,0.2),transparent_20%),linear-gradient(180deg,rgba(15,23,42,0.25),rgba(15,23,42,0.9))]" />
 
-      <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:px-8 lg:py-24">
+      <div className="relative mx-auto grid max-w-7xl gap-10 px-5 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:px-8 lg:py-24">
         <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/35 bg-amber-500/10 px-4 py-2 text-sm font-semibold text-amber-300 shadow-[0_0_0_1px_rgba(245,158,11,0.08)]">
+          <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/35 bg-amber-500/10 px-3 py-2 text-xs sm:px-4 sm:text-sm font-semibold text-amber-300">
             <span className="text-base leading-none">◼</span>
-            We’re Hiring · 6 Open Roles
+            We’re Hiring 
           </div>
 
-          <h1 className="mt-8 text-5xl font-black tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
+          <h1 className="mt-8 text-4xl font-black tracking-[-0.05em] text-white sm:text-5xl lg:text-7xl">
             Build Your Career at
             <span className="block bg-[linear-gradient(90deg,#2563eb_0%,#3b82f6_38%,#f59e0b_100%)] bg-clip-text text-transparent">
               GrowBig
             </span>
           </h1>
 
-          <p className="mt-6 max-w-xl text-lg leading-8 text-slate-300 sm:text-xl">
+          <p className="mt-6 max-w-xl text-base leading-7 text-slate-300 sm:text-lg lg:text-xl">
             Join a team that builds products used by real businesses, ships fast, and takes craftsmanship seriously. We hire for attitude and grow the skill.
           </p>
 
@@ -39,6 +39,30 @@ export default function CareersHeroSection() {
         </div>
 
         <div className="relative lg:justify-self-end">
+
+
+  {/* Mobile Version */}
+  <div className="lg:hidden mt-10">
+    <div className="rounded-3xl border border-white/10 bg-slate-800/60 p-6 backdrop-blur-md shadow-2xl">
+
+      <div className="flex justify-center">
+        <div className="flex h-28 w-28 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-amber-400 text-5xl">
+          💼
+        </div>
+      </div>
+
+      <h3 className="mt-6 text-center text-xl font-bold">
+        Grow With Us
+      </h3>
+
+      <p className="mt-3 text-center text-sm leading-6 text-slate-300">
+        Join passionate people building technology that creates real impact.
+        Learn, innovate and build your future with GrowBig Technologies.
+      </p>
+
+    </div>
+  </div>
+           <div className="hidden lg:block">
           <div className="absolute -left-4 top-10 hidden h-28 w-28 rounded-full bg-blue-500/15 blur-3xl lg:block" />
           <div className="absolute -right-10 bottom-6 hidden h-36 w-36 rounded-full bg-amber-500/15 blur-3xl lg:block" />
 
@@ -111,6 +135,7 @@ export default function CareersHeroSection() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   )

@@ -1,28 +1,35 @@
+import michealImg from "../../assets/micheal.png";
+import VinayakImg from "../../assets/Vinayak.png";
+import manishImg from "../../assets/manish.jpeg";
+import HeenaImg from "../../assets/Heena.jpg";
+import sushantImg from "../../assets/sushant.png";
+
+
 const leaders = [
   {
-    name: "Micheal Diago",
-    role: "Director",
-    image: "",
+    name: "Michael D'souza",
+    role: "CEO",
+    image: michealImg,
   },
   {
     name: "Sushant Paste",
     role: "Director",
-    image: "",
+    image: sushantImg,
   },
   {
-    name: "Vinayak Jhadav",
+    name: "Vinayak Jadhav",
     role: "Director",
-    image: "",
+    image: VinayakImg,
   },
   {
     name: "Manish Jadhav",
     role: "HR Admin ",
-    image: "",
+    image: manishImg,
   },
   {
     name: "Heena Shaikh",
     role: "Manager",
-    image: "",
+    image: HeenaImg,
   },
 ];
 
@@ -81,3 +88,4 @@ export default function AboutLeadershipSection() {
     </section>
   );
 }
+
