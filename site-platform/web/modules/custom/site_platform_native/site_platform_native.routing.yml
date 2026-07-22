@@ -27,6 +27,15 @@ site_platform_native.api_bootstrap:
   options:
     _format: 'json'
 
+site_platform_native.api_pages:
+  path: '/api/v2/pages'
+  defaults:
+    _controller: '\Drupal\site_platform_native\Controller\NativeApiController::pages'
+  requirements:
+    _permission: 'access content'
+  options:
+    _format: 'json'
+
 site_platform_native.api_page:
   path: '/api/v2/pages/{slug}'
   defaults:
@@ -46,6 +55,15 @@ site_platform_native.api_navigation:
   options:
     _format: 'json'
 
+site_platform_native.api_forms:
+  path: '/api/v2/forms'
+  defaults:
+    _controller: '\Drupal\site_platform_native\Controller\NativeApiController::forms'
+  requirements:
+    _permission: 'access content'
+  options:
+    _format: 'json'
+
 site_platform_native.api_form:
   path: '/api/v2/forms/{webform_id}'
   defaults:
@@ -53,6 +71,15 @@ site_platform_native.api_form:
   requirements:
     _permission: 'access content'
     webform_id: '[A-Za-z0-9_\-]+'
+  options:
+    _format: 'json'
+
+site_platform_native.api_datasets:
+  path: '/api/v2/datasets'
+  defaults:
+    _controller: '\Drupal\site_platform_native\Controller\NativeApiController::datasets'
+  requirements:
+    _permission: 'access content'
   options:
     _format: 'json'
 
