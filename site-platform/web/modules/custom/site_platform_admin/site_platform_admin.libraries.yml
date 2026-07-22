@@ -1,0 +1,5 @@
+admin_workspace:
+  version: 1.x
+  css:
+    theme:
+      css/site-platform-admin.css: {}

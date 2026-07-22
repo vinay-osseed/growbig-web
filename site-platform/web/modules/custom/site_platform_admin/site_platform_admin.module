@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * Runtime helpers for the Site Platform Admin module.
+ */
+
+/**
+ * Implements hook_page_attachments().
+ */
+function site_platform_admin_page_attachments(array &$attachments): void {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+
+  if (is_string($route_name) && str_starts_with($route_name, 'site_platform_admin.')) {
+    $attachments['#attached']['library'][] = 'site_platform_admin/admin_workspace';
+  }
+}
