@@ -17,7 +17,7 @@ use Drupal\node\NodeInterface;
 function site_platform_admin_page_attachments(array &$attachments): void {
   $route_name = \Drupal::routeMatch()->getRouteName();
 
-  if (is_string($route_name) && str_starts_with($route_name, 'site_platform_admin.')) {
+  if (is_string($route_name) && (str_starts_with($route_name, 'site_platform_admin.') || str_starts_with($route_name, 'entity.node.'))) {
     $attachments['#attached']['library'][] = 'site_platform_admin/admin_workspace';
   }
 }
@@ -26,10 +26,6 @@ function site_platform_admin_page_attachments(array &$attachments): void {
  * Implements hook_form_alter().
  */
 function site_platform_admin_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
-  if (!isset($form['#form_id']) || !is_string($form['#form_id'])) {
-    return;
-  }
-
   $form_object = $form_state->getFormObject();
   if (!is_object($form_object) || !method_exists($form_object, 'getEntity')) {
     return;
@@ -55,6 +51,16 @@ function site_platform_admin_form_alter(array &$form, FormStateInterface $form_s
  * Improves the Landing Page editor form.
  */
 function site_platform_admin_alter_page_form(array &$form, NodeInterface $node): void {
+  $form['site_platform_page_builder_guide'] = [
+    '#type' => 'details',
+    '#title' => t('Page Builder Guide: what to add and in what order'),
+    '#open' => TRUE,
+    '#weight' => -110,
+    'content' => [
+      '#markup' => site_platform_admin_page_builder_guide_markup(),
+    ],
+  ];
+
   $form['site_platform_editor_guide'] = [
     '#type' => 'details',
     '#title' => t('Frontend / API handoff'),
@@ -66,22 +72,20 @@ function site_platform_admin_alter_page_form(array &$form, NodeInterface $node):
   ];
 
   if (isset($form['field_site_profile']['widget'])) {
-    $form['field_site_profile']['widget']['#description'] = t('Choose the site/brand this page belongs to. This should be a dropdown for editors, not a search-only field.');
+    $form['field_site_profile']['widget']['#description'] = t('Choose the site/brand this page belongs to. This is intentionally a dropdown for editors.');
   }
   if (isset($form['field_page_key']['widget'])) {
-    $form['field_page_key']['widget']['#description'] = t('Stable internal page key used by the API, for example home, about, contact.');
+    $form['field_page_key']['widget']['#description'] = t('Stable internal page key used by the API, for example home, about, services, careers, or contact.');
   }
   if (isset($form['field_page_slug']['widget'])) {
-    $form['field_page_slug']['widget']['#description'] = t('URL slug without a leading slash, for example home or about-us.');
+    $form['field_page_slug']['widget']['#description'] = t('URL slug without a leading slash, for example home, about-us, services, or contact.');
   }
   if (isset($form['field_page_path']['widget'])) {
-    $form['field_page_path']['widget']['#description'] = t('Frontend path with a leading slash, for example / or /about-us.');
+    $form['field_page_path']['widget']['#description'] = t('Frontend path with a leading slash, for example /, /about, /services, /careers, or /contact.');
   }
-  if (isset($form['field_seo_title']['widget'])) {
-    $form['field_seo_title']['widget']['#description'] = t('SEO/browser title for this page.');
-  }
-  if (isset($form['field_seo_description']['widget'])) {
-    $form['field_seo_description']['widget']['#description'] = t('SEO meta description for search/social previews.');
+  if (isset($form['field_page_components'])) {
+    $form['field_page_components']['#title'] = t('Page sections');
+    $form['field_page_components']['#description'] = t('Build the page from ordered frontend sections. Use Hero, Section Header, Card Grid, Partner Strip, Image + Text, CTA, FAQ, Contact, or Webform Embed as needed.');
   }
 
   foreach (['field_page_template', 'field_page_weight', 'field_is_demo', 'field_demo_source'] as $technical_field) {
@@ -101,7 +105,7 @@ function site_platform_admin_alter_site_profile_form(array &$form, NodeInterface
     '#open' => TRUE,
     '#weight' => -100,
     'content' => [
-      '#markup' => '<p>This record controls one brand/site. Use media selectors for logo/favicon and structured social link rows instead of pasting untracked text blobs.</p>',
+      '#markup' => '<div class="site-platform-handoff"><p><strong>Start here for one brand/site.</strong> Add the logo, favicon, brand color, domain values, contact details, and social links. Landing Pages, Content Blocks, Media Assets, and Forms reference this Site Profile.</p></div>',
     ],
   ];
 
@@ -122,7 +126,7 @@ function site_platform_admin_alter_media_asset_form(array &$form, NodeInterface 
     '#open' => TRUE,
     '#weight' => -100,
     'content' => [
-      '#markup' => '<p>Select a Drupal Media Library item whenever possible. The old URL field remains only as fallback compatibility.</p>',
+      '#markup' => '<div class="site-platform-handoff"><p>Select a Drupal Media Library item whenever possible. The old URL field remains only as fallback compatibility.</p></div>',
     ],
   ];
 }
@@ -172,6 +176,24 @@ function site_platform_admin_entity_view_alter(array &$build, EntityInterface $e
 }
 
 /**
+ * Builds the editor page builder guide.
+ */
+function site_platform_admin_page_builder_guide_markup(): string {
+  return '<div class="site-platform-builder-guide">'
+    . '<p><strong>Recommended homepage order:</strong></p>'
+    . '<ol>'
+    . '<li><strong>Hero</strong> - main headline, short copy, CTA button, and hero media/slider image.</li>'
+    . '<li><strong>Section Header</strong> - eyebrow and title for the next group, such as "What we do" and "Our Services".</li>'
+    . '<li><strong>Card Grid</strong> - add Card Items for services, features, industries, job benefits, or leadership cards.</li>'
+    . '<li><strong>Section Header</strong> - introduce partners, ecosystem, process, testimonials, FAQ, or contact.</li>'
+    . '<li><strong>Partner / Logo Strip</strong> - add Partner Items for country/partner/logo blocks.</li>'
+    . '<li><strong>Image + Text</strong>, <strong>Stats Grid</strong>, <strong>Process Steps</strong>, <strong>Testimonials</strong>, <strong>FAQ</strong>, <strong>CTA</strong>, or <strong>Contact / Webform Embed</strong> as needed for the page.</li>'
+    . '</ol>'
+    . '<p><strong>For the current GrowBig homepage screenshot:</strong> use Hero, Section Header, Card Grid with six service Card Items, Section Header, Partner / Logo Strip with two Partner Items, then footer/contact data from Site Profile and Content Blocks.</p>'
+    . '</div>';
+}
+
+/**
  * Builds page API handoff markup.
  */
 function site_platform_admin_page_handoff_markup(NodeInterface $node): string {
@@ -186,11 +208,10 @@ function site_platform_admin_page_handoff_markup(NodeInterface $node): string {
   $page_api = '/api/v1/pages/' . rawurlencode($slug) . '?site=' . rawurlencode($site_key);
   $route_api = '/api/v1/routes/' . rawurlencode($route_path) . '?site=' . rawurlencode($site_key);
   $list_api = '/api/v1/pages?site=' . rawurlencode($site_key);
-  $frontend = $path;
 
   return '<div class="site-platform-handoff">'
-    . '<p><strong>Frontend path:</strong> <code>' . Html::escape($frontend) . '</code></p>'
-    . '<p><strong>API:</strong> <a href="' . Html::escape($page_api) . '">' . Html::escape($page_api) . '</a></p>'
+    . '<p><strong>Frontend path:</strong> <code>' . Html::escape($path) . '</code></p>'
+    . '<p><strong>Page API:</strong> <a href="' . Html::escape($page_api) . '">' . Html::escape($page_api) . '</a></p>'
     . '<p><strong>Route API:</strong> <a href="' . Html::escape($route_api) . '">' . Html::escape($route_api) . '</a></p>'
     . '<p><strong>Pages list API:</strong> <a href="' . Html::escape($list_api) . '">' . Html::escape($list_api) . '</a></p>'
     . '</div>';
