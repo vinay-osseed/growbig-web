@@ -725,6 +725,15 @@ final class NativeApiController extends ControllerBase {
   }
 
   /**
+   * Returns a JSON API response.
+   */
+  private function json(array $data, int $status = 200): JsonResponse {
+    $response = new JsonResponse($data, $status);
+    $response->headers->set('Content-Type', 'application/json');
+    return $response;
+  }
+
+  /**
    * Field exists check.
    */
   private function fieldExists(string $entity_type, string $bundle, string $field_name): bool {
