@@ -68,12 +68,3 @@ site_platform_admin.menus:
   options:
     _admin_route: TRUE
 
-site_platform_admin.legacy_wrappers:
-  path: '/admin/site-platform/legacy-wrappers'
-  defaults:
-    _controller: '\Drupal\site_platform_admin\Controller\SitePlatformAdminController::legacyWrappers'
-    _title: 'Site Platform Legacy Wrappers'
-  requirements:
-    _permission: 'administer site platform'
-  options:
-    _admin_route: TRUE

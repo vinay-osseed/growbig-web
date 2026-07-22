@@ -6,7 +6,17 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_user_login().
+ */
+function site_platform_native_user_login(AccountInterface $account): void {
+  if ($account->hasPermission('access site platform native admin') || $account->hasPermission('access administration pages') || $account->hasPermission('administer site platform')) {
+    \Drupal::request()->getSession()->set('site_platform_native_redirect_after_login', TRUE);
+  }
+}
 
 /**
  * Implements hook_form_alter().
@@ -28,7 +38,7 @@ function site_platform_native_form_alter(array &$form, FormStateInterface $form_
       '#open' => TRUE,
       '#weight' => -120,
       'content' => [
-        '#markup' => '<div class="site-platform-builder-guide"><p><strong>Build order:</strong> Site Profile → Media → Webforms → Landing Pages → Menus. Use this page for content and sections. Use Drupal Menu UI for navigation and Webform for forms.</p><p><strong>Frontend handoff:</strong> the page API returns SEO and sections together: <code>/api/v2/pages/PAGE_SLUG?site=SITE_KEY</code>.</p></div>',
+        '#markup' => '<div class="site-platform-builder-guide"><p><strong>Build order:</strong> Site Profile → Media → Webforms → Landing Pages → Drupal Menus → Site Data Sets.</p><p><strong>Page API:</strong> one clean payload returns page, SEO, sections, media, and embedded references: <code>/api/v2/pages/PAGE_SLUG?site=SITE_KEY</code>.</p></div>',
       ],
     ];
   }
@@ -40,7 +50,7 @@ function site_platform_native_form_alter(array &$form, FormStateInterface $form_
       '#open' => TRUE,
       '#weight' => -120,
       'content' => [
-        '#markup' => '<div class="site-platform-builder-guide"><p>Use datasets for site-specific structured data such as ISP plans, coverage areas, locations, pricing tiers, product plans, benefits, team lists, or any repeatable business data. Frontend API: <code>/api/v2/datasets/DATASET_KEY?site=SITE_KEY</code>.</p></div>',
+        '#markup' => '<div class="site-platform-builder-guide"><p>Use datasets for site-specific structured data such as ISP plans, coverage areas, locations, pricing tiers, product plans, benefits, team lists, careers, or any repeatable business data.</p><p><strong>Dataset type is required:</strong> choose List, Cards, Table, Pricing/plans, Locations/areas, Careers, or Custom.</p><p><strong>Frontend API:</strong> <code>/api/v2/datasets/DATASET_KEY?site=SITE_KEY</code>.</p></div>',
       ],
     ];
   }

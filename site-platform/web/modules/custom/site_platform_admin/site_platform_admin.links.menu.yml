@@ -47,9 +47,3 @@ site_platform_admin.menus:
   parent: site_platform_admin.overview
   weight: 5
 
-site_platform_admin.legacy_wrappers:
-  title: 'Legacy Wrappers'
-  description: 'Review compatibility records outside the primary editor flow.'
-  route_name: site_platform_admin.legacy_wrappers
-  parent: site_platform_admin.overview
-  weight: 20

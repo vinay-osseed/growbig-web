@@ -50,10 +50,6 @@ final class SitePlatformAdminController extends ControllerBase {
       'path' => '/admin/site-platform/menus',
       'purpose' => 'Drupal core menus as target workflow; existing node wrappers remain compatibility data.',
     ],
-    'Legacy Wrappers' => [
-      'path' => '/admin/site-platform/legacy-wrappers',
-      'purpose' => 'Technical compatibility bundles kept out of the primary editor workflow.',
-    ],
   ];
 
   /**
@@ -64,11 +60,6 @@ final class SitePlatformAdminController extends ControllerBase {
     'site_page' => 'Landing Page',
     'site_content_block' => 'Content Block',
     'site_media_asset' => 'Media Asset Metadata',
-    'site_menu' => 'Legacy API Menu Wrapper',
-    'site_menu_item' => 'Legacy API Menu Item Wrapper',
-    'site_form' => 'Legacy API Form Wrapper',
-    'site_form_field' => 'Legacy API Form Field Wrapper',
-    'site_form_submission' => 'Legacy API Form Submission Fallback',
   ];
 
   /**
@@ -116,7 +107,7 @@ final class SitePlatformAdminController extends ControllerBase {
       '#type' => 'container',
       '#attributes' => ['class' => ['site-platform-admin-overview']],
       'intro' => [
-        '#markup' => '<p><strong>Site Platform admin workspace.</strong> Use this page as the backend entry point for reviewing and managing sites, pages, content, media, forms, menus, and compatibility wrappers.</p>',
+        '#markup' => '<p><strong>Site Platform admin workspace.</strong> Use this page as the backend entry point for reviewing and managing sites, domains, pages, media, forms, menus, datasets, and clean frontend APIs.</p>',
       ],
       'workflow' => [
         '#type' => 'details',
@@ -129,7 +120,7 @@ final class SitePlatformAdminController extends ControllerBase {
             'Create Landing Pages and attach Paragraph components for frontend page structure.',
             'Use native Drupal Webform for real forms and submissions.',
             'Use Content Blocks and Media Assets for reusable API output.',
-            'Treat legacy menu/form wrapper nodes as compatibility records only.',
+            'Use Drupal core menus for navigation and Webform for real forms.',
           ],
         ],
       ],
@@ -491,11 +482,6 @@ final class SitePlatformAdminController extends ControllerBase {
       'site_page' => '/admin/site-platform/pages',
       'site_content_block' => '/admin/site-platform/content-blocks',
       'site_media_asset' => '/admin/site-platform/media-assets',
-      'site_menu' => '/admin/site-platform/legacy-wrappers',
-      'site_menu_item' => '/admin/site-platform/legacy-wrappers',
-      'site_form' => '/admin/site-platform/legacy-wrappers',
-      'site_form_field' => '/admin/site-platform/legacy-wrappers',
-      'site_form_submission' => '/admin/site-platform/legacy-wrappers',
     ];
 
     $rows = [];
