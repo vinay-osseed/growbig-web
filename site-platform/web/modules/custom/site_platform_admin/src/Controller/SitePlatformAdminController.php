@@ -8,44 +8,81 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\State\StateInterface;
+use Drupal\node\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Site Platform admin overview controller.
+ * Site Platform admin controller.
+ *
+ * Keep this controller deliberately simple: plain strings in tables, no Url
+ * objects in table rows, no config import requirement, and no active config
+ * mutation. This prevents admin rendering from breaking the site.
  */
 final class SitePlatformAdminController extends ControllerBase {
+
+  /**
+   * Primary workspace sections.
+   */
+  private const SECTIONS = [
+    'Sites' => [
+      'path' => '/admin/site-platform/sites',
+      'purpose' => 'Site Profiles for brands, domains, and per-site settings.',
+    ],
+    'Landing Pages' => [
+      'path' => '/admin/site-platform/pages',
+      'purpose' => 'Frontend page records with route path, template, SEO, and page sections.',
+    ],
+    'Content Blocks' => [
+      'path' => '/admin/site-platform/content-blocks',
+      'purpose' => 'Reusable source/key content exposed through the content API.',
+    ],
+    'Media Assets' => [
+      'path' => '/admin/site-platform/media-assets',
+      'purpose' => 'Frontend-safe media metadata while binary files move toward Media Library.',
+    ],
+    'Forms' => [
+      'path' => '/admin/site-platform/forms',
+      'purpose' => 'Native Drupal Webform first, legacy wrappers only as fallback compatibility.',
+    ],
+    'Menus' => [
+      'path' => '/admin/site-platform/menus',
+      'purpose' => 'Drupal core menus as target workflow; existing node wrappers remain compatibility data.',
+    ],
+    'Legacy Wrappers' => [
+      'path' => '/admin/site-platform/legacy-wrappers',
+      'purpose' => 'Technical compatibility bundles kept out of the primary editor workflow.',
+    ],
+  ];
 
   /**
    * Managed bundles shown in the overview.
    */
   private const MANAGED_BUNDLES = [
     'site_profile' => 'Site Profile',
-    'site_page' => 'Site Page',
-    'site_menu' => 'Site Menu',
-    'site_menu_item' => 'Site Menu Item',
-    'site_form' => 'Legacy Site Form wrapper',
-    'site_form_field' => 'Legacy Site Form Field wrapper',
-    'site_form_submission' => 'Legacy Site Form Submission fallback',
-    'site_content_block' => 'Site Content Block',
-    'site_media_asset' => 'Site Media Asset',
+    'site_page' => 'Landing Page',
+    'site_content_block' => 'Content Block',
+    'site_media_asset' => 'Media Asset Metadata',
+    'site_menu' => 'Legacy API Menu Wrapper',
+    'site_menu_item' => 'Legacy API Menu Item Wrapper',
+    'site_form' => 'Legacy API Form Wrapper',
+    'site_form_field' => 'Legacy API Form Field Wrapper',
+    'site_form_submission' => 'Legacy API Form Submission Fallback',
   ];
 
   /**
    * Site Platform modules shown in the overview.
    */
   private const PLATFORM_MODULES = [
-    'site_platform_core' => 'Core',
-    'site_platform_site' => 'Site Profile',
-    'site_platform_page' => 'Pages',
-    'site_platform_menu' => 'Menus',
-    'site_platform_component' => 'Components',
-    'site_platform_form' => 'Legacy form wrappers',
-    'site_platform_content' => 'Content Blocks',
-    'site_platform_media' => 'Media Assets',
-    'site_platform_api' => 'API',
-    'site_platform_setup' => 'Setup',
-    'site_platform_admin' => 'Admin',
-    'webform' => 'Webform',
+    'site_platform_core' => 'Core site context',
+    'site_platform_site' => 'Site profiles',
+    'site_platform_page' => 'Landing pages',
+    'site_platform_component' => 'Page sections / components',
+    'site_platform_content' => 'Reusable content blocks',
+    'site_platform_media' => 'Media asset metadata',
+    'site_platform_api' => 'Frontend API',
+    'site_platform_setup' => 'Setup and YAML import',
+    'site_platform_admin' => 'Admin workspace',
+    'webform' => 'Native Drupal Webform',
   ];
 
   /**
@@ -70,17 +107,39 @@ final class SitePlatformAdminController extends ControllerBase {
   }
 
   /**
-   * Builds the admin overview page.
-   *
-   * @return array<string, mixed>
-   *   Render array.
+   * Builds the admin workspace overview.
    */
   public function overview(): array {
     return [
       '#type' => 'container',
       '#attributes' => ['class' => ['site-platform-admin-overview']],
       'intro' => [
-        '#markup' => '<p>Site Platform backend overview. Use this page to review setup state, enabled modules, managed records, and available API groups.</p>',
+        '#markup' => '<p><strong>Site Platform admin workspace.</strong> Use this page as the backend entry point for reviewing sites, pages, content, media, forms, menus, and compatibility wrappers.</p>',
+      ],
+      'workflow' => [
+        '#type' => 'details',
+        '#title' => $this->t('Recommended workflow'),
+        '#open' => TRUE,
+        'items' => [
+          '#theme' => 'item_list',
+          '#items' => [
+            'Create or review one Site Profile per brand/site.',
+            'Create Landing Pages and attach Paragraph components for frontend page structure.',
+            'Use native Drupal Webform for real forms and submissions.',
+            'Use Content Blocks and Media Assets for reusable API output.',
+            'Treat legacy menu/form wrapper nodes as compatibility records only.',
+          ],
+        ],
+      ],
+      'sections' => [
+        '#type' => 'details',
+        '#title' => $this->t('Workspace sections'),
+        '#open' => TRUE,
+        'table' => [
+          '#type' => 'table',
+          '#header' => ['Section', 'Purpose', 'Path'],
+          '#rows' => $this->sectionRows(),
+        ],
       ],
       'setup' => [
         '#type' => 'details',
@@ -88,18 +147,18 @@ final class SitePlatformAdminController extends ControllerBase {
         '#open' => TRUE,
         'table' => [
           '#type' => 'table',
-          '#header' => [$this->t('Item'), $this->t('Value')],
+          '#header' => ['Item', 'Value'],
           '#rows' => $this->setupRows(),
-          '#empty' => $this->t('No setup status found.'),
+          '#empty' => 'No setup status found.',
         ],
       ],
       'modules' => [
         '#type' => 'details',
-        '#title' => $this->t('Modules'),
+        '#title' => $this->t('Backend capability status'),
         '#open' => TRUE,
         'table' => [
           '#type' => 'table',
-          '#header' => [$this->t('Module'), $this->t('Status')],
+          '#header' => ['Capability', 'Status'],
           '#rows' => $this->moduleRows(),
         ],
       ],
@@ -109,20 +168,20 @@ final class SitePlatformAdminController extends ControllerBase {
         '#open' => TRUE,
         'table' => [
           '#type' => 'table',
-          '#header' => [$this->t('Record type'), $this->t('Machine name'), $this->t('Count')],
+          '#header' => ['Record type', 'Machine name', 'Count'],
           '#rows' => $this->countRows(),
         ],
       ],
       'apis' => [
         '#type' => 'details',
-        '#title' => $this->t('API groups'),
+        '#title' => $this->t('Frontend API groups'),
         '#open' => TRUE,
         'list' => [
           '#theme' => 'item_list',
           '#items' => [
             '/api/v1/site',
             '/api/v1/pages and /api/v1/pages/{slug}',
-            '/api/v1/routes and /api/v1/routes/{path}',
+            '/api/v1/routes/{path}',
             '/api/v1/menus and /api/v1/menus/{menu}',
             '/api/v1/forms/{form} and /api/v1/forms/{form}/submit',
             '/api/v1/content, /api/v1/content/{source}, /api/v1/content/{source}/{key}',
@@ -137,10 +196,229 @@ final class SitePlatformAdminController extends ControllerBase {
   }
 
   /**
+   * Builds the Site Profiles admin page.
+   */
+  public function sites(): array {
+    $rows = [];
+    foreach ($this->loadNodes('site_profile') as $site) {
+      $rows[] = [
+        $site->label(),
+        $this->fieldValue($site, 'field_site_key'),
+        $this->fieldValue($site, 'field_frontend_domains'),
+        $this->fieldValue($site, 'field_api_domains'),
+        $this->fieldValue($site, 'field_is_active') === '1' ? 'yes' : 'no',
+        $this->fieldValue($site, 'field_is_default') === '1' ? 'yes' : 'no',
+        '/node/' . $site->id() . '/edit',
+      ];
+    }
+
+    return $this->listingPage(
+      'Sites',
+      'One Site Profile represents one brand/site/domain set.',
+      ['Site', 'Key', 'Frontend domains', 'API domains', 'Active', 'Default', 'Edit path'],
+      $rows,
+      'No Site Profiles found.',
+    );
+  }
+
+  /**
+   * Builds the Landing Pages admin page.
+   */
+  public function pages(): array {
+    $rows = [];
+    foreach ($this->loadNodes('site_page') as $page) {
+      $rows[] = [
+        $this->siteLabelForNode($page),
+        $page->label(),
+        $this->fieldValue($page, 'field_page_key'),
+        $this->fieldValue($page, 'field_page_path'),
+        $this->fieldValue($page, 'field_page_template'),
+        (string) $this->paragraphCount($page, 'field_page_components'),
+        $this->fieldValue($page, 'field_seo_title') !== '' ? 'yes' : 'no',
+        '/node/' . $page->id() . '/edit',
+      ];
+    }
+
+    return $this->listingPage(
+      'Landing Pages',
+      'Frontend page records with site, path, template, SEO, and Paragraph sections.',
+      ['Site', 'Page', 'Key', 'Path', 'Template', 'Sections', 'SEO title', 'Edit path'],
+      $rows,
+      'No Landing Pages found.',
+    );
+  }
+
+  /**
+   * Builds the Content Blocks admin page.
+   */
+  public function contentBlocks(): array {
+    $rows = [];
+    foreach ($this->loadNodes('site_content_block') as $block) {
+      $rows[] = [
+        $this->siteLabelForNode($block),
+        $block->label(),
+        $this->fieldValue($block, 'field_content_source'),
+        $this->fieldValue($block, 'field_content_key'),
+        $this->fieldValue($block, 'field_content_is_active') === '1' ? 'yes' : 'no',
+        '/node/' . $block->id() . '/edit',
+      ];
+    }
+
+    return $this->listingPage(
+      'Content Blocks',
+      'Reusable source/key content exposed through the content API.',
+      ['Site', 'Block', 'Source', 'Key', 'Active', 'Edit path'],
+      $rows,
+      'No Content Blocks found.',
+    );
+  }
+
+  /**
+   * Builds the Media Assets admin page.
+   */
+  public function mediaAssets(): array {
+    $rows = [];
+    foreach ($this->loadNodes('site_media_asset') as $asset) {
+      $rows[] = [
+        $this->siteLabelForNode($asset),
+        $asset->label(),
+        $this->fieldValue($asset, 'field_media_key'),
+        $this->fieldValue($asset, 'field_media_kind'),
+        $this->fieldValue($asset, 'field_media_is_active') === '1' ? 'yes' : 'no',
+        '/node/' . $asset->id() . '/edit',
+      ];
+    }
+
+    return $this->listingPage(
+      'Media Assets',
+      'Frontend-safe media metadata. Binary file management should move toward Drupal Media Library.',
+      ['Site', 'Asset', 'Key', 'Kind', 'Active', 'Edit path'],
+      $rows,
+      'No Media Assets found.',
+    );
+  }
+
+  /**
+   * Builds the Forms admin page.
+   */
+  public function forms(): array {
+    $webform_rows = $this->webformRows();
+    $legacy_rows = [];
+    foreach ($this->loadNodes('site_form') as $form) {
+      $legacy_rows[] = [
+        $this->siteLabelForNode($form),
+        $form->label(),
+        $this->fieldValue($form, 'field_form_key'),
+        $this->fieldValue($form, 'field_form_is_active') === '1' ? 'yes' : 'no',
+        '/node/' . $form->id() . '/edit',
+      ];
+    }
+
+    $build = $this->listingPage(
+      'Forms',
+      'Native Drupal Webform is the primary form system. Legacy Site Form nodes remain fallback compatibility records only.',
+      ['Webform', 'ID', 'Status', 'Edit path'],
+      $webform_rows,
+      'No Webforms found.',
+    );
+
+    $build['legacy'] = [
+      '#type' => 'details',
+      '#title' => 'Legacy form wrappers',
+      '#open' => FALSE,
+      'table' => [
+        '#type' => 'table',
+        '#header' => ['Site', 'Wrapper', 'Key', 'Active', 'Edit path'],
+        '#rows' => $legacy_rows,
+        '#empty' => 'No legacy Site Form wrappers found.',
+      ],
+    ];
+
+    return $build;
+  }
+
+  /**
+   * Builds the Menus admin page.
+   */
+  public function menus(): array {
+    $rows = [];
+    foreach ($this->loadNodes('site_menu') as $menu) {
+      $rows[] = [
+        $this->siteLabelForNode($menu),
+        $menu->label(),
+        $this->fieldValue($menu, 'field_menu_key'),
+        $this->fieldValue($menu, 'field_menu_is_active') === '1' ? 'yes' : 'no',
+        '/node/' . $menu->id() . '/edit',
+      ];
+    }
+
+    return $this->listingPage(
+      'Menus',
+      'Long-term target is Drupal core menus. Current Site Menu nodes are compatibility wrappers for the API/YAML importer.',
+      ['Site', 'Legacy menu wrapper', 'Key', 'Active', 'Edit path'],
+      $rows,
+      'No legacy menu wrappers found.',
+    );
+  }
+
+  /**
+   * Builds the Legacy Wrappers admin page.
+   */
+  public function legacyWrappers(): array {
+    $rows = [];
+    foreach (['site_menu', 'site_menu_item', 'site_form', 'site_form_field', 'site_form_submission'] as $bundle) {
+      foreach ($this->loadNodes($bundle) as $node) {
+        $rows[] = [
+          self::MANAGED_BUNDLES[$bundle] ?? $bundle,
+          $this->siteLabelForNode($node),
+          $node->label(),
+          '/node/' . $node->id() . '/edit',
+        ];
+      }
+    }
+
+    return $this->listingPage(
+      'Legacy Wrappers',
+      'Compatibility node records. These are not the preferred editor workflow.',
+      ['Type', 'Site', 'Record', 'Edit path'],
+      $rows,
+      'No legacy wrapper records found.',
+    );
+  }
+
+  /**
+   * Builds a reusable listing page.
+   */
+  private function listingPage(string $title, string $intro, array $header, array $rows, string $empty): array {
+    return [
+      '#type' => 'container',
+      '#attributes' => ['class' => ['site-platform-admin-listing']],
+      'intro' => [
+        '#markup' => '<p><strong>' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '.</strong> ' . htmlspecialchars($intro, ENT_QUOTES, 'UTF-8') . '</p>',
+      ],
+      'table' => [
+        '#type' => 'table',
+        '#header' => $header,
+        '#rows' => $rows,
+        '#empty' => $empty,
+      ],
+    ];
+  }
+
+  /**
+   * Builds workspace section rows.
+   */
+  private function sectionRows(): array {
+    $rows = [];
+    foreach (self::SECTIONS as $section => $info) {
+      $rows[] = [$section, $info['purpose'], $info['path']];
+    }
+
+    return $rows;
+  }
+
+  /**
    * Builds setup status rows.
-   *
-   * @return array<int, array<int, string>>
-   *   Table rows.
    */
   private function setupRows(): array {
     $last_run = $this->sitePlatformState->get('site_platform_setup.last_run');
@@ -159,9 +437,6 @@ final class SitePlatformAdminController extends ControllerBase {
 
   /**
    * Builds module status rows.
-   *
-   * @return array<int, array<int, string>>
-   *   Table rows.
    */
   private function moduleRows(): array {
     $rows = [];
@@ -174,14 +449,11 @@ final class SitePlatformAdminController extends ControllerBase {
 
   /**
    * Builds managed entity count rows.
-   *
-   * @return array<int, array<int, string|int>>
-   *   Table rows.
    */
   private function countRows(): array {
     $rows = [];
     foreach (self::MANAGED_BUNDLES as $bundle => $label) {
-      $rows[] = [$label, $bundle, $this->countBundle($bundle)];
+      $rows[] = [$label, $bundle, (string) $this->countBundle($bundle)];
     }
 
     return $rows;
@@ -203,6 +475,94 @@ final class SitePlatformAdminController extends ControllerBase {
     catch (\Throwable) {
       return 0;
     }
+  }
+
+  /**
+   * Loads nodes for a bundle.
+   *
+   * @return array<int, \Drupal\node\NodeInterface>
+   *   Loaded nodes.
+   */
+  private function loadNodes(string $bundle, int $limit = 50): array {
+    try {
+      $storage = $this->sitePlatformEntityTypeManager->getStorage('node');
+      $ids = $storage->getQuery()
+        ->accessCheck(FALSE)
+        ->condition('type', $bundle)
+        ->sort('title')
+        ->range(0, $limit)
+        ->execute();
+
+      return $ids ? $storage->loadMultiple($ids) : [];
+    }
+    catch (\Throwable) {
+      return [];
+    }
+  }
+
+  /**
+   * Builds native Webform rows.
+   */
+  private function webformRows(): array {
+    if (!$this->sitePlatformModuleHandler->moduleExists('webform')) {
+      return [];
+    }
+
+    try {
+      $storage = $this->sitePlatformEntityTypeManager->getStorage('webform');
+      $webforms = $storage->loadMultiple();
+    }
+    catch (\Throwable) {
+      return [];
+    }
+
+    $rows = [];
+    foreach ($webforms as $webform) {
+      $id = method_exists($webform, 'id') ? (string) $webform->id() : '';
+      $label = method_exists($webform, 'label') ? (string) $webform->label() : $id;
+      $status = method_exists($webform, 'isOpen') && $webform->isOpen() ? 'open' : 'closed';
+      $rows[] = [$label, $id, $status, '/admin/structure/webform/manage/' . $id];
+    }
+
+    return $rows;
+  }
+
+  /**
+   * Gets a basic field value as a plain string.
+   */
+  private function fieldValue(NodeInterface $node, string $field_name): string {
+    if (!$node->hasField($field_name) || $node->get($field_name)->isEmpty()) {
+      return '';
+    }
+
+    return trim($node->get($field_name)->getString());
+  }
+
+  /**
+   * Gets the Site Profile label for a node.
+   */
+  private function siteLabelForNode(NodeInterface $node): string {
+    if (!$node->hasField('field_site_profile') || $node->get('field_site_profile')->isEmpty()) {
+      return '';
+    }
+
+    $entities = $node->get('field_site_profile')->referencedEntities();
+    if (!$entities) {
+      return $this->fieldValue($node, 'field_site_profile');
+    }
+
+    return (string) reset($entities)->label();
+  }
+
+  /**
+   * Counts paragraph references.
+   */
+  private function paragraphCount(NodeInterface $node, string $field_name): int {
+    if (!$node->hasField($field_name) || $node->get($field_name)->isEmpty()) {
+      return 0;
+    }
+
+    return $node->get($field_name)->count();
   }
 
   /**
