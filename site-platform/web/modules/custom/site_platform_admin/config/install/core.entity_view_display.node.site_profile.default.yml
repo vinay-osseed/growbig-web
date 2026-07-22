@@ -1,0 +1,173 @@
+dependencies:
+  config:
+    - node.type.site_profile
+    - field.field.node.site_profile.field_site_key
+    - field.field.node.site_profile.field_is_active
+    - field.field.node.site_profile.field_is_default
+    - field.field.node.site_profile.field_site_weight
+    - field.field.node.site_profile.field_frontend_domains
+    - field.field.node.site_profile.field_api_domains
+    - field.field.node.site_profile.field_admin_domains
+    - field.field.node.site_profile.field_default_language
+    - field.field.node.site_profile.field_enabled_languages
+    - field.field.node.site_profile.field_timezone
+    - field.field.node.site_profile.field_brand_primary_color
+    - field.field.node.site_profile.field_logo_url
+    - field.field.node.site_profile.field_favicon_url
+    - field.field.node.site_profile.field_contact_email
+    - field.field.node.site_profile.field_contact_phone
+    - field.field.node.site_profile.field_contact_address
+    - field.field.node.site_profile.field_social_links
+    - field.field.node.site_profile.field_ga_measurement_id
+    - field.field.node.site_profile.field_gtm_container_id
+  module:
+    - text
+id: node.site_profile.default
+targetEntityType: node
+bundle: site_profile
+mode: default
+status: true
+content:
+  field_site_key:
+    type: basic_string
+    label: above
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_is_active:
+    type: boolean
+    label: above
+    weight: 1
+    region: content
+    settings:
+      format: 'yes-no'
+      format_custom_true: 
+      format_custom_false: 
+    third_party_settings: {  }
+  field_is_default:
+    type: boolean
+    label: above
+    weight: 2
+    region: content
+    settings:
+      format: 'yes-no'
+      format_custom_true: 
+      format_custom_false: 
+    third_party_settings: {  }
+  field_site_weight:
+    type: number_integer
+    label: above
+    weight: 3
+    region: content
+    settings:
+      thousand_separator: 
+      prefix_suffix: true
+    third_party_settings: {  }
+  field_frontend_domains:
+    type: basic_string
+    label: above
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_api_domains:
+    type: basic_string
+    label: above
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_admin_domains:
+    type: basic_string
+    label: above
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_default_language:
+    type: basic_string
+    label: above
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_enabled_languages:
+    type: basic_string
+    label: above
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_timezone:
+    type: basic_string
+    label: above
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_brand_primary_color:
+    type: basic_string
+    label: above
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_logo_url:
+    type: basic_string
+    label: above
+    weight: 11
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_favicon_url:
+    type: basic_string
+    label: above
+    weight: 12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_contact_email:
+    type: basic_string
+    label: above
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_contact_phone:
+    type: basic_string
+    label: above
+    weight: 14
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_contact_address:
+    type: basic_string
+    label: above
+    weight: 15
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_social_links:
+    type: basic_string
+    label: above
+    weight: 16
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_ga_measurement_id:
+    type: basic_string
+    label: above
+    weight: 17
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_gtm_container_id:
+    type: basic_string
+    label: above
+    weight: 18
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  links: true

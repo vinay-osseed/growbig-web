@@ -1,0 +1,133 @@
+dependencies:
+  config:
+    - node.type.site_form_field
+    - field.field.node.site_form_field.field_site_profile
+    - field.field.node.site_form_field.field_site_form
+    - field.field.node.site_form_field.field_form_field_key
+    - field.field.node.site_form_field.field_form_field_label
+    - field.field.node.site_form_field.field_form_field_type
+    - field.field.node.site_form_field.field_form_field_required
+    - field.field.node.site_form_field.field_form_field_placeholder
+    - field.field.node.site_form_field.field_form_field_help
+    - field.field.node.site_form_field.field_form_field_options
+    - field.field.node.site_form_field.field_form_field_weight
+    - field.field.node.site_form_field.field_is_demo
+    - field.field.node.site_form_field.field_demo_source
+id: node.site_form_field.default
+targetEntityType: node
+bundle: site_form_field
+mode: default
+status: true
+content:
+  title:
+    type: string_textfield
+    weight: -10
+    region: content
+    settings:
+      size: 80
+      placeholder: ''
+    third_party_settings: {  }
+  field_site_profile:
+    type: entity_reference_autocomplete
+    weight: 0
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_site_form:
+    type: entity_reference_autocomplete
+    weight: 1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_form_field_key:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_form_field_label:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_form_field_type:
+    type: string_textfield
+    weight: 4
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_form_field_required:
+    type: boolean_checkbox
+    weight: 5
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_form_field_placeholder:
+    type: string_textfield
+    weight: 6
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_form_field_help:
+    type: string_textarea
+    weight: 7
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_form_field_options:
+    type: string_textarea
+    weight: 8
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_form_field_weight:
+    type: number
+    weight: 9
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_is_demo:
+    type: boolean_checkbox
+    weight: 10
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_demo_source:
+    type: string_textfield
+    weight: 11
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true

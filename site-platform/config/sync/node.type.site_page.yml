@@ -1,6 +1,9 @@
+uuid: 146c092f-2d12-4992-8b24-e1501d22d0dc
 langcode: en
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: l7ynkRQDjoRm115Lvacv1jpcxK0PmXxpOiPaza3l4kg
 name: 'Landing Page'
 type: site_page
 description: 'Frontend page record with route path, SEO metadata, template, and ordered Paragraph sections.'

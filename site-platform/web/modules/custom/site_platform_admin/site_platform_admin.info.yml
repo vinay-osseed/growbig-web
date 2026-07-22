@@ -1,6 +1,6 @@
 name: Site Platform Admin
 type: module
-description: Provides Site Platform admin dashboard and permission foundation.
+description: Provides the Site Platform admin workspace, filtered editor listings, display configuration, and permission foundation.
 package: Site Platform
 core_version_requirement: ^11
 dependencies:

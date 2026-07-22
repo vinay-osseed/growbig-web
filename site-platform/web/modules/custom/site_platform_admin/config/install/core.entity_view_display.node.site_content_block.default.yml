@@ -1,0 +1,108 @@
+dependencies:
+  config:
+    - node.type.site_content_block
+    - field.field.node.site_content_block.field_site_profile
+    - field.field.node.site_content_block.field_content_source
+    - field.field.node.site_content_block.field_content_key
+    - field.field.node.site_content_block.field_content_label
+    - field.field.node.site_content_block.field_content_variant
+    - field.field.node.site_content_block.field_content_summary
+    - field.field.node.site_content_block.field_content_body
+    - field.field.node.site_content_block.field_content_weight
+    - field.field.node.site_content_block.field_content_is_active
+    - field.field.node.site_content_block.field_is_demo
+    - field.field.node.site_content_block.field_demo_source
+id: node.site_content_block.default
+targetEntityType: node
+bundle: site_content_block
+mode: default
+status: true
+content:
+  field_site_profile:
+    type: entity_reference_label
+    label: above
+    weight: 0
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_content_source:
+    type: basic_string
+    label: above
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_content_key:
+    type: basic_string
+    label: above
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_content_label:
+    type: basic_string
+    label: above
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_content_variant:
+    type: basic_string
+    label: above
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_content_summary:
+    type: basic_string
+    label: above
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_content_body:
+    type: basic_string
+    label: above
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_content_weight:
+    type: number_integer
+    label: above
+    weight: 7
+    region: content
+    settings:
+      thousand_separator: 
+      prefix_suffix: true
+    third_party_settings: {  }
+  field_content_is_active:
+    type: boolean
+    label: above
+    weight: 8
+    region: content
+    settings:
+      format: 'yes-no'
+      format_custom_true: 
+      format_custom_false: 
+    third_party_settings: {  }
+  field_is_demo:
+    type: boolean
+    label: above
+    weight: 9
+    region: content
+    settings:
+      format: 'yes-no'
+      format_custom_true: 
+      format_custom_false: 
+    third_party_settings: {  }
+  field_demo_source:
+    type: basic_string
+    label: above
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  links: true

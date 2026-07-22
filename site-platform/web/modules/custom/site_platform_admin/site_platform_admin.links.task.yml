@@ -1,0 +1,47 @@
+site_platform_admin.overview_tab:
+  route_name: site_platform_admin.overview
+  title: 'Overview'
+  base_route: site_platform_admin.overview
+  weight: 0
+
+site_platform_admin.sites_tab:
+  route_name: site_platform_admin.sites
+  title: 'Sites'
+  base_route: site_platform_admin.overview
+  weight: 1
+
+site_platform_admin.pages_tab:
+  route_name: site_platform_admin.pages
+  title: 'Pages'
+  base_route: site_platform_admin.overview
+  weight: 2
+
+site_platform_admin.content_blocks_tab:
+  route_name: site_platform_admin.content_blocks
+  title: 'Content Blocks'
+  base_route: site_platform_admin.overview
+  weight: 3
+
+site_platform_admin.media_assets_tab:
+  route_name: site_platform_admin.media_assets
+  title: 'Media Assets'
+  base_route: site_platform_admin.overview
+  weight: 4
+
+site_platform_admin.forms_tab:
+  route_name: site_platform_admin.forms
+  title: 'Forms'
+  base_route: site_platform_admin.overview
+  weight: 5
+
+site_platform_admin.menus_tab:
+  route_name: site_platform_admin.menus
+  title: 'Menus'
+  base_route: site_platform_admin.overview
+  weight: 6
+
+site_platform_admin.legacy_wrappers_tab:
+  route_name: site_platform_admin.legacy_wrappers
+  title: 'Legacy Wrappers'
+  base_route: site_platform_admin.overview
+  weight: 20

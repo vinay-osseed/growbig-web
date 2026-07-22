@@ -1,6 +1,9 @@
+uuid: f2698ad1-4c23-41df-9014-2e24f5448a53
 langcode: en
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: ZJL8LATKcwHxlMPuc2vj9BOcAE8w3TdeNo-gHewnCw4
 name: 'Media Asset Metadata'
 type: site_media_asset
 description: 'Frontend-safe media metadata exposed by the media API. Binary files should move toward Drupal Media Library.'

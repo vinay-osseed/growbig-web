@@ -1,0 +1,102 @@
+dependencies:
+  config:
+    - node.type.site_media_asset
+    - field.field.node.site_media_asset.field_site_profile
+    - field.field.node.site_media_asset.field_media_key
+    - field.field.node.site_media_asset.field_media_kind
+    - field.field.node.site_media_asset.field_media_url
+    - field.field.node.site_media_asset.field_media_alt
+    - field.field.node.site_media_asset.field_media_credit
+    - field.field.node.site_media_asset.field_media_weight
+    - field.field.node.site_media_asset.field_media_is_active
+    - field.field.node.site_media_asset.field_is_demo
+    - field.field.node.site_media_asset.field_demo_source
+  module:
+    - options
+id: node.site_media_asset.default
+targetEntityType: node
+bundle: site_media_asset
+mode: default
+status: true
+content:
+  field_site_profile:
+    type: entity_reference_label
+    label: above
+    weight: 0
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_media_key:
+    type: basic_string
+    label: above
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_media_kind:
+    type: list_default
+    label: above
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_media_url:
+    type: basic_string
+    label: above
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_media_alt:
+    type: basic_string
+    label: above
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_media_credit:
+    type: basic_string
+    label: above
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_media_weight:
+    type: number_integer
+    label: above
+    weight: 6
+    region: content
+    settings:
+      thousand_separator: 
+      prefix_suffix: true
+    third_party_settings: {  }
+  field_media_is_active:
+    type: boolean
+    label: above
+    weight: 7
+    region: content
+    settings:
+      format: 'yes-no'
+      format_custom_true: 
+      format_custom_false: 
+    third_party_settings: {  }
+  field_is_demo:
+    type: boolean
+    label: above
+    weight: 8
+    region: content
+    settings:
+      format: 'yes-no'
+      format_custom_true: 
+      format_custom_false: 
+    third_party_settings: {  }
+  field_demo_source:
+    type: basic_string
+    label: above
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  links: true

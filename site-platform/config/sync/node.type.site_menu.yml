@@ -1,6 +1,9 @@
+uuid: f626b6e9-5a73-44b4-b516-9ffc32c2a5b6
 langcode: en
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: K66FZr0F3psuolEEYNEhcy7PabEjiKvua_59Axmm888
 name: 'Legacy API Menu Wrapper'
 type: site_menu
 description: 'Compatibility menu wrapper used by the current API/YAML import. Long-term editor workflow should use Drupal core menus.'

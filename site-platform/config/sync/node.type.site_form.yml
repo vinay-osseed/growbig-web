@@ -1,6 +1,9 @@
+uuid: 5f480ded-4aff-4a83-8297-54fbdc4139c9
 langcode: en
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: qie5CvCDMIdyrQNEH7V8CBiEGT8GFG-hjt-Ue_mHOWM
 name: 'Legacy API Form Wrapper'
 type: site_form
 description: 'Compatibility form wrapper kept for API fallback. Real forms should use Drupal Webform.'

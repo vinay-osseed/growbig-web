@@ -1,6 +1,9 @@
+uuid: 82143b2a-1bbb-451a-9f89-e081a08b1742
 langcode: en
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: isQwSsKXOzR16RpBJ_OMPFgIJPTUCzyikI2Ua19ureQ
 name: 'Content Block'
 type: site_content_block
 description: 'Reusable source/key content exposed through the Site Platform content API.'
