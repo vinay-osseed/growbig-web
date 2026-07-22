@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Drupal\site_platform_admin\Controller;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Render\Markup;
 use Drupal\Core\State\StateInterface;
 use Drupal\node\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -14,9 +16,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Site Platform admin controller.
  *
- * Keep this controller deliberately simple: plain strings in tables, no Url
- * objects in table rows, no config import requirement, and no active config
- * mutation. This prevents admin rendering from breaking the site.
+ * Keep this controller deliberately safe: no Url objects inside table rows, no
+ * config import requirement, and no active config mutation. CRUD operations are
+ * exposed as plain, escaped HTML links to Drupal's native node/Webform screens.
  */
 final class SitePlatformAdminController extends ControllerBase {
 
@@ -114,7 +116,7 @@ final class SitePlatformAdminController extends ControllerBase {
       '#type' => 'container',
       '#attributes' => ['class' => ['site-platform-admin-overview']],
       'intro' => [
-        '#markup' => '<p><strong>Site Platform admin workspace.</strong> Use this page as the backend entry point for reviewing sites, pages, content, media, forms, menus, and compatibility wrappers.</p>',
+        '#markup' => '<p><strong>Site Platform admin workspace.</strong> Use this page as the backend entry point for reviewing and managing sites, pages, content, media, forms, menus, and compatibility wrappers.</p>',
       ],
       'workflow' => [
         '#type' => 'details',
@@ -137,7 +139,7 @@ final class SitePlatformAdminController extends ControllerBase {
         '#open' => TRUE,
         'table' => [
           '#type' => 'table',
-          '#header' => ['Section', 'Purpose', 'Path'],
+          '#header' => ['Section', 'Purpose', 'Open'],
           '#rows' => $this->sectionRows(),
         ],
       ],
@@ -168,7 +170,7 @@ final class SitePlatformAdminController extends ControllerBase {
         '#open' => TRUE,
         'table' => [
           '#type' => 'table',
-          '#header' => ['Record type', 'Machine name', 'Count'],
+          '#header' => ['Record type', 'Machine name', 'Count', 'Open section'],
           '#rows' => $this->countRows(),
         ],
       ],
@@ -202,20 +204,24 @@ final class SitePlatformAdminController extends ControllerBase {
     $rows = [];
     foreach ($this->loadNodes('site_profile') as $site) {
       $rows[] = [
-        $site->label(),
+        $this->nodeTitleCell($site),
         $this->fieldValue($site, 'field_site_key'),
         $this->fieldValue($site, 'field_frontend_domains'),
         $this->fieldValue($site, 'field_api_domains'),
         $this->fieldValue($site, 'field_is_active') === '1' ? 'yes' : 'no',
         $this->fieldValue($site, 'field_is_default') === '1' ? 'yes' : 'no',
-        '/node/' . $site->id() . '/edit',
+        $this->nodeActionsCell($site),
       ];
     }
 
     return $this->listingPage(
       'Sites',
       'One Site Profile represents one brand/site/domain set.',
-      ['Site', 'Key', 'Frontend domains', 'API domains', 'Active', 'Default', 'Edit path'],
+      [
+        'Add Site Profile' => '/node/add/site_profile',
+        'Drupal content list' => '/admin/content',
+      ],
+      ['Site', 'Key', 'Frontend domains', 'API domains', 'Active', 'Default', 'Actions'],
       $rows,
       'No Site Profiles found.',
     );
@@ -229,20 +235,24 @@ final class SitePlatformAdminController extends ControllerBase {
     foreach ($this->loadNodes('site_page') as $page) {
       $rows[] = [
         $this->siteLabelForNode($page),
-        $page->label(),
+        $this->nodeTitleCell($page),
         $this->fieldValue($page, 'field_page_key'),
         $this->fieldValue($page, 'field_page_path'),
         $this->fieldValue($page, 'field_page_template'),
         (string) $this->paragraphCount($page, 'field_page_components'),
         $this->fieldValue($page, 'field_seo_title') !== '' ? 'yes' : 'no',
-        '/node/' . $page->id() . '/edit',
+        $this->nodeActionsCell($page),
       ];
     }
 
     return $this->listingPage(
       'Landing Pages',
       'Frontend page records with site, path, template, SEO, and Paragraph sections.',
-      ['Site', 'Page', 'Key', 'Path', 'Template', 'Sections', 'SEO title', 'Edit path'],
+      [
+        'Add Landing Page' => '/node/add/site_page',
+        'Drupal content list' => '/admin/content',
+      ],
+      ['Site', 'Page', 'Key', 'Path', 'Template', 'Sections', 'SEO title', 'Actions'],
       $rows,
       'No Landing Pages found.',
     );
@@ -256,18 +266,22 @@ final class SitePlatformAdminController extends ControllerBase {
     foreach ($this->loadNodes('site_content_block') as $block) {
       $rows[] = [
         $this->siteLabelForNode($block),
-        $block->label(),
+        $this->nodeTitleCell($block),
         $this->fieldValue($block, 'field_content_source'),
         $this->fieldValue($block, 'field_content_key'),
         $this->fieldValue($block, 'field_content_is_active') === '1' ? 'yes' : 'no',
-        '/node/' . $block->id() . '/edit',
+        $this->nodeActionsCell($block),
       ];
     }
 
     return $this->listingPage(
       'Content Blocks',
       'Reusable source/key content exposed through the content API.',
-      ['Site', 'Block', 'Source', 'Key', 'Active', 'Edit path'],
+      [
+        'Add Content Block' => '/node/add/site_content_block',
+        'Drupal content list' => '/admin/content',
+      ],
+      ['Site', 'Block', 'Source', 'Key', 'Active', 'Actions'],
       $rows,
       'No Content Blocks found.',
     );
@@ -281,18 +295,22 @@ final class SitePlatformAdminController extends ControllerBase {
     foreach ($this->loadNodes('site_media_asset') as $asset) {
       $rows[] = [
         $this->siteLabelForNode($asset),
-        $asset->label(),
+        $this->nodeTitleCell($asset),
         $this->fieldValue($asset, 'field_media_key'),
         $this->fieldValue($asset, 'field_media_kind'),
         $this->fieldValue($asset, 'field_media_is_active') === '1' ? 'yes' : 'no',
-        '/node/' . $asset->id() . '/edit',
+        $this->nodeActionsCell($asset),
       ];
     }
 
     return $this->listingPage(
       'Media Assets',
       'Frontend-safe media metadata. Binary file management should move toward Drupal Media Library.',
-      ['Site', 'Asset', 'Key', 'Kind', 'Active', 'Edit path'],
+      [
+        'Add Media Asset Metadata' => '/node/add/site_media_asset',
+        'Drupal files' => '/admin/content/files',
+      ],
+      ['Site', 'Asset', 'Key', 'Kind', 'Active', 'Actions'],
       $rows,
       'No Media Assets found.',
     );
@@ -307,17 +325,22 @@ final class SitePlatformAdminController extends ControllerBase {
     foreach ($this->loadNodes('site_form') as $form) {
       $legacy_rows[] = [
         $this->siteLabelForNode($form),
-        $form->label(),
+        $this->nodeTitleCell($form),
         $this->fieldValue($form, 'field_form_key'),
         $this->fieldValue($form, 'field_form_is_active') === '1' ? 'yes' : 'no',
-        '/node/' . $form->id() . '/edit',
+        $this->nodeActionsCell($form),
       ];
     }
 
     $build = $this->listingPage(
       'Forms',
       'Native Drupal Webform is the primary form system. Legacy Site Form nodes remain fallback compatibility records only.',
-      ['Webform', 'ID', 'Status', 'Edit path'],
+      [
+        'Add Webform' => '/admin/structure/webform/add',
+        'All Webforms' => '/admin/structure/webform',
+        'Add Legacy Wrapper' => '/node/add/site_form',
+      ],
+      ['Webform', 'ID', 'Status', 'Actions'],
       $webform_rows,
       'No Webforms found.',
     );
@@ -328,7 +351,7 @@ final class SitePlatformAdminController extends ControllerBase {
       '#open' => FALSE,
       'table' => [
         '#type' => 'table',
-        '#header' => ['Site', 'Wrapper', 'Key', 'Active', 'Edit path'],
+        '#header' => ['Site', 'Wrapper', 'Key', 'Active', 'Actions'],
         '#rows' => $legacy_rows,
         '#empty' => 'No legacy Site Form wrappers found.',
       ],
@@ -345,17 +368,22 @@ final class SitePlatformAdminController extends ControllerBase {
     foreach ($this->loadNodes('site_menu') as $menu) {
       $rows[] = [
         $this->siteLabelForNode($menu),
-        $menu->label(),
+        $this->nodeTitleCell($menu),
         $this->fieldValue($menu, 'field_menu_key'),
         $this->fieldValue($menu, 'field_menu_is_active') === '1' ? 'yes' : 'no',
-        '/node/' . $menu->id() . '/edit',
+        $this->nodeActionsCell($menu),
       ];
     }
 
     return $this->listingPage(
       'Menus',
       'Long-term target is Drupal core menus. Current Site Menu nodes are compatibility wrappers for the API/YAML importer.',
-      ['Site', 'Legacy menu wrapper', 'Key', 'Active', 'Edit path'],
+      [
+        'Drupal core menus' => '/admin/structure/menu',
+        'Add Drupal menu' => '/admin/structure/menu/add',
+        'Add Legacy Menu Wrapper' => '/node/add/site_menu',
+      ],
+      ['Site', 'Legacy menu wrapper', 'Key', 'Active', 'Actions'],
       $rows,
       'No legacy menu wrappers found.',
     );
@@ -371,8 +399,8 @@ final class SitePlatformAdminController extends ControllerBase {
         $rows[] = [
           self::MANAGED_BUNDLES[$bundle] ?? $bundle,
           $this->siteLabelForNode($node),
-          $node->label(),
-          '/node/' . $node->id() . '/edit',
+          $this->nodeTitleCell($node),
+          $this->nodeActionsCell($node),
         ];
       }
     }
@@ -380,7 +408,13 @@ final class SitePlatformAdminController extends ControllerBase {
     return $this->listingPage(
       'Legacy Wrappers',
       'Compatibility node records. These are not the preferred editor workflow.',
-      ['Type', 'Site', 'Record', 'Edit path'],
+      [
+        'Add Menu Wrapper' => '/node/add/site_menu',
+        'Add Menu Item Wrapper' => '/node/add/site_menu_item',
+        'Add Form Wrapper' => '/node/add/site_form',
+        'Add Form Field Wrapper' => '/node/add/site_form_field',
+      ],
+      ['Type', 'Site', 'Record', 'Actions'],
       $rows,
       'No legacy wrapper records found.',
     );
@@ -389,13 +423,14 @@ final class SitePlatformAdminController extends ControllerBase {
   /**
    * Builds a reusable listing page.
    */
-  private function listingPage(string $title, string $intro, array $header, array $rows, string $empty): array {
+  private function listingPage(string $title, string $intro, array $actions, array $header, array $rows, string $empty): array {
     return [
       '#type' => 'container',
       '#attributes' => ['class' => ['site-platform-admin-listing']],
       'intro' => [
-        '#markup' => '<p><strong>' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '.</strong> ' . htmlspecialchars($intro, ENT_QUOTES, 'UTF-8') . '</p>',
+        '#markup' => '<p><strong>' . Html::escape($title) . '.</strong> ' . Html::escape($intro) . '</p>',
       ],
+      'actions' => $this->actionsMarkup($actions),
       'table' => [
         '#type' => 'table',
         '#header' => $header,
@@ -411,7 +446,7 @@ final class SitePlatformAdminController extends ControllerBase {
   private function sectionRows(): array {
     $rows = [];
     foreach (self::SECTIONS as $section => $info) {
-      $rows[] = [$section, $info['purpose'], $info['path']];
+      $rows[] = [$section, $info['purpose'], $this->linksCell(['Open' => $info['path']])];
     }
 
     return $rows;
@@ -451,9 +486,26 @@ final class SitePlatformAdminController extends ControllerBase {
    * Builds managed entity count rows.
    */
   private function countRows(): array {
+    $section_by_bundle = [
+      'site_profile' => '/admin/site-platform/sites',
+      'site_page' => '/admin/site-platform/pages',
+      'site_content_block' => '/admin/site-platform/content-blocks',
+      'site_media_asset' => '/admin/site-platform/media-assets',
+      'site_menu' => '/admin/site-platform/legacy-wrappers',
+      'site_menu_item' => '/admin/site-platform/legacy-wrappers',
+      'site_form' => '/admin/site-platform/legacy-wrappers',
+      'site_form_field' => '/admin/site-platform/legacy-wrappers',
+      'site_form_submission' => '/admin/site-platform/legacy-wrappers',
+    ];
+
     $rows = [];
     foreach (self::MANAGED_BUNDLES as $bundle => $label) {
-      $rows[] = [$label, $bundle, (string) $this->countBundle($bundle)];
+      $rows[] = [
+        $label,
+        $bundle,
+        (string) $this->countBundle($bundle),
+        $this->linksCell(['Open' => $section_by_bundle[$bundle] ?? '/admin/site-platform']),
+      ];
     }
 
     return $rows;
@@ -521,7 +573,18 @@ final class SitePlatformAdminController extends ControllerBase {
       $id = method_exists($webform, 'id') ? (string) $webform->id() : '';
       $label = method_exists($webform, 'label') ? (string) $webform->label() : $id;
       $status = method_exists($webform, 'isOpen') && $webform->isOpen() ? 'open' : 'closed';
-      $rows[] = [$label, $id, $status, '/admin/structure/webform/manage/' . $id];
+      $rows[] = [
+        $this->linksCell([$label => '/admin/structure/webform/manage/' . $id]),
+        $id,
+        $status,
+        $this->linksCell([
+          'Manage' => '/admin/structure/webform/manage/' . $id,
+          'View' => '/form/' . $id,
+          'Results' => '/admin/structure/webform/manage/' . $id . '/results/submissions',
+          'Settings' => '/admin/structure/webform/manage/' . $id . '/settings',
+          'Delete' => '/admin/structure/webform/manage/' . $id . '/delete',
+        ]),
+      ];
     }
 
     return $rows;
@@ -563,6 +626,65 @@ final class SitePlatformAdminController extends ControllerBase {
     }
 
     return $node->get($field_name)->count();
+  }
+
+  /**
+   * Builds a linked title cell for a node.
+   */
+  private function nodeTitleCell(NodeInterface $node): array {
+    return $this->linksCell([(string) $node->label() => '/node/' . $node->id()]);
+  }
+
+  /**
+   * Builds CRUD action links for a node row.
+   */
+  private function nodeActionsCell(NodeInterface $node): array {
+    return $this->linksCell([
+      'View' => '/node/' . $node->id(),
+      'Edit' => '/node/' . $node->id() . '/edit',
+      'Delete' => '/node/' . $node->id() . '/delete',
+    ]);
+  }
+
+  /**
+   * Builds a table cell containing safe, clickable links.
+   */
+  private function linksCell(array $links): array {
+    return [
+      'data' => [
+        '#markup' => Markup::create($this->linksHtml($links, ' | ')),
+      ],
+    ];
+  }
+
+  /**
+   * Builds top action link markup.
+   */
+  private function actionsMarkup(array $links): array {
+    if (!$links) {
+      return [];
+    }
+
+    return [
+      '#markup' => Markup::create('<p class="site-platform-admin-actions">' . $this->linksHtml($links, ' &nbsp; ') . '</p>'),
+    ];
+  }
+
+  /**
+   * Builds escaped anchor HTML from label/path pairs.
+   */
+  private function linksHtml(array $links, string $separator): string {
+    $items = [];
+    foreach ($links as $label => $path) {
+      $label = trim((string) $label);
+      $path = trim((string) $path);
+      if ($label === '' || $path === '') {
+        continue;
+      }
+      $items[] = '<a href="' . Html::escape($path) . '">' . Html::escape($label) . '</a>';
+    }
+
+    return implode($separator, $items);
   }
 
   /**
