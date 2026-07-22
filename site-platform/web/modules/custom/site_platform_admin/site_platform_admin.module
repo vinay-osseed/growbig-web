@@ -5,6 +5,12 @@
  * Runtime helpers for the Site Platform Admin module.
  */
 
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeInterface;
+
 /**
  * Implements hook_page_attachments().
  */
@@ -14,4 +20,202 @@ function site_platform_admin_page_attachments(array &$attachments): void {
   if (is_string($route_name) && str_starts_with($route_name, 'site_platform_admin.')) {
     $attachments['#attached']['library'][] = 'site_platform_admin/admin_workspace';
   }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function site_platform_admin_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  if (!isset($form['#form_id']) || !is_string($form['#form_id'])) {
+    return;
+  }
+
+  $form_object = $form_state->getFormObject();
+  if (!is_object($form_object) || !method_exists($form_object, 'getEntity')) {
+    return;
+  }
+
+  $entity = $form_object->getEntity();
+  if (!$entity instanceof NodeInterface) {
+    return;
+  }
+
+  if ($entity->bundle() === 'site_page') {
+    site_platform_admin_alter_page_form($form, $entity);
+  }
+  elseif ($entity->bundle() === 'site_profile') {
+    site_platform_admin_alter_site_profile_form($form, $entity);
+  }
+  elseif ($entity->bundle() === 'site_media_asset') {
+    site_platform_admin_alter_media_asset_form($form, $entity);
+  }
+}
+
+/**
+ * Improves the Landing Page editor form.
+ */
+function site_platform_admin_alter_page_form(array &$form, NodeInterface $node): void {
+  $form['site_platform_editor_guide'] = [
+    '#type' => 'details',
+    '#title' => t('Frontend / API handoff'),
+    '#open' => TRUE,
+    '#weight' => -100,
+    'content' => [
+      '#markup' => site_platform_admin_page_handoff_markup($node),
+    ],
+  ];
+
+  if (isset($form['field_site_profile']['widget'])) {
+    $form['field_site_profile']['widget']['#description'] = t('Choose the site/brand this page belongs to. This should be a dropdown for editors, not a search-only field.');
+  }
+  if (isset($form['field_page_key']['widget'])) {
+    $form['field_page_key']['widget']['#description'] = t('Stable internal page key used by the API, for example home, about, contact.');
+  }
+  if (isset($form['field_page_slug']['widget'])) {
+    $form['field_page_slug']['widget']['#description'] = t('URL slug without a leading slash, for example home or about-us.');
+  }
+  if (isset($form['field_page_path']['widget'])) {
+    $form['field_page_path']['widget']['#description'] = t('Frontend path with a leading slash, for example / or /about-us.');
+  }
+  if (isset($form['field_seo_title']['widget'])) {
+    $form['field_seo_title']['widget']['#description'] = t('SEO/browser title for this page.');
+  }
+  if (isset($form['field_seo_description']['widget'])) {
+    $form['field_seo_description']['widget']['#description'] = t('SEO meta description for search/social previews.');
+  }
+
+  foreach (['field_page_template', 'field_page_weight', 'field_is_demo', 'field_demo_source'] as $technical_field) {
+    if (isset($form[$technical_field])) {
+      $form[$technical_field]['#access'] = FALSE;
+    }
+  }
+}
+
+/**
+ * Improves the Site Profile editor form.
+ */
+function site_platform_admin_alter_site_profile_form(array &$form, NodeInterface $node): void {
+  $form['site_platform_editor_guide'] = [
+    '#type' => 'details',
+    '#title' => t('Site profile guide'),
+    '#open' => TRUE,
+    '#weight' => -100,
+    'content' => [
+      '#markup' => '<p>This record controls one brand/site. Use media selectors for logo/favicon and structured social link rows instead of pasting untracked text blobs.</p>',
+    ],
+  ];
+
+  foreach (['field_logo_url', 'field_favicon_url', 'field_social_links', 'field_is_demo', 'field_demo_source'] as $legacy_field) {
+    if (isset($form[$legacy_field])) {
+      $form[$legacy_field]['#access'] = FALSE;
+    }
+  }
+}
+
+/**
+ * Improves the Media Asset editor form.
+ */
+function site_platform_admin_alter_media_asset_form(array &$form, NodeInterface $node): void {
+  $form['site_platform_editor_guide'] = [
+    '#type' => 'details',
+    '#title' => t('Media asset guide'),
+    '#open' => TRUE,
+    '#weight' => -100,
+    'content' => [
+      '#markup' => '<p>Select a Drupal Media Library item whenever possible. The old URL field remains only as fallback compatibility.</p>',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function site_platform_admin_node_insert(NodeInterface $node): void {
+  site_platform_admin_show_page_save_handoff($node);
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function site_platform_admin_node_update(NodeInterface $node): void {
+  site_platform_admin_show_page_save_handoff($node);
+}
+
+/**
+ * Shows useful API handoff links after page save.
+ */
+function site_platform_admin_show_page_save_handoff(NodeInterface $node): void {
+  if ($node->bundle() !== 'site_page') {
+    return;
+  }
+
+  \Drupal::messenger()->addStatus(site_platform_admin_page_handoff_markup($node));
+}
+
+/**
+ * Implements hook_entity_view_alter().
+ */
+function site_platform_admin_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display): void {
+  if (!$entity instanceof NodeInterface || $entity->bundle() !== 'site_page') {
+    return;
+  }
+
+  $build['site_platform_frontend_handoff'] = [
+    '#type' => 'details',
+    '#title' => t('Frontend / API handoff'),
+    '#open' => TRUE,
+    '#weight' => -100,
+    'content' => [
+      '#markup' => site_platform_admin_page_handoff_markup($entity),
+    ],
+  ];
+}
+
+/**
+ * Builds page API handoff markup.
+ */
+function site_platform_admin_page_handoff_markup(NodeInterface $node): string {
+  $site_key = site_platform_admin_site_key_for_node($node) ?: 'SITE_KEY';
+  $slug = site_platform_admin_field_string($node, 'field_page_slug') ?: 'PAGE_SLUG';
+  $path = site_platform_admin_field_string($node, 'field_page_path') ?: '/' . $slug;
+  $route_path = ltrim($path, '/');
+  if ($route_path === '') {
+    $route_path = 'home';
+  }
+
+  $page_api = '/api/v1/pages/' . rawurlencode($slug) . '?site=' . rawurlencode($site_key);
+  $route_api = '/api/v1/routes/' . rawurlencode($route_path) . '?site=' . rawurlencode($site_key);
+  $list_api = '/api/v1/pages?site=' . rawurlencode($site_key);
+  $frontend = $path;
+
+  return '<div class="site-platform-handoff">'
+    . '<p><strong>Frontend path:</strong> <code>' . Html::escape($frontend) . '</code></p>'
+    . '<p><strong>API:</strong> <a href="' . Html::escape($page_api) . '">' . Html::escape($page_api) . '</a></p>'
+    . '<p><strong>Route API:</strong> <a href="' . Html::escape($route_api) . '">' . Html::escape($route_api) . '</a></p>'
+    . '<p><strong>Pages list API:</strong> <a href="' . Html::escape($list_api) . '">' . Html::escape($list_api) . '</a></p>'
+    . '</div>';
+}
+
+/**
+ * Gets the Site Profile key for a node.
+ */
+function site_platform_admin_site_key_for_node(NodeInterface $node): string {
+  if (!$node->hasField('field_site_profile') || $node->get('field_site_profile')->isEmpty()) {
+    return '';
+  }
+  $site = $node->get('field_site_profile')->entity;
+  if (!$site instanceof NodeInterface) {
+    return '';
+  }
+  return site_platform_admin_field_string($site, 'field_site_key');
+}
+
+/**
+ * Reads a simple field string.
+ */
+function site_platform_admin_field_string(NodeInterface $node, string $field_name): string {
+  if (!$node->hasField($field_name) || $node->get($field_name)->isEmpty()) {
+    return '';
+  }
+  return trim((string) $node->get($field_name)->getString());
 }

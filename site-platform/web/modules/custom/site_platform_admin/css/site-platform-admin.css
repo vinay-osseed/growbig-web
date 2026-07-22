@@ -49,3 +49,22 @@
 .site-platform-admin-overview td:last-child {
   min-width: 180px;
 }
+
+.site-platform-handoff {
+  background: #f6f8fa;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  margin: 0.75rem 0;
+  padding: 0.75rem 1rem;
+}
+
+.site-platform-handoff p {
+  margin: 0.25rem 0;
+}
+
+.site-platform-handoff code {
+  background: #ffffff;
+  border: 1px solid #d0d7de;
+  border-radius: 4px;
+  padding: 0.075rem 0.25rem;
+}
