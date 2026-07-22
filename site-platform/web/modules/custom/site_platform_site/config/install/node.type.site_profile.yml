@@ -3,8 +3,8 @@ status: true
 dependencies: {  }
 name: 'Site Profile'
 type: site_profile
-description: 'Top-level brand/site/domain profile. One profile powers one isolated frontend site.'
-help: 'Create one Site Profile per brand or landing-page site. Pages, content blocks, media assets, and form wrappers reference this profile.'
+description: 'Represents one isolated site/company/domain set inside Site Platform.'
+help: ''
 new_revision: true
 preview_mode: 1
 display_submitted: false

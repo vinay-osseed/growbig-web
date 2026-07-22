@@ -1,10 +1,10 @@
 langcode: en
 status: true
 dependencies: {  }
-name: 'Legacy API Form Wrapper'
+name: 'Site Form'
 type: site_form
-description: 'Compatibility form wrapper kept for API fallback. Real forms should use Drupal Webform.'
-help: 'Do not build production forms here. Build production forms in Drupal Webform and keep this only as an API compatibility wrapper when needed.'
+description: 'Represents one frontend form assigned to a Site Profile.'
+help: ''
 new_revision: true
 preview_mode: 1
 display_submitted: false

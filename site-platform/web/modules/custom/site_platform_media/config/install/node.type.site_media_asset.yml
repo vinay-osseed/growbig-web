@@ -1,10 +1,10 @@
 langcode: en
 status: true
 dependencies: {  }
-name: 'Media Asset Metadata'
+name: 'Site Media Asset'
 type: site_media_asset
-description: 'Frontend-safe media metadata exposed by the media API. Binary files should move toward Drupal Media Library.'
-help: 'Use this for API media references. Store title, key, kind, URL, alt text, credit, and active state.'
+description: 'Represents a reusable media asset assigned to a Site Profile.'
+help: ''
 new_revision: true
 preview_mode: 1
 display_submitted: false
