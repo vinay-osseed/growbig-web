@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_form_field_weight
+    - node.type.site_form_field
+id: node.site_form_field.field_form_field_weight
+field_name: field_form_field_weight
+entity_type: node
+bundle: site_form_field
+label: 'Weight'
+description: 'Sort weight for form fields.'
+required: false
+translatable: false
+default_value_callback: ''
+default_value:
+  -
+    value: 0
+settings: {  }
+field_type: integer

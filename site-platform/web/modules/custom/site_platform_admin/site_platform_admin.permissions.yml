@@ -1,6 +1,12 @@
-
-
-administer site setup:
-  title: 'Administer Site Setup'
-  description: 'Run, review, unlock, retry, or reset the first-run site setup workflow.'
+administer site platform:
+  title: 'Administer Site Platform'
+  description: 'Access Site Platform administration, setup status, and backend dashboard.'
   restrict access: true
+
+manage site platform content:
+  title: 'Manage Site Platform content'
+  description: 'Manage Site Platform site profiles, pages, menus, media, and content records.'
+
+view site platform reports:
+  title: 'View Site Platform reports'
+  description: 'View Site Platform backend reports and readiness status.'

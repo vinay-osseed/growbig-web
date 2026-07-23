@@ -1,0 +1,14 @@
+name: Site Platform Native
+package: Site Platform
+type: module
+description: Drupal-native Site Platform workflow, onboarding, Domain-aware APIs, and flexible datasets.
+core_version_requirement: ^11
+dependencies:
+  - drupal:node
+  - drupal:menu_ui
+  - drupal:menu_link_content
+  - drupal:media
+  - drupal:media_library
+  - drupal:jsonapi
+  - paragraphs:paragraphs
+  - webform:webform

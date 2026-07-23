@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_is_default
+    - node.type.site_profile
+id: node.site_profile.field_is_default
+field_name: field_is_default
+entity_type: node
+bundle: site_profile
+label: 'Default site'
+description: 'Marks the default site for local/bootstrap use.'
+required: false
+translatable: false
+default_value_callback: ''
+default_value:
+  -
+    value: 0
+settings: {  }
+field_type: boolean

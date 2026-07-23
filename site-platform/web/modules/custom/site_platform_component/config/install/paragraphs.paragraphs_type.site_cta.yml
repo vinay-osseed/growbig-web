@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: site_cta
+label: 'Site CTA'
+icon_uuid: null
+icon_default: null
+description: 'Call to action component.'
+behavior_plugins: {  }

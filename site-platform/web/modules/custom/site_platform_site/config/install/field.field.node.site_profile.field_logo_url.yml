@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_logo_url
+    - node.type.site_profile
+id: node.site_profile.field_logo_url
+field_name: field_logo_url
+entity_type: node
+bundle: site_profile
+label: 'Logo URL'
+description: 'Temporary logo URL until media/image support is added.'
+required: false
+translatable: true
+default_value_callback: ''
+default_value: {  }
+settings: {  }
+field_type: string

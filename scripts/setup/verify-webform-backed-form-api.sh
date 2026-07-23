@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+cd "$ROOT"
+
+required=(
+  "site-platform/web/modules/custom/site_platform_form/site_platform_form.info.yml"
+  "site-platform/web/modules/custom/site_platform_form/config/install/node.type.site_form.yml"
+  "site-platform/web/modules/custom/site_platform_form/config/install/node.type.site_form_field.yml"
+  "site-platform/web/modules/custom/site_platform_form/config/install/node.type.site_form_submission.yml"
+  "site-platform/web/modules/custom/site_platform_api/src/Controller/FormApiController.php"
+  "scripts/setup/verify-form-api.php"
+  "docs/implementation/phase-09-form-model-api.md"
+)
+
+for file in "${required[@]}"; do
+  if [ ! -f "$file" ]; then
+    echo "Missing: $file"
+    exit 1
+  fi
+done
+
+if ! ddev composer show drupal/webform >/dev/null 2>&1; then
+  echo "Missing Composer package: drupal/webform"
+  echo "Run: ddev composer require drupal/webform -W"
+  exit 1
+fi
+
+php -l site-platform/web/modules/custom/site_platform_api/src/Controller/FormApiController.php >/dev/null
+php -l site-platform/web/modules/custom/site_platform_setup/src/Commands/SitePlatformSetupCommands.php >/dev/null
+php -l scripts/setup/verify-form-api.php >/dev/null
+
+ddev drush en webform site_platform_core site_platform_site site_platform_page site_platform_menu site_platform_component site_platform_form site_platform_api -y
+ddev drush cr
+
+ddev drush config:get node.type.site_form >/dev/null
+ddev drush config:get node.type.site_form_field >/dev/null
+ddev drush config:get node.type.site_form_submission >/dev/null
+ddev drush config:get field.field.node.site_form.field_form_key >/dev/null
+ddev drush config:get field.field.node.site_form_field.field_form_field_key >/dev/null
+ddev drush config:get field.field.node.site_form_submission.field_submission_payload >/dev/null
+
+ddev drush php:script /var/www/html/scripts/setup/verify-basic-site-page-api.php
+ddev drush php:script /var/www/html/scripts/setup/verify-form-api.php
+
+ddev drush ev 'echo \Drupal\webform\Entity\Webform::load("growbig_contact") ? "ok" : "missing";' | grep -q 'ok'
+ddev drush ev 'echo \Drupal\webform\Entity\Webform::load("osseed_contact") ? "ok" : "missing";' | grep -q 'ok'
+
+before_nodes="$(ddev drush ev '$ids = \Drupal::entityTypeManager()->getStorage("node")->getQuery()->accessCheck(FALSE)->condition("type", "site_form_submission")->execute(); echo count($ids);' | tr -dc '0-9')"
+
+form_json="$(curl -fsS 'https://site-platform.ddev.site/api/v1/forms/contact?site=growbig')"
+osseed_json="$(curl -fsS 'https://site-platform.ddev.site/api/v1/forms/contact?site=osseed')"
+submit_json="$(curl -fsS -X POST 'https://site-platform.ddev.site/api/v1/forms/contact/submit?site=growbig' -H 'Content-Type: application/json' --data '{"name":"Test User","email":"test@example.com","message":"Hello"}')"
+invalid_json="$(curl -s -X POST 'https://site-platform.ddev.site/api/v1/forms/contact/submit?site=growbig' -H 'Content-Type: application/json' --data '{"name":"","email":"bad-email","message":""}')"
+missing_json="$(curl -s 'https://site-platform.ddev.site/api/v1/forms/missing?site=growbig')"
+
+after_nodes="$(ddev drush ev '$ids = \Drupal::entityTypeManager()->getStorage("node")->getQuery()->accessCheck(FALSE)->condition("type", "site_form_submission")->execute(); echo count($ids);' | tr -dc '0-9')"
+webform_submissions="$(ddev drush ev '$ids = \Drupal::entityTypeManager()->getStorage("webform_submission")->getQuery()->accessCheck(FALSE)->condition("webform_id", "growbig_contact")->execute(); echo count($ids);' | tr -dc '0-9')"
+
+printf '%s' "$form_json" | grep -q '"type":"Webform"'
+printf '%s' "$form_json" | grep -q '"storage":"webform"'
+printf '%s' "$form_json" | grep -q '"key":"contact"'
+printf '%s' "$form_json" | grep -q '"type":"email"'
+printf '%s' "$form_json" | grep -q '"key":"message"'
+printf '%s' "$osseed_json" | grep -q '"Contact OSSeed"'
+printf '%s' "$submit_json" | grep -q '"submissionId":"webform_submission-'
+printf '%s' "$submit_json" | grep -q '"storage":"webform"'
+printf '%s' "$submit_json" | grep -q '"status":"received"'
+printf '%s' "$invalid_json" | grep -q '"code":"validation_failed"'
+printf '%s' "$missing_json" | grep -q '"code":"form_not_found"'
+
+if [ "$before_nodes" != "$after_nodes" ]; then
+  echo "Expected no new site_form_submission nodes for Webform-backed submit. Before=$before_nodes After=$after_nodes"
+  exit 1
+fi
+
+if [ "${webform_submissions:-0}" -lt 1 ]; then
+  echo "Expected at least one growbig_contact webform_submission."
+  exit 1
+fi
+
+echo "Webform-backed form API verification passed."

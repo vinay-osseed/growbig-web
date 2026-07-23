@@ -1,22 +1,6 @@
 parameters:
-  cors.config:
-    enabled: true
-    allowedHeaders:
-      - authorization
-      - content-type
-      - accept
-      - origin
-      - x-requested-with
-      - x-csrf-token
-      - x-site-key
-    allowedMethods:
-      - GET
-      - POST
-      - OPTIONS
-    allowedOrigins:
-      - 'https://dev.growbigllp.com'
-      - 'https://growbigllp.com'
-      - 'https://www.growbigllp.com'
-    exposedHeaders: false
-    maxAge: 1000
-    supportsCredentials: false
+  http.response.debug_cacheability_headers: false
+  twig.config:
+    debug: false
+    auto_reload: null
+    cache: true

@@ -1,0 +1,44 @@
+# GrowBig Webform production-prep draft.
+# Planning only. Do not import into stage or production yet.
+# Do not store secrets or private recipient addresses in this file.
+
+site_key: growbig
+webforms:
+  - key: contact
+    webform_id: growbig_contact
+    title: Contact GrowBig
+    status: draft
+    storage: webform
+    purpose: Primary public contact form for GrowBig.
+    fields:
+      - key: name
+        label: Name
+        type: textfield
+        required: true
+      - key: email
+        label: Email
+        type: email
+        required: true
+      - key: message
+        label: Message
+        type: textarea
+        required: true
+    handlers:
+      email:
+        status: todo
+        recipient: TODO_GROWBIG_CONTACT_RECIPIENT
+        subject: TODO GrowBig contact email subject
+        reply_to: TODO submitter email token
+    confirmation:
+      type: message
+      message: TODO GrowBig contact confirmation message
+    spam_protection:
+      status: todo
+      recommended: honeypot_or_captcha
+    retention:
+      status: todo
+      export_owner: TODO_GROWBIG_FORM_EXPORT_OWNER
+      retention_policy: TODO_GROWBIG_RETENTION_POLICY
+    uploads:
+      allowed: false
+      notes: No uploads in the initial contact form draft.

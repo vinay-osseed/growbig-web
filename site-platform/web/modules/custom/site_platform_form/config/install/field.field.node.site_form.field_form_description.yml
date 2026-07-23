@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_form_description
+    - node.type.site_form
+id: node.site_form.field_form_description
+field_name: field_form_description
+entity_type: node
+bundle: site_form
+label: 'Description'
+description: 'Public form description.'
+required: false
+translatable: true
+default_value_callback: ''
+default_value: {  }
+settings: {  }
+field_type: string_long

@@ -1,107 +1,156 @@
 site_platform_api.site:
   path: '/api/v1/site'
   defaults:
-    _controller: '\Drupal\site_platform_api\Controller\SiteController::site'
+    _controller: '\Drupal\site_platform_api\Controller\SiteApiController::site'
   requirements:
-    _permission: 'access content'
-  options:
-    no_cache: TRUE
+    _access: 'TRUE'
+  methods: [GET]
 
 site_platform_api.pages:
   path: '/api/v1/pages'
   defaults:
-    _controller: '\Drupal\site_platform_api\Controller\PageController::index'
+    _controller: '\Drupal\site_platform_api\Controller\PageApiController::pages'
   requirements:
-    _permission: 'access content'
-  options:
-    no_cache: TRUE
+    _access: 'TRUE'
+  methods: [GET]
 
 site_platform_api.page:
   path: '/api/v1/pages/{slug}'
   defaults:
-    _controller: '\Drupal\site_platform_api\Controller\PageController::page'
+    _controller: '\Drupal\site_platform_api\Controller\PageApiController::page'
   requirements:
-    _permission: 'access content'
-  options:
-    no_cache: TRUE
+    _access: 'TRUE'
+    slug: '[A-Za-z0-9_-]+'
+  methods: [GET]
 
-site_platform_api.content:
-  path: '/api/v1/content/{source}'
+site_platform_api.route_front:
+  path: '/api/v1/routes'
   defaults:
-    _controller: '\Drupal\site_platform_api\Controller\ContentController::list'
+    _controller: '\Drupal\site_platform_api\Controller\PageApiController::route'
+    path: ''
   requirements:
-    _permission: 'access content'
-  options:
-    no_cache: TRUE
+    _access: 'TRUE'
+  methods: [GET]
 
-site_platform_api.content_detail:
-  path: '/api/v1/content/{source}/{key}'
+site_platform_api.route:
+  path: '/api/v1/routes/{path}'
   defaults:
-    _controller: '\Drupal\site_platform_api\Controller\ContentController::detail'
+    _controller: '\Drupal\site_platform_api\Controller\PageApiController::route'
   requirements:
-    _permission: 'access content'
-  options:
-    no_cache: TRUE
-
-site_platform_api.form:
-  path: '/api/v1/forms/{form}'
-  defaults:
-    _controller: '\Drupal\site_platform_api\Controller\FormController::form'
-  requirements:
-    _permission: 'access content'
-  options:
-    no_cache: TRUE
-
-site_platform_api.form_submit:
-  path: '/api/v1/forms/{form}/submit'
-  defaults:
-    _controller: '\Drupal\site_platform_api\Controller\FormController::submit'
-  requirements:
-    _permission: 'access content'
-  methods: [POST]
-  options:
-    no_cache: TRUE
+    _access: 'TRUE'
+    path: '.+'
+  methods: [GET]
 
 site_platform_api.menus:
   path: '/api/v1/menus'
   defaults:
-    _controller: '\Drupal\site_platform_api\Controller\MenuController::index'
+    _controller: '\Drupal\site_platform_api\Controller\MenuApiController::menus'
   requirements:
-    _permission: 'access content'
-  options:
-    no_cache: TRUE
+    _access: 'TRUE'
+  methods: [GET]
 
 site_platform_api.menu:
   path: '/api/v1/menus/{menu}'
   defaults:
-    _controller: '\Drupal\site_platform_api\Controller\MenuController::menu'
+    _controller: '\Drupal\site_platform_api\Controller\MenuApiController::menu'
   requirements:
-    _permission: 'access content'
-  options:
-    no_cache: TRUE
+    _access: 'TRUE'
+    menu: '[A-Za-z0-9_-]+'
+  methods: [GET]
 
-site_platform_api.admin_dashboard:
-  path: '/api/v1/admin/dashboard'
+site_platform_api.form:
+  path: '/api/v1/forms/{form}'
   defaults:
-    _controller: '\Drupal\site_platform_api\Controller\AdminDashboardController::dashboard'
+    _controller: '\Drupal\site_platform_api\Controller\FormApiController::form'
   requirements:
-    _permission: 'access administration pages'
-  options:
-    no_cache: TRUE
+    _access: 'TRUE'
+    form: '[A-Za-z0-9_-]+'
+  methods: [GET]
 
-site_platform_api.analytics_config:
-  path: '/api/v1/analytics/config'
+site_platform_api.form_submit:
+  path: '/api/v1/forms/{form}/submit'
   defaults:
-    _controller: '\Drupal\site_platform_api\Controller\AnalyticsController::analyticsConfig'
+    _controller: '\Drupal\site_platform_api\Controller\FormApiController::submit'
   requirements:
-    _permission: 'access content'
-  options:
-    no_cache: TRUE
+    _access: 'TRUE'
+    form: '[A-Za-z0-9_-]+'
+  methods: [POST]
 
-site_platform_api.analytics_settings:
-  path: '/admin/config/site-platform/analytics'
+site_platform_api.content:
+  path: '/api/v1/content'
   defaults:
-    _form: '\Drupal\site_platform_api\Form\AnalyticsSettingsForm'
-    _title: 'Analytics Settings'
+    _controller: '\Drupal\site_platform_api\Controller\ContentApiController::content'
   requirements:
-    _permission: 'administer site configuration'
+    _access: 'TRUE'
+  methods: [GET]
+
+site_platform_api.content_source:
+  path: '/api/v1/content/{source}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\ContentApiController::content'
+    key: ''
+  requirements:
+    _access: 'TRUE'
+    source: '[A-Za-z0-9_-]+'
+  methods: [GET]
+
+site_platform_api.content_item:
+  path: '/api/v1/content/{source}/{key}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\ContentApiController::contentItem'
+  requirements:
+    _access: 'TRUE'
+    source: '[A-Za-z0-9_-]+'
+    key: '[A-Za-z0-9_-]+'
+  methods: [GET]
+
+
+site_platform_api.media:
+  path: '/api/v1/media'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\MediaApiController::media'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+
+site_platform_api.media_item:
+  path: '/api/v1/media/{key}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\MediaApiController::mediaItem'
+  requirements:
+    _access: 'TRUE'
+    key: '[A-Za-z0-9_-]+'
+  methods: [GET]
+
+site_platform_api.seo:
+  path: '/api/v1/seo'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\SeoApiController::seo'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+
+site_platform_api.seo_page:
+  path: '/api/v1/seo/page/{slug}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\SeoApiController::seoPage'
+  requirements:
+    _access: 'TRUE'
+    slug: '[A-Za-z0-9_-]+'
+  methods: [GET]
+
+site_platform_api.analytics:
+  path: '/api/v1/analytics'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\AnalyticsApiController::analytics'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+
+site_platform_api.search:
+  path: '/api/v1/search'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\SearchApiController::search'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]

@@ -1,0 +1,13 @@
+site_platform_native.start:
+  title: 'Start Here'
+  description: 'Drupal-native editor workflow and onboarding guide.'
+  route_name: site_platform_native.start
+  parent: site_platform_admin.overview
+  weight: -20
+
+site_platform_native.api_docs:
+  title: 'API Guide'
+  description: 'Clean frontend API payload guide.'
+  route_name: site_platform_native.api_docs
+  parent: site_platform_admin.overview
+  weight: -19

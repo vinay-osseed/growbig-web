@@ -1,13 +1,49 @@
-site_platform_admin.dashboard:
-  title: 'Site Dashboard'
-  description: 'Manage reusable site platform settings, content, menus, and API documentation.'
-  route_name: site_platform_admin.dashboard
+site_platform_admin.overview:
+  title: 'Site Platform'
+  description: 'Manage Site Platform backend records and API readiness.'
+  route_name: site_platform_admin.overview
   parent: system.admin
-  weight: -50
+  weight: -5
 
-site_platform_admin.site_setup:
-  title: 'Site Setup'
-  description: 'Run and review the first-run site setup workflow.'
-  route_name: site_platform_admin.site_setup
-  parent: system.admin
-  weight: -20
+site_platform_admin.sites:
+  title: 'Sites'
+  description: 'Review Site Profiles for brands/domains.'
+  route_name: site_platform_admin.sites
+  parent: site_platform_admin.overview
+  weight: 0
+
+site_platform_admin.pages:
+  title: 'Landing Pages'
+  description: 'Review frontend page records and page sections.'
+  route_name: site_platform_admin.pages
+  parent: site_platform_admin.overview
+  weight: 1
+
+site_platform_admin.content_blocks:
+  title: 'Content Blocks'
+  description: 'Review reusable source/key content blocks.'
+  route_name: site_platform_admin.content_blocks
+  parent: site_platform_admin.overview
+  weight: 2
+
+site_platform_admin.media_assets:
+  title: 'Media Assets'
+  description: 'Review frontend media asset metadata.'
+  route_name: site_platform_admin.media_assets
+  parent: site_platform_admin.overview
+  weight: 3
+
+site_platform_admin.forms:
+  title: 'Forms'
+  description: 'Review Webforms and legacy compatibility wrappers.'
+  route_name: site_platform_admin.forms
+  parent: site_platform_admin.overview
+  weight: 4
+
+site_platform_admin.menus:
+  title: 'Menus'
+  description: 'Review menu workflow and compatibility wrappers.'
+  route_name: site_platform_admin.menus
+  parent: site_platform_admin.overview
+  weight: 5
+

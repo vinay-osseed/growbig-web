@@ -1,0 +1,38 @@
+name: Site Platform v2 Backend Checks
+
+on:
+  pull_request:
+    branches:
+      - architecture/site-platform-v2
+  push:
+    branches:
+      - architecture/site-platform-v2
+
+jobs:
+  static-checks:
+    name: Static checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+
+      - name: PHP syntax check custom modules
+        run: |
+          find site-platform/web/modules/custom -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: Shell syntax check setup scripts
+        run: |
+          for file in scripts/setup/*.sh; do
+            bash -n "$file"
+          done
+
+      - name: API contract files exist
+        run: |
+          test -f docs/api/site-platform-v2-api-contract.md
+          test -f docs/release/backend-deadline-status.md

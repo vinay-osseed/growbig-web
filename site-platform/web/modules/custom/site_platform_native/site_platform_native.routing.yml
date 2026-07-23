@@ -1,0 +1,103 @@
+site_platform_native.start:
+  path: '/admin/site-platform/start'
+  defaults:
+    _controller: '\Drupal\site_platform_native\Controller\NativeAdminController::start'
+    _title: 'Site Platform Start Here'
+  requirements:
+    _permission: 'access site platform native admin'
+  options:
+    _admin_route: TRUE
+
+site_platform_native.api_docs:
+  path: '/admin/site-platform/api-guide'
+  defaults:
+    _controller: '\Drupal\site_platform_native\Controller\NativeAdminController::apiGuide'
+    _title: 'Site Platform API Guide'
+  requirements:
+    _permission: 'access site platform native admin'
+  options:
+    _admin_route: TRUE
+
+site_platform_native.api_bootstrap:
+  path: '/api/v2/bootstrap'
+  defaults:
+    _controller: '\Drupal\site_platform_native\Controller\NativeApiController::bootstrap'
+  requirements:
+    _permission: 'access content'
+  options:
+    _format: 'json'
+
+site_platform_native.api_pages:
+  path: '/api/v2/pages'
+  defaults:
+    _controller: '\Drupal\site_platform_native\Controller\NativeApiController::pages'
+  requirements:
+    _permission: 'access content'
+  options:
+    _format: 'json'
+
+site_platform_native.api_page:
+  path: '/api/v2/pages/{slug}'
+  defaults:
+    _controller: '\Drupal\site_platform_native\Controller\NativeApiController::page'
+  requirements:
+    _permission: 'access content'
+    slug: '.+'
+  options:
+    _format: 'json'
+
+site_platform_native.api_navigation:
+  path: '/api/v2/navigation'
+  defaults:
+    _controller: '\Drupal\site_platform_native\Controller\NativeApiController::navigation'
+  requirements:
+    _permission: 'access content'
+  options:
+    _format: 'json'
+
+site_platform_native.api_forms:
+  path: '/api/v2/forms'
+  defaults:
+    _controller: '\Drupal\site_platform_native\Controller\NativeApiController::forms'
+  requirements:
+    _permission: 'access content'
+  options:
+    _format: 'json'
+
+site_platform_native.api_form:
+  path: '/api/v2/forms/{webform_id}'
+  defaults:
+    _controller: '\Drupal\site_platform_native\Controller\NativeApiController::form'
+  requirements:
+    _permission: 'access content'
+    webform_id: '[A-Za-z0-9_\-]+'
+  options:
+    _format: 'json'
+
+site_platform_native.api_datasets:
+  path: '/api/v2/datasets'
+  defaults:
+    _controller: '\Drupal\site_platform_native\Controller\NativeApiController::datasets'
+  requirements:
+    _permission: 'access content'
+  options:
+    _format: 'json'
+
+site_platform_native.api_dataset:
+  path: '/api/v2/datasets/{key}'
+  defaults:
+    _controller: '\Drupal\site_platform_native\Controller\NativeApiController::dataset'
+  requirements:
+    _permission: 'access content'
+    key: '[A-Za-z0-9_\-]+'
+  options:
+    _format: 'json'
+
+site_platform_native.api_careers:
+  path: '/api/v2/careers'
+  defaults:
+    _controller: '\Drupal\site_platform_native\Controller\NativeApiController::careers'
+  requirements:
+    _permission: 'access content'
+  options:
+    _format: 'json'

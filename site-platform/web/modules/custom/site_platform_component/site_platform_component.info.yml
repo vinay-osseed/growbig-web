@@ -1,0 +1,12 @@
+name: Site Platform Component
+type: module
+description: Provides the component/paragraph model for Site Platform pages.
+package: Site Platform
+core_version_requirement: ^11
+dependencies:
+  - drupal:node
+  - drupal:text
+  - paragraphs:paragraphs
+  - entity_reference_revisions:entity_reference_revisions
+  - site_platform_core:site_platform_core
+  - site_platform_page:site_platform_page

@@ -1,15 +1,5 @@
-dashboard:
+admin_workspace:
   version: 1.x
   css:
     theme:
-      css/site-platform-admin-dashboard.css: {}
-  js:
-    js/site-platform-admin-dashboard.js: {}
-  dependencies:
-    - core/drupal
-    - core/once
-
-site_setup:
-  css:
-    theme:
-      css/site-setup.css: {}
+      css/site-platform-admin.css: {}

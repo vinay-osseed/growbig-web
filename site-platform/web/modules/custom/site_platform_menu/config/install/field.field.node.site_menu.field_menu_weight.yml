@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_weight
+    - node.type.site_menu
+id: node.site_menu.field_menu_weight
+field_name: field_menu_weight
+entity_type: node
+bundle: site_menu
+label: 'Weight'
+description: 'Sort weight for menu lists.'
+required: false
+translatable: false
+default_value_callback: ''
+default_value:
+  -
+    value: 0
+settings: {  }
+field_type: integer

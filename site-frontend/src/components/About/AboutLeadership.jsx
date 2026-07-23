@@ -2,22 +2,22 @@ const leaders = [
   {
     name: "Rahul Sawant",
     role: "Founder & CEO",
-    image: "https://via.placeholder.com/400x500?text=Rahul",
+    image: "",
   },
   {
     name: "Priya Desai",
     role: "Chief Technology Officer",
-    image: "https://via.placeholder.com/400x500?text=Priya",
+    image: "",
   },
   {
     name: "Arjun Naik",
     role: "Head of Design",
-    image: "https://via.placeholder.com/400x500?text=Arjun",
+    image: "",
   },
   {
     name: "Sneha Patil",
     role: "Head of Delivery",
-    image: "https://via.placeholder.com/400x500?text=Sneha",
+    image: "",
   },
 ];
 

@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_media_kind
+    - node.type.site_media_asset
+  module:
+    - options
+id: node.site_media_asset.field_media_kind
+field_name: field_media_kind
+entity_type: node
+bundle: site_media_asset
+label: Kind
+description: 'Media asset kind.'
+required: true
+translatable: false
+default_value:
+  -
+    value: image
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,10 @@
+name: Site Platform Page
+type: module
+description: Provides the Site Page content model and site assignment fields.
+package: Site Platform
+core_version_requirement: ^11
+dependencies:
+  - drupal:node
+  - drupal:text
+  - site_platform_core:site_platform_core
+  - site_platform_site:site_platform_site

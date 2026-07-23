@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_media_is_active
+    - node.type.site_media_asset
+id: node.site_media_asset.field_media_is_active
+field_name: field_media_is_active
+entity_type: node
+bundle: site_media_asset
+label: Active
+description: 'Whether this media asset is active.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Active
+  off_label: Inactive
+field_type: boolean

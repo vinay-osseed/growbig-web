@@ -1,8 +1,0 @@
-services:
-  site_platform_admin.commands:
-    class: Drupal\site_platform_admin\Commands\SiteSetupCommands
-    arguments:
-      - '@site_platform_admin.setup_storage'
-      - '@site_platform_admin.setup_runner'
-    tags:
-      - { name: drush.command }

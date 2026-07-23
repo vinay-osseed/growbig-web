@@ -1,0 +1,11 @@
+name: Site Platform Form
+type: module
+description: Provides site-scoped form models and submission storage for Site Platform.
+package: Site Platform
+core_version_requirement: ^11
+dependencies:
+  - drupal:node
+  - drupal:text
+  - site_platform_core:site_platform_core
+  - site_platform_site:site_platform_site
+  - site_platform_page:site_platform_page

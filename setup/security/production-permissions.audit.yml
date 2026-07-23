@@ -1,0 +1,77 @@
+# Production permissions audit draft for Site Platform v2.
+# Planning only. Do not import into stage or production.
+# This file documents decisions; it does not change Drupal permissions.
+
+status: draft
+stage_deployment: skipped
+production_deployment: not_started
+safety:
+  no_permission_changes: true
+  review_only: true
+
+roles:
+  - role: administrator
+    status: todo
+    owner: TODO_ACCESS_OWNER
+    intended_access: Full technical administration.
+    notes: TODO confirm production admin users and remove unused accounts.
+
+  - role: site_platform_administrator
+    status: todo
+    owner: TODO_ACCESS_OWNER
+    intended_access: Manage Site Platform configuration and high-level dashboard.
+    permissions_to_review:
+      - administer site platform
+      - manage site platform content
+      - view site platform reports
+    notes: TODO map to actual Drupal role before launch.
+
+  - role: site_platform_editor
+    status: todo
+    owner: TODO_ACCESS_OWNER
+    intended_access: Manage approved Site Platform content only.
+    permissions_to_review:
+      - manage site platform content
+    notes: TODO keep editor role separate from full administrator role.
+
+  - role: webform_manager
+    status: todo
+    owner: TODO_FORM_OWNER
+    intended_access: Manage Webform fields, handlers, and submissions.
+    permissions_to_review:
+      - administer webform
+      - access webform overview
+      - view webform submissions
+    notes: TODO confirm who can change email handlers.
+
+  - role: content_editor
+    status: todo
+    owner: TODO_ACCESS_OWNER
+    intended_access: Edit approved content only.
+    permissions_to_review:
+      - create/edit Site Platform content bundles as approved
+    notes: TODO review default Drupal content permissions.
+
+  - role: anonymous
+    status: todo
+    owner: TODO_SECURITY_OWNER
+    intended_access: Public API read access and public form submit only.
+    api_access_to_review:
+      - GET /api/v1/site
+      - GET /api/v1/pages
+      - GET /api/v1/routes/{path}
+      - GET /api/v1/menus/{menu}
+      - GET /api/v1/forms/{form}
+      - POST /api/v1/forms/{form}/submit
+      - GET /api/v1/content
+      - GET /api/v1/media
+      - GET /api/v1/seo
+      - GET /api/v1/analytics
+      - GET /api/v1/search
+    notes: TODO confirm rate limiting or spam protection for public submit/search.
+
+  - role: authenticated
+    status: todo
+    owner: TODO_ACCESS_OWNER
+    intended_access: No special production access unless explicitly approved.
+    notes: TODO verify default authenticated permissions.

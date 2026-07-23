@@ -1,0 +1,44 @@
+# OSSeed Webform production-prep draft.
+# Planning only. Do not import into stage or production yet.
+# Do not store secrets or private recipient addresses in this file.
+
+site_key: osseed
+webforms:
+  - key: contact
+    webform_id: osseed_contact
+    title: Contact OSSeed
+    status: draft
+    storage: webform
+    purpose: Primary public contact form for OSSeed.
+    fields:
+      - key: name
+        label: Name
+        type: textfield
+        required: true
+      - key: email
+        label: Email
+        type: email
+        required: true
+      - key: message
+        label: Message
+        type: textarea
+        required: true
+    handlers:
+      email:
+        status: todo
+        recipient: TODO_OSSEED_CONTACT_RECIPIENT
+        subject: TODO OSSeed contact email subject
+        reply_to: TODO submitter email token
+    confirmation:
+      type: message
+      message: TODO OSSeed contact confirmation message
+    spam_protection:
+      status: todo
+      recommended: honeypot_or_captcha
+    retention:
+      status: todo
+      export_owner: TODO_OSSEED_FORM_EXPORT_OWNER
+      retention_policy: TODO_OSSEED_RETENTION_POLICY
+    uploads:
+      allowed: false
+      notes: No uploads in the initial contact form draft.

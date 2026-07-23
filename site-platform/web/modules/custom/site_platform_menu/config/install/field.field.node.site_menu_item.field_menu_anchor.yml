@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_anchor
+    - node.type.site_menu_item
+id: node.site_menu_item.field_menu_anchor
+field_name: field_menu_anchor
+entity_type: node
+bundle: site_menu_item
+label: 'Anchor'
+description: 'Optional hash anchor without the leading #.'
+required: false
+translatable: true
+default_value_callback: ''
+default_value: {  }
+settings: {  }
+field_type: string

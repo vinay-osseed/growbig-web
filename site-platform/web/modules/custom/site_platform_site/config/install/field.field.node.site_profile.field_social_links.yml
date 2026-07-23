@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_social_links
+    - node.type.site_profile
+id: node.site_profile.field_social_links
+field_name: field_social_links
+entity_type: node
+bundle: site_profile
+label: 'Social links'
+description: 'JSON or newline data for social links until dedicated social model is added.'
+required: false
+translatable: true
+default_value_callback: ''
+default_value: {  }
+settings: {  }
+field_type: string_long

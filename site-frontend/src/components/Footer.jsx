@@ -1,22 +1,22 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logowhite from "../assets/logowhite.png"
 
 const quickLinks = [
   { label: 'Home', to: '/' },
   { label: 'About', to: '/about' },
-  { label: 'Services', to: '/services' },
+  { label: 'Services', to: '/#services' },
   { label: 'Careers', to: '/careers' },
-  { label: 'Our Leadership', to: '/leadership' },
-  { label: 'Partners', to: '/partners' },
+  { label: 'Our Leadership', to: '/about#leadership' },
+  { label: 'Partners', to: '/#partners' },
   { label: 'Contact', to: '/contact' },
 ]
 
 const serviceLinks = [
-  { label: 'Web Development', to: '/services' },
-  { label: 'Mobile Apps', to: '/services' },
-  { label: 'Software Development', to: '/services' },
-  { label: 'Cloud Solutions', to: '/services' },
-  { label: 'Digital Transformation', to: '/services' },
+  { label: 'Web Development', to: '/#services' },
+  { label: 'Mobile Apps', to: '/#services' },
+  { label: 'Software Development', to: '/#services' },
+  { label: 'Cloud Solutions', to: '/#services' },
+  { label: 'Digital Transformation', to: '/#services' },
 ]
 
 const socialLinks = [
@@ -60,10 +60,49 @@ const socialLinks = [
 
 export default function Footer() {
   const navigate = useNavigate()
+  const location = useLocation()
   const currentYear = new Date().getFullYear()
+  const showContactCta = location.pathname === '/contact'
 
   return (
     <footer className="bg-slate-950 text-slate-300">
+      {showContactCta ? (
+        <section className="bg-blue-600 px-6 py-14 text-white lg:px-8 lg:py-16">
+          <div className="mx-auto flex max-w-7xl flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+            <div className="max-w-2xl">
+              <h2 className="text-2xl font-extrabold tracking-[-0.04em] text-white sm:text-3xl">
+                Ready to build something great?
+              </h2>
+              <p className="mt-2 text-sm leading-7 text-white/80 sm:text-base">
+                Our team is ready to kickstart your project within 48 hours.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="tel:+910000000000"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/15"
+              >
+                <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+                </svg>
+                Call Us
+              </a>
+              <a
+                href="mailto:hello@growbigtech.in"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/15"
+              >
+                <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+                Email Us
+              </a>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       <div className="border-t border-white/10 bg-slate-950/95 py-16">
         <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[1.3fr_0.7fr_0.7fr_0.9fr] lg:px-8">
           <div>
