@@ -35,7 +35,7 @@ RUN set -eux; \
 COPY docker/site-platform/prod-php.ini /usr/local/etc/php/conf.d/zz-growbig-prod.ini
 COPY docker/site-platform/apache-vhost.conf /etc/apache2/sites-available/000-default.conf
 
-FROM php-base AS vendor
+FROM php-base AS build
 
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
@@ -51,17 +51,23 @@ RUN composer install \
   --optimize-autoloader \
   --no-scripts
 
+COPY site-platform/ ./
+COPY scripts/setup/ ./scripts/setup/
+
+RUN composer dump-autoload --optimize --no-dev
+
 FROM php-base AS runtime
 
 WORKDIR /var/www/html
 
-COPY site-platform /var/www/html/site-platform
-COPY --from=vendor /app/vendor /var/www/html/site-platform/vendor
-
+COPY --from=build /app /var/www/html/site-platform
 COPY docker/site-platform/entrypoint.sh /usr/local/bin/growbig-entrypoint
 
 RUN set -eux; \
   chmod +x /usr/local/bin/growbig-entrypoint; \
+  test -f /var/www/html/site-platform/web/core/includes/bootstrap.inc; \
+  test -f /var/www/html/site-platform/vendor/bin/drush; \
+  test -d /var/www/html/site-platform/scripts/setup; \
   mkdir -p \
     /var/www/html/site-platform/web/sites/default/files \
     /var/www/html/site-platform/private \
