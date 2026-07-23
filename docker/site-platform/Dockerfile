@@ -1,32 +1,17 @@
 # syntax=docker/dockerfile:1.7
 
-FROM composer:2 AS vendor
-WORKDIR /app
-ENV COMPOSER_ALLOW_SUPERUSER=1
+FROM php:8.4-apache-bookworm AS php-base
 
-COPY site-platform/composer.json site-platform/composer.lock ./
-RUN composer install \
-  --no-dev \
-  --prefer-dist \
-  --no-interaction \
-  --no-progress \
-  --optimize-autoloader \
-  --no-scripts
-
-COPY site-platform/ ./
-RUN composer dump-autoload --optimize --no-dev
-
-FROM php:8.4-apache-bookworm AS runtime
-
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/web \
-    DRUPAL_ENV=prod \
-    COMPOSER_HOME=/tmp/composer
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/site-platform/web \
+    COMPOSER_ALLOW_SUPERUSER=1 \
+    PATH="/var/www/html/site-platform/vendor/bin:${PATH}"
 
 RUN set -eux; \
   apt-get update; \
   apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
+    default-mysql-client \
     git \
     libfreetype6-dev \
     libicu-dev \
@@ -47,21 +32,46 @@ RUN set -eux; \
   a2enmod rewrite headers expires remoteip; \
   rm -rf /var/lib/apt/lists/*
 
+COPY docker/site-platform/prod-php.ini /usr/local/etc/php/conf.d/zz-growbig-prod.ini
 COPY docker/site-platform/apache-vhost.conf /etc/apache2/sites-available/000-default.conf
-COPY docker/site-platform/prod-php.ini /usr/local/etc/php/conf.d/zz-site-platform-prod.ini
-COPY docker/site-platform/entrypoint.sh /usr/local/bin/site-platform-entrypoint
 
-COPY --from=vendor --chown=www-data:www-data /app /var/www/html
+FROM php-base AS vendor
 
-RUN set -eux; \
-  chmod +x /usr/local/bin/site-platform-entrypoint; \
-  mkdir -p /var/www/html/web/sites/default/files /var/www/html/private /var/www/html/tmp; \
-  chown -R www-data:www-data /var/www/html/web/sites/default/files /var/www/html/private /var/www/html/tmp; \
-  find /var/www/html -type d -exec chmod 755 {} \; ; \
-  find /var/www/html -type f -exec chmod 644 {} \; ; \
-  chmod +x /usr/local/bin/site-platform-entrypoint
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
+
+WORKDIR /app
+
+COPY site-platform/composer.json site-platform/composer.lock ./
+
+RUN composer install \
+  --no-dev \
+  --prefer-dist \
+  --no-interaction \
+  --no-progress \
+  --optimize-autoloader \
+  --no-scripts
+
+FROM php-base AS runtime
 
 WORKDIR /var/www/html
+
+COPY site-platform /var/www/html/site-platform
+COPY --from=vendor /app/vendor /var/www/html/site-platform/vendor
+
+COPY docker/site-platform/entrypoint.sh /usr/local/bin/growbig-entrypoint
+
+RUN set -eux; \
+  chmod +x /usr/local/bin/growbig-entrypoint; \
+  mkdir -p \
+    /var/www/html/site-platform/web/sites/default/files \
+    /var/www/html/site-platform/private \
+    /var/www/html/site-platform/config/sync; \
+  chown -R www-data:www-data \
+    /var/www/html/site-platform/web/sites/default/files \
+    /var/www/html/site-platform/private \
+    /var/www/html/site-platform/config
+
 EXPOSE 80
-ENTRYPOINT ["site-platform-entrypoint"]
+
+ENTRYPOINT ["growbig-entrypoint"]
 CMD ["apache2-foreground"]
