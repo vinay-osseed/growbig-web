@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_form_field_help
+    - node.type.site_form_field
+id: node.site_form_field.field_form_field_help
+field_name: field_form_field_help
+entity_type: node
+bundle: site_form_field
+label: 'Help text'
+description: 'Field help text.'
+required: false
+translatable: true
+default_value_callback: ''
+default_value: {  }
+settings: {  }
+field_type: string_long

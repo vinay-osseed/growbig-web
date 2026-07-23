@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * @file
+ * Runtime helpers for the Drupal-native Site Platform layer.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_user_login().
+ */
+function site_platform_native_user_login(AccountInterface $account): void {
+  if ($account->hasPermission('access site platform native admin') || $account->hasPermission('access administration pages') || $account->hasPermission('administer site platform')) {
+    \Drupal::request()->getSession()->set('site_platform_native_redirect_after_login', TRUE);
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function site_platform_native_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $form_object = $form_state->getFormObject();
+  if (!is_object($form_object) || !method_exists($form_object, 'getEntity')) {
+    return;
+  }
+  $entity = $form_object->getEntity();
+  if (!$entity instanceof NodeInterface) {
+    return;
+  }
+
+  if ($entity->bundle() === 'site_page') {
+    $form['site_platform_native_workflow'] = [
+      '#type' => 'details',
+      '#title' => t('Editor workflow'),
+      '#open' => TRUE,
+      '#weight' => -120,
+      'content' => [
+        '#markup' => '<div class="site-platform-builder-guide"><p><strong>Build order:</strong> Site Profile → Media → Webforms → Landing Pages → Drupal Menus → Site Data Sets.</p><p><strong>Page API:</strong> one clean payload returns page, SEO, sections, media, and embedded references: <code>/api/v2/pages/PAGE_SLUG?site=SITE_KEY</code>.</p></div>',
+      ],
+    ];
+  }
+
+  if ($entity->bundle() === 'site_data_set') {
+    $form['site_platform_native_dataset_guide'] = [
+      '#type' => 'details',
+      '#title' => t('Dataset guide'),
+      '#open' => TRUE,
+      '#weight' => -120,
+      'content' => [
+        '#markup' => '<div class="site-platform-builder-guide"><p>Use datasets for site-specific structured data such as ISP plans, coverage areas, locations, pricing tiers, product plans, benefits, team lists, careers, or any repeatable business data.</p><p><strong>Dataset type is required:</strong> choose List, Cards, Table, Pricing/plans, Locations/areas, Careers, or Custom.</p><p><strong>Frontend API:</strong> <code>/api/v2/datasets/DATASET_KEY?site=SITE_KEY</code>.</p></div>',
+      ],
+    ];
+  }
+}

@@ -1,0 +1,40 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_page_components
+    - node.type.site_page
+    - paragraphs.paragraphs_type.site_cta
+    - paragraphs.paragraphs_type.site_hero
+    - paragraphs.paragraphs_type.site_rich_text
+  module:
+    - entity_reference_revisions
+id: node.site_page.field_page_components
+field_name: field_page_components
+entity_type: node
+bundle: site_page
+label: Components
+description: 'Ordered frontend components for this page.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      site_hero: site_hero
+      site_rich_text: site_rich_text
+      site_cta: site_cta
+    negate: 0
+    target_bundles_drag_drop:
+      site_hero:
+        weight: 0
+        enabled: true
+      site_rich_text:
+        weight: 1
+        enabled: true
+      site_cta:
+        weight: 2
+        enabled: true
+field_type: entity_reference_revisions

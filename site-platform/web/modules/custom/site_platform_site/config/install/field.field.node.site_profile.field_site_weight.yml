@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_site_weight
+    - node.type.site_profile
+id: node.site_profile.field_site_weight
+field_name: field_site_weight
+entity_type: node
+bundle: site_profile
+label: 'Weight'
+description: 'Sort weight for admin listings.'
+required: false
+translatable: false
+default_value_callback: ''
+default_value:
+  -
+    value: 0
+settings: {  }
+field_type: integer

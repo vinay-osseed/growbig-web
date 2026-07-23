@@ -1,41 +1,13 @@
 # Site Platform Admin
 
-Provides a custom Drupal admin dashboard for reusable site platform management.
+Site Platform Admin provides a small admin dashboard and permission foundation.
 
-## Dashboard
+Current scope:
 
-URL:
+- `/admin/site-platform` overview page
+- setup status summary
+- managed entity counts
+- API endpoint summary
+- Site Platform permissions
 
-- /admin/site-dashboard
-
-## Dashboard Sections
-
-- Overview counts
-- Role-aware quick action cards
-- Recent content updates
-
-## Backend Data
-
-The dashboard uses backend dashboard data from:
-
-- GET /api/v1/admin/dashboard
-
-The API requires authenticated admin access.
-
-## Roles
-
-Supported role-aware dashboard behavior includes:
-
-- Site Developer
-- Content Admin
-- HR Manager
-- Form Manager
-- Analytics Viewer
-
-## Verification
-
-Use:
-
-- ./scripts/check-dashboard-api.sh
-- ./scripts/check-dashboard-ui.sh
-- ./scripts/check-admin-roles.sh
+This module does not delete data and does not replace the final editor workflow. Later phases can add custom admin Views, form display cleanup, filters, bulk actions, and richer editor tools.

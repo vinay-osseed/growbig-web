@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_submission_payload
+    - node.type.site_form_submission
+id: node.site_form_submission.field_submission_payload
+field_name: field_submission_payload
+entity_type: node
+bundle: site_form_submission
+label: 'Submission payload'
+description: 'Submitted JSON payload.'
+required: true
+translatable: false
+default_value_callback: ''
+default_value: {  }
+settings: {  }
+field_type: string_long

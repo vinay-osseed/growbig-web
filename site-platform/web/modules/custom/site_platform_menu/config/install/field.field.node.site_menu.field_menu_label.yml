@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_label
+    - node.type.site_menu
+id: node.site_menu.field_menu_label
+field_name: field_menu_label
+entity_type: node
+bundle: site_menu
+label: 'Menu label'
+description: 'Human-readable menu label.'
+required: false
+translatable: true
+default_value_callback: ''
+default_value: {  }
+settings: {  }
+field_type: string

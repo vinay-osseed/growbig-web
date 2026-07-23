@@ -1,2 +1,22 @@
+# Drupal runtime files.
+files/
+private/
+php/
+styles/
+translations/
+
+# Environment-specific settings.
+settings.local.php
+settings.prod.php
+settings.ddev.php
+
+# Keep committed templates/base files.
+!settings.php
+!settings.platform.php
+!settings.local.example.php
+!settings.prod.example.php
+!services.yml
+!services.prod.yml
+!.gitignore
 /default.services.yml
 /default.settings.php

@@ -1,0 +1,10 @@
+name: Site Platform Content
+type: module
+description: Provides reusable site-scoped content blocks for Site Platform.
+package: Site Platform
+core_version_requirement: ^11
+dependencies:
+  - drupal:node
+  - drupal:text
+  - site_platform_core:site_platform_core
+  - site_platform_site:site_platform_site

@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_content_summary
+    - node.type.site_content_block
+id: node.site_content_block.field_content_summary
+field_name: field_content_summary
+entity_type: node
+bundle: site_content_block
+label: 'Summary'
+description: 'Reusable content summary.'
+required: false
+translatable: true
+default_value_callback: ''
+default_value: {  }
+settings: {  }
+field_type: string_long

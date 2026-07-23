@@ -1,43 +1,84 @@
 # Site Platform API
 
-This module exposes normalized frontend-ready JSON responses under `/api/v1`.
+## Purpose
+
+Site Platform API provides public JSON endpoints for decoupled frontends.
 
 ## Endpoints
 
-- `/api/v1/site`
-- `/api/v1/pages/{slug}`
-- `/api/v1/content/{source}`
-- `/api/v1/content/{source}/{key}`
+    GET /api/v1/site
+    GET /api/v1/pages
+    GET /api/v1/pages/{slug}
+    GET /api/v1/routes
+    GET /api/v1/routes/{path}
+    GET /api/v1/menus
+    GET /api/v1/menus/{menu}
+    GET /api/v1/forms/{form}
+    POST /api/v1/forms/{form}/submit
+    GET /api/v1/content
+    GET /api/v1/content/{source}
+    GET /api/v1/content/{source}/{key}
 
-## Current examples
+## Local Testing
 
-- `/api/v1/site`
-- `/api/v1/pages/home`
-- `/api/v1/pages/about`
-- `/api/v1/content/services`
-- `/api/v1/content/partners`
-- `/api/v1/content/team`
-- `/api/v1/content/services/website-development`
-- `/api/v1/content/partners/aws`
-- `/api/v1/content/team/founder-ceo`
-
-## Supported content sources
-
-- services
-- partners
-- team
-
-## Query parameters for content lists
-
-- `limit`
-- `featuredOnly`
+Local testing can use the `site` query parameter.
 
 Examples:
 
-- `/api/v1/content/services?limit=3`
-- `/api/v1/content/partners?featuredOnly=1`
-- `/api/v1/content/team?limit=4&featuredOnly=1`
+    https://site-platform.ddev.site/api/v1/site?site=growbig
+    https://site-platform.ddev.site/api/v1/pages/home?site=growbig
+    https://site-platform.ddev.site/api/v1/routes/about?site=growbig
+    https://site-platform.ddev.site/api/v1/menus/main?site=growbig
+    https://site-platform.ddev.site/api/v1/forms/contact?site=growbig
+    https://site-platform.ddev.site/api/v1/content/global/footer_cta?site=growbig
 
-## Purpose
+The `site` query parameter is local/dev only. Production resolution must use domains.
 
-The API hides raw Drupal entity structures and returns clean JSON for the decoupled frontend application.
+## Response Shape
+
+Successful responses use:
+
+    data
+    meta
+    cache
+
+Errors use:
+
+    error
+
+## Current Scope
+
+This API returns Site Profile, Site Page, route, basic Site Menu, basic component, basic form, and reusable content data.
+
+Advanced multilingual fallback comes later.
+
+## Forms
+
+Form endpoints are Webform-first.
+
+    GET  /api/v1/forms/{form}
+    POST /api/v1/forms/{form}/submit
+
+When a site-scoped Webform exists, submissions are stored as `webform_submission` entities. The old `site_form_submission` node storage remains only as a legacy fallback.
+
+
+## Media
+
+Media endpoints are site-scoped and return stable reusable media assets.
+
+    GET /api/v1/media
+    GET /api/v1/media/{key}
+
+The media API returns metadata and URL references only. Binary file ingestion/import remains a later production hardening step.
+
+
+## SEO, Analytics, and Search
+
+Additional backend foundation endpoints:
+
+    GET /api/v1/seo
+    GET /api/v1/seo/page/{slug}
+    GET /api/v1/analytics
+    GET /api/v1/search?q=term
+
+SEO and analytics are API-first. A future production phase can integrate contrib Metatag, full sitemap generation, and a stronger search index without changing the current frontend contract.

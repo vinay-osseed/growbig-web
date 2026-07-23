@@ -1,0 +1,21 @@
+id: site-platform-start
+label: 'Site Platform start tour'
+module: site_platform_native
+langcode: en
+routes:
+  - route_name: site_platform_native.start
+tips:
+  start:
+    id: start
+    plugin: text
+    label: 'Start here'
+    body: 'This page explains the Drupal-native workflow: sites and domains, media, webforms, pages, menus, datasets, and APIs.'
+    weight: 1
+    location: bottom
+  api:
+    id: api
+    plugin: text
+    label: 'Use fewer frontend API calls'
+    body: 'Use bootstrap and page APIs for most frontend needs instead of calling every small content block separately.'
+    weight: 2
+    location: bottom

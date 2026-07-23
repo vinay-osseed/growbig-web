@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: site_hero
+label: 'Site Hero'
+icon_uuid: null
+icon_default: null
+description: 'Hero component for page headers and landing sections.'
+behavior_plugins: {  }

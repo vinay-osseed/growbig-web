@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_component_admin_label
+    - paragraphs.paragraphs_type.site_rich_text
+id: paragraph.site_rich_text.field_component_admin_label
+field_name: field_component_admin_label
+entity_type: paragraph
+bundle: site_rich_text
+label: 'Admin label'
+description: 'Editor-facing component label.'
+required: false
+translatable: true
+default_value_callback: ''
+default_value: {  }
+settings: {  }
+field_type: string

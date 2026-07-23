@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_content_variant
+    - node.type.site_content_block
+id: node.site_content_block.field_content_variant
+field_name: field_content_variant
+entity_type: node
+bundle: site_content_block
+label: 'Variant'
+description: 'Frontend variant key.'
+required: false
+translatable: false
+default_value_callback: ''
+default_value:
+  -
+    value: default
+settings: {  }
+field_type: string

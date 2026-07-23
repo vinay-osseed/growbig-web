@@ -1,71 +1,70 @@
-site_platform_admin.dashboard:
-  path: '/admin/site-dashboard'
+site_platform_admin.overview:
+  path: '/admin/site-platform'
   defaults:
-    _controller: '\Drupal\site_platform_admin\Controller\SiteDashboardController::dashboard'
-    _title: 'Site Dashboard'
+    _controller: '\Drupal\site_platform_admin\Controller\SitePlatformAdminController::overview'
+    _title: 'Site Platform'
   requirements:
-    _permission: 'access content overview'
+    _permission: 'administer site platform'
+  options:
+    _admin_route: TRUE
 
-site_platform_admin.site_setup:
-  path: '/admin/site-setup'
+site_platform_admin.sites:
+  path: '/admin/site-platform/sites'
   defaults:
-    _controller: '\Drupal\site_platform_admin\Controller\SiteSetupController::overview'
-    _title: 'Site Setup'
+    _controller: '\Drupal\site_platform_admin\Controller\SitePlatformAdminController::sites'
+    _title: 'Site Platform Sites'
   requirements:
-    _permission: 'administer site setup'
+    _permission: 'administer site platform'
+  options:
+    _admin_route: TRUE
 
-site_platform_admin.site_setup_wizard:
-  path: '/admin/site-setup/wizard'
+site_platform_admin.pages:
+  path: '/admin/site-platform/pages'
   defaults:
-    _form: '\Drupal\site_platform_admin\Form\SiteSetupWizardForm'
-    _title: 'Setup Wizard'
+    _controller: '\Drupal\site_platform_admin\Controller\SitePlatformAdminController::pages'
+    _title: 'Site Platform Landing Pages'
   requirements:
-    _permission: 'administer site setup'
+    _permission: 'administer site platform'
+  options:
+    _admin_route: TRUE
 
-site_platform_admin.site_setup_run:
-  path: '/admin/site-setup/run'
+site_platform_admin.content_blocks:
+  path: '/admin/site-platform/content-blocks'
   defaults:
-    _form: '\Drupal\site_platform_admin\Form\SiteSetupRunForm'
-    _title: 'Prepare Setup Run'
+    _controller: '\Drupal\site_platform_admin\Controller\SitePlatformAdminController::contentBlocks'
+    _title: 'Site Platform Content Blocks'
   requirements:
-    _permission: 'administer site setup'
+    _permission: 'administer site platform'
+  options:
+    _admin_route: TRUE
 
-site_platform_admin.site_setup_complete:
-  path: '/admin/site-setup/complete'
+site_platform_admin.media_assets:
+  path: '/admin/site-platform/media-assets'
   defaults:
-    _form: '\Drupal\site_platform_admin\Form\SiteSetupCompleteForm'
-    _title: 'Complete and Lock Setup'
+    _controller: '\Drupal\site_platform_admin\Controller\SitePlatformAdminController::mediaAssets'
+    _title: 'Site Platform Media Assets'
   requirements:
-    _permission: 'administer site setup'
+    _permission: 'administer site platform'
+  options:
+    _admin_route: TRUE
 
-site_platform_admin.site_setup_unlock:
-  path: '/admin/site-setup/unlock'
+site_platform_admin.forms:
+  path: '/admin/site-platform/forms'
   defaults:
-    _form: '\Drupal\site_platform_admin\Form\SiteSetupUnlockForm'
-    _title: 'Unlock Setup'
+    _controller: '\Drupal\site_platform_admin\Controller\SitePlatformAdminController::forms'
+    _title: 'Site Platform Forms'
   requirements:
-    _permission: 'administer site setup'
+    _permission: 'administer site platform'
+  options:
+    _admin_route: TRUE
 
-site_platform_admin.site_setup_reset_status:
-  path: '/admin/site-setup/reset-status'
+site_platform_admin.menus:
+  path: '/admin/site-platform/menus'
   defaults:
-    _form: '\Drupal\site_platform_admin\Form\SiteSetupResetStatusForm'
-    _title: 'Reset Setup Status'
+    _controller: '\Drupal\site_platform_admin\Controller\SitePlatformAdminController::menus'
+    _title: 'Site Platform Menus'
   requirements:
-    _permission: 'administer site setup'
+    _permission: 'administer site platform'
+  options:
+    _admin_route: TRUE
 
-site_platform_admin.frontend_menus:
-  path: '/admin/site-dashboard/menus'
-  defaults:
-    _controller: '\Drupal\site_platform_admin\Controller\SiteDashboardController::frontendMenus'
-    _title: 'Header & Footer Menus'
-  requirements:
-    _permission: 'access content overview'
-
-site_platform_admin.reusable_content:
-  path: '/admin/site-dashboard/content'
-  defaults:
-    _controller: '\Drupal\site_platform_admin\Controller\SiteDashboardController::reusableContent'
-    _title: 'Reusable Content'
-  requirements:
-    _permission: 'access content overview'

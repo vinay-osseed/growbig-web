@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_target
+    - node.type.site_menu_item
+id: node.site_menu_item.field_menu_target
+field_name: field_menu_target
+entity_type: node
+bundle: site_menu_item
+label: 'Target'
+description: 'Link target, such as _self or _blank.'
+required: false
+translatable: false
+default_value_callback: ''
+default_value:
+  -
+    value: _self
+settings: {  }
+field_type: string

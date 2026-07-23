@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_external_url
+    - node.type.site_menu_item
+id: node.site_menu_item.field_menu_external_url
+field_name: field_menu_external_url
+entity_type: node
+bundle: site_menu_item
+label: 'External URL'
+description: 'External URL target.'
+required: false
+translatable: true
+default_value_callback: ''
+default_value: {  }
+settings: {  }
+field_type: string

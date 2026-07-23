@@ -1,0 +1,6 @@
+services:
+  site_platform_native.editor_login_redirect_subscriber:
+    class: Drupal\site_platform_native\EventSubscriber\EditorLoginRedirectSubscriber
+    arguments: ['@current_user', '@request_stack', '@path.current']
+    tags:
+      - { name: event_subscriber }

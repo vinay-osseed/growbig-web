@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_enabled_languages
+    - node.type.site_profile
+id: node.site_profile.field_enabled_languages
+field_name: field_enabled_languages
+entity_type: node
+bundle: site_profile
+label: 'Enabled languages'
+description: 'Enabled language codes for the site.'
+required: false
+translatable: false
+default_value_callback: ''
+default_value: {  }
+settings: {  }
+field_type: string

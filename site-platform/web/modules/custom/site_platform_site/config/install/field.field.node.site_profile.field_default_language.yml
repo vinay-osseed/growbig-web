@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_default_language
+    - node.type.site_profile
+id: node.site_profile.field_default_language
+field_name: field_default_language
+entity_type: node
+bundle: site_profile
+label: 'Default language'
+description: 'Default language code for the site.'
+required: false
+translatable: false
+default_value_callback: ''
+default_value:
+  -
+    value: en
+settings: {  }
+field_type: string

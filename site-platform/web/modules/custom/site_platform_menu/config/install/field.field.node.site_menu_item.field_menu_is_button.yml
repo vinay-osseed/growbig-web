@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_is_button
+    - node.type.site_menu_item
+id: node.site_menu_item.field_menu_is_button
+field_name: field_menu_is_button
+entity_type: node
+bundle: site_menu_item
+label: 'Button style'
+description: 'Marks this menu item as a button-style link.'
+required: false
+translatable: false
+default_value_callback: ''
+default_value:
+  -
+    value: 0
+settings: {  }
+field_type: boolean

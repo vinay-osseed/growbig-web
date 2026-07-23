@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_timezone
+    - node.type.site_profile
+id: node.site_profile.field_timezone
+field_name: field_timezone
+entity_type: node
+bundle: site_profile
+label: 'Timezone'
+description: 'Default timezone for this site.'
+required: false
+translatable: false
+default_value_callback: ''
+default_value:
+  -
+    value: UTC
+settings: {  }
+field_type: string
