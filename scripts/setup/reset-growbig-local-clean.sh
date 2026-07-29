@@ -63,9 +63,7 @@ ddev drush en -y \
   admin_toolbar_tools \
   config_ignore \
   config_split \
-  site_platform_api \
-  site_platform_admin \
-  site_platform_native
+  site_platform_api
 
 echo "Running single-backend closeout..."
 ddev drush scr scripts/setup/site_platform_local_single_backend_closeout.php

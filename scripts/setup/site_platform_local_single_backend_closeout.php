@@ -52,8 +52,6 @@ $requiredModules = [
   'admin_toolbar_tools',
   'config_ignore',
   'config_split',
-  'site_platform_admin',
-  'site_platform_native',
 ];
 
 $toInstall = [];

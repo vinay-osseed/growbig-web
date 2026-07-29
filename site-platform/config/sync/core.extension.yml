@@ -52,18 +52,6 @@ module:
   rest: 0
   serialization: 0
   simple_sitemap: 0
-  site_platform_admin: 0
-  site_platform_api: 0
-  site_platform_component: 0
-  site_platform_content: 0
-  site_platform_core: 0
-  site_platform_form: 0
-  site_platform_media: 0
-  site_platform_menu: 0
-  site_platform_native: 0
-  site_platform_page: 0
-  site_platform_setup: 0
-  site_platform_site: 0
   system: 0
   taxonomy: 0
   telephone: 0

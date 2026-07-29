@@ -210,3 +210,19 @@ site_platform_api.frontend_analytics:
   options:
     no_cache: TRUE
 
+
+site_platform_api.frontend_admin_overview:
+  path: '/admin/content/frontend'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\FrontendAdminController::overview'
+    _title: 'Frontend Content'
+  requirements:
+    _permission: 'administer site configuration'
+
+site_platform_api.frontend_admin_overview:
+  path: '/admin/content/frontend'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\FrontendAdminController::overview'
+    _title: 'Frontend Content'
+  requirements:
+    _permission: 'administer site configuration'

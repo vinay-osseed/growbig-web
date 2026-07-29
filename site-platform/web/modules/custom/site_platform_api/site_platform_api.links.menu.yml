@@ -1,0 +1,6 @@
+site_platform_api.frontend_admin_overview:
+  title: 'Frontend Content'
+  description: 'Review frontend pages, content sources, media, forms, analytics, and API links.'
+  route_name: site_platform_api.frontend_admin_overview
+  parent: system.admin_content
+  weight: 20
