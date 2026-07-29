@@ -1,0 +1,30 @@
+{
+  "name": "html",
+  "version": "1.0.0",
+  "description": "Reusable Drupal backend platform for content-driven websites.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinay-osseed/growbig-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/vinay-osseed/growbig-web/issues"
+  },
+  "homepage": "https://github.com/vinay-osseed/growbig-web#readme",
+  "devDependencies": {
+    "playwright": "^1.62.0"
+  },
+  "dependencies": {
+    "playwright-core": "^1.62.0"
+  }
+}

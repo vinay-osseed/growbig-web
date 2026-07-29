@@ -1,0 +1,842 @@
+{
+  "url": "https://growbigllp.com/about",
+  "title": "GrowBig Technologies LLP",
+  "metaDescription": "GrowBig Technologies LLP - Building Digital Solutions That Drive Business Growth",
+  "headings": [
+    {
+      "tag": "h1",
+      "text": "We Are GrowBig"
+    },
+    {
+      "tag": "h2",
+      "text": "Mission & Vision"
+    },
+    {
+      "tag": "h3",
+      "text": "Our Mission"
+    },
+    {
+      "tag": "h3",
+      "text": "Our Vision"
+    },
+    {
+      "tag": "h2",
+      "text": "Why choose us"
+    },
+    {
+      "tag": "h3",
+      "text": "End-to-End Service Capability"
+    },
+    {
+      "tag": "h3",
+      "text": "Flexible & Scalable Delivery Models"
+    },
+    {
+      "tag": "h3",
+      "text": "Cost-Effective Solutions"
+    },
+    {
+      "tag": "h3",
+      "text": "Strong Quality Assurance"
+    },
+    {
+      "tag": "h3",
+      "text": "Strategic EOS Globe Partnership"
+    },
+    {
+      "tag": "h2",
+      "text": "Our Leadership"
+    },
+    {
+      "tag": "h3",
+      "text": "Michael D'souza"
+    },
+    {
+      "tag": "h3",
+      "text": "Sushant Paste"
+    },
+    {
+      "tag": "h3",
+      "text": "Vinayak Jadhav"
+    },
+    {
+      "tag": "h3",
+      "text": "Manish Jadhav"
+    },
+    {
+      "tag": "h3",
+      "text": "Heena Shaikh"
+    },
+    {
+      "tag": "h2",
+      "text": "Want to join our growing team?"
+    },
+    {
+      "tag": "h4",
+      "text": "QUICK LINKS"
+    },
+    {
+      "tag": "h4",
+      "text": "SERVICES"
+    },
+    {
+      "tag": "h4",
+      "text": "CONTACT US"
+    }
+  ],
+  "sections": [
+    {
+      "index": 0,
+      "tag": "header",
+      "heading": "",
+      "textSample": "VISION BEYOND FUTURE Home Services Careers About Contact We're Hiring",
+      "className": "sticky top-0 z-50 border-b transition-all duration-300 border-gray-200 bg-gray-100"
+    },
+    {
+      "index": 1,
+      "tag": "section",
+      "heading": "We Are GrowBig",
+      "textSample": "Company Overview and value We Are GrowBig We help businesses grow through innovative software development, AI solutions, digital marketing, and business process outsourcing—delivering reliable, scalable, and future-ready technology solutions.",
+      "className": "relative overflow-hidden bg-[#071a3e] px-6 py-24 text-white lg:py-32 lg:px-8"
+    },
+    {
+      "index": 2,
+      "tag": "section",
+      "heading": "Mission & Vision",
+      "textSample": "PURPOSE Mission & Vision The principles that guide every line of code, every design decision, and every client conversation. Our Mission Deliver scalable, reliable, and cost-effective digital solutions while building long-term client partnerships through innovation, quality, and customer-focused development. Our mission is to empower rural communities by reaching users who are still unable to access the opportunities of the digital world and helping them bridge the digital divide. Our Vision To ",
+      "className": "bg-[#F7F9FC] py-20 sm:py-24"
+    },
+    {
+      "index": 3,
+      "tag": "section",
+      "heading": "Why choose us",
+      "textSample": "OUR ADVANTAGES Why choose us Discover what makes us a trusted technology partner for businesses worldwide. End-to-End Service Capability We manage every stage of your project, from planning and development to deployment and ongoing support. Flexible & Scalable Delivery Models Our delivery approach adapts to your business needs, ensuring seamless growth and efficient project execution. Cost-Effective Solutions We deliver high-quality technology solutions that maximize value while keeping costs op",
+      "className": "bg-white py-20 sm:py-24"
+    },
+    {
+      "index": 4,
+      "tag": "section",
+      "heading": "Our Leadership",
+      "textSample": "THE TEAM Our Leadership The people steering strategy, technology, and culture at GrowBig. Michael D'souza CEO BSL,LL.B. , BBM View Profile Michael D'Souza is the CEO of GrowBig Technologies, holding a B.S.L., LL.B. degree with expertise in law, governance, and business management. He is a successful entrepreneur in the agriculture sector and serves as an elected Member of the Zilla Parishad. Committed to innovation, ethical leadership, and social responsibility, he actively contributes to commun",
+      "className": "bg-white py-20 sm:py-24"
+    },
+    {
+      "index": 5,
+      "tag": "section",
+      "heading": "Want to join our growing team?",
+      "textSample": "Want to join our growing team? We are always looking for talented people who share our passion for great software. View Open Roles",
+      "className": "relative overflow-hidden bg-[#0e1526] px-6 py-16 text-white lg:px-8 lg:py-20"
+    },
+    {
+      "index": 6,
+      "tag": "footer",
+      "heading": "QUICK LINKS",
+      "textSample": "Building digital excellence for startups and enterprises across India and beyond. Narayan Arcade, 1st Floor Above Axis BankNear ST Stand, Sawantwadi QUICK LINKS Home About Services Careers Our Leadership Partners Contact SERVICES Website and Software Development Mobile Application Devleopment CRM & ERP Solutions Digital Marketing Services BPO & Customer Support Solutions AI & Automation Services CONTACT US +91 9146802212 office@growbigllp.com 24 Hours Open Shift-based Operations © 2026 GrowBig T",
+      "className": "bg-slate-950 text-slate-300"
+    }
+  ],
+  "text": [
+    "VISION BEYOND FUTURE",
+    "Home",
+    "Services",
+    "Careers",
+    "About",
+    "Contact",
+    "We're Hiring",
+    "Company Overview and value",
+    "We Are GrowBig",
+    "We help businesses grow through innovative software development, AI solutions, digital marketing, and business process outsourcing—delivering reliable, scalable, and future-ready technology solutions.",
+    "PURPOSE",
+    "Mission & Vision",
+    "The principles that guide every line of code, every design decision, and every client conversation.",
+    "Our Mission",
+    "Deliver scalable, reliable, and cost-effective digital solutions while building long-term client partnerships through innovation, quality, and customer-focused development. Our mission is to empower rural communities by reaching users who are still unable to access the opportunities of the digital world and helping them bridge the digital divide.",
+    "Our Vision",
+    "To become a globally trusted technology and outsourcing partner by delivering innovative digital solutions that empower businesses to grow and succeed. We envision a world where everyone has access to knowledge, creating equal opportunities for all and enabling inclusive digital growth.",
+    "OUR ADVANTAGES",
+    "Why choose us",
+    "Discover what makes us a trusted technology partner for businesses worldwide.",
+    "End-to-End Service Capability",
+    "We manage every stage of your project, from planning and development to deployment and ongoing support.",
+    "Flexible & Scalable Delivery Models",
+    "Our delivery approach adapts to your business needs, ensuring seamless growth and efficient project execution.",
+    "Cost-Effective Solutions",
+    "We deliver high-quality technology solutions that maximize value while keeping costs optimized.",
+    "Strong Quality Assurance",
+    "Our rigorous testing and quality processes ensure reliable, secure, and high-performing solutions.",
+    "Strategic EOS Globe Partnership",
+    "Through our partnership with EOS Globe, we leverage global expertise and best practices to deliver enhanced business value.",
+    "THE TEAM",
+    "Our Leadership",
+    "The people steering strategy, technology, and culture at GrowBig.",
+    "Michael D'souza",
+    "CEO",
+    "BSL,LL.B. , BBM",
+    "View Profile",
+    "Michael D'Souza is the CEO of GrowBig Technologies, holding a B.S.L., LL.B. degree with expertise in law, governance, and business management. He is a successful entrepreneur in the agriculture sector and serves as an elected Member of the Zilla Parishad. Committed to innovation, ethical leadership, and social responsibility, he actively contributes to community welfare and sustainable development.",
+    "Sushant Paste",
+    "Director",
+    "B.E. Computer Engineering",
+    "View Profile",
+    "Sushant Paste is the Director of GrowBig Technologies and holds a Bachelor of Engineering (B.E.) in Computer Science. With over 20 years of experience in the IT industry, he specializes in software solutions, project management, and technology-driven innovation. He is committed to driving operational excellence, digital transformation, and sustainable business growth through reliable and innovative technology solutions..",
+    "Vinayak Jadhav",
+    "Director",
+    "M.Tech. Computer Engineering",
+    "View Profile",
+    "Vinayak Jadhav is the Director of GrowBig Technologies, holding an M.Tech. and B.E. in Computer Science. With over 20 years of experience in the education and IT sectors, he has expertise in teaching, software development, and technical leadership. He is committed to driving innovation, technical excellence, and delivering high-quality technology solutions while fostering continuous learning and professional growth.",
+    "Manish Jadhav",
+    "HR Admin",
+    "B.E. IT , MBA-HR , LLB",
+    "View Profile",
+    "Manish Jadhav is the HR Admin at GrowBig Technologies, holding a B.E. in Information Technology, an MBA in Human Resource Management, an LL.B., and a Diploma in Cyber Law. With extensive experience across the banking, media, and IT industries, he specializes in HR management, operations, and organizational development. He is committed to building high-performing teams, fostering innovation, and driving sustainable organizational growth through people-centric leadership.",
+    "Heena Shaikh",
+    "Recruitment officer",
+    "BA , MA-HISTORY",
+    "View Profile",
+    "Heena Shaikh is the Recruitment Officer at GrowBig Technologies and holds a Bachelor of Arts (B.A.) and a Master of Arts (M.A.) in History. She is responsible for talent acquisition, candidate engagement, and supporting the company's hiring initiatives. With a strong focus on identifying the right talent and building a skilled workforce, she contributes to the organization's growth through effective recruitment and people-centric practices.",
+    "Want to join our growing team?",
+    "We are always looking for talented people who share our passion for great software.",
+    "View Open Roles",
+    "Building digital excellence for startups and enterprises across India and beyond.",
+    "Narayan Arcade, 1st Floor Above Axis BankNear ST Stand, Sawantwadi",
+    "QUICK LINKS",
+    "Home",
+    "About",
+    "Services",
+    "Careers",
+    "Our Leadership",
+    "Partners",
+    "Contact",
+    "SERVICES",
+    "Website and Software Development",
+    "Mobile Application Devleopment",
+    "CRM & ERP Solutions",
+    "Digital Marketing Services",
+    "BPO & Customer Support Solutions",
+    "AI & Automation Services",
+    "CONTACT US",
+    "+91 9146802212",
+    "office@growbigllp.com",
+    "24 Hours Open",
+    "Shift-based Operations",
+    "© 2026 GrowBig Technologies LLP. All Rights Reserved."
+  ],
+  "links": [
+    {
+      "text": "VISION BEYOND FUTURE",
+      "href": "https://growbigllp.com/"
+    },
+    {
+      "text": "Home",
+      "href": "https://growbigllp.com/"
+    },
+    {
+      "text": "Services",
+      "href": "https://growbigllp.com/#services"
+    },
+    {
+      "text": "Careers",
+      "href": "https://growbigllp.com/careers"
+    },
+    {
+      "text": "About",
+      "href": "https://growbigllp.com/about"
+    },
+    {
+      "text": "Contact",
+      "href": "https://growbigllp.com/contact"
+    },
+    {
+      "text": "We're Hiring",
+      "href": "https://growbigllp.com/careers"
+    },
+    {
+      "text": "Home",
+      "href": "https://growbigllp.com/"
+    },
+    {
+      "text": "Services",
+      "href": "https://growbigllp.com/#services"
+    },
+    {
+      "text": "Careers",
+      "href": "https://growbigllp.com/careers"
+    },
+    {
+      "text": "About",
+      "href": "https://growbigllp.com/about"
+    },
+    {
+      "text": "Contact",
+      "href": "https://growbigllp.com/contact"
+    },
+    {
+      "text": "We're Hiring",
+      "href": "https://growbigllp.com/careers"
+    },
+    {
+      "text": "View Open Roles",
+      "href": "https://growbigllp.com/careers"
+    },
+    {
+      "text": "",
+      "href": "https://growbigllp.com/"
+    },
+    {
+      "text": "",
+      "href": "https://www.facebook.com/share/182RC2vgWz/"
+    },
+    {
+      "text": "",
+      "href": "https://www.linkedin.com/company/growbig-technologies/"
+    },
+    {
+      "text": "",
+      "href": "https://www.instagram.com/growbigllp/"
+    },
+    {
+      "text": "Website and Software Development",
+      "href": "https://growbigllp.com/#services"
+    },
+    {
+      "text": "Mobile Application Devleopment",
+      "href": "https://growbigllp.com/#services"
+    },
+    {
+      "text": "CRM & ERP Solutions",
+      "href": "https://growbigllp.com/#services"
+    },
+    {
+      "text": "Digital Marketing Services",
+      "href": "https://growbigllp.com/#services"
+    },
+    {
+      "text": "BPO & Customer Support Solutions",
+      "href": "https://growbigllp.com/#services"
+    },
+    {
+      "text": "AI & Automation Services",
+      "href": "https://growbigllp.com/#services"
+    }
+  ],
+  "navLinks": [
+    {
+      "text": "VISION BEYOND FUTURE",
+      "href": "https://growbigllp.com/"
+    },
+    {
+      "text": "Home",
+      "href": "https://growbigllp.com/"
+    },
+    {
+      "text": "Services",
+      "href": "https://growbigllp.com/#services"
+    },
+    {
+      "text": "Careers",
+      "href": "https://growbigllp.com/careers"
+    },
+    {
+      "text": "About",
+      "href": "https://growbigllp.com/about"
+    },
+    {
+      "text": "Contact",
+      "href": "https://growbigllp.com/contact"
+    },
+    {
+      "text": "We're Hiring",
+      "href": "https://growbigllp.com/careers"
+    },
+    {
+      "text": "Home",
+      "href": "https://growbigllp.com/"
+    },
+    {
+      "text": "Services",
+      "href": "https://growbigllp.com/#services"
+    },
+    {
+      "text": "Careers",
+      "href": "https://growbigllp.com/careers"
+    },
+    {
+      "text": "About",
+      "href": "https://growbigllp.com/about"
+    },
+    {
+      "text": "Contact",
+      "href": "https://growbigllp.com/contact"
+    },
+    {
+      "text": "We're Hiring",
+      "href": "https://growbigllp.com/careers"
+    },
+    {
+      "text": "",
+      "href": "https://growbigllp.com/"
+    },
+    {
+      "text": "",
+      "href": "https://www.facebook.com/share/182RC2vgWz/"
+    },
+    {
+      "text": "",
+      "href": "https://www.linkedin.com/company/growbig-technologies/"
+    },
+    {
+      "text": "",
+      "href": "https://www.instagram.com/growbigllp/"
+    },
+    {
+      "text": "Website and Software Development",
+      "href": "https://growbigllp.com/#services"
+    },
+    {
+      "text": "Mobile Application Devleopment",
+      "href": "https://growbigllp.com/#services"
+    },
+    {
+      "text": "CRM & ERP Solutions",
+      "href": "https://growbigllp.com/#services"
+    },
+    {
+      "text": "Digital Marketing Services",
+      "href": "https://growbigllp.com/#services"
+    },
+    {
+      "text": "BPO & Customer Support Solutions",
+      "href": "https://growbigllp.com/#services"
+    },
+    {
+      "text": "AI & Automation Services",
+      "href": "https://growbigllp.com/#services"
+    }
+  ],
+  "images": [
+    {
+      "alt": "GrowBig Technologies",
+      "src": "https://growbigllp.com/assets/Logo-DRDTLvwZ.png",
+      "width": 748,
+      "height": 238
+    },
+    {
+      "alt": "Michael D'souza",
+      "src": "https://growbigllp.com/assets/micheal-n62yvyge.png",
+      "width": 1254,
+      "height": 1170
+    },
+    {
+      "alt": "Sushant Paste",
+      "src": "https://growbigllp.com/assets/sushant-KdnDWRG0.png",
+      "width": 1117,
+      "height": 1026
+    },
+    {
+      "alt": "Vinayak Jadhav",
+      "src": "https://growbigllp.com/assets/Vinayak-e8Gl1-2i.png",
+      "width": 1254,
+      "height": 1203
+    },
+    {
+      "alt": "Manish Jadhav",
+      "src": "https://growbigllp.com/assets/manish-DZzUIMCP.jpeg",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "alt": "Heena Shaikh",
+      "src": "https://growbigllp.com/assets/Heena-DngY0izo.png",
+      "width": 901,
+      "height": 878
+    },
+    {
+      "alt": "GrowBig Technologies",
+      "src": "https://growbigllp.com/assets/logowhite-FVw9m_Xm.png",
+      "width": 473,
+      "height": 126
+    }
+  ],
+  "buttons": [
+    {
+      "text": "VISION BEYOND FUTURE",
+      "tag": "a",
+      "href": "https://growbigllp.com/",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.372 0.044 257.287)",
+      "borderRadius": "0px",
+      "fontSize": "16px",
+      "fontWeight": "400"
+    },
+    {
+      "text": "Home",
+      "tag": "a",
+      "href": "https://growbigllp.com/",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.372 0.044 257.287)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "500"
+    },
+    {
+      "text": "Services",
+      "tag": "a",
+      "href": "https://growbigllp.com/#services",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.372 0.044 257.287)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "500"
+    },
+    {
+      "text": "Careers",
+      "tag": "a",
+      "href": "https://growbigllp.com/careers",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.372 0.044 257.287)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "500"
+    },
+    {
+      "text": "About",
+      "tag": "a",
+      "href": "https://growbigllp.com/about",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.372 0.044 257.287)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "600"
+    },
+    {
+      "text": "Contact",
+      "tag": "a",
+      "href": "https://growbigllp.com/contact",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.372 0.044 257.287)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "500"
+    },
+    {
+      "text": "We're Hiring",
+      "tag": "a",
+      "href": "https://growbigllp.com/careers",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.372 0.044 257.287)",
+      "borderRadius": "0px",
+      "fontSize": "16px",
+      "fontWeight": "400"
+    },
+    {
+      "text": "We're Hiring",
+      "tag": "button",
+      "href": "",
+      "background": "oklch(0.546 0.245 262.881)",
+      "color": "rgb(255, 255, 255)",
+      "borderRadius": "3.35544e+07px",
+      "fontSize": "14px",
+      "fontWeight": "600"
+    },
+    {
+      "text": "Home",
+      "tag": "a",
+      "href": "https://growbigllp.com/",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.372 0.044 257.287)",
+      "borderRadius": "16px",
+      "fontSize": "14px",
+      "fontWeight": "500"
+    },
+    {
+      "text": "Services",
+      "tag": "a",
+      "href": "https://growbigllp.com/#services",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.372 0.044 257.287)",
+      "borderRadius": "16px",
+      "fontSize": "14px",
+      "fontWeight": "500"
+    },
+    {
+      "text": "Careers",
+      "tag": "a",
+      "href": "https://growbigllp.com/careers",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.372 0.044 257.287)",
+      "borderRadius": "16px",
+      "fontSize": "14px",
+      "fontWeight": "500"
+    },
+    {
+      "text": "About",
+      "tag": "a",
+      "href": "https://growbigllp.com/about",
+      "background": "oklch(0.97 0.014 254.604)",
+      "color": "oklch(0.372 0.044 257.287)",
+      "borderRadius": "16px",
+      "fontSize": "14px",
+      "fontWeight": "600"
+    },
+    {
+      "text": "Contact",
+      "tag": "a",
+      "href": "https://growbigllp.com/contact",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.372 0.044 257.287)",
+      "borderRadius": "16px",
+      "fontSize": "14px",
+      "fontWeight": "500"
+    },
+    {
+      "text": "We're Hiring",
+      "tag": "a",
+      "href": "https://growbigllp.com/careers",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.372 0.044 257.287)",
+      "borderRadius": "0px",
+      "fontSize": "16px",
+      "fontWeight": "400"
+    },
+    {
+      "text": "We're Hiring",
+      "tag": "button",
+      "href": "",
+      "background": "oklch(0.546 0.245 262.881)",
+      "color": "rgb(255, 255, 255)",
+      "borderRadius": "16px",
+      "fontSize": "14px",
+      "fontWeight": "600"
+    },
+    {
+      "text": "View Profile",
+      "tag": "button",
+      "href": "",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.705 0.213 47.604)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "600"
+    },
+    {
+      "text": "View Profile",
+      "tag": "button",
+      "href": "",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.705 0.213 47.604)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "600"
+    },
+    {
+      "text": "View Profile",
+      "tag": "button",
+      "href": "",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.705 0.213 47.604)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "600"
+    },
+    {
+      "text": "View Profile",
+      "tag": "button",
+      "href": "",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.705 0.213 47.604)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "600"
+    },
+    {
+      "text": "View Profile",
+      "tag": "button",
+      "href": "",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.705 0.213 47.604)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "600"
+    },
+    {
+      "text": "View Open Roles",
+      "tag": "a",
+      "href": "https://growbigllp.com/careers",
+      "background": "oklch(0.705 0.213 47.604)",
+      "color": "rgb(255, 255, 255)",
+      "borderRadius": "24px",
+      "fontSize": "18px",
+      "fontWeight": "700"
+    },
+    {
+      "text": "Home",
+      "tag": "button",
+      "href": "",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.704 0.04 256.788)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "400"
+    },
+    {
+      "text": "About",
+      "tag": "button",
+      "href": "",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.704 0.04 256.788)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "400"
+    },
+    {
+      "text": "Services",
+      "tag": "button",
+      "href": "",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.704 0.04 256.788)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "400"
+    },
+    {
+      "text": "Careers",
+      "tag": "button",
+      "href": "",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.704 0.04 256.788)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "400"
+    },
+    {
+      "text": "Our Leadership",
+      "tag": "button",
+      "href": "",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.704 0.04 256.788)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "400"
+    },
+    {
+      "text": "Partners",
+      "tag": "button",
+      "href": "",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.704 0.04 256.788)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "400"
+    },
+    {
+      "text": "Contact",
+      "tag": "button",
+      "href": "",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.704 0.04 256.788)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "400"
+    },
+    {
+      "text": "Website and Software Development",
+      "tag": "a",
+      "href": "https://growbigllp.com/#services",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.869 0.022 252.894)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "400"
+    },
+    {
+      "text": "Mobile Application Devleopment",
+      "tag": "a",
+      "href": "https://growbigllp.com/#services",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.869 0.022 252.894)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "400"
+    },
+    {
+      "text": "CRM & ERP Solutions",
+      "tag": "a",
+      "href": "https://growbigllp.com/#services",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.869 0.022 252.894)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "400"
+    },
+    {
+      "text": "Digital Marketing Services",
+      "tag": "a",
+      "href": "https://growbigllp.com/#services",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.869 0.022 252.894)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "400"
+    },
+    {
+      "text": "BPO & Customer Support Solutions",
+      "tag": "a",
+      "href": "https://growbigllp.com/#services",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.869 0.022 252.894)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "400"
+    },
+    {
+      "text": "AI & Automation Services",
+      "tag": "a",
+      "href": "https://growbigllp.com/#services",
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.869 0.022 252.894)",
+      "borderRadius": "0px",
+      "fontSize": "14px",
+      "fontWeight": "400"
+    }
+  ],
+  "colors": [
+    "oklch(0.372 0.044 257.287)",
+    "oklch(0.967 0.003 264.542)",
+    "oklch(0.928 0.006 264.531)",
+    "oklch(0.705 0.213 47.604)",
+    "rgb(255, 255, 255)",
+    "oklch(0.546 0.245 262.881)",
+    "oklch(0.872 0.01 258.338)",
+    "oklch(0.97 0.014 254.604)",
+    "rgb(7, 26, 62)",
+    "oklch(0.869 0.022 252.894)",
+    "oklab(0 0 0 / 0.3)",
+    "oklab(0.999994 0.0000455678 0.0000200868 / 0.1)",
+    "oklch(0.792 0.209 151.711)",
+    "oklch(0.707 0.165 254.624)",
+    "oklch(0.828 0.189 84.429)",
+    "rgb(247, 249, 252)",
+    "oklch(0.98 0.016 73.684)",
+    "oklch(0.901 0.076 70.697)",
+    "oklch(0.208 0.042 265.755)",
+    "oklch(0.446 0.043 257.281)",
+    "oklch(0.929 0.013 255.508)",
+    "oklch(0.623 0.214 259.815)",
+    "oklch(0.645 0.246 16.439)",
+    "oklch(0.969 0.015 12.422)",
+    "oklch(0.769 0.188 70.08)",
+    "oklch(0.987 0.022 95.277)",
+    "oklch(0.968 0.007 247.896)",
+    "oklch(0.554 0.046 257.417)",
+    "rgb(14, 21, 38)",
+    "oklch(0.129 0.042 264.695)",
+    "oklab(0.129 -0.0038832 -0.0418201 / 0.95)",
+    "oklch(0.704 0.04 256.788)",
+    "oklab(0.999994 0.0000455678 0.0000200868 / 0.05)",
+    "oklab(0.666 0.0940116 0.152325 / 0.3)"
+  ],
+  "fonts": [
+    "Inter, sans-serif",
+    "Cinzel, serif"
+  ]
+}

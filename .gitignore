@@ -71,3 +71,4 @@ setup/site.prod.yml
 # Frontend generated/dependency folders.
 site-frontend/node_modules/
 site-frontend/dist/
+node_modules

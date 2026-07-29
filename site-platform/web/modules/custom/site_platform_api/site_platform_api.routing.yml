@@ -154,3 +154,59 @@ site_platform_api.search:
   requirements:
     _access: 'TRUE'
   methods: [GET]
+
+site_platform_api.frontend_bootstrap:
+  path: '/api/v2/frontend/bootstrap'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\FrontendContentController::bootstrap'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+
+site_platform_api.frontend_page:
+  path: '/api/v2/frontend/pages/{slug}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\FrontendContentController::page'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+
+site_platform_api.frontend_content:
+  path: '/api/v2/frontend/content/{source}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\FrontendContentController::content'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+
+site_platform_api.frontend_form:
+  path: '/api/v2/frontend/forms/{id}'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\FrontendContentController::form'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+
+site_platform_api.frontend_form_submit:
+  path: '/api/v2/frontend/forms/{id}/submit'
+  methods: [POST]
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\FrontendContentController::submitForm'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+
+site_platform_api.frontend_analytics:
+  path: '/api/v2/frontend/analytics'
+  defaults:
+    _controller: '\Drupal\site_platform_api\Controller\FrontendContentController::analytics'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+
