@@ -1,0 +1,21 @@
+uuid: 9615c20d-3597-4a98-aab9-9c494b7c9a79
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_form_field_help
+    - node.type.site_form_field
+_core:
+  default_config_hash: JzVPx3wd7DG3TcQMas5_2HWxQF9bi1ahfBPZD3cS1hw
+id: node.site_form_field.field_form_field_help
+field_name: field_form_field_help
+entity_type: node
+bundle: site_form_field
+label: 'Help text'
+description: 'Field help text.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

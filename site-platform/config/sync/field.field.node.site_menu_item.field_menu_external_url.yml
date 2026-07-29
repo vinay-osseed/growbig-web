@@ -1,0 +1,21 @@
+uuid: 1284e003-7ab5-4feb-9ec0-d1adb1c5c969
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_external_url
+    - node.type.site_menu_item
+_core:
+  default_config_hash: Sc0CadaJQpG0oEebEYsoiLu2pmEnXjYIi5ljQqs4qtI
+id: node.site_menu_item.field_menu_external_url
+field_name: field_menu_external_url
+entity_type: node
+bundle: site_menu_item
+label: 'External URL'
+description: 'External URL target.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

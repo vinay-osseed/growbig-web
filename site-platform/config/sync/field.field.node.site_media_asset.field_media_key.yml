@@ -1,0 +1,21 @@
+uuid: dbaeebd0-caea-4ea1-9a6d-237684cbf800
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_media_key
+    - node.type.site_media_asset
+_core:
+  default_config_hash: PBa88od7eJIwCt61rc7PsST8Wsy5QIugzq90_dhkHIA
+id: node.site_media_asset.field_media_key
+field_name: field_media_key
+entity_type: node
+bundle: site_media_asset
+label: 'Media key'
+description: 'Stable media key.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

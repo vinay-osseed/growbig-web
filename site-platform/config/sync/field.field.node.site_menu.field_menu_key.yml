@@ -1,0 +1,21 @@
+uuid: f445bbfd-264a-471e-b0d7-37cec96b7c13
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_key
+    - node.type.site_menu
+_core:
+  default_config_hash: _Rxc9_nUbN17u5g_geaDO1AHl_TltcKpq_XmMo0l4mo
+id: node.site_menu.field_menu_key
+field_name: field_menu_key
+entity_type: node
+bundle: site_menu
+label: 'Menu key'
+description: 'Stable menu key, such as main or footer.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

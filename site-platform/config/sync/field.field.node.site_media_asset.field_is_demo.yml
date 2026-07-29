@@ -1,0 +1,25 @@
+uuid: 79197707-2143-452a-80b9-acb2163da33b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_is_demo
+    - node.type.site_media_asset
+_core:
+  default_config_hash: L8hbO96QnccnpRZNFeAiTNeqPHlQEzaEWKbySkWPhJ4
+id: node.site_media_asset.field_is_demo
+field_name: field_is_demo
+entity_type: node
+bundle: site_media_asset
+label: 'Demo record'
+description: 'Marks records created by demo/setup tooling.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

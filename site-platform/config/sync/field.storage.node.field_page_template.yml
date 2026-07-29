@@ -1,0 +1,23 @@
+uuid: 170e2410-9b32-401c-b10d-8f0ed8c11b13
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: FUGIAtWRTN4XJqItbiUKGhBjquKDQd5Pmr3Fx1fX9fk
+id: node.field_page_template
+field_name: field_page_template
+entity_type: node
+type: string
+settings:
+  max_length: 64
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

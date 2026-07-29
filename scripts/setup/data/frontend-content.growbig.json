@@ -1,718 +1,780 @@
 {
-  "contractVersion": "2.0",
-  "template": {
-    "mode": "single_backend",
-    "reusable": true,
-    "projectKey": "growbig",
-    "projectLabel": "GrowBig Technologies LLP"
-  },
-  "site": {
-    "key": "growbig",
-    "name": "GrowBig Technologies LLP",
-    "shortName": "GrowBig",
-    "tagline": "Vision Beyond Future",
-    "description": "Building digital excellence for startups and enterprises across India and beyond.",
-    "phone": "+91 9146802212",
-    "email": "office@growbigllp.com",
-    "address": {
-      "line1": "Narayan Arcade, 1st Floor Above Axis Bank",
-      "line2": "Near ST Stand, Sawantwadi",
-      "city": "Sawantwadi",
-      "state": "Maharashtra",
-      "country": "India"
+    "contractVersion": "2.0",
+    "template": {
+        "mode": "single_backend",
+        "reusable": true,
+        "projectKey": "growbig",
+        "projectLabel": "GrowBig Technologies LLP"
     },
-    "hours": {
-      "label": "24 Hours Open",
-      "note": "Shift-based Operations"
-    },
-    "mapUrl": "https://maps.app.goo.gl/VGqk8VbPQXS3yQNb9",
-    "social": [
-      {
-        "label": "Facebook",
-        "url": "https://www.facebook.com/share/182RC2vgWz/"
-      },
-      {
-        "label": "LinkedIn",
-        "url": "https://www.linkedin.com/company/growbig-technologies/"
-      },
-      {
-        "label": "Instagram",
-        "url": "https://www.instagram.com/growbigllp/"
-      }
-    ]
-  },
-  "analytics": {
-    "enabled": true,
-    "gaMeasurementId": "G-L2ML42EZZ7",
-    "gtmContainerId": "",
-    "note": "Update from the real analytics account before production launch."
-  },
-  "media": {
-    "logo": {
-      "alt": "GrowBig Technologies",
-      "status": "placeholder",
-      "auditSourceUrl": "https://growbigllp.com/assets/Logo-DRDTLvwZ.png"
-    },
-    "footerLogo": {
-      "alt": "GrowBig Technologies",
-      "status": "placeholder",
-      "auditSourceUrl": "https://growbigllp.com/assets/logowhite-FVw9m_Xm.png"
-    },
-    "heroExpertTeam": {
-      "alt": "Expert Team",
-      "status": "placeholder",
-      "auditSourceUrl": "https://growbigllp.com/Images/expert%20team.jpg"
-    },
-    "eosLogo": {
-      "alt": "EOS Globe",
-      "status": "placeholder",
-      "auditSourceUrl": "https://growbigllp.com/assets/eos-logo-DCZ1t2Fr.png"
-    }
-  },
-  "navigation": {
-    "main": [
-      {
-        "title": "Home",
-        "url": "/"
-      },
-      {
-        "title": "Services",
-        "url": "/#services"
-      },
-      {
-        "title": "Careers",
-        "url": "/careers"
-      },
-      {
-        "title": "About",
-        "url": "/about"
-      },
-      {
-        "title": "Contact",
-        "url": "/contact"
-      }
-    ],
-    "cta": {
-      "title": "We're Hiring",
-      "url": "/careers"
-    }
-  },
-  "footer": {
-    "description": "Building digital excellence for startups and enterprises across India and beyond.",
-    "copyright": "© 2026 GrowBig Technologies LLP. All Rights Reserved.",
-    "quickLinks": [
-      {
-        "title": "Home",
-        "url": "/"
-      },
-      {
-        "title": "About",
-        "url": "/about"
-      },
-      {
-        "title": "Services",
-        "url": "/#services"
-      },
-      {
-        "title": "Careers",
-        "url": "/careers"
-      },
-      {
-        "title": "Our Leadership",
-        "url": "/about#leadership"
-      },
-      {
-        "title": "Partners",
-        "url": "/#partners"
-      },
-      {
-        "title": "Contact",
-        "url": "/contact"
-      }
-    ],
-    "services": [
-      {
-        "title": "Website and Software Development",
-        "url": "/#services"
-      },
-      {
-        "title": "Mobile Application Development",
-        "url": "/#services"
-      },
-      {
-        "title": "CRM & ERP Solutions",
-        "url": "/#services"
-      },
-      {
-        "title": "Digital Marketing Services",
-        "url": "/#services"
-      },
-      {
-        "title": "BPO & Customer Support Solutions",
-        "url": "/#services"
-      },
-      {
-        "title": "AI & Automation Services",
-        "url": "/#services"
-      }
-    ]
-  },
-  "pages": {
-    "home": {
-      "slug": "home",
-      "path": "/",
-      "title": "GrowBig Technologies LLP",
-      "seo": {
-        "title": "GrowBig Technologies LLP",
-        "description": "GrowBig Technologies LLP - Building Digital Solutions That Drive Business Growth"
-      },
-      "sections": [
-        {
-          "type": "hero",
-          "badge": "🚀 Empowering Digital Growth",
-          "heading": "Building Digital Solutions That Drive Business Growth",
-          "description": "GrowBig Technologies LLP delivers modern websites, mobile applications, cloud solutions, digital transformation, AI-powered software, branding, and technology consulting for startups and enterprises.",
-          "mediaKey": "heroExpertTeam",
-          "sliderLabel": "Expert Team"
+    "site": {
+        "key": "growbig",
+        "name": "GrowBig Technologies LLP",
+        "shortName": "GrowBig",
+        "tagline": "Vision Beyond Future",
+        "description": "Building digital excellence for startups and enterprises across India and beyond.",
+        "phone": "+91 9146802212",
+        "email": "office@growbigllp.com",
+        "address": {
+            "line1": "Narayan Arcade, 1st Floor Above Axis Bank",
+            "line2": "Near ST Stand, Sawantwadi",
+            "city": "Sawantwadi",
+            "state": "Maharashtra",
+            "country": "India"
         },
-        {
-          "type": "services",
-          "id": "services",
-          "badge": "WHAT WE DO",
-          "heading": "Our Services",
-          "description": "We build scalable digital products that transform how businesses connect with their customers.",
-          "source": "services"
+        "hours": {
+            "label": "24 Hours Open",
+            "note": "Shift-based Operations"
         },
-        {
-          "type": "partners",
-          "id": "partners",
-          "badge": "ECOSYSTEM",
-          "heading": "Our Trusted Partners",
-          "description": "We proudly collaborate with trusted global partners to deliver innovative technology solutions and world-class services.",
-          "source": "partners"
+        "mapUrl": "https://maps.app.goo.gl/VGqk8VbPQXS3yQNb9",
+        "social": [
+            {
+                "label": "Facebook",
+                "url": "https://www.facebook.com/share/182RC2vgWz/"
+            },
+            {
+                "label": "LinkedIn",
+                "url": "https://www.linkedin.com/company/growbig-technologies/"
+            },
+            {
+                "label": "Instagram",
+                "url": "https://www.instagram.com/growbigllp/"
+            }
+        ]
+    },
+    "analytics": {
+        "enabled": true,
+        "gaMeasurementId": "G-L2ML42EZZ7",
+        "gtmContainerId": "",
+        "note": "Update from the real analytics account before production launch."
+    },
+    "media": {
+        "logo": {
+            "alt": "GrowBig Technologies",
+            "status": "drupal_media",
+            "auditSourceUrl": "https://growbigllp.com/assets/Logo-DRDTLvwZ.png",
+            "mediaId": 1,
+            "mediaUuid": "22d0e504-73d8-4183-9e14-82ad3a19ca9a",
+            "fileId": 1,
+            "fileUri": "public://frontend-assets/growbig/media-logo.png",
+            "url": "https://site-platform.ddev.site/sites/default/files/frontend-assets/growbig/media-logo.png"
+        },
+        "footerLogo": {
+            "alt": "GrowBig Technologies",
+            "status": "drupal_media",
+            "auditSourceUrl": "https://growbigllp.com/assets/logowhite-FVw9m_Xm.png",
+            "mediaId": 2,
+            "mediaUuid": "67ee78eb-b4cd-471d-a26d-2e7ada317388",
+            "fileId": 2,
+            "fileUri": "public://frontend-assets/growbig/media-footerlogo.png",
+            "url": "https://site-platform.ddev.site/sites/default/files/frontend-assets/growbig/media-footerlogo.png"
+        },
+        "heroExpertTeam": {
+            "alt": "Expert Team",
+            "status": "drupal_media",
+            "auditSourceUrl": "https://growbigllp.com/Images/expert%20team.jpg",
+            "mediaId": 3,
+            "mediaUuid": "6f2d0181-7a14-4e3d-909f-bfdfe6d540ed",
+            "fileId": 3,
+            "fileUri": "public://frontend-assets/growbig/media-heroexpertteam.jpg",
+            "url": "https://site-platform.ddev.site/sites/default/files/frontend-assets/growbig/media-heroexpertteam.jpg"
+        },
+        "eosLogo": {
+            "alt": "EOS Globe",
+            "status": "drupal_media",
+            "auditSourceUrl": "https://growbigllp.com/assets/eos-logo-DCZ1t2Fr.png",
+            "mediaId": 4,
+            "mediaUuid": "e394a785-eafb-4233-b679-727f4dbb7859",
+            "fileId": 4,
+            "fileUri": "public://frontend-assets/growbig/media-eoslogo.png",
+            "url": "https://site-platform.ddev.site/sites/default/files/frontend-assets/growbig/media-eoslogo.png"
         }
-      ]
     },
-    "about": {
-      "slug": "about",
-      "path": "/about",
-      "title": "About GrowBig",
-      "seo": {
-        "title": "About GrowBig Technologies LLP",
-        "description": "Learn about GrowBig Technologies LLP, our mission, vision, values, and leadership."
-      },
-      "sections": [
-        {
-          "type": "hero",
-          "badge": "Company Overview and value",
-          "heading": "We Are GrowBig",
-          "description": "We help businesses grow through innovative software development, AI solutions, digital marketing, and business process outsourcing—delivering reliable, scalable, and future-ready technology solutions."
-        },
-        {
-          "type": "mission_vision",
-          "badge": "PURPOSE",
-          "heading": "Mission & Vision",
-          "description": "The principles that guide every line of code, every design decision, and every client conversation.",
-          "items": [
+    "navigation": {
+        "main": [
             {
-              "title": "Our Mission",
-              "body": "Deliver scalable, reliable, and cost-effective digital solutions while building long-term client partnerships through innovation, quality, and customer-focused development. Our mission is to empower rural communities by reaching users who are still unable to access the opportunities of the digital world and helping them bridge the digital divide."
+                "title": "Home",
+                "url": "/"
             },
             {
-              "title": "Our Vision",
-              "body": "To become a globally trusted technology and outsourcing partner by delivering innovative digital solutions that empower businesses to grow and succeed. We envision a world where everyone has access to knowledge, creating equal opportunities for all and enabling inclusive digital growth."
+                "title": "Services",
+                "url": "/#services"
+            },
+            {
+                "title": "Careers",
+                "url": "/careers"
+            },
+            {
+                "title": "About",
+                "url": "/about"
+            },
+            {
+                "title": "Contact",
+                "url": "/contact"
             }
-          ]
-        },
-        {
-          "type": "advantages",
-          "badge": "OUR ADVANTAGES",
-          "heading": "Why choose us",
-          "description": "Discover what makes us a trusted technology partner for businesses worldwide.",
-          "items": [
-            {
-              "title": "End-to-End Service Capability",
-              "body": "We manage every stage of your project, from planning and development to deployment and ongoing support."
-            },
-            {
-              "title": "Flexible & Scalable Delivery Models",
-              "body": "Our delivery approach adapts to your business needs, ensuring seamless growth and efficient project execution."
-            },
-            {
-              "title": "Cost-Effective Solutions",
-              "body": "We deliver high-quality technology solutions that maximize value while keeping costs optimized."
-            },
-            {
-              "title": "Strong Quality Assurance",
-              "body": "Our rigorous testing and quality processes ensure reliable, secure, and high-performing solutions."
-            },
-            {
-              "title": "Strategic EOS Globe Partnership",
-              "body": "Through our partnership with EOS Globe, we leverage global expertise and best practices to deliver enhanced business value."
-            }
-          ]
-        },
-        {
-          "type": "team",
-          "id": "leadership",
-          "badge": "THE TEAM",
-          "heading": "Our Leadership",
-          "description": "The people steering strategy, technology, and culture at GrowBig.",
-          "source": "team"
-        },
-        {
-          "type": "cta",
-          "heading": "Want to join our growing team?",
-          "description": "We are always looking for talented people who share our passion for great software.",
-          "button": {
-            "title": "View Open Roles",
+        ],
+        "cta": {
+            "title": "We're Hiring",
             "url": "/careers"
-          }
         }
-      ]
     },
-    "careers": {
-      "slug": "careers",
-      "path": "/careers",
-      "title": "Careers at GrowBig",
-      "seo": {
-        "title": "Careers at GrowBig Technologies LLP",
-        "description": "Build your career at GrowBig Technologies LLP."
-      },
-      "sections": [
-        {
-          "type": "hero",
-          "badge": "We’re Hiring",
-          "heading": "Build Your Career at GrowBig",
-          "description": "Join a team that builds products used by real businesses, ships fast, and takes craftsmanship seriously. We hire for attitude and grow the skill."
-        },
-        {
-          "type": "jobs",
-          "badge": "OPEN ROLES",
-          "heading": "Current Openings",
-          "description": "Join our growing team and build your career with GrowBig Technologies.",
-          "source": "jobs"
-        },
-        {
-          "type": "cta",
-          "heading": "Don't see the right role?",
-          "description": "Send us your resume anyway. We're always interested in talented people who want to build great things.",
-          "button": {
-            "title": "office@growbigllp.com",
-            "url": "mailto:office@growbigllp.com"
-          }
-        }
-      ]
-    },
-    "contact": {
-      "slug": "contact",
-      "path": "/contact",
-      "title": "Contact GrowBig",
-      "seo": {
-        "title": "Contact GrowBig Technologies LLP",
-        "description": "Contact GrowBig Technologies LLP for website, software, mobile app, AI, BPO, and digital marketing services."
-      },
-      "sections": [
-        {
-          "type": "hero",
-          "badge": "We typically reply within few hours",
-          "heading": "Let's Start a Conversation",
-          "description": "Tell us about your project, your goals, or simply say hello. We'd love to hear from you.",
-          "cards": [
+    "footer": {
+        "description": "Building digital excellence for startups and enterprises across India and beyond.",
+        "copyright": "© 2026 GrowBig Technologies LLP. All Rights Reserved.",
+        "quickLinks": [
             {
-              "title": "Call Us",
-              "value": "+91 9146802212",
-              "url": "tel:+919146802212"
+                "title": "Home",
+                "url": "/"
             },
             {
-              "title": "Email Us",
-              "value": "office@growbigllp.com",
-              "url": "mailto:office@growbigllp.com"
+                "title": "About",
+                "url": "/about"
             },
             {
-              "title": "Visit Us",
-              "value": "Sawantwadi, Maharashtra Narayan Arcade, Near ST Stand",
-              "url": "https://maps.app.goo.gl/VGqk8VbPQXS3yQNb9"
+                "title": "Services",
+                "url": "/#services"
+            },
+            {
+                "title": "Careers",
+                "url": "/careers"
+            },
+            {
+                "title": "Our Leadership",
+                "url": "/about#leadership"
+            },
+            {
+                "title": "Partners",
+                "url": "/#partners"
+            },
+            {
+                "title": "Contact",
+                "url": "/contact"
             }
-          ]
-        },
-        {
-          "type": "form",
-          "badge": "SEND A MESSAGE",
-          "heading": "How can we help you?",
-          "formId": "contact-us"
-        },
-        {
-          "type": "social",
-          "heading": "Follow Us",
-          "linksSource": "site.social"
-        },
-        {
-          "type": "cta",
-          "heading": "Ready to build something great?",
-          "description": "Our team is ready to kickstart your project within 48 hours.",
-          "buttons": [
+        ],
+        "services": [
             {
-              "title": "Call Us",
-              "url": "tel:+919146802212"
+                "title": "Website and Software Development",
+                "url": "/#services"
             },
             {
-              "title": "Email Us",
-              "url": "mailto:office@growbigllp.com"
+                "title": "Mobile Application Development",
+                "url": "/#services"
+            },
+            {
+                "title": "CRM & ERP Solutions",
+                "url": "/#services"
+            },
+            {
+                "title": "Digital Marketing Services",
+                "url": "/#services"
+            },
+            {
+                "title": "BPO & Customer Support Solutions",
+                "url": "/#services"
+            },
+            {
+                "title": "AI & Automation Services",
+                "url": "/#services"
             }
-          ]
-        }
-      ]
-    }
-  },
-  "content": {
-    "services": [
-      {
-        "key": "website-software-development",
-        "title": "Website & Software Development",
-        "summary": "Custom websites and software solutions designed to improve business operations, performance, and user experience.",
-        "icon": "code",
-        "color": "blue",
-        "order": 10
-      },
-      {
-        "key": "mobile-application-development",
-        "title": "Mobile Application Development",
-        "summary": "High-performance Android and iOS mobile applications built with intuitive design and seamless functionality.",
-        "icon": "mobile",
-        "color": "purple",
-        "order": 20
-      },
-      {
-        "key": "crm-erp-solution",
-        "title": "CRM & ERP Solution",
-        "summary": "Powerful CRM and ERP systems that automate workflows, improve productivity, and streamline business management.",
-        "icon": "workflow",
-        "color": "teal",
-        "order": 30
-      },
-      {
-        "key": "digital-marketing-services",
-        "title": "Digital Marketing Services",
-        "summary": "Grow your online presence with SEO, social media marketing, paid advertising, branding, and content strategies.",
-        "icon": "send",
-        "color": "amber",
-        "order": 40
-      },
-      {
-        "key": "bpo-customer-support-solutions",
-        "title": "BPO & Customer Support Solutions",
-        "summary": "Professional customer support and business process outsourcing services that enhance customer satisfaction and efficiency.",
-        "icon": "headphones",
-        "color": "pink",
-        "order": 50
-      },
-      {
-        "key": "ai-automation-services",
-        "title": "AI & Automation Services",
-        "summary": "Intelligent AI-powered solutions and workflow automation to reduce manual effort, improve accuracy, and boost productivity.",
-        "icon": "automation",
-        "color": "indigo",
-        "order": 60
-      }
-    ],
-    "partners": [
-      {
-        "key": "united-states",
-        "title": "United States",
-        "summary": "Trusted Global Partner",
-        "media": {
-          "status": "external",
-          "url": "https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/us.svg"
-        },
-        "order": 10
-      },
-      {
-        "key": "eos-globe",
-        "title": "EOS Globe",
-        "summary": "Technology Partner",
-        "mediaKey": "eosLogo",
-        "order": 20
-      }
-    ],
-    "team": [
-      {
-        "key": "michael-dsouza",
-        "name": "Michael D'souza",
-        "role": "CEO",
-        "qualification": "BSL,LL.B. , BBM",
-        "bio": "Michael D'Souza is the CEO of GrowBig Technologies, holding a B.S.L., LL.B. degree with expertise in law, governance, and business management. He is a successful entrepreneur in the agriculture sector and serves as an elected Member of the Zilla Parishad. Committed to innovation, ethical leadership, and social responsibility, he actively contributes to community welfare and sustainable development.",
-        "media": {
-          "status": "placeholder",
-          "auditSourceUrl": "https://growbigllp.com/assets/micheal-n62yvyge.png"
-        },
-        "order": 10
-      },
-      {
-        "key": "sushant-paste",
-        "name": "Sushant Paste",
-        "role": "Director",
-        "qualification": "B.E. Computer Engineering",
-        "bio": "Sushant Paste is the Director of GrowBig Technologies and holds a Bachelor of Engineering (B.E.) in Computer Science. With over 20 years of experience in the IT industry, he specializes in software solutions, project management, and technology-driven innovation. He is committed to driving operational excellence, digital transformation, and sustainable business growth through reliable and innovative technology solutions.",
-        "media": {
-          "status": "placeholder",
-          "auditSourceUrl": "https://growbigllp.com/assets/sushant-KdnDWRG0.png"
-        },
-        "order": 20
-      },
-      {
-        "key": "vinayak-jadhav",
-        "name": "Vinayak Jadhav",
-        "role": "Director",
-        "qualification": "M.Tech. Computer Engineering",
-        "bio": "Vinayak Jadhav is the Director of GrowBig Technologies, holding an M.Tech. and B.E. in Computer Science. With over 20 years of experience in the education and IT sectors, he has expertise in teaching, software development, and technical leadership. He is committed to driving innovation, technical excellence, and delivering high-quality technology solutions while fostering continuous learning and professional growth.",
-        "media": {
-          "status": "placeholder",
-          "auditSourceUrl": "https://growbigllp.com/assets/Vinayak-e8Gl1-2i.png"
-        },
-        "order": 30
-      },
-      {
-        "key": "manish-jadhav",
-        "name": "Manish Jadhav",
-        "role": "HR Admin",
-        "qualification": "B.E. IT , MBA-HR , LLB",
-        "bio": "Manish Jadhav is the HR Admin at GrowBig Technologies, holding a B.E. in Information Technology, an MBA in Human Resource Management, an LL.B., and a Diploma in Cyber Law. With extensive experience across the banking, media, and IT industries, he specializes in HR management, operations, and organizational development. He is committed to building high-performing teams, fostering innovation, and driving sustainable organizational growth through people-centric leadership.",
-        "media": {
-          "status": "placeholder",
-          "auditSourceUrl": "https://growbigllp.com/assets/manish-DZzUIMCP.jpeg"
-        },
-        "order": 40
-      },
-      {
-        "key": "heena-shaikh",
-        "name": "Heena Shaikh",
-        "role": "Recruitment officer",
-        "qualification": "BA , MA-HISTORY",
-        "bio": "Heena Shaikh is the Recruitment Officer at GrowBig Technologies and holds a Bachelor of Arts (B.A.) and a Master of Arts (M.A.) in History. She is responsible for talent acquisition, candidate engagement, and supporting the company's hiring initiatives. With a strong focus on identifying the right talent and building a skilled workforce, she contributes to the organization's growth through effective recruitment and people-centric practices.",
-        "media": {
-          "status": "placeholder",
-          "auditSourceUrl": "https://growbigllp.com/assets/Heena-DngY0izo.png"
-        },
-        "order": 50
-      }
-    ],
-    "jobs": [
-      {
-        "key": "customer-support-executive",
-        "title": "Customer Support Executive",
-        "location": "Sawantwadi, Maharashtra",
-        "shift": "Rotational Shifts",
-        "experience": "0–2 Years Experience",
-        "summary": "We are looking for a Customer Support Executive with excellent communication skills to assist customers, resolve queries, and deliver outstanding service while working closely with our internal teams.",
-        "applyFormId": "job-application",
-        "status": "open",
-        "order": 10
-      }
-    ]
-  },
-  "forms": {
-    "contact-us": {
-      "id": "contact-us",
-      "webformId": "contact_us",
-      "title": "Contact Us",
-      "description": "Send a message to the team.",
-      "successMessage": "Thanks for contacting us. We will get back to you soon.",
-      "submitApi": "/api/v2/frontend/forms/contact-us/submit",
-      "fields": [
-        {
-          "name": "full_name",
-          "type": "text",
-          "label": "Full Name",
-          "required": true,
-          "placeholder": "Rahul Sawant"
-        },
-        {
-          "name": "email",
-          "type": "email",
-          "label": "Email Address",
-          "required": true,
-          "placeholder": "rahul@company.com"
-        },
-        {
-          "name": "phone",
-          "type": "tel",
-          "label": "Phone Number",
-          "required": false,
-          "placeholder": "+91 98765 43210"
-        },
-        {
-          "name": "service_needed",
-          "type": "select",
-          "label": "Service Needed",
-          "required": false
-        },
-        {
-          "name": "message",
-          "type": "textarea",
-          "label": "Message",
-          "required": true,
-          "placeholder": "Tell us about your project, timeline, and goals..."
-        }
-      ],
-      "webformElements": {
-        "full_name": {
-          "#type": "textfield",
-          "#title": "Full Name",
-          "#required": true,
-          "#placeholder": "Rahul Sawant"
-        },
-        "email": {
-          "#type": "email",
-          "#title": "Email Address",
-          "#required": true,
-          "#placeholder": "rahul@company.com"
-        },
-        "phone": {
-          "#type": "tel",
-          "#title": "Phone Number",
-          "#required": false,
-          "#placeholder": "+91 98765 43210"
-        },
-        "service_needed": {
-          "#type": "select",
-          "#title": "Service Needed",
-          "#required": false,
-          "#empty_option": "Select a service...",
-          "#options": {
-            "website_software_development": "Website & Software Development",
-            "mobile_application_development": "Mobile Application Development",
-            "crm_erp_solutions": "CRM & ERP Solutions",
-            "digital_marketing_services": "Digital Marketing Services",
-            "bpo_customer_support": "BPO & Customer Support Solutions",
-            "ai_automation_services": "AI & Automation Services",
-            "other": "Other"
-          }
-        },
-        "message": {
-          "#type": "textarea",
-          "#title": "Message",
-          "#required": true,
-          "#placeholder": "Tell us about your project, timeline, and goals..."
-        }
-      }
+        ]
     },
-    "job-application": {
-      "id": "job-application",
-      "webformId": "job_application",
-      "title": "Job Application",
-      "description": "Apply for an open role.",
-      "successMessage": "Thanks for applying. Our team will review your application.",
-      "submitApi": "/api/v2/frontend/forms/job-application/submit",
-      "fields": [
-        {
-          "name": "full_name",
-          "type": "text",
-          "label": "Full Name",
-          "required": true
+    "pages": {
+        "home": {
+            "slug": "home",
+            "path": "/",
+            "title": "GrowBig Technologies LLP",
+            "seo": {
+                "title": "GrowBig Technologies LLP",
+                "description": "GrowBig Technologies LLP - Building Digital Solutions That Drive Business Growth"
+            },
+            "sections": [
+                {
+                    "type": "hero",
+                    "badge": "🚀 Empowering Digital Growth",
+                    "heading": "Building Digital Solutions That Drive Business Growth",
+                    "description": "GrowBig Technologies LLP delivers modern websites, mobile applications, cloud solutions, digital transformation, AI-powered software, branding, and technology consulting for startups and enterprises.",
+                    "mediaKey": "heroExpertTeam",
+                    "sliderLabel": "Expert Team"
+                },
+                {
+                    "type": "services",
+                    "id": "services",
+                    "badge": "WHAT WE DO",
+                    "heading": "Our Services",
+                    "description": "We build scalable digital products that transform how businesses connect with their customers.",
+                    "source": "services"
+                },
+                {
+                    "type": "partners",
+                    "id": "partners",
+                    "badge": "ECOSYSTEM",
+                    "heading": "Our Trusted Partners",
+                    "description": "We proudly collaborate with trusted global partners to deliver innovative technology solutions and world-class services.",
+                    "source": "partners"
+                }
+            ]
         },
-        {
-          "name": "email",
-          "type": "email",
-          "label": "Email Address",
-          "required": true
+        "about": {
+            "slug": "about",
+            "path": "/about",
+            "title": "About GrowBig",
+            "seo": {
+                "title": "About GrowBig Technologies LLP",
+                "description": "Learn about GrowBig Technologies LLP, our mission, vision, values, and leadership."
+            },
+            "sections": [
+                {
+                    "type": "hero",
+                    "badge": "Company Overview and value",
+                    "heading": "We Are GrowBig",
+                    "description": "We help businesses grow through innovative software development, AI solutions, digital marketing, and business process outsourcing—delivering reliable, scalable, and future-ready technology solutions."
+                },
+                {
+                    "type": "mission_vision",
+                    "badge": "PURPOSE",
+                    "heading": "Mission & Vision",
+                    "description": "The principles that guide every line of code, every design decision, and every client conversation.",
+                    "items": [
+                        {
+                            "title": "Our Mission",
+                            "body": "Deliver scalable, reliable, and cost-effective digital solutions while building long-term client partnerships through innovation, quality, and customer-focused development. Our mission is to empower rural communities by reaching users who are still unable to access the opportunities of the digital world and helping them bridge the digital divide."
+                        },
+                        {
+                            "title": "Our Vision",
+                            "body": "To become a globally trusted technology and outsourcing partner by delivering innovative digital solutions that empower businesses to grow and succeed. We envision a world where everyone has access to knowledge, creating equal opportunities for all and enabling inclusive digital growth."
+                        }
+                    ]
+                },
+                {
+                    "type": "advantages",
+                    "badge": "OUR ADVANTAGES",
+                    "heading": "Why choose us",
+                    "description": "Discover what makes us a trusted technology partner for businesses worldwide.",
+                    "items": [
+                        {
+                            "title": "End-to-End Service Capability",
+                            "body": "We manage every stage of your project, from planning and development to deployment and ongoing support."
+                        },
+                        {
+                            "title": "Flexible & Scalable Delivery Models",
+                            "body": "Our delivery approach adapts to your business needs, ensuring seamless growth and efficient project execution."
+                        },
+                        {
+                            "title": "Cost-Effective Solutions",
+                            "body": "We deliver high-quality technology solutions that maximize value while keeping costs optimized."
+                        },
+                        {
+                            "title": "Strong Quality Assurance",
+                            "body": "Our rigorous testing and quality processes ensure reliable, secure, and high-performing solutions."
+                        },
+                        {
+                            "title": "Strategic EOS Globe Partnership",
+                            "body": "Through our partnership with EOS Globe, we leverage global expertise and best practices to deliver enhanced business value."
+                        }
+                    ]
+                },
+                {
+                    "type": "team",
+                    "id": "leadership",
+                    "badge": "THE TEAM",
+                    "heading": "Our Leadership",
+                    "description": "The people steering strategy, technology, and culture at GrowBig.",
+                    "source": "team"
+                },
+                {
+                    "type": "cta",
+                    "heading": "Want to join our growing team?",
+                    "description": "We are always looking for talented people who share our passion for great software.",
+                    "button": {
+                        "title": "View Open Roles",
+                        "url": "/careers"
+                    }
+                }
+            ]
         },
-        {
-          "name": "phone",
-          "type": "tel",
-          "label": "Phone Number",
-          "required": false
+        "careers": {
+            "slug": "careers",
+            "path": "/careers",
+            "title": "Careers at GrowBig",
+            "seo": {
+                "title": "Careers at GrowBig Technologies LLP",
+                "description": "Build your career at GrowBig Technologies LLP."
+            },
+            "sections": [
+                {
+                    "type": "hero",
+                    "badge": "We’re Hiring",
+                    "heading": "Build Your Career at GrowBig",
+                    "description": "Join a team that builds products used by real businesses, ships fast, and takes craftsmanship seriously. We hire for attitude and grow the skill."
+                },
+                {
+                    "type": "jobs",
+                    "badge": "OPEN ROLES",
+                    "heading": "Current Openings",
+                    "description": "Join our growing team and build your career with GrowBig Technologies.",
+                    "source": "jobs"
+                },
+                {
+                    "type": "cta",
+                    "heading": "Don't see the right role?",
+                    "description": "Send us your resume anyway. We're always interested in talented people who want to build great things.",
+                    "button": {
+                        "title": "office@growbigllp.com",
+                        "url": "mailto:office@growbigllp.com"
+                    }
+                }
+            ]
         },
-        {
-          "name": "job_role",
-          "type": "select",
-          "label": "Job Role",
-          "required": true
-        },
-        {
-          "name": "current_location",
-          "type": "text",
-          "label": "Current Location",
-          "required": false
-        },
-        {
-          "name": "experience_years",
-          "type": "text",
-          "label": "Experience",
-          "required": false
-        },
-        {
-          "name": "resume_url",
-          "type": "url",
-          "label": "Resume URL",
-          "required": false
-        },
-        {
-          "name": "message",
-          "type": "textarea",
-          "label": "Message",
-          "required": false
-        },
-        {
-          "name": "consent",
-          "type": "checkbox",
-          "label": "I agree to be contacted about this application.",
-          "required": true
+        "contact": {
+            "slug": "contact",
+            "path": "/contact",
+            "title": "Contact GrowBig",
+            "seo": {
+                "title": "Contact GrowBig Technologies LLP",
+                "description": "Contact GrowBig Technologies LLP for website, software, mobile app, AI, BPO, and digital marketing services."
+            },
+            "sections": [
+                {
+                    "type": "hero",
+                    "badge": "We typically reply within few hours",
+                    "heading": "Let's Start a Conversation",
+                    "description": "Tell us about your project, your goals, or simply say hello. We'd love to hear from you.",
+                    "cards": [
+                        {
+                            "title": "Call Us",
+                            "value": "+91 9146802212",
+                            "url": "tel:+919146802212"
+                        },
+                        {
+                            "title": "Email Us",
+                            "value": "office@growbigllp.com",
+                            "url": "mailto:office@growbigllp.com"
+                        },
+                        {
+                            "title": "Visit Us",
+                            "value": "Sawantwadi, Maharashtra Narayan Arcade, Near ST Stand",
+                            "url": "https://maps.app.goo.gl/VGqk8VbPQXS3yQNb9"
+                        }
+                    ]
+                },
+                {
+                    "type": "form",
+                    "badge": "SEND A MESSAGE",
+                    "heading": "How can we help you?",
+                    "formId": "contact-us"
+                },
+                {
+                    "type": "social",
+                    "heading": "Follow Us",
+                    "linksSource": "site.social"
+                },
+                {
+                    "type": "cta",
+                    "heading": "Ready to build something great?",
+                    "description": "Our team is ready to kickstart your project within 48 hours.",
+                    "buttons": [
+                        {
+                            "title": "Call Us",
+                            "url": "tel:+919146802212"
+                        },
+                        {
+                            "title": "Email Us",
+                            "url": "mailto:office@growbigllp.com"
+                        }
+                    ]
+                }
+            ]
         }
-      ],
-      "webformElements": {
-        "full_name": {
-          "#type": "textfield",
-          "#title": "Full Name",
-          "#required": true
+    },
+    "content": {
+        "services": [
+            {
+                "key": "website-software-development",
+                "title": "Website & Software Development",
+                "summary": "Custom websites and software solutions designed to improve business operations, performance, and user experience.",
+                "icon": "code",
+                "color": "blue",
+                "order": 10
+            },
+            {
+                "key": "mobile-application-development",
+                "title": "Mobile Application Development",
+                "summary": "High-performance Android and iOS mobile applications built with intuitive design and seamless functionality.",
+                "icon": "mobile",
+                "color": "purple",
+                "order": 20
+            },
+            {
+                "key": "crm-erp-solution",
+                "title": "CRM & ERP Solution",
+                "summary": "Powerful CRM and ERP systems that automate workflows, improve productivity, and streamline business management.",
+                "icon": "workflow",
+                "color": "teal",
+                "order": 30
+            },
+            {
+                "key": "digital-marketing-services",
+                "title": "Digital Marketing Services",
+                "summary": "Grow your online presence with SEO, social media marketing, paid advertising, branding, and content strategies.",
+                "icon": "send",
+                "color": "amber",
+                "order": 40
+            },
+            {
+                "key": "bpo-customer-support-solutions",
+                "title": "BPO & Customer Support Solutions",
+                "summary": "Professional customer support and business process outsourcing services that enhance customer satisfaction and efficiency.",
+                "icon": "headphones",
+                "color": "pink",
+                "order": 50
+            },
+            {
+                "key": "ai-automation-services",
+                "title": "AI & Automation Services",
+                "summary": "Intelligent AI-powered solutions and workflow automation to reduce manual effort, improve accuracy, and boost productivity.",
+                "icon": "automation",
+                "color": "indigo",
+                "order": 60
+            }
+        ],
+        "partners": [
+            {
+                "key": "united-states",
+                "title": "United States",
+                "summary": "Trusted Global Partner",
+                "media": {
+                    "status": "external",
+                    "url": "https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/us.svg"
+                },
+                "order": 10
+            },
+            {
+                "key": "eos-globe",
+                "title": "EOS Globe",
+                "summary": "Technology Partner",
+                "mediaKey": "eosLogo",
+                "order": 20
+            }
+        ],
+        "team": [
+            {
+                "key": "michael-dsouza",
+                "name": "Michael D'souza",
+                "role": "CEO",
+                "qualification": "BSL,LL.B. , BBM",
+                "bio": "Michael D'Souza is the CEO of GrowBig Technologies, holding a B.S.L., LL.B. degree with expertise in law, governance, and business management. He is a successful entrepreneur in the agriculture sector and serves as an elected Member of the Zilla Parishad. Committed to innovation, ethical leadership, and social responsibility, he actively contributes to community welfare and sustainable development.",
+                "media": {
+                    "status": "drupal_media",
+                    "auditSourceUrl": "https://growbigllp.com/assets/micheal-n62yvyge.png",
+                    "mediaId": 5,
+                    "mediaUuid": "6366de83-89e0-406b-92d7-804a6a1f89e0",
+                    "fileId": 5,
+                    "fileUri": "public://frontend-assets/growbig/content-team-media.png",
+                    "url": "https://site-platform.ddev.site/sites/default/files/frontend-assets/growbig/content-team-media.png",
+                    "alt": "content-team-media"
+                },
+                "order": 10
+            },
+            {
+                "key": "sushant-paste",
+                "name": "Sushant Paste",
+                "role": "Director",
+                "qualification": "B.E. Computer Engineering",
+                "bio": "Sushant Paste is the Director of GrowBig Technologies and holds a Bachelor of Engineering (B.E.) in Computer Science. With over 20 years of experience in the IT industry, he specializes in software solutions, project management, and technology-driven innovation. He is committed to driving operational excellence, digital transformation, and sustainable business growth through reliable and innovative technology solutions.",
+                "media": {
+                    "status": "drupal_media",
+                    "auditSourceUrl": "https://growbigllp.com/assets/sushant-KdnDWRG0.png",
+                    "mediaId": 6,
+                    "mediaUuid": "40136d62-1f0a-4625-906b-61f3a0946c72",
+                    "fileId": 6,
+                    "fileUri": "public://frontend-assets/growbig/content-team-1-media.png",
+                    "url": "https://site-platform.ddev.site/sites/default/files/frontend-assets/growbig/content-team-1-media.png",
+                    "alt": "content-team-1-media"
+                },
+                "order": 20
+            },
+            {
+                "key": "vinayak-jadhav",
+                "name": "Vinayak Jadhav",
+                "role": "Director",
+                "qualification": "M.Tech. Computer Engineering",
+                "bio": "Vinayak Jadhav is the Director of GrowBig Technologies, holding an M.Tech. and B.E. in Computer Science. With over 20 years of experience in the education and IT sectors, he has expertise in teaching, software development, and technical leadership. He is committed to driving innovation, technical excellence, and delivering high-quality technology solutions while fostering continuous learning and professional growth.",
+                "media": {
+                    "status": "drupal_media",
+                    "auditSourceUrl": "https://growbigllp.com/assets/Vinayak-e8Gl1-2i.png",
+                    "mediaId": 7,
+                    "mediaUuid": "d2c8bd1c-02ff-4800-a436-05988de63def",
+                    "fileId": 7,
+                    "fileUri": "public://frontend-assets/growbig/content-team-2-media.png",
+                    "url": "https://site-platform.ddev.site/sites/default/files/frontend-assets/growbig/content-team-2-media.png",
+                    "alt": "content-team-2-media"
+                },
+                "order": 30
+            },
+            {
+                "key": "manish-jadhav",
+                "name": "Manish Jadhav",
+                "role": "HR Admin",
+                "qualification": "B.E. IT , MBA-HR , LLB",
+                "bio": "Manish Jadhav is the HR Admin at GrowBig Technologies, holding a B.E. in Information Technology, an MBA in Human Resource Management, an LL.B., and a Diploma in Cyber Law. With extensive experience across the banking, media, and IT industries, he specializes in HR management, operations, and organizational development. He is committed to building high-performing teams, fostering innovation, and driving sustainable organizational growth through people-centric leadership.",
+                "media": {
+                    "status": "drupal_media",
+                    "auditSourceUrl": "https://growbigllp.com/assets/manish-DZzUIMCP.jpeg",
+                    "mediaId": 8,
+                    "mediaUuid": "faaaf48a-f9dc-4dae-8ab7-927645362f21",
+                    "fileId": 8,
+                    "fileUri": "public://frontend-assets/growbig/content-team-3-media.jpeg",
+                    "url": "https://site-platform.ddev.site/sites/default/files/frontend-assets/growbig/content-team-3-media.jpeg",
+                    "alt": "content-team-3-media"
+                },
+                "order": 40
+            },
+            {
+                "key": "heena-shaikh",
+                "name": "Heena Shaikh",
+                "role": "Recruitment officer",
+                "qualification": "BA , MA-HISTORY",
+                "bio": "Heena Shaikh is the Recruitment Officer at GrowBig Technologies and holds a Bachelor of Arts (B.A.) and a Master of Arts (M.A.) in History. She is responsible for talent acquisition, candidate engagement, and supporting the company's hiring initiatives. With a strong focus on identifying the right talent and building a skilled workforce, she contributes to the organization's growth through effective recruitment and people-centric practices.",
+                "media": {
+                    "status": "drupal_media",
+                    "auditSourceUrl": "https://growbigllp.com/assets/Heena-DngY0izo.png",
+                    "mediaId": 9,
+                    "mediaUuid": "e7e207a5-70a0-49a3-becd-a91c10b52d4c",
+                    "fileId": 9,
+                    "fileUri": "public://frontend-assets/growbig/content-team-4-media.png",
+                    "url": "https://site-platform.ddev.site/sites/default/files/frontend-assets/growbig/content-team-4-media.png",
+                    "alt": "content-team-4-media"
+                },
+                "order": 50
+            }
+        ],
+        "jobs": [
+            {
+                "key": "customer-support-executive",
+                "title": "Customer Support Executive",
+                "location": "Sawantwadi, Maharashtra",
+                "shift": "Rotational Shifts",
+                "experience": "0–2 Years Experience",
+                "summary": "We are looking for a Customer Support Executive with excellent communication skills to assist customers, resolve queries, and deliver outstanding service while working closely with our internal teams.",
+                "applyFormId": "job-application",
+                "status": "open",
+                "order": 10
+            }
+        ]
+    },
+    "forms": {
+        "contact-us": {
+            "id": "contact-us",
+            "webformId": "contact_us",
+            "title": "Contact Us",
+            "description": "Send a message to the team.",
+            "successMessage": "Thanks for contacting us. We will get back to you soon.",
+            "submitApi": "/api/v2/frontend/forms/contact-us/submit",
+            "fields": [
+                {
+                    "name": "full_name",
+                    "type": "text",
+                    "label": "Full Name",
+                    "required": true,
+                    "placeholder": "Rahul Sawant"
+                },
+                {
+                    "name": "email",
+                    "type": "email",
+                    "label": "Email Address",
+                    "required": true,
+                    "placeholder": "rahul@company.com"
+                },
+                {
+                    "name": "phone",
+                    "type": "tel",
+                    "label": "Phone Number",
+                    "required": false,
+                    "placeholder": "+91 98765 43210"
+                },
+                {
+                    "name": "service_needed",
+                    "type": "select",
+                    "label": "Service Needed",
+                    "required": false
+                },
+                {
+                    "name": "message",
+                    "type": "textarea",
+                    "label": "Message",
+                    "required": true,
+                    "placeholder": "Tell us about your project, timeline, and goals..."
+                }
+            ],
+            "webformElements": {
+                "full_name": {
+                    "#type": "textfield",
+                    "#title": "Full Name",
+                    "#required": true,
+                    "#placeholder": "Rahul Sawant"
+                },
+                "email": {
+                    "#type": "email",
+                    "#title": "Email Address",
+                    "#required": true,
+                    "#placeholder": "rahul@company.com"
+                },
+                "phone": {
+                    "#type": "tel",
+                    "#title": "Phone Number",
+                    "#required": false,
+                    "#placeholder": "+91 98765 43210"
+                },
+                "service_needed": {
+                    "#type": "select",
+                    "#title": "Service Needed",
+                    "#required": false,
+                    "#empty_option": "Select a service...",
+                    "#options": {
+                        "website_software_development": "Website & Software Development",
+                        "mobile_application_development": "Mobile Application Development",
+                        "crm_erp_solutions": "CRM & ERP Solutions",
+                        "digital_marketing_services": "Digital Marketing Services",
+                        "bpo_customer_support": "BPO & Customer Support Solutions",
+                        "ai_automation_services": "AI & Automation Services",
+                        "other": "Other"
+                    }
+                },
+                "message": {
+                    "#type": "textarea",
+                    "#title": "Message",
+                    "#required": true,
+                    "#placeholder": "Tell us about your project, timeline, and goals..."
+                }
+            },
+            "notification": {
+                "enabled": true,
+                "to": "office@growbigllp.com",
+                "subject": "New GrowBig website enquiry from [submission:full_name]",
+                "intro": "A new enquiry was submitted from the GrowBig website contact form."
+            }
         },
-        "email": {
-          "#type": "email",
-          "#title": "Email Address",
-          "#required": true
-        },
-        "phone": {
-          "#type": "tel",
-          "#title": "Phone Number",
-          "#required": false
-        },
-        "job_role": {
-          "#type": "select",
-          "#title": "Job Role",
-          "#required": true,
-          "#options": {
-            "customer_support_executive": "Customer Support Executive",
-            "general_application": "General Application"
-          }
-        },
-        "current_location": {
-          "#type": "textfield",
-          "#title": "Current Location",
-          "#required": false
-        },
-        "experience_years": {
-          "#type": "textfield",
-          "#title": "Experience",
-          "#required": false,
-          "#placeholder": "0-2 years"
-        },
-        "resume_url": {
-          "#type": "url",
-          "#title": "Resume URL",
-          "#required": false,
-          "#description": "Temporary API-friendly field. File upload can be added later."
-        },
-        "message": {
-          "#type": "textarea",
-          "#title": "Message",
-          "#required": false
-        },
-        "consent": {
-          "#type": "checkbox",
-          "#title": "I agree to be contacted about this application.",
-          "#required": true
+        "job-application": {
+            "id": "job-application",
+            "webformId": "job_application",
+            "title": "Job Application",
+            "description": "Apply for an open role.",
+            "successMessage": "Thanks for applying. Our team will review your application.",
+            "submitApi": "/api/v2/frontend/forms/job-application/submit",
+            "fields": [
+                {
+                    "name": "full_name",
+                    "type": "text",
+                    "label": "Full Name",
+                    "required": true
+                },
+                {
+                    "name": "email",
+                    "type": "email",
+                    "label": "Email Address",
+                    "required": true
+                },
+                {
+                    "name": "phone",
+                    "type": "tel",
+                    "label": "Phone Number",
+                    "required": false
+                },
+                {
+                    "name": "job_role",
+                    "type": "select",
+                    "label": "Job Role",
+                    "required": true
+                },
+                {
+                    "name": "current_location",
+                    "type": "text",
+                    "label": "Current Location",
+                    "required": false
+                },
+                {
+                    "name": "experience_years",
+                    "type": "text",
+                    "label": "Experience",
+                    "required": false
+                },
+                {
+                    "name": "resume_url",
+                    "type": "url",
+                    "label": "Resume URL",
+                    "required": false
+                },
+                {
+                    "name": "message",
+                    "type": "textarea",
+                    "label": "Message",
+                    "required": false
+                },
+                {
+                    "name": "consent",
+                    "type": "checkbox",
+                    "label": "I agree to be contacted about this application.",
+                    "required": true
+                }
+            ],
+            "webformElements": {
+                "full_name": {
+                    "#type": "textfield",
+                    "#title": "Full Name",
+                    "#required": true
+                },
+                "email": {
+                    "#type": "email",
+                    "#title": "Email Address",
+                    "#required": true
+                },
+                "phone": {
+                    "#type": "tel",
+                    "#title": "Phone Number",
+                    "#required": false
+                },
+                "job_role": {
+                    "#type": "select",
+                    "#title": "Job Role",
+                    "#required": true,
+                    "#options": {
+                        "customer_support_executive": "Customer Support Executive",
+                        "general_application": "General Application"
+                    }
+                },
+                "current_location": {
+                    "#type": "textfield",
+                    "#title": "Current Location",
+                    "#required": false
+                },
+                "experience_years": {
+                    "#type": "textfield",
+                    "#title": "Experience",
+                    "#required": false,
+                    "#placeholder": "0-2 years"
+                },
+                "resume_url": {
+                    "#type": "url",
+                    "#title": "Resume URL",
+                    "#required": false,
+                    "#description": "Temporary API-friendly field. File upload can be added later."
+                },
+                "message": {
+                    "#type": "textarea",
+                    "#title": "Message",
+                    "#required": false
+                },
+                "consent": {
+                    "#type": "checkbox",
+                    "#title": "I agree to be contacted about this application.",
+                    "#required": true
+                }
+            },
+            "notification": {
+                "enabled": true,
+                "to": "office@growbigllp.com",
+                "subject": "New job application for [submission:job_role] from [submission:full_name]",
+                "intro": "A new job application was submitted from the GrowBig careers page."
+            }
         }
-      }
     }
-  }
 }

@@ -1,0 +1,21 @@
+uuid: 07aa0b9d-57a6-4b02-838c-760dfc690941
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_component_button_label
+    - paragraphs.paragraphs_type.site_cta
+_core:
+  default_config_hash: MlkDUFbDNe7AJ2ZYjaKFNTlFt38T-UneKBEFW4ssT1Y
+id: paragraph.site_cta.field_component_button_label
+field_name: field_component_button_label
+entity_type: paragraph
+bundle: site_cta
+label: 'Button label'
+description: 'CTA button label.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

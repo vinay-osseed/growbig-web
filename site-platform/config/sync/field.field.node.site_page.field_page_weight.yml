@@ -1,0 +1,27 @@
+uuid: 8301ea0d-dbf7-4673-9171-aa8621d191b8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_page_weight
+    - node.type.site_page
+_core:
+  default_config_hash: owLf5qdJbmr67oNsl9KY_Kh1bcFQq5ZQsgLD2N6cnnQ
+id: node.site_page.field_page_weight
+field_name: field_page_weight
+entity_type: node
+bundle: site_page
+label: Weight
+description: 'Sort weight for page admin listings.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

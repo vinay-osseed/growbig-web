@@ -1,0 +1,4 @@
+mode: single_backend
+frontend_count: 1
+multisite_supported: false
+domain_required: false

@@ -1,0 +1,21 @@
+uuid: 7c7e2696-bb9a-4aeb-aa2a-9df37422bf82
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_component_summary
+    - paragraphs.paragraphs_type.site_cta
+_core:
+  default_config_hash: Kb3hQkT-y0F8wNNWNmo9EhctRh0Ca1W7e1zBI8pAdcM
+id: paragraph.site_cta.field_component_summary
+field_name: field_component_summary
+entity_type: paragraph
+bundle: site_cta
+label: Summary
+description: 'CTA summary.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

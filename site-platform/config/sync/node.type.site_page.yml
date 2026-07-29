@@ -1,0 +1,13 @@
+uuid: 32c66f90-0d1d-4517-8a48-973133a26393
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: l7ynkRQDjoRm115Lvacv1jpcxK0PmXxpOiPaza3l4kg
+name: 'Site Page'
+type: site_page
+description: 'Represents one frontend page/route assigned to a Site Profile.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

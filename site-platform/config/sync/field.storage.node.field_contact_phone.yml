@@ -1,0 +1,23 @@
+uuid: 1aaa4e16-3c81-40a9-9d2a-08c809df2eaa
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: 6XLQneu95QeWJigce1AM6Dboj65ifA4Ef7c51-yU210
+id: node.field_contact_phone
+field_name: field_contact_phone
+entity_type: node
+type: string
+settings:
+  max_length: 64
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

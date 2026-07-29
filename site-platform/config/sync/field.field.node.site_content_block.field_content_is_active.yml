@@ -1,0 +1,25 @@
+uuid: 47c54ecf-9e0f-492c-bc4b-6e2352b1942e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_content_is_active
+    - node.type.site_content_block
+_core:
+  default_config_hash: M7zDuiFhqbscangieRKkm4dvelfQYwafS7mUeiUz7KU
+id: node.site_content_block.field_content_is_active
+field_name: field_content_is_active
+entity_type: node
+bundle: site_content_block
+label: Active
+description: 'Only active content blocks are exposed by API.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

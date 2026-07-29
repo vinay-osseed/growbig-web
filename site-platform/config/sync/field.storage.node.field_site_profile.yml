@@ -1,0 +1,23 @@
+uuid: e120601a-51f3-4e02-bf6d-094fa13efb6a
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: 4XSBgpaCh9bo2SmJNdUkggoetvds-ML7uDNZof9I3SA
+id: node.field_site_profile
+field_name: field_site_profile
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes:
+  target_id:
+    - target_id
+persist_with_no_fields: false
+custom_storage: false

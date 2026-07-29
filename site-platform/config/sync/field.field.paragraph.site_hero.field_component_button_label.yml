@@ -1,0 +1,21 @@
+uuid: 12e4b5f0-6e45-4e85-aecf-9102554eb253
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_component_button_label
+    - paragraphs.paragraphs_type.site_hero
+_core:
+  default_config_hash: F03oUk2mo4hz7W9sQM6cltTeuDRZxQV2vuL4gq66Ji4
+id: paragraph.site_hero.field_component_button_label
+field_name: field_component_button_label
+entity_type: paragraph
+bundle: site_hero
+label: 'Button label'
+description: 'Primary button label.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

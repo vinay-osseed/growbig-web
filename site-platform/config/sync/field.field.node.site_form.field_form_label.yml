@@ -1,0 +1,21 @@
+uuid: 150f87bf-bb92-493a-9c3b-729cd0d7878b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_form_label
+    - node.type.site_form
+_core:
+  default_config_hash: y0kDmwZakajyfp4KKRax7EzoOfSPxr1PUcy8PZNn29o
+id: node.site_form.field_form_label
+field_name: field_form_label
+entity_type: node
+bundle: site_form
+label: 'Form label'
+description: 'Public form label.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

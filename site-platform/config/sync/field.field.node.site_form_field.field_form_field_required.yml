@@ -1,0 +1,25 @@
+uuid: 61c5ee23-874d-4111-9501-e3d5d14663d8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_form_field_required
+    - node.type.site_form_field
+_core:
+  default_config_hash: Pn7EKaTjOau177JPFX941OmhEaHPFgpjN28UOIiI5Z0
+id: node.site_form_field.field_form_field_required
+field_name: field_form_field_required
+entity_type: node
+bundle: site_form_field
+label: Required
+description: 'Marks this field as required.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

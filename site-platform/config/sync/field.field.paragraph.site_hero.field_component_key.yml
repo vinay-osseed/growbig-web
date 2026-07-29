@@ -1,0 +1,21 @@
+uuid: d7feba64-4210-4f72-bf77-aeb9ddb1169d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_component_key
+    - paragraphs.paragraphs_type.site_hero
+_core:
+  default_config_hash: PxTKveOSdUoQZ94NfDiXcvR-Lsst7fTeQA90653icA8
+id: paragraph.site_hero.field_component_key
+field_name: field_component_key
+entity_type: paragraph
+bundle: site_hero
+label: 'Component key'
+description: 'Stable component key.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

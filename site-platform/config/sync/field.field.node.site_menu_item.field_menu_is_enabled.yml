@@ -1,0 +1,25 @@
+uuid: 8cde9c89-5a0b-4597-b97f-4d038ff27bba
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_is_enabled
+    - node.type.site_menu_item
+_core:
+  default_config_hash: 8jhaPElNjm7e82h5KPiwY9Nk-RX6zFb0TDtSI7B-_zE
+id: node.site_menu_item.field_menu_is_enabled
+field_name: field_menu_is_enabled
+entity_type: node
+bundle: site_menu_item
+label: Enabled
+description: 'Only enabled menu items are exposed by API.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

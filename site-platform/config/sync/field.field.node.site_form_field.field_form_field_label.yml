@@ -1,0 +1,21 @@
+uuid: 594ea007-c207-434c-9de8-7292f204807c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_form_field_label
+    - node.type.site_form_field
+_core:
+  default_config_hash: pk0Zzevs3xAHG6phKysfvzyqYfexO86ts35Opc56Iw8
+id: node.site_form_field.field_form_field_label
+field_name: field_form_field_label
+entity_type: node
+bundle: site_form_field
+label: 'Field label'
+description: 'Public field label.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

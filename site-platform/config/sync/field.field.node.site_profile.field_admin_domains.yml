@@ -1,0 +1,21 @@
+uuid: e516cc6b-d74b-4195-8092-119a07e7fe26
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_admin_domains
+    - node.type.site_profile
+_core:
+  default_config_hash: PHTAvnqmfypY2vgPUbT1RPTRbjhHnJziu7H-PNNviOw
+id: node.site_profile.field_admin_domains
+field_name: field_admin_domains
+entity_type: node
+bundle: site_profile
+label: 'Admin domains'
+description: 'Admin/backend domains, such as admin.example.com.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,12 @@
+uuid: 24a4a994-66e3-40c9-b6ba-414151ca8a10
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: wI3_9rROfepUxhAZ-BZ_b_8UTW_BgmMerMWnv2J7VE0
+id: site_rich_text
+label: 'Site Rich Text'
+icon_uuid: null
+icon_default: null
+description: 'Rich text/content section component.'
+behavior_plugins: {  }

@@ -1,0 +1,21 @@
+uuid: b20984c6-c4b5-487d-ae3b-14302ad8ed90
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_gtm_container_id
+    - node.type.site_profile
+_core:
+  default_config_hash: VuA6qWjSDmxdfutxXOHD-5xPqXhRVd_Zz-jQg_ybGF0
+id: node.site_profile.field_gtm_container_id
+field_name: field_gtm_container_id
+entity_type: node
+bundle: site_profile
+label: 'Google Tag Manager Container ID'
+description: 'Google Tag Manager container ID for this site.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

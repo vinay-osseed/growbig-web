@@ -1,0 +1,27 @@
+uuid: d0d16fcf-c73e-4bda-b7c2-838b0a9ea2f6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_form_field_weight
+    - node.type.site_form_field
+_core:
+  default_config_hash: o0RHoyJ7M7z6pVD14t8G93KrsYCTvTDAnplihuq58WQ
+id: node.site_form_field.field_form_field_weight
+field_name: field_form_field_weight
+entity_type: node
+bundle: site_form_field
+label: Weight
+description: 'Sort weight for form fields.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

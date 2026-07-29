@@ -1,0 +1,21 @@
+uuid: 17345353-16ee-4546-9400-abdbd10fd7e3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_site_key
+    - node.type.site_profile
+_core:
+  default_config_hash: 1V7-ySRizz5PRSzHbf8tHOkDYkTsoaIJWczW_Uq4Exc
+id: node.site_profile.field_site_key
+field_name: field_site_key
+entity_type: node
+bundle: site_profile
+label: 'Site key'
+description: 'Stable machine key for this site, such as growbig or osseed.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

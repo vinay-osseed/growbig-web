@@ -1,0 +1,22 @@
+uuid: 828a6437-5b35-48a1-934f-17469f0f9eb5
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: CXifidR61nRIsFXfb9_npG4RhAww7MSwDLq7ZDJ7hnI
+id: node.field_media_weight
+field_name: field_media_weight
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

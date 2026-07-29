@@ -1,0 +1,21 @@
+uuid: 268fcacd-1f0c-4fcc-9f07-cb92771d64fd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_favicon_url
+    - node.type.site_profile
+_core:
+  default_config_hash: 7nVJXwAALCJ6nNd0MJ250frh2c7fIC-oKiscpDKKgjU
+id: node.site_profile.field_favicon_url
+field_name: field_favicon_url
+entity_type: node
+bundle: site_profile
+label: 'Favicon URL'
+description: 'Temporary favicon URL until media/image support is added.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

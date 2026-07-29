@@ -1,0 +1,21 @@
+uuid: 889e892b-973b-4113-86b1-941b21cc7f78
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_content_body
+    - node.type.site_content_block
+_core:
+  default_config_hash: GaSzBbSJrP_u08w28BlUor2mtYViOHNUAt0uWvzwV54
+id: node.site_content_block.field_content_body
+field_name: field_content_body
+entity_type: node
+bundle: site_content_block
+label: Body
+description: 'Reusable content body.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

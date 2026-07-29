@@ -1,0 +1,25 @@
+uuid: 45960667-4d6e-4be7-b965-cf99ee4118f8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_form_is_active
+    - node.type.site_form
+_core:
+  default_config_hash: WMTn2f2visOeHhrGDSn38JjnJQ30NacAq5j6pkQfMTc
+id: node.site_form.field_form_is_active
+field_name: field_form_is_active
+entity_type: node
+bundle: site_form
+label: Active
+description: 'Only active forms are exposed by API.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

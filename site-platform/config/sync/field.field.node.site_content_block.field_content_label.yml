@@ -1,0 +1,21 @@
+uuid: c2eb9a13-17c0-44bd-9894-d14845fa5199
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_content_label
+    - node.type.site_content_block
+_core:
+  default_config_hash: cho1s1to1_h8GSHiZ2xDKsPd-laqLRKBAGCZk_LCYmI
+id: node.site_content_block.field_content_label
+field_name: field_content_label
+entity_type: node
+bundle: site_content_block
+label: Label
+description: 'Public content label.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

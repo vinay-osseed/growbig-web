@@ -72,3 +72,12 @@ setup/site.prod.yml
 site-frontend/node_modules/
 site-frontend/dist/
 node_modules
+
+# Local one-time UI audit / browser tooling.
+node_modules/
+docs/ui-audit/
+tools/ui-audit/
+package.json
+package-lock.json
+
+.local-backups/

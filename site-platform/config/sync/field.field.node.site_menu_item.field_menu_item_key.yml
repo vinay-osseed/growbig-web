@@ -1,0 +1,21 @@
+uuid: 8a06111b-6085-4b83-b789-eca62c6e7a71
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_item_key
+    - node.type.site_menu_item
+_core:
+  default_config_hash: UWos06_bnPIZSFMK-d6-z1ptTppqpqwPA9yQif21F9c
+id: node.site_menu_item.field_menu_item_key
+field_name: field_menu_item_key
+entity_type: node
+bundle: site_menu_item
+label: 'Item key'
+description: 'Stable item key.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

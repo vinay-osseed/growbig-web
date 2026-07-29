@@ -1,0 +1,13 @@
+uuid: 0607e009-c15c-41cd-ac71-01d9c127928a
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: K66FZr0F3psuolEEYNEhcy7PabEjiKvua_59Axmm888
+name: 'Site Menu'
+type: site_menu
+description: 'Represents one menu assigned to a Site Profile.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

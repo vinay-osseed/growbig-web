@@ -1,0 +1,25 @@
+uuid: 6cc1258e-5cfa-471b-b08d-2cc23def7839
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_is_button
+    - node.type.site_menu_item
+_core:
+  default_config_hash: NazOepISpJ29c0sv5xCGLKhpUfpwSn-3NScymrcThI8
+id: node.site_menu_item.field_menu_is_button
+field_name: field_menu_is_button
+entity_type: node
+bundle: site_menu_item
+label: 'Button style'
+description: 'Marks this menu item as a button-style link.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

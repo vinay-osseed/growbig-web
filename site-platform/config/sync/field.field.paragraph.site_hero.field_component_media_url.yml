@@ -1,0 +1,21 @@
+uuid: c67883cd-b95c-408d-b0a2-309e45615832
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_component_media_url
+    - paragraphs.paragraphs_type.site_hero
+_core:
+  default_config_hash: 8_LykAj7M1T5kAodG7svwNbg9p6soJ3mB94ShpVrU_M
+id: paragraph.site_hero.field_component_media_url
+field_name: field_component_media_url
+entity_type: paragraph
+bundle: site_hero
+label: 'Media URL'
+description: 'Temporary image/media URL.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

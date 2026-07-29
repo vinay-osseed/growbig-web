@@ -1,0 +1,25 @@
+uuid: 2ca8fda9-ca21-485e-a4d9-a52ff12f5263
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_media_weight
+    - node.type.site_media_asset
+_core:
+  default_config_hash: e2X4t9JLAqR1YfQjWg6ho5StH60hYKie5BKrm6wtyAc
+id: node.site_media_asset.field_media_weight
+field_name: field_media_weight
+entity_type: node
+bundle: site_media_asset
+label: Weight
+description: 'Ordering weight.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

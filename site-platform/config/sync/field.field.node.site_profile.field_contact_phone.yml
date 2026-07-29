@@ -1,0 +1,21 @@
+uuid: ab11b3f4-39b9-48d4-b954-54059e72803c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_contact_phone
+    - node.type.site_profile
+_core:
+  default_config_hash: MZ7LVuOilZSYs19EJgJJIa36VuLVgdyMUUhzg89qHB8
+id: node.site_profile.field_contact_phone
+field_name: field_contact_phone
+entity_type: node
+bundle: site_profile
+label: 'Contact phone'
+description: 'Primary public contact phone.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

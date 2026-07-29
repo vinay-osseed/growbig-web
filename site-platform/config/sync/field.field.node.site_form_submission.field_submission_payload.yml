@@ -1,0 +1,21 @@
+uuid: 8ee157fa-d541-40a2-9072-587d4d1e751b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_submission_payload
+    - node.type.site_form_submission
+_core:
+  default_config_hash: l6Dlk-1VpmWltZWezJ-yFd6SbD0fulF2jETh5qSh2Lc
+id: node.site_form_submission.field_submission_payload
+field_name: field_submission_payload
+entity_type: node
+bundle: site_form_submission
+label: 'Submission payload'
+description: 'Submitted JSON payload.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

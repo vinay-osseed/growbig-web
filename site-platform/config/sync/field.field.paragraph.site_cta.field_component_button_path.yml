@@ -1,0 +1,21 @@
+uuid: fff85e2a-1212-4484-a2b3-823638c86675
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_component_button_path
+    - paragraphs.paragraphs_type.site_cta
+_core:
+  default_config_hash: VvhOu4Z3DHZc-DcJH18auFIFKOHt8bAA2jhkl-_tx9I
+id: paragraph.site_cta.field_component_button_path
+field_name: field_component_button_path
+entity_type: paragraph
+bundle: site_cta
+label: 'Button path'
+description: 'CTA button path.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

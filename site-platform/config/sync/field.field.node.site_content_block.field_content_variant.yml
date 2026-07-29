@@ -1,0 +1,23 @@
+uuid: c797e5bd-1f0c-4e6b-b466-12ae1ddf6f0d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_content_variant
+    - node.type.site_content_block
+_core:
+  default_config_hash: '-L5Y5XBOhq_XJhJAWIOa-3T0nxhgMmfVtm3fzadYwVI'
+id: node.site_content_block.field_content_variant
+field_name: field_content_variant
+entity_type: node
+bundle: site_content_block
+label: Variant
+description: 'Frontend variant key.'
+required: false
+translatable: false
+default_value:
+  -
+    value: default
+default_value_callback: ''
+settings: {  }
+field_type: string

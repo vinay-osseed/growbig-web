@@ -1,0 +1,21 @@
+uuid: 29b0c9ab-191a-4856-8cbb-4820096dbfa0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_component_body
+    - paragraphs.paragraphs_type.site_hero
+_core:
+  default_config_hash: jgtuvCd0crj7yMDBddksTj_esKpXf06IDOHAuxVMxwI
+id: paragraph.site_hero.field_component_body
+field_name: field_component_body
+entity_type: paragraph
+bundle: site_hero
+label: Body
+description: 'Optional hero body.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

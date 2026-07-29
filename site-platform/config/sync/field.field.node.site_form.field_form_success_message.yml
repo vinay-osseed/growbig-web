@@ -1,0 +1,21 @@
+uuid: de1a4a1d-8480-41ec-b71b-459c3b1ebf7c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_form_success_message
+    - node.type.site_form
+_core:
+  default_config_hash: IMpngEbQwJH6U8mcArZlBZyNsNWrdXbd2UzxWyE3_t8
+id: node.site_form.field_form_success_message
+field_name: field_form_success_message
+entity_type: node
+bundle: site_form
+label: 'Success message'
+description: 'Message returned after successful submission.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

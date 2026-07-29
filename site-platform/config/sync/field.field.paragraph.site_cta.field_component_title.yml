@@ -1,0 +1,21 @@
+uuid: a2103c78-92f1-4c35-9509-3f31d613bfdf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_component_title
+    - paragraphs.paragraphs_type.site_cta
+_core:
+  default_config_hash: T2cJANTVXwWqEtQqIZZKP1UE7368ZA4XARa7lNbERkA
+id: paragraph.site_cta.field_component_title
+field_name: field_component_title
+entity_type: paragraph
+bundle: site_cta
+label: Title
+description: 'CTA title.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

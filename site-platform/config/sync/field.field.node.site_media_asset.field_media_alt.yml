@@ -1,0 +1,21 @@
+uuid: e9779d08-c010-4403-b125-6c7355f24e80
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_media_alt
+    - node.type.site_media_asset
+_core:
+  default_config_hash: bQQJ9OSv675fLNQZqqxipKTowT3M6f-GBM2Kn6NXe5c
+id: node.site_media_asset.field_media_alt
+field_name: field_media_alt
+entity_type: node
+bundle: site_media_asset
+label: 'Alt text'
+description: 'Accessible alt text.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,21 @@
+uuid: 471cd5a1-11a6-4a36-8155-9f06a2e8530b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_media_url
+    - node.type.site_media_asset
+_core:
+  default_config_hash: wljQ2zGf-0KVnZ82Lc29ik-ykpFOFVdfKGnjDw8Ybas
+id: node.site_media_asset.field_media_url
+field_name: field_media_url
+entity_type: node
+bundle: site_media_asset
+label: 'Media URL'
+description: 'URL or path for the media asset.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

@@ -1,0 +1,12 @@
+uuid: ff80b602-418f-4b21-acc7-3885119a6f8e
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: _Vw05_KgyvqPwPu-Vt32HOHQzFNZvdUDrj6ho5rOa1g
+id: site_cta
+label: 'Site CTA'
+icon_uuid: null
+icon_default: null
+description: 'Call to action component.'
+behavior_plugins: {  }

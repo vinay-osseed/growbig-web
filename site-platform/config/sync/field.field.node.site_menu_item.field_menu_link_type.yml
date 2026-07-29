@@ -1,0 +1,23 @@
+uuid: fe075ae2-f6cf-4758-a575-6215550c49f5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_link_type
+    - node.type.site_menu_item
+_core:
+  default_config_hash: keb4eDv_nPbyCqXE1oJw4SRVZtF3lZeyW9Xpz5ntybQ
+id: node.site_menu_item.field_menu_link_type
+field_name: field_menu_link_type
+entity_type: node
+bundle: site_menu_item
+label: 'Link type'
+description: 'One of page, path, external, or nolink.'
+required: true
+translatable: false
+default_value:
+  -
+    value: page
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,23 @@
+uuid: ca60dd5d-29d7-417e-a92b-6b7e64eb88c9
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: qI7WkAXXpc3IS7Czq3-VKfovNNy_cB11h2gouTLKomM
+id: node.field_site_form
+field_name: field_site_form
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes:
+  target_id:
+    - target_id
+persist_with_no_fields: false
+custom_storage: false

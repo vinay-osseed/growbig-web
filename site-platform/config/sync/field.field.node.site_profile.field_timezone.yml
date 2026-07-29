@@ -1,0 +1,23 @@
+uuid: a03d12cf-7fbe-4a85-8312-8445fe492229
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_timezone
+    - node.type.site_profile
+_core:
+  default_config_hash: 40dGkhDE7rNC3ehcG4iuzmjqvez6LDZ551WedRWCIBk
+id: node.site_profile.field_timezone
+field_name: field_timezone
+entity_type: node
+bundle: site_profile
+label: Timezone
+description: 'Default timezone for this site.'
+required: false
+translatable: false
+default_value:
+  -
+    value: UTC
+default_value_callback: ''
+settings: {  }
+field_type: string

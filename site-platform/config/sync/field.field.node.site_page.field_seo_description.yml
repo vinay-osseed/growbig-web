@@ -1,0 +1,21 @@
+uuid: 5a30252d-761d-4ad4-84c9-6132f92ea035
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_seo_description
+    - node.type.site_page
+_core:
+  default_config_hash: xR_gQnqskOEs3MWJJatJxdpHj9Al5wM_Cw1A7L1sAY0
+id: node.site_page.field_seo_description
+field_name: field_seo_description
+entity_type: node
+bundle: site_page
+label: 'SEO description'
+description: 'SEO/meta description for this page.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

@@ -1,0 +1,21 @@
+uuid: d93a2950-70b9-4d2e-a562-13f5d9d5c2dd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_component_summary
+    - paragraphs.paragraphs_type.site_hero
+_core:
+  default_config_hash: zYakTP-fn693TxrEnANNDcGItGC1yS8OAyDRVjNIfEA
+id: paragraph.site_hero.field_component_summary
+field_name: field_component_summary
+entity_type: paragraph
+bundle: site_hero
+label: Summary
+description: 'Hero summary.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

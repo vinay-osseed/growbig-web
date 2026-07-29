@@ -1,0 +1,27 @@
+uuid: 33502992-0e6c-45fe-b87c-0a8059c6510c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_weight
+    - node.type.site_menu
+_core:
+  default_config_hash: R-gcjRyNPaJT6b6yE49IePnLpP50s7E6IeHxUAl4Mv4
+id: node.site_menu.field_menu_weight
+field_name: field_menu_weight
+entity_type: node
+bundle: site_menu
+label: Weight
+description: 'Sort weight for menu lists.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

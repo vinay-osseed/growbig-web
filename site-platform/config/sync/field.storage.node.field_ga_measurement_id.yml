@@ -1,0 +1,23 @@
+uuid: 6cca3de9-34c4-44ee-922f-665ce7681631
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: Dei88WIFW53AXgMs430wcV4MDg4zRIfhn_M_tlUI2DE
+id: node.field_ga_measurement_id
+field_name: field_ga_measurement_id
+entity_type: node
+type: string
+settings:
+  max_length: 32
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

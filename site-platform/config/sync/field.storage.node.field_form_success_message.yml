@@ -1,0 +1,21 @@
+uuid: bfc3f8c5-dd5d-4336-b68d-192ab985c8ef
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: fQc9o0cDh_ails1czLLZipOH05A50FdtU6xVYnL0w6c
+id: node.field_form_success_message
+field_name: field_form_success_message
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

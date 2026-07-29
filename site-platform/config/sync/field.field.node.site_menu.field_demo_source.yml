@@ -1,0 +1,21 @@
+uuid: e311ac73-4053-4089-8e21-0134ce34abfe
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_demo_source
+    - node.type.site_menu
+_core:
+  default_config_hash: 80Mbztfu9bHF8mpr6TaUeU26QlPJS0GG1OeKTUXfeco
+id: node.site_menu.field_demo_source
+field_name: field_demo_source
+entity_type: node
+bundle: site_menu
+label: 'Demo source'
+description: 'Source identifier for demo/setup content.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

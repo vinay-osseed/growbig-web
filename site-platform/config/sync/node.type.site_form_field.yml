@@ -1,0 +1,13 @@
+uuid: a1dcd21a-0f78-4bfa-8fbe-74ae03560f46
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: tmcELukgxcPBzzX8D5VkQpmlOn2R8qiHjCvUl8QR_BU
+name: 'Site Form Field'
+type: site_form_field
+description: 'Represents one field inside a Site Form.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

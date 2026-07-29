@@ -1,0 +1,13 @@
+uuid: eb907532-9cbd-4482-8838-5fcc00bde7ca
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: d1e2OXBUSYNwzUa6czbgGaJK6nEs2qqQv7XcgaGnrBM
+name: 'Site Form Submission'
+type: site_form_submission
+description: 'Stores one frontend form submission payload.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

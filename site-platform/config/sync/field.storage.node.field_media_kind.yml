@@ -1,0 +1,35 @@
+uuid: 20a591a0-c4c5-4d54-a85d-deb9810453ee
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: pBj5DNR4i-rJNMEVXIKd7wHNvEHnv6n9AnyH5bhZXCE
+id: node.field_media_kind
+field_name: field_media_kind
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: image
+      label: Image
+    -
+      value: file
+      label: File
+    -
+      value: video
+      label: Video
+    -
+      value: external
+      label: External
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

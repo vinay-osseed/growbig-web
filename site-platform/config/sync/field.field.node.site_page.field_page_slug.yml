@@ -1,0 +1,21 @@
+uuid: d766147c-9970-40f4-83de-6c917aae3857
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_page_slug
+    - node.type.site_page
+_core:
+  default_config_hash: KIicE91nzy6xl2uK9lsX9kY7TlhaaN-4mGKzGYItB3E
+id: node.site_page.field_page_slug
+field_name: field_page_slug
+entity_type: node
+bundle: site_page
+label: Slug
+description: 'Frontend slug without leading slash. Use home for the front page.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

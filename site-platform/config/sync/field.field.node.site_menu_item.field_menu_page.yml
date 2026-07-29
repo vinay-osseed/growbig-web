@@ -1,0 +1,31 @@
+uuid: f3531803-0a4d-4b49-9c38-0fb3844800fd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_page
+    - node.type.site_menu_item
+    - node.type.site_page
+_core:
+  default_config_hash: NgvJoJ7OAQsCsEBQXFfoO5d00xeE_Sd_mnxBPHdjS2U
+id: node.site_menu_item.field_menu_page
+field_name: field_menu_page
+entity_type: node
+bundle: site_menu_item
+label: 'Site Page'
+description: 'Optional Site Page target.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      site_page: site_page
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

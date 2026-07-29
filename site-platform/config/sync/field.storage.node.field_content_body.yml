@@ -1,0 +1,21 @@
+uuid: da52ff21-7eff-4129-b602-3bd4b3ce6230
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: GCKL1smqP58My_MD9cCFP-4dexymALM1TKscmUS_Lw4
+id: node.field_content_body
+field_name: field_content_body
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

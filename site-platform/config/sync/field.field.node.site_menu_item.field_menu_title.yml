@@ -1,0 +1,21 @@
+uuid: 0972ec02-ec94-4d12-ab8d-a9db280a3454
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_title
+    - node.type.site_menu_item
+_core:
+  default_config_hash: 9yXGRSEPujXDNad8wkaDsCQuu8hO7FaiuPOGTiLkoao
+id: node.site_menu_item.field_menu_title
+field_name: field_menu_title
+entity_type: node
+bundle: site_menu_item
+label: 'Menu title'
+description: 'Public menu item label.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

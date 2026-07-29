@@ -1,0 +1,12 @@
+uuid: 9085fe33-a42e-4d1c-b481-41bbdf8df3b1
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: v-rI-iwDbrJ4LG6qNJ2Knoao1gpXAmDtpZ4OCaToR2k
+id: site_hero
+label: 'Site Hero'
+icon_uuid: null
+icon_default: null
+description: 'Hero component for page headers and landing sections.'
+behavior_plugins: {  }

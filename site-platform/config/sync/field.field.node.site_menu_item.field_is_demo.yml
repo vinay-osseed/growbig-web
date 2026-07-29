@@ -1,0 +1,25 @@
+uuid: 46862bdd-7da9-4a32-8fdb-da2c40818a62
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_is_demo
+    - node.type.site_menu_item
+_core:
+  default_config_hash: VAi1wCLN3_FLfQqJ7BLD37dC-bL-0u7MZGoH4pottSI
+id: node.site_menu_item.field_is_demo
+field_name: field_is_demo
+entity_type: node
+bundle: site_menu_item
+label: 'Demo content'
+description: 'Marks this menu item as setup/demo content.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

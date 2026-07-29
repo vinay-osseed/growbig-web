@@ -1,0 +1,31 @@
+uuid: e5a0e3e1-4abd-444b-b4fd-3e7f51d6f8fd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_site_profile
+    - node.type.site_menu_item
+    - node.type.site_profile
+_core:
+  default_config_hash: ZvibMConpMhrqZMXO9P70wkRBLiSPwTO1PZMqhr3RyQ
+id: node.site_menu_item.field_site_profile
+field_name: field_site_profile
+entity_type: node
+bundle: site_menu_item
+label: 'Site Profile'
+description: 'The site this record belongs to.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      site_profile: site_profile
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

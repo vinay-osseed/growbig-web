@@ -1,0 +1,13 @@
+uuid: 8706e1b7-11b6-445b-9221-6f4cb906decd
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: qie5CvCDMIdyrQNEH7V8CBiEGT8GFG-hjt-Ue_mHOWM
+name: 'Site Form'
+type: site_form
+description: 'Represents one frontend form assigned to a Site Profile.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

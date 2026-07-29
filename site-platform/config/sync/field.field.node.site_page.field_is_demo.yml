@@ -1,0 +1,25 @@
+uuid: 5f64baa4-d74d-476f-b448-97eaca06368b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_is_demo
+    - node.type.site_page
+_core:
+  default_config_hash: Ei-qpMrTSd5sI65h8yo_LudB3GO1t2w2uGyihz17JIE
+id: node.site_page.field_is_demo
+field_name: field_is_demo
+entity_type: node
+bundle: site_page
+label: 'Demo content'
+description: 'Marks this page as setup/demo content.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -1,0 +1,27 @@
+uuid: 829a9a08-a733-4005-9a96-1a7fdb630247
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_content_weight
+    - node.type.site_content_block
+_core:
+  default_config_hash: DvwzDcfnKhkKQjuEK50BaxipVo5dPVmkHd55LSziPdI
+id: node.site_content_block.field_content_weight
+field_name: field_content_weight
+entity_type: node
+bundle: site_content_block
+label: Weight
+description: 'Sort weight for reusable content.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

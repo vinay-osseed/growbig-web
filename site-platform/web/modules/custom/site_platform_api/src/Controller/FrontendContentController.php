@@ -28,7 +28,7 @@ final class FrontendContentController extends ControllerBase {
       'media' => $payload['media'] ?? [],
       'pages' => array_values($payload['pages'] ?? []),
       'content' => $payload['content'] ?? [],
-      'forms' => $payload['forms'] ?? [],
+      'forms' => $this->publicForms($payload['forms'] ?? []),
     ]);
   }
 
@@ -74,7 +74,7 @@ final class FrontendContentController extends ControllerBase {
     }
 
     $form = $payload['forms'][$id];
-    unset($form['webformElements']);
+    unset($form['webformElements'], $form['notification']);
 
     return $this->json([
       'contractVersion' => $payload['contractVersion'] ?? '2.0',
@@ -139,6 +139,14 @@ final class FrontendContentController extends ControllerBase {
       'submissionId' => (int) $submission->id(),
       'webformId' => $webform_id,
     ], 201);
+  }
+
+  private function publicForms(array $forms): array {
+    foreach ($forms as &$form) {
+      unset($form['webformElements'], $form['notification']);
+    }
+
+    return $forms;
   }
 
   private function payload(): array {

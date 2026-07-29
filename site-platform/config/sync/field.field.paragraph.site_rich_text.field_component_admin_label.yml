@@ -1,0 +1,21 @@
+uuid: 1f5280df-3408-4a91-a17c-7147f4dec34b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_component_admin_label
+    - paragraphs.paragraphs_type.site_rich_text
+_core:
+  default_config_hash: DNHywUSYM6wWYu3eKG62UtEaHTPLT0kADNiyZIzbNlg
+id: paragraph.site_rich_text.field_component_admin_label
+field_name: field_component_admin_label
+entity_type: paragraph
+bundle: site_rich_text
+label: 'Admin label'
+description: 'Editor-facing component label.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

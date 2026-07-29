@@ -1,0 +1,25 @@
+uuid: dc4b1e68-a598-4438-99c7-5d0f31c9f2e8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_is_active
+    - node.type.site_menu
+_core:
+  default_config_hash: lvMtO4ppNC58vFty0W-nXQjWL0YTRS4AsTqP6Wf01xw
+id: node.site_menu.field_menu_is_active
+field_name: field_menu_is_active
+entity_type: node
+bundle: site_menu
+label: Active
+description: 'Only active menus are exposed by API.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -1,0 +1,21 @@
+uuid: 974f90d2-4884-494c-9f17-722ffcf738e6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_path
+    - node.type.site_menu_item
+_core:
+  default_config_hash: NL_WQqohHfMejuvnv3tB_YZwAmXid5EP8rQI0jlGZ6w
+id: node.site_menu_item.field_menu_path
+field_name: field_menu_path
+entity_type: node
+bundle: site_menu_item
+label: 'Internal path'
+description: 'Internal frontend path, such as /contact.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,20 @@
+uuid: 05b52937-9302-42e7-9f8f-e8016e569648
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: VHCgBl8EkN6iGb3O5KMaVvcSc3jxV3omngt07z8PGaQ
+id: node.field_contact_email
+field_name: field_contact_email
+entity_type: node
+type: email
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

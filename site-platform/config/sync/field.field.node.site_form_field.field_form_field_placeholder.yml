@@ -1,0 +1,21 @@
+uuid: 640db245-f495-47a1-b792-ca33b44d80f4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_form_field_placeholder
+    - node.type.site_form_field
+_core:
+  default_config_hash: YXI3vUA5fIAXVFrJXApmKG7c61rCYsxVY2cCHfJdDJ8
+id: node.site_form_field.field_form_field_placeholder
+field_name: field_form_field_placeholder
+entity_type: node
+bundle: site_form_field
+label: Placeholder
+description: 'Input placeholder.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

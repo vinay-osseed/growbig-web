@@ -1,0 +1,23 @@
+uuid: 6a5db6b4-e4a0-49de-9e52-4a527ccd191f
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: UZvWx2BcZZuhtb2nmzM1fGe6V50k7joB13Rmst4iZzo
+id: node.field_brand_primary_color
+field_name: field_brand_primary_color
+entity_type: node
+type: string
+settings:
+  max_length: 32
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

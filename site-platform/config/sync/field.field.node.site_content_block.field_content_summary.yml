@@ -1,0 +1,21 @@
+uuid: 175ac100-db83-4315-aaac-d5d807bf54d3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_content_summary
+    - node.type.site_content_block
+_core:
+  default_config_hash: 6kKE0gJhWgKgyDWikqfEJefDS8VGLPh80U_EWnu4J9k
+id: node.site_content_block.field_content_summary
+field_name: field_content_summary
+entity_type: node
+bundle: site_content_block
+label: Summary
+description: 'Reusable content summary.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

@@ -1,0 +1,21 @@
+uuid: 68e69ca0-eee9-4f09-a24b-20e29f75baad
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_form_field_options
+    - node.type.site_form_field
+_core:
+  default_config_hash: wigT9iAG3EmFb5OVFpTGW4p1KfV5J9hGIB9jb4vz1BE
+id: node.site_form_field.field_form_field_options
+field_name: field_form_field_options
+entity_type: node
+bundle: site_form_field
+label: Options
+description: 'JSON or newline options for option-based fields.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

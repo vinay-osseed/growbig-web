@@ -1,0 +1,25 @@
+uuid: 63a6fbe9-a4cc-4b00-889e-80461f2c7818
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_is_active
+    - node.type.site_profile
+_core:
+  default_config_hash: NeHG-4-M53C32UjrlTm-C5IR7QybSS2jCkEkPTSzDJg
+id: node.site_profile.field_is_active
+field_name: field_is_active
+entity_type: node
+bundle: site_profile
+label: Active
+description: 'Only active site profiles are available to public APIs.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

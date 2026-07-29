@@ -1,0 +1,21 @@
+uuid: ff79efba-1322-41c1-a48e-913483ca9214
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_form_key
+    - node.type.site_form
+_core:
+  default_config_hash: 8WYER1GKYfER1bu5A4FAIlxkW92HUtU3TLXOZxAFxtM
+id: node.site_form.field_form_key
+field_name: field_form_key
+entity_type: node
+bundle: site_form
+label: 'Form key'
+description: 'Stable form key.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

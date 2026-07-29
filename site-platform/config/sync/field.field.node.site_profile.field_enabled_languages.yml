@@ -1,0 +1,21 @@
+uuid: 765a64b9-3cd3-4999-bbe5-a540e08beb52
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_enabled_languages
+    - node.type.site_profile
+_core:
+  default_config_hash: zOCQcZkNAgDHsNPkNffKT2ogCoWUbNffBf4dJFA6vUE
+id: node.site_profile.field_enabled_languages
+field_name: field_enabled_languages
+entity_type: node
+bundle: site_profile
+label: 'Enabled languages'
+description: 'Enabled language codes for the site.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

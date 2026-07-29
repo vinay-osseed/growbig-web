@@ -1,0 +1,21 @@
+uuid: 607c4f0c-dbf9-4be0-8c17-d61bdff95464
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_label
+    - node.type.site_menu
+_core:
+  default_config_hash: Np31TrgGHVznpCFRXSa1UeGTm07KjKzYJehJdc9GsxA
+id: node.site_menu.field_menu_label
+field_name: field_menu_label
+entity_type: node
+bundle: site_menu
+label: 'Menu label'
+description: 'Human-readable menu label.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

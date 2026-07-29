@@ -1,0 +1,13 @@
+uuid: 36291ad5-3d6f-4875-bc93-feab4fa67d5c
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: qWpylot71YuVT9UTTSEdJElVPi8WALsfSVsQi7plepY
+name: 'Site Profile'
+type: site_profile
+description: 'Represents one isolated site/company/domain set inside Site Platform.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

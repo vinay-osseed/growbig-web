@@ -1,0 +1,23 @@
+uuid: febbed82-dad8-4139-9e1d-2b61b9e893ba
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: HW8Gz37lTZDQ_ie6Vu7KzkmUjQo1qdMfYWeU1Cqr-Y4
+id: node.field_menu_page
+field_name: field_menu_page
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes:
+  target_id:
+    - target_id
+persist_with_no_fields: false
+custom_storage: false

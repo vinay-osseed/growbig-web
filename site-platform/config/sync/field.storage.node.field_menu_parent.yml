@@ -1,0 +1,23 @@
+uuid: dabd1ec6-c34e-4280-be33-efa135f21d16
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: RT9h-Tauw1uW9O4OX7d3xYmjiI84VIkNLc5AwgOrRys
+id: node.field_menu_parent
+field_name: field_menu_parent
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes:
+  target_id:
+    - target_id
+persist_with_no_fields: false
+custom_storage: false

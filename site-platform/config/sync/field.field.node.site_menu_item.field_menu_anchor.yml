@@ -1,0 +1,21 @@
+uuid: 655adc43-4586-44fb-b60d-74ddfaad8e5d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_anchor
+    - node.type.site_menu_item
+_core:
+  default_config_hash: ZJJunnHqbgLzqhof45v9k1AB4JPuo7IQ3gvLSo7qQII
+id: node.site_menu_item.field_menu_anchor
+field_name: field_menu_anchor
+entity_type: node
+bundle: site_menu_item
+label: Anchor
+description: 'Optional hash anchor without the leading #.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

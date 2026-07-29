@@ -1,0 +1,25 @@
+uuid: b548981b-9d82-4be3-8be4-675e5dcc9e4e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_is_demo
+    - node.type.site_form
+_core:
+  default_config_hash: z27P8wTOUEv8fBMhTr61rcjdWxnDi0XYKnjXEsURCYQ
+id: node.site_form.field_is_demo
+field_name: field_is_demo
+entity_type: node
+bundle: site_form
+label: 'Demo content'
+description: 'Marks this form as setup/demo content.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

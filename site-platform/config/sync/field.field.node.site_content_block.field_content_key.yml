@@ -1,0 +1,21 @@
+uuid: 826156b0-86d8-430d-bf70-1bff38576524
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_content_key
+    - node.type.site_content_block
+_core:
+  default_config_hash: nYLDEKLbO3L0uPfEPUZj2I8hVG_ku9Z8ehHrA13DaGc
+id: node.site_content_block.field_content_key
+field_name: field_content_key
+entity_type: node
+bundle: site_content_block
+label: 'Content key'
+description: 'Stable content key.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

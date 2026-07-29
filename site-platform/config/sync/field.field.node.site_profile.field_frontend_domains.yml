@@ -1,0 +1,21 @@
+uuid: 13e71625-d9f7-491e-a22b-9a0c8c10df57
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_frontend_domains
+    - node.type.site_profile
+_core:
+  default_config_hash: ACMizkxTMu68tVWk57ocbO0VIoaDPP5ScLMC1vG7aWA
+id: node.site_profile.field_frontend_domains
+field_name: field_frontend_domains
+entity_type: node
+bundle: site_profile
+label: 'Frontend domains'
+description: 'Public frontend domains, such as www.example.com.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
