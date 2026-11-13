@@ -12,8 +12,8 @@ function About() {
       <AboutValue/>
       <AboutLeadership/>
       <AboutCtaSection/>
-      
-      
+
+
     </>
   );
 }

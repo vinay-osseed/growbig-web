@@ -8,9 +8,9 @@ function Careers() {
       <CareersHeroSection />
       <CareersOpenRolesSection/>
       <CareersCtaSection/>
-    
-      
-      
+
+
+
     </>
   );
 }
