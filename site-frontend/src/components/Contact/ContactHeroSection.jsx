@@ -6,8 +6,8 @@ const heroStats = [
       </svg>
     ),
     label: 'Call Us',
-    value: '+91 00000 00000',
-    link: 'tel:+910000000000',
+    value: '+91 7039523024',
+    link: 'tel:+7039523024',
   },
   {
     icon: (
@@ -17,8 +17,8 @@ const heroStats = [
       </svg>
     ),
     label: 'Email Us',
-    value: 'hello@growbigtech.in',
-    link: 'mailto:hello@growbigtech.in',
+    value: 'office@growbigllp.com',
+    link: 'mailto:office@growbigllp.com',
   },
   {
     icon: (
@@ -29,7 +29,7 @@ const heroStats = [
     ),
     label: 'Visit Us',
     value: 'Sawantwadi, Maharashtra\nNarayan Arcade, Near ST Stand',
-    link: null,
+    link: "https://maps.app.goo.gl/VGqk8VbPQXS3yQNb9",
   },
 ]
 
@@ -42,7 +42,7 @@ export default function ContactHeroSection() {
       <div className="relative mx-auto max-w-4xl text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-sm font-semibold text-amber-300 shadow-[0_0_0_1px_rgba(245,158,11,0.08)]">
           <span className="h-2 w-2 rounded-full bg-emerald-400" />
-          We typically reply within 4 hours
+          We typically reply within few hours
         </div>
 
         <h1 className="mt-8 text-5xl font-black tracking-[-0.05em] text-white sm:text-6xl lg:text-[4.6rem] lg:leading-[0.98]">
@@ -65,12 +65,19 @@ export default function ContactHeroSection() {
             </div>
             <h3 className="mt-5 text-lg font-bold text-slate-950">{item.label}</h3>
             {item.link ? (
-              <a href={item.link} className="mt-2 block text-sm font-semibold text-blue-600 transition hover:text-blue-700">
-                {item.value}
-              </a>
-            ) : (
-              <p className="mt-2 whitespace-pre-line text-sm text-slate-500">{item.value}</p>
-            )}
+  <a
+    href={item.link}
+    target={item.label === "Visit Us" ? "_blank" : undefined}
+    rel={item.label === "Visit Us" ? "noopener noreferrer" : undefined}
+    className="mt-2 block whitespace-pre-line text-sm font-semibold text-blue-600 transition hover:text-blue-700"
+  >
+    {item.value}
+  </a>
+) : (
+  <p className="mt-2 whitespace-pre-line text-sm text-slate-500">
+    {item.value}
+  </p>
+)}
           </div>
         ))}
       </div>
